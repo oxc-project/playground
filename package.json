@@ -1,0 +1,41 @@
+{
+  "name": "@oxc-project/playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "oxc playground",
+  "main": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "homepage": "https://oxc-project.github.io",
+  "bugs": "https://github.com/oxc-project/playground/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxc-project/playground.git"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.378.0",
+    "monaco-editor": "^0.48.0",
+    "radix-vue": "^1.7.4",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vue": "^3.4.27",
+    "vue-tsc": "^2.0.18"
+  }
+}
