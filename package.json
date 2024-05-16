@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier",
+    "prepare": "husky"
   },
   "license": "MIT",
   "homepage": "https://oxc-project.github.io",
@@ -21,7 +23,10 @@
     "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
@@ -37,6 +42,9 @@
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.27",
     "vue-tsc": "^2.0.18"
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "prettier --write"
   },
   "engines": {
     "node": ">=18.0"
