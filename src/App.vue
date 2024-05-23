@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import Hello from "./components/Hello.vue";
+import Header from "./components/Header/Header.vue";
+import Sidebar from "./components/Sidebar/Sidebar.vue";
 </script>
 
 <template>
-  <Hello msg="Oxc Playground with Vue" />
+  <Suspense>
+    <main class="flex w-screen h-screen bg-white dark:bg-[#1b1b1f]">
+      <Sidebar />
+      <div class="flex w-screen">
+        <Header />
+        <div>
+          <!-- Todo: Editor Component -->
+        </div>
+      </div>
+    </main>
+
+    <template #fallback>
+      <!-- Todo: add fallback loading -->
+    </template>
+  </Suspense>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
