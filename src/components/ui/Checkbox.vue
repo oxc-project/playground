@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import { Checkbox } from "src/ui/checkbox";
 
 defineProps<{
