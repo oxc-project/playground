@@ -10,4 +10,9 @@ export default defineConfig({
       src: path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    fs: {
+      allow: [__dirname, "../oxc/npm/oxc-wasm"],
+    },
+  },
 });

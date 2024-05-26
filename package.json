@@ -31,7 +31,8 @@
     "tailwindcss": "^3.4.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm"
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
