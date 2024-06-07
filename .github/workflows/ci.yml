@@ -94,13 +94,13 @@ jobs:
 
       - name: Generate URL Preview
         id: url_preview
-        if: ${{ env.github_refname != 'main' }}
+        if: github.event_name == 'pull_request'
         run: |
           NETLIFY_PREVIEW_URL=$(jq -r '.deploy_url' deploy_output.json)
           echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> $GITHUB_OUTPUT
 
       - uses: peter-evans/create-or-update-comment@v4
-        if: ${{ env.github_refname != 'main' }}
+        if: github.event_name == 'pull_request'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.number }}
