@@ -45,7 +45,7 @@ const toggleDark = useToggle(isDark);
       <SwitchThumb
         :class="
           cn(
-            'pointer-events-none block h-5 w-5 rounded-full bg-white dark:bg-black shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+            'pointer-events-none block h-5 w-5 rounded-full bg-white dark:bg-[#1b1b1f] shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
           )
         "
       />

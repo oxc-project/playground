@@ -11,7 +11,7 @@
   },
   "framework": "vite",
   "aliases": {
-    "components": "src/ui",
+    "components": "src/",
     "utils": "src/utils/index"
   }
 }

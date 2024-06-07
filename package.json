@@ -21,6 +21,7 @@
     "url": "git+https://github.com/oxc-project/playground.git"
   },
   "devDependencies": {
+    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
@@ -31,8 +32,7 @@
     "tailwindcss": "^3.4.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11",
-    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm"
+    "vite": "^5.2.11"
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
