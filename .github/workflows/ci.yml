@@ -27,17 +27,49 @@ jobs:
         with:
           files: .
 
-  build-and-deploy:
-    name: Build and Deploy
+  wasm:
+    name: Build Wasm
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+        with:
+          repository: oxc-project/oxc
+          ref: main
+
+      - uses: Boshen/setup-rust@main
+        with:
+          save-cache: ${{ github.ref_name == 'main' }}
+          tools: wasm-pack,just
+
+      - run: just build-wasm
+
+      - uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: wasm
+          path: npm/oxc-wasm
+
+  build:
+    needs: wasm
+    name: Build Playground
+    runs-on: ubuntu-latest
+    steps:
+      - uses: taiki-e/checkout-action@v1
+
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
+
       - run: pnpm install --frozen-lockfile
+
+      # Download after to invalidate the version from pnpm cache
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          name: wasm
+          path: ../oxc/npm/oxc-wasm
+
       - run: pnpm run build
