@@ -51,7 +51,7 @@
     "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "prettier --write"
   },
   "engines": {
-    "node": ">=18.0"
+    "node": ">=20.14.0"
   },
   "packageManager": "pnpm@9.1.1"
 }
