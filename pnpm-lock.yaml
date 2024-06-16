@@ -43,8 +43,8 @@ importers:
         version: 2.0.21(typescript@5.4.5)
     devDependencies:
       '@oxc/oxc_wasm':
-        specifier: link:../oxc1/npm/oxc-wasm
-        version: link:../oxc1/npm/oxc-wasm
+        specifier: link:../oxc/npm/oxc-wasm
+        version: link:../oxc/npm/oxc-wasm
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
