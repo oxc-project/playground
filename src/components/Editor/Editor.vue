@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Code from "./Code.vue";
-import Output from "./Output.vue";
+import Output from "./OutputPanel.vue";
 
 defineProps(["syntaxState"]);
 </script>

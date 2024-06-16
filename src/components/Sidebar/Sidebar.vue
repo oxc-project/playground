@@ -8,11 +8,11 @@ defineProps<{ syntaxState: SyntaxOptions }>();
 </script>
 
 <template>
-  <div
+  <aside
     class="hidden pc:block w-52 h-screen px-8 box-content bg-[#f6f6f7] dark:bg-[#161618]"
   >
     <Logo />
     <Syntax :syntaxState="syntaxState" />
     <Lint :syntaxState="syntaxState" />
-  </div>
+  </aside>
 </template>

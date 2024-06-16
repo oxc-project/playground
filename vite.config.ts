@@ -12,7 +12,7 @@ export default defineConfig({
   },
   server: {
     fs: {
-      allow: [__dirname, "../oxc/npm/oxc-wasm"],
+      allow: [__dirname, "../oxc1/npm/oxc-wasm"],
     },
   },
 });
