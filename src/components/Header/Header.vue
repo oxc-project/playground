@@ -6,7 +6,9 @@ import Switch from "./Switch.vue";
 </script>
 
 <template>
-  <header class="relative w-full h-16">
+  <header
+    class="flex flex-shrink-0 flex-grow flex-basis-[4rem] relative w-full h-16"
+  >
     <div class="flex justify-between w-full h-full px-8">
       <Logo class="visible pc:invisible" />
       <div class="hidden md:flex">

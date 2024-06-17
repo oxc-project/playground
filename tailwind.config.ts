@@ -15,6 +15,10 @@ export default {
   ],
 
   theme: {
+    data: {
+      active: 'state="active"',
+      inactive: 'state="inactive"',
+    },
     container: {
       center: true,
       padding: "2rem",

@@ -33,7 +33,7 @@ export default defineComponent({
   emits: ["editorWillMount", "editorDidMount", "change", "update:modelValue"],
   setup(props, { emit }) {
     const container: any = ref(null);
-    let instance: monaco.editor.IStandaloneCodeEditor | any = null;
+    let instance: monaco.editor.IStandaloneCodeEditor | null = null;
 
     const isDark = useDark({
       onChanged(isDark) {
@@ -55,9 +55,10 @@ export default defineComponent({
 
       instance = monaco.editor.create(container.value, editorProps);
       instance.onDidChangeModelContent(() => {
-        const value = instance.getValue();
+        const value = instance!.getValue();
         emit("update:modelValue", value);
       });
+      emit("editorDidMount", instance);
     };
 
     onMounted(() => {

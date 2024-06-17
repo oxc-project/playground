@@ -9,15 +9,17 @@ const syntaxState = useSyntaxOptionState();
 
 <template>
   <Suspense>
-    <main class="flex w-screen h-screen bg-white dark:bg-[#1b1b1f]">
+    <div
+      class="flex w-screen w-max-screen h-screen h-max-screen bg-white dark:bg-[#1b1b1f]"
+    >
       <Sidebar :syntaxState="syntaxState" />
-      <div class="flex flex-col w-screen">
+      <div class="flex flex-col w-screen h-full max-h-full">
         <Header />
-        <div class="flex w-full h-full">
+        <main class="flex w-full h-[calc(100%-4rem)]">
           <Editor :syntaxState="syntaxState" />
-        </div>
+        </main>
       </div>
-    </main>
+    </div>
 
     <template #fallback>
       <!-- Todo: add fallback loading -->
