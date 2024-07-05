@@ -20,9 +20,15 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lodash.throttle:
+        specifier: ^4.1.1
+        version: 4.1.1
       lucide-vue-next:
         specifier: ^0.390.0
         version: 0.390.0(vue@3.4.27(typescript@5.4.5))
+      lzma:
+        specifier: ^2.3.2
+        version: 2.3.2
       monaco-editor:
         specifier: ^0.49.0
         version: 0.49.0
@@ -45,6 +51,12 @@ importers:
       '@oxc/oxc_wasm':
         specifier: link:../oxc/npm/oxc-wasm
         version: link:../oxc/npm/oxc-wasm
+      '@types/lodash.throttle':
+        specifier: ^4.1.9
+        version: 4.1.9
+      '@types/lzma':
+        specifier: ^2.3.0
+        version: 2.3.0
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
@@ -417,6 +429,15 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/lodash.throttle@4.1.9':
+    resolution: {integrity: sha512-PCPVfpfueguWZQB7pJQK890F2scYKoDUL3iM522AptHWn7d5NQmeS/LTEHIcLr5PaTzl3dK2Z0xSUHHTHwaL5g==}
+
+  '@types/lodash@4.17.6':
+    resolution: {integrity: sha512-OpXEVoCKSS3lQqjx9GGGOapBeuW5eUboYHRlHP9urXPX25IKZ6AnP5ZRxtVf63iieUbsHxLn8NQ5Nlftc6yzAA==}
+
+  '@types/lzma@2.3.0':
+    resolution: {integrity: sha512-z7TknP6ts5GPnN7P2bkZC1B/tMpoMJXG3UnPY1XDrwBq1OJQ2EpHtEypFwq5Q0A5iS37+oc+MT/o/B7x5lgl8Q==}
 
   '@types/node@20.14.2':
     resolution: {integrity: sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q==}
@@ -824,6 +845,9 @@ packages:
     resolution: {integrity: sha512-irTfvpib/rNiD637xeevjO2l3Z5loZmuaRi0L0YE5LfijwVY96oyVn0DFD3o/teAok7nfobMG1THvvcHh/BP6g==}
     engines: {node: '>=18.0.0'}
 
+  lodash.throttle@4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
+
   log-update@6.0.0:
     resolution: {integrity: sha512-niTvB4gqvtof056rRIrTZvjNYE4rCUzO6X/X+kYjd7WFxXeJ0NwEFnRxX6ehkvv3jTwrXnNdtAak5XYZuIyPFw==}
     engines: {node: '>=18'}
@@ -836,6 +860,10 @@ packages:
     resolution: {integrity: sha512-rP02sQ/8EA6DeONL5DinlXddYD+lCggC0m+bqQBkz6rhM7tkhRmnkY3QIfNkgeXpMfNgYpENUrByaVf7kV7sIQ==}
     peerDependencies:
       vue: '>=3.0.1'
+
+  lzma@2.3.2:
+    resolution: {integrity: sha512-DcfiawQ1avYbW+hsILhF38IKAlnguc/fjHrychs9hdxe4qLykvhT5VTGNs5YRWgaNePh7NTxGD4uv4gKsRomCQ==}
+    hasBin: true
 
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
@@ -1512,6 +1540,16 @@ snapshots:
 
   '@types/estree@1.0.5': {}
 
+  '@types/lodash.throttle@4.1.9':
+    dependencies:
+      '@types/lodash': 4.17.6
+
+  '@types/lodash@4.17.6': {}
+
+  '@types/lzma@2.3.0':
+    dependencies:
+      '@types/node': 20.14.2
+
   '@types/node@20.14.2':
     dependencies:
       undici-types: 5.26.5
@@ -1938,6 +1976,8 @@ snapshots:
       rfdc: 1.3.1
       wrap-ansi: 9.0.0
 
+  lodash.throttle@4.1.1: {}
+
   log-update@6.0.0:
     dependencies:
       ansi-escapes: 6.2.1
@@ -1951,6 +1991,8 @@ snapshots:
   lucide-vue-next@0.390.0(vue@3.4.27(typescript@5.4.5)):
     dependencies:
       vue: 3.4.27(typescript@5.4.5)
+
+  lzma@2.3.2: {}
 
   magic-string@0.30.10:
     dependencies:
