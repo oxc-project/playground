@@ -6,13 +6,10 @@ import initWasm, {
   OxcParserOptions,
   OxcRunOptions,
 } from "@oxc/oxc_wasm";
-import {
-  createGlobalState,
-  createInjectionState,
-  useAsyncState,
-} from "@vueuse/core";
-import { Ref, computed, onUnmounted, reactive, ref, watch } from "vue";
+import { createGlobalState, useAsyncState } from "@vueuse/core";
+import { Ref, computed, reactive, ref, watch } from "vue";
 import { useEditorValue } from "./useEditorValue";
+import { useSyntaxOptionState, type SyntaxOptions } from "./useSyntaxOptions";
 
 interface OxcStore {
   oxc?: Oxc;
@@ -68,6 +65,7 @@ async function initialize(): Promise<OxcStore> {
 
 export const useOxc = createGlobalState(() => {
   const editorValue = useEditorValue();
+  const syntaxOption = useSyntaxOptionState();
   const runDuration = ref<number | undefined>();
   const oxcInternal = useAsyncState<OxcStore>(initialize, {
     oxc: undefined,
@@ -113,6 +111,11 @@ export const useOxc = createGlobalState(() => {
       );
     }
 
+    const sourceFilename = getFilename(syntaxOption.value);
+    parser.sourceFilename = sourceFilename;
+    run.lint = syntaxOption.value.linted;
+    run.syntax = true;
+
     const start = new Date();
     oxc.run(run, parser, linter, codegen, minifier);
     runDuration.value = new Date().getTime() - start.getTime();
@@ -147,6 +150,30 @@ export const useOxc = createGlobalState(() => {
   );
 
   disposables.push(
+    // re-run when syntax options changes
+    watch(syntaxOption.value, () => {
+      if (!oxcInternal.isReady.value) {
+        return;
+      }
+      const {
+        options: { run: runOptions, parser },
+      } = oxcInternal.state.value;
+
+      const sourceFilename = getFilename(syntaxOption.value);
+      const linted = syntaxOption.value.linted;
+
+      if (
+        parser?.sourceFilename === sourceFilename &&
+        runOptions?.lint === linted
+      ) {
+        return;
+      }
+
+      run();
+    }),
+  );
+
+  disposables.push(
     // run for the first time when wasm initializes
     watch(oxcInternal.isReady, (isReady) => {
       if (isReady) {
@@ -169,3 +196,23 @@ export const useOxc = createGlobalState(() => {
     duration: runDuration,
   };
 });
+
+function getFilename(syntaxOption: SyntaxOptions) {
+  if (syntaxOption.language === "typescript") {
+    if (syntaxOption.tsx) {
+      return "test.tsx";
+    }
+    if (syntaxOption.dts) {
+      return "test.d.ts";
+    }
+    return "test.ts";
+  }
+
+  if (syntaxOption.language === "javascript") {
+    if (syntaxOption.jsx) {
+      return "test.jsx";
+    }
+
+    return "test.js";
+  }
+}

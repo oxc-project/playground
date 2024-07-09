@@ -14,6 +14,10 @@ function changeLanguage(language: string) {
   props.syntaxState.language = language;
 }
 
+function checkedSyntax(checked: boolean) {
+  props.syntaxState.syntax = checked;
+}
+
 function checkedJSX(checked: boolean) {
   props.syntaxState.jsx = checked;
 }
@@ -34,6 +38,13 @@ function checkedDTS(checked: boolean) {
     >
       Syntax Options
     </p>
+
+    <Checkbox
+      :checked="syntaxState.syntax"
+      :onChange="checkedSyntax"
+      id="syntax"
+      title="Check Syntax"
+    />
 
     <Select
       :initValue="syntaxState.sourceType"

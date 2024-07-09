@@ -29,6 +29,10 @@ export default defineComponent({
       type: Object as PropType<monaco.editor.IStandaloneEditorConstructionOptions>,
       default: () => ({}),
     },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["editorWillMount", "editorDidMount", "change", "update:modelValue"],
   setup(props, { emit }) {
@@ -53,7 +57,25 @@ export default defineComponent({
         theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
       };
 
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        allowComments: true,
+        enableSchemaRequest: true,
+        trailingCommas: "ignore",
+      });
+
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        module: monaco.languages.typescript.ModuleKind.ESNext,
+        allowNonTsExtensions: true,
+        moduleResolution:
+          monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+        noEmit: true,
+        esModuleInterop: true,
+        jsx: monaco.languages.typescript.JsxEmit.Preserve,
+      });
+
       instance = monaco.editor.create(container.value, editorProps);
+
       instance.onDidChangeModelContent(() => {
         const value = instance!.getValue();
         emit("update:modelValue", value);
