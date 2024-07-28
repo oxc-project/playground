@@ -23,7 +23,7 @@
   "devDependencies": {
     "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@types/lodash.throttle": "^4.1.9",
-    "@types/node": "^20.14.2",
+    "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "autoprefixer": "^10.4.19",
     "husky": "^9.0.11",
