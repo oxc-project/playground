@@ -42,8 +42,8 @@
     "clsx": "^2.1.1",
     "fflate": "^0.8.2",
     "lodash.throttle": "^4.1.1",
-    "lucide-vue-next": "^0.390.0",
-    "monaco-editor": "^0.49.0",
+    "lucide-vue-next": "^0.427.0",
+    "monaco-editor": "^0.50.0",
     "radix-vue": "^1.8.3",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
@@ -56,5 +56,5 @@
   "engines": {
     "node": ">=20.14.0"
   },
-  "packageManager": "pnpm@9.2.0"
+  "packageManager": "pnpm@9.7.0"
 }
