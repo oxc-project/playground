@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { editorValue } from "src/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "src/utils/constants";
 import { urlParamsInst } from "src/utils/url";
+import { ref } from "vue";
 import MonacoEditor from "./Monaco.vue";
 
 defineProps(["language"]);
@@ -22,8 +22,8 @@ setValue(urlParamsInst.code || PLAYGROUND_DEMO_CODE);
     <MonacoEditor
       ref="editorContainer"
       :language="language"
-      @update:model-value="setValue"
       :value="editorValue"
+      @update:model-value="setValue"
     />
   </div>
 </template>

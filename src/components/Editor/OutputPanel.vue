@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TabsTrigger, TabsContent, TabsList, TabsRoot } from "src/ui/tabs";
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "src/ui/tabs";
 import AstPanel from "./Output/AstPanel.vue";
 import CodegenPanel from "./Output/CodegenPanel.vue";
 import FormatPanel from "./Output/FormatPanel.vue";

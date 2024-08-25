@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { SelectRootEmits, SelectRootProps } from "radix-vue";
-import { SelectRoot, useForwardPropsEmits } from "radix-vue";
+import {
+  SelectRoot,
+  useForwardPropsEmits,
+  type SelectRootEmits,
+  type SelectRootProps,
+} from "radix-vue";
 
 const props = defineProps<SelectRootProps>();
 const emits = defineEmits<SelectRootEmits>();

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
   NavigationMenuLink,
+  useForwardPropsEmits,
   type NavigationMenuLinkEmits,
   type NavigationMenuLinkProps,
-  useForwardPropsEmits,
 } from "radix-vue";
 
 const props = defineProps<NavigationMenuLinkProps>();

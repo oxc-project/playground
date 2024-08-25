@@ -16,7 +16,7 @@ function checkedLint(checked: boolean) {
       id="lint-enable"
       title="Enable Lint"
       :checked="syntaxOptionState.linted"
-      :onChange="checkedLint"
+      :on-change="checkedLint"
     />
   </div>
 </template>

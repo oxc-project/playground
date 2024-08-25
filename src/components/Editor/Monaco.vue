@@ -1,15 +1,17 @@
 <script lang="ts">
+import { useDark } from "@vueuse/core";
+import * as monaco from "monaco-editor";
 import {
-  type PropType,
   defineComponent,
   onBeforeUnmount,
   onMounted,
   ref,
+  type PropType,
 } from "vue";
-import { useDark } from "@vueuse/core";
-import * as monaco from "monaco-editor";
 import "src/composables/useEditorWorker";
 
+// TODO refactor `<script setup>`
+// eslint-disable-next-line import/no-default-export
 export default defineComponent({
   name: "MonacoEditor",
   props: {
@@ -93,5 +95,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="w-full h-full" ref="container" />
+  <div ref="container" class="w-full h-full" />
 </template>

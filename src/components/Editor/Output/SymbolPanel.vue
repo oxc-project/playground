@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onUnmounted, ref, watch } from "vue";
 import { useOxc } from "src/composables/useOxc";
-import { Reference } from "@oxc/oxc_wasm";
+import { onUnmounted, ref, watch } from "vue";
+import type { Reference } from "@oxc/oxc_wasm";
 
 type Symbol = {
   name: string;

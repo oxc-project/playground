@@ -7,7 +7,7 @@ import initWasm, {
   OxcRunOptions,
 } from "@oxc/oxc_wasm";
 import { createGlobalState, useAsyncState } from "@vueuse/core";
-import { Ref, computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch, type Ref } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
 interface OxcStore {
@@ -108,7 +108,7 @@ export const useOxc = createGlobalState(() => {
 
     const start = new Date();
     oxc.run(run, parser, linter, codegen, minifier);
-    runDuration.value = new Date().getTime() - start.getTime();
+    runDuration.value = Date.now() - start.getTime();
 
     oxcState.ast = oxc.ast;
     oxcState.ir = oxc.ir;
@@ -128,7 +128,7 @@ export const useOxc = createGlobalState(() => {
       return;
     }
 
-    if (editorValue.value == oxc.sourceText) {
+    if (editorValue.value === oxc.sourceText) {
       return;
     }
 

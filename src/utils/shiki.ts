@@ -1,8 +1,8 @@
 import { createHighlighterCore } from "shiki/core";
-import getWasm from "shiki/wasm";
-import vitesseLight from "shiki/themes/vitesse-light.mjs";
-import vitesseDark from "shiki/themes/vitesse-dark.mjs";
 import langJson from "shiki/langs/json.mjs";
+import vitesseDark from "shiki/themes/vitesse-dark.mjs";
+import vitesseLight from "shiki/themes/vitesse-light.mjs";
+import getWasm from "shiki/wasm";
 
 export const highlighter = await createHighlighterCore({
   themes: [vitesseLight, vitesseDark],

@@ -1,7 +1,7 @@
 import { useLocalStorage } from "@vueuse/core";
 import {
-  PLAYGROUND_SYNTAX_STORAGE,
   PLAYGROUND_CODE_STORAGE,
+  PLAYGROUND_SYNTAX_STORAGE,
 } from "src/utils/constants";
 
 /**
