@@ -11,7 +11,7 @@ import { computed, reactive, ref, watch, type Ref } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
 interface OxcStore {
-  oxc?: Oxc;
+  oxc: Oxc;
   options: Partial<{
     run: OxcRunOptions;
     parser: OxcParserOptions;
@@ -39,7 +39,7 @@ export interface OxcState {
   /**
    * Controls parsing, linting, codegen, and minification.
    */
-  options: Ref<Partial<OxcStore["options"]>>;
+  options: Ref<OxcStore["options"]>;
   /**
    * Duration, in ms, of the most recent run. `undefined` before the first run.
    */
@@ -64,16 +64,10 @@ async function initialize(): Promise<OxcStore> {
 
 export const useOxc = createGlobalState(() => {
   const runDuration = ref<number>();
-  const oxcInternal = useAsyncState<OxcStore>(initialize, {
-    oxc: undefined,
-    options: {
-      run: undefined,
-      parser: undefined,
-      linter: undefined,
-      minifier: undefined,
-      codegen: undefined,
-    },
-  });
+  const oxcInternal = useAsyncState<OxcStore | undefined>(
+    initialize,
+    undefined,
+  );
   // NOTE: we can't just expose the above state b/c oxc.run() mutates itself in
   // place and updates won't propagate to the UI.
   const oxcState = reactive<
@@ -84,7 +78,7 @@ export const useOxc = createGlobalState(() => {
       >
     >
   >({});
-  const options = computed(() => oxcInternal.state.value.options);
+  const options = computed(() => oxcInternal.state.value?.options);
 
   const run = () => {
     if (!oxcInternal.isReady) {
@@ -93,7 +87,7 @@ export const useOxc = createGlobalState(() => {
     const {
       oxc,
       options: { run, parser, linter, codegen, minifier },
-    } = oxcInternal.state.value;
+    } = oxcInternal.state.value!;
 
     if (!oxc || !run || !parser || !linter || !codegen || !minifier) {
       throw new Error(
@@ -123,7 +117,7 @@ export const useOxc = createGlobalState(() => {
     if (!oxcInternal.isReady.value) {
       return;
     }
-    const oxc = oxcInternal.state.value.oxc;
+    const oxc = oxcInternal.state.value?.oxc;
     if (!oxc) {
       return;
     }
@@ -137,31 +131,36 @@ export const useOxc = createGlobalState(() => {
   });
 
   // re-run when syntax options changes
-  watch(syntaxOptionState, (syntaxOption) => {
-    if (!oxcInternal.isReady.value) {
-      return;
-    }
-    const {
-      options: { run: runOptions, parser },
-    } = oxcInternal.state.value;
+  watch(
+    syntaxOptionState,
+    (syntaxOption) => {
+      if (!oxcInternal.isReady.value) {
+        return;
+      }
 
-    const sourceFilename = getFilename(syntaxOption);
-    const linted = syntaxOption.linted;
+      const {
+        options: { run: runOptions, parser },
+      } = oxcInternal.state.value!;
 
-    if (
-      parser?.sourceFilename === sourceFilename &&
-      runOptions?.lint === linted
-    ) {
-      return;
-    }
+      const sourceFilename = getFilename(syntaxOption);
+      const { linted } = syntaxOption;
 
-    run();
-  });
+      if (
+        parser?.sourceFilename === sourceFilename &&
+        runOptions?.lint === linted
+      ) {
+        return;
+      }
+
+      run();
+    },
+    { deep: true },
+  );
 
   // run for the first time when wasm initializes
   watch(oxcInternal.isReady, (isReady) => {
     if (isReady) {
-      oxcInternal.state.value.oxc!.sourceText = editorValue.value;
+      oxcInternal.state.value!.oxc!.sourceText = editorValue.value;
       run();
     }
   });
