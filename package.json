@@ -19,7 +19,7 @@
     "preview": "vite preview",
     "format": "prettier",
     "typecheck": "vue-tsc",
-    "lint": "eslint",
+    "lint": "eslint --cache",
     "prepare": "husky"
   },
   "dependencies": {
@@ -59,6 +59,6 @@
     "node": ">=20.14.0"
   },
   "lint-staged": {
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "prettier --write"
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"
   }
 }
