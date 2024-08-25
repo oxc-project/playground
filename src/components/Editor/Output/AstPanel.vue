@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useOxc } from "src/composable/useOxc";
+import { useOxc } from "src/composables/useOxc";
 import { highlighter } from "src/utils/shiki";
 import { computed } from "vue";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type SyntaxOptions } from "src/composable/useSyntaxOptions";
+import { type SyntaxOptions } from "src/composables/useSyntaxOptions";
 import Logo from "../Logo/Logo.vue";
 import Lint from "./Lint.vue";
 import Syntax from "./Syntax.vue";
