@@ -10,11 +10,13 @@ function checkedLint(checked: boolean) {
 </script>
 
 <template>
-  <div class="pt-3">
-    <p class="text-lg text-[#3c3c43] dark:text-[#fffff5]/[.86]">Lint Options</p>
+  <div class="flex flex-col gap-2">
+    <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+      Lint Options
+    </p>
     <Checkbox
       id="lint-enable"
-      title="Lint Enabled"
+      title="Enable Lint"
       :checked="syntaxState.linted"
       :onChange="checkedLint"
     />

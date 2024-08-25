@@ -23,8 +23,8 @@ const modelValue = ref(props.initValue || props.options?.[0]?.value);
 </script>
 
 <template>
-  <div class="mt-3">
-    <p class="mb-1 text-lg text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+  <div class="flex flex-col gap-2">
+    <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
       {{ title }}
     </p>
     <Select v-model="modelValue" @update:modelValue="onChange">

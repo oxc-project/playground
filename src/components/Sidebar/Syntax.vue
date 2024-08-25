@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { capitalize } from "vue";
 import Checkbox from "../ui/Checkbox.vue";
 import Select from "../ui/Select.vue";
 
@@ -32,36 +31,35 @@ function checkedDTS(checked: boolean) {
 </script>
 
 <template>
-  <div>
-    <p
-      class="pt-4 text-xl font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]"
-    >
-      Syntax Options
-    </p>
-
-    <Checkbox
-      :checked="syntaxState.syntax"
-      :onChange="checkedSyntax"
-      id="syntax"
-      title="Check Syntax"
-    />
+  <div class="pt-4 flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <div class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+        Syntax Options
+      </div>
+      <Checkbox
+        :checked="syntaxState.syntax"
+        :onChange="checkedSyntax"
+        id="syntax"
+        title="Check Syntax"
+      />
+    </div>
 
     <Select
       :initValue="syntaxState.sourceType"
-      :title="capitalize('source')"
+      title="Source"
       :onChange="changeSourceType"
       :options="[
-        { value: 'module', label: 'module' },
-        { value: 'script', label: 'script' },
+        { value: 'module', label: 'Module' },
+        { value: 'script', label: 'Script' },
       ]"
     />
     <Select
       :initValue="syntaxState.language"
-      :title="capitalize('language')"
+      title="Language"
       :onChange="changeLanguage"
       :options="[
-        { value: 'typescript', label: 'typescript' },
-        { value: 'javascript', label: 'javascript' },
+        { value: 'typescript', label: 'TypeScript' },
+        { value: 'javascript', label: 'JavaScript' },
       ]"
     />
 
