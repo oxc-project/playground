@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from "vue";
+import { useDark, useToggle } from "@vueuse/core";
 import {
-  type SwitchRootProps,
-  type SwitchRootEmits,
   SwitchRoot,
   SwitchThumb,
   useForwardPropsEmits,
+  type SwitchRootEmits,
+  type SwitchRootProps,
 } from "radix-vue";
-import { useDark, useToggle } from "@vueuse/core";
 import { cn } from "src/utils/cn";
+import { computed, type HTMLAttributes } from "vue";
 
 const props = defineProps<
   SwitchRootProps & { class?: HTMLAttributes["class"] }
@@ -31,7 +31,6 @@ const toggleDark = useToggle(isDark);
     class="hidden xl:flex items-center before:content-[''] before:w-px before:h-6 before:ml-2 before:mr-4 before:bg-[#e2e2e3] dark:before:bg-[#2e2e32]"
   >
     <SwitchRoot
-      @click="toggleDark()"
       v-bind="forwarded"
       v-model:checked="isDark"
       role="switch"
@@ -41,6 +40,7 @@ const toggleDark = useToggle(isDark);
           props.class,
         )
       "
+      @click="toggleDark()"
     >
       <SwitchThumb
         :class="

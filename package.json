@@ -1,18 +1,10 @@
 {
   "name": "@oxc-project/playground",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.8.0",
   "description": "oxc playground",
-  "main": "",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "format": "prettier",
-    "typecheck": "vue-tsc",
-    "prepare": "husky"
-  },
+  "type": "module",
   "license": "MIT",
   "homepage": "https://oxc-project.github.io",
   "bugs": "https://github.com/oxc-project/playground/issues",
@@ -20,21 +12,15 @@
     "type": "git",
     "url": "git+https://github.com/oxc-project/playground.git"
   },
-  "devDependencies": {
-    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
-    "@types/lodash.throttle": "^4.1.9",
-    "@types/node": "^22.0.0",
-    "@vitejs/plugin-vue": "^5.0.5",
-    "autoprefixer": "^10.4.19",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "postcss": "^8.4.38",
-    "prettier": "^3.3.1",
-    "shiki": "^1.14.1",
-    "tailwindcss": "^3.4.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.13"
+  "main": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "format": "prettier",
+    "typecheck": "vue-tsc",
+    "lint": "eslint",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
@@ -51,11 +37,28 @@
     "vue": "^3.4.27",
     "vue-tsc": "^2.0.21"
   },
-  "lint-staged": {
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "prettier --write"
+  "devDependencies": {
+    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
+    "@sxzz/eslint-config": "^3.17.4",
+    "@types/lodash.throttle": "^4.1.9",
+    "@types/node": "^22.0.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.9.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.5",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.1",
+    "shiki": "^1.14.1",
+    "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.13"
   },
   "engines": {
     "node": ">=20.14.0"
   },
-  "packageManager": "pnpm@9.8.0"
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "prettier --write"
+  }
 }

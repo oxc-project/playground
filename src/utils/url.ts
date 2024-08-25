@@ -2,8 +2,8 @@
 // <https://github.com/rome/tools/blob/665bb9d810b4ebf4ea82b72df20ad79b8fa3a3d0/website/src/playground/utils.ts#L141-L181>
 // https://github.com/sxzz/ast-explorer/blob/main/utils/url.ts
 
-import throttle from "lodash.throttle";
 import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate";
+import throttle from "lodash.throttle";
 import { PLAYGROUND_CODE_STORAGE } from "./constants";
 
 const getStringFromStorage = (whatToGet: string) => {
@@ -42,8 +42,8 @@ export class URLParams {
         return res;
       }
       return getStringFromStorage(PLAYGROUND_CODE_STORAGE);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       return "";
     }
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
-  GithubLogoIcon,
   DiscordLogoIcon,
+  GithubLogoIcon,
   TwitterLogoIcon,
 } from "@radix-icons/vue";
 </script>
