@@ -6,7 +6,7 @@ import {
   useForwardProps,
 } from "radix-vue";
 import { ChevronUp } from "lucide-vue-next";
-import { cn } from "src/utils/index";
+import { cn } from "src/utils/cn";
 
 const props = defineProps<
   SelectScrollUpButtonProps & { class?: HTMLAttributes["class"] }

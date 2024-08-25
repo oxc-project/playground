@@ -1,4 +1,4 @@
-// Code partly copied from Rome and sxzz/ast-explore
+// Code partly copied from Rome and sxzz/ast-explorer
 // <https://github.com/rome/tools/blob/665bb9d810b4ebf4ea82b72df20ad79b8fa3a3d0/website/src/playground/utils.ts#L141-L181>
 // https://github.com/sxzz/ast-explorer/blob/main/utils/url.ts
 

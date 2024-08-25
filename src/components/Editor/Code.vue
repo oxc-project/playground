@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { editorValue } from "src/composables/state";
-import { PLAYGROUND_DEMO_CODE } from "src/utils";
-import { urlParamsInst } from "src/utils";
+import { PLAYGROUND_DEMO_CODE } from "src/utils/constants";
+import { urlParamsInst } from "src/utils/url";
 import MonacoEditor from "./Monaco.vue";
 
 defineProps(["language"]);

@@ -10,7 +10,7 @@ import {
   TabsIndicator,
   TabsTriggerProps,
 } from "radix-vue";
-import { cn } from "src/utils";
+import { cn } from "src/utils/cn";
 
 const props = defineProps<
   TabsTriggerProps & { class?: HTMLAttributes["class"] }

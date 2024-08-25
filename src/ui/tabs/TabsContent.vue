@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from "vue";
 import { useForwardPropsEmits, TabsContentProps, TabsContent } from "radix-vue";
-import { cn } from "src/utils";
+import { cn } from "src/utils/cn";
 
 const props = defineProps<
   TabsContentProps & { class?: HTMLAttributes["class"] }

@@ -8,7 +8,7 @@ import {
   useForwardPropsEmits,
 } from "radix-vue";
 import { useDark, useToggle } from "@vueuse/core";
-import { cn } from "src/utils";
+import { cn } from "src/utils/cn";
 
 const props = defineProps<
   SwitchRootProps & { class?: HTMLAttributes["class"] }
