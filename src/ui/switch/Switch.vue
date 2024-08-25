@@ -7,7 +7,7 @@ import {
   SwitchThumb,
   useForwardPropsEmits,
 } from "radix-vue";
-import { cn } from "src/utils/index";
+import { cn } from "src/utils/cn";
 
 const props = defineProps<
   SwitchRootProps & { class?: HTMLAttributes["class"] }

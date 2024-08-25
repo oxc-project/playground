@@ -9,7 +9,7 @@ import {
   useForwardPropsEmits,
 } from "radix-vue";
 import { SelectScrollDownButton, SelectScrollUpButton } from ".";
-import { cn } from "src/utils/index";
+import { cn } from "src/utils/cn";
 
 defineOptions({
   inheritAttrs: false,

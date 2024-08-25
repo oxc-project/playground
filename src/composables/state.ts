@@ -1,5 +1,8 @@
 import { useLocalStorage } from "@vueuse/core";
-import { PLAYGROUND_SYNTAX_STORAGE, PLAYGROUND_CODE_STORAGE } from "src/utils";
+import {
+  PLAYGROUND_SYNTAX_STORAGE,
+  PLAYGROUND_CODE_STORAGE,
+} from "src/utils/constants";
 
 /**
  * Global state containing the text value of the monaco code editor.
