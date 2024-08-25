@@ -8,7 +8,7 @@ import {
 } from "vue";
 import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor";
-import "src/composable/useEditorWorker";
+import "src/composables/useEditorWorker";
 
 export default defineComponent({
   name: "MonacoEditor",

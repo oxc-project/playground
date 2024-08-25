@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useElementSize } from "@vueuse/core";
-import { useEditorValue } from "src/composable/useEditorValue";
+import { useEditorValue } from "src/composables/useEditorValue";
 import { PLAYGROUND_DEMO_CODE } from "src/utils";
 import { urlParamsInst } from "src/utils";
 import MonacoEditor from "./Monaco.vue";

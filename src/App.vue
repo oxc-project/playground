@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSyntaxOptionState } from "src/composable/useSyntaxOptions";
+import { useSyntaxOptionState } from "src/composables/useSyntaxOptions";
 import Editor from "src/components/Editor/Editor.vue";
 import Header from "src/components/Header/Header.vue";
 import Sidebar from "src/components/Sidebar/Sidebar.vue";
