@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { dark } from "src/composables/state";
 import { useOxc } from "src/composables/useOxc";
 import { highlighter } from "src/utils/shiki";
 import { computed } from "vue";
@@ -9,7 +10,7 @@ const astWithColor = computed(() => {
   if (!oxc.ast) return "";
   return highlighter.codeToHtml(JSON.stringify(oxc.ast, undefined, 2), {
     lang: "json",
-    theme: "vitesse-dark",
+    theme: dark.value ? "vitesse-dark" : "vitesse-light",
     transformers: [
       {
         name: "add-style",

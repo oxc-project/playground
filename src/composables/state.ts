@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@vueuse/core";
+import { useDark, useLocalStorage } from "@vueuse/core";
 import {
   PLAYGROUND_CODE_STORAGE,
   PLAYGROUND_SYNTAX_STORAGE,
@@ -31,3 +31,5 @@ export const syntaxOptionState = useLocalStorage<SyntaxOptions>(
     linted: true,
   },
 );
+
+export const dark = useDark();
