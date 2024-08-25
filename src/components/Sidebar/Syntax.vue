@@ -62,21 +62,17 @@ function checkedDTS(checked: boolean) {
     />
 
     <Checkbox
+      v-if="syntaxOptionState.language === 'javascript'"
       id="jsx"
-      :checked="
-        syntaxOptionState.language === 'javascript' && syntaxOptionState.jsx
-      "
+      :checked="syntaxOptionState.jsx"
       :on-change="checkedJSX"
-      :disabled="syntaxOptionState.language === 'typescript'"
       title="JSX"
     />
     <Checkbox
+      v-if="syntaxOptionState.language === 'typescript'"
       id="Tsx"
-      :checked="
-        syntaxOptionState.language === 'typescript' && syntaxOptionState.tsx
-      "
+      :checked="syntaxOptionState.tsx"
       :on-change="checkedTSX"
-      :disabled="syntaxOptionState.language === 'javascript'"
       title="TSX"
     />
     <Checkbox
