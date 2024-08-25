@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { dark } from "src/composables/state";
 import { useOxc } from "src/composables/useOxc";
-import { highlighter } from "src/utils/shiki";
+import { highlighterPromise } from "src/utils/shiki";
 import { computed } from "vue";
 
 const { oxc } = useOxc();
+const highlighter = await highlighterPromise;
 
 const astWithColor = computed(() => {
   if (!oxc.ast) return "";
