@@ -7,18 +7,13 @@ import Switch from "./Switch.vue";
 
 <template>
   <header
-    class="flex flex-shrink-0 flex-grow flex-basis-[4rem] relative w-full h-16"
+    class="flex w-full h-16 border-b border-[#e2e2e3] dark:border-[#2e2e32] justify-between px-8"
   >
-    <div class="flex justify-between w-full h-full px-8">
-      <Logo class="visible pc:invisible" />
-      <div class="hidden md:flex">
-        <Nav />
-        <Switch />
-        <Media />
-      </div>
+    <Logo class="visible pc:invisible" />
+    <div class="hidden md:flex">
+      <Nav />
+      <Switch />
+      <Media />
     </div>
-    <div
-      class="absolute bottom-0 w-full h-px border-b border-[#e2e2e3] dark:border-[#2e2e32]"
-    />
   </header>
 </template>

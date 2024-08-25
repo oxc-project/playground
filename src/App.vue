@@ -10,9 +10,7 @@ import Sidebar from "src/components/Sidebar/Sidebar.vue";
       <Sidebar />
       <div class="flex flex-col flex-1 min-w-0">
         <Header />
-        <main class="flex w-full h-[calc(100%-4rem)]">
-          <Editor />
-        </main>
+        <Editor />
       </div>
     </div>
 
