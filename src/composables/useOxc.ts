@@ -63,7 +63,7 @@ async function initialize(): Promise<OxcStore> {
 }
 
 export const useOxc = createGlobalState(() => {
-  const runDuration = ref<number | undefined>();
+  const runDuration = ref<number>();
   const oxcInternal = useAsyncState<OxcStore>(initialize, {
     oxc: undefined,
     options: {
@@ -83,14 +83,7 @@ export const useOxc = createGlobalState(() => {
         "ast" | "ir" | "symbols" | "scopeText" | "codegenText" | "diagnostics"
       >
     >
-  >({
-    ast: undefined,
-    ir: undefined,
-    symbols: undefined,
-    scopeText: undefined,
-    codegenText: undefined,
-    diagnostics: undefined,
-  });
+  >({});
   const options = computed(() => oxcInternal.state.value.options);
 
   const run = () => {
