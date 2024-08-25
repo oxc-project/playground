@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { type SyntaxOptions } from "src/composables/useSyntaxOptions";
 import Logo from "../Logo/Logo.vue";
 import Lint from "./Lint.vue";
 import Syntax from "./Syntax.vue";
-
-defineProps<{ syntaxState: SyntaxOptions }>();
 </script>
 
 <template>
@@ -13,8 +10,8 @@ defineProps<{ syntaxState: SyntaxOptions }>();
   >
     <Logo />
     <div class="flex flex-col gap-6">
-      <Syntax :syntaxState="syntaxState" />
-      <Lint :syntaxState="syntaxState" />
+      <Syntax />
+      <Lint />
     </div>
   </aside>
 </template>

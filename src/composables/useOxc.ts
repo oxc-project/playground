@@ -8,8 +8,7 @@ import initWasm, {
 } from "@oxc/oxc_wasm";
 import { createGlobalState, useAsyncState } from "@vueuse/core";
 import { Ref, computed, reactive, ref, watch } from "vue";
-import { useEditorValue } from "./useEditorValue";
-import { useSyntaxOptionState, type SyntaxOptions } from "./useSyntaxOptions";
+import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
 interface OxcStore {
   oxc?: Oxc;
@@ -64,8 +63,6 @@ async function initialize(): Promise<OxcStore> {
 }
 
 export const useOxc = createGlobalState(() => {
-  const editorValue = useEditorValue();
-  const syntaxOption = useSyntaxOptionState();
   const runDuration = ref<number | undefined>();
   const oxcInternal = useAsyncState<OxcStore>(initialize, {
     oxc: undefined,
@@ -111,9 +108,9 @@ export const useOxc = createGlobalState(() => {
       );
     }
 
-    const sourceFilename = getFilename(syntaxOption.value);
+    const sourceFilename = getFilename(syntaxOptionState.value);
     parser.sourceFilename = sourceFilename;
-    run.lint = syntaxOption.value.linted;
+    run.lint = syntaxOptionState.value.linted;
     run.syntax = true;
 
     const start = new Date();
@@ -128,63 +125,56 @@ export const useOxc = createGlobalState(() => {
     oxcState.diagnostics = oxc.diagnostics;
   };
 
-  const disposables: Array<() => void> = [];
-  disposables.push(
-    // re-run when editor value changes
-    watch(editorValue, () => {
-      if (!oxcInternal.isReady.value) {
-        return;
-      }
-      const oxc = oxcInternal.state.value.oxc;
-      if (!oxc) {
-        return;
-      }
+  // re-run when editor value changes
+  watch(editorValue, () => {
+    if (!oxcInternal.isReady.value) {
+      return;
+    }
+    const oxc = oxcInternal.state.value.oxc;
+    if (!oxc) {
+      return;
+    }
 
-      if (editorValue.value == oxc.sourceText) {
-        return;
-      }
+    if (editorValue.value == oxc.sourceText) {
+      return;
+    }
 
-      oxc.sourceText = editorValue.value;
+    oxc.sourceText = editorValue.value;
+    run();
+  });
+
+  // re-run when syntax options changes
+  watch(syntaxOptionState, (syntaxOption) => {
+    if (!oxcInternal.isReady.value) {
+      return;
+    }
+    const {
+      options: { run: runOptions, parser },
+    } = oxcInternal.state.value;
+
+    const sourceFilename = getFilename(syntaxOption);
+    const linted = syntaxOption.linted;
+
+    if (
+      parser?.sourceFilename === sourceFilename &&
+      runOptions?.lint === linted
+    ) {
+      return;
+    }
+
+    run();
+  });
+
+  // run for the first time when wasm initializes
+  watch(oxcInternal.isReady, (isReady) => {
+    if (isReady) {
+      oxcInternal.state.value.oxc!.sourceText = editorValue.value;
       run();
-    }),
-  );
-
-  disposables.push(
-    // re-run when syntax options changes
-    watch(syntaxOption.value, () => {
-      if (!oxcInternal.isReady.value) {
-        return;
-      }
-      const {
-        options: { run: runOptions, parser },
-      } = oxcInternal.state.value;
-
-      const sourceFilename = getFilename(syntaxOption.value);
-      const linted = syntaxOption.value.linted;
-
-      if (
-        parser?.sourceFilename === sourceFilename &&
-        runOptions?.lint === linted
-      ) {
-        return;
-      }
-
-      run();
-    }),
-  );
-
-  disposables.push(
-    // run for the first time when wasm initializes
-    watch(oxcInternal.isReady, (isReady) => {
-      if (isReady) {
-        oxcInternal.state.value.oxc!.sourceText = editorValue.value;
-        run();
-      }
-    }),
-  );
+    }
+  });
 
   // re-run when options change
-  disposables.push(watch(oxcInternal.state, () => run()));
+  watch(oxcInternal.state, () => run());
 
   // NOTE: do not free() on unmount. that hook is fired any time any consuming
   // component unmounts, which messes things up for other components.

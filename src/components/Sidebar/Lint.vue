@@ -1,11 +1,9 @@
 <script setup lang="ts">
+import { syntaxOptionState } from "src/composables/state";
 import Checkbox from "../ui/Checkbox.vue";
 
-const props = defineProps(["syntaxState"]);
-const emit = defineEmits(["update:syntaxState"]);
-
 function checkedLint(checked: boolean) {
-  props.syntaxState.linted = checked;
+  syntaxOptionState.value.linted = checked;
 }
 </script>
 
@@ -17,7 +15,7 @@ function checkedLint(checked: boolean) {
     <Checkbox
       id="lint-enable"
       title="Enable Lint"
-      :checked="syntaxState.linted"
+      :checked="syntaxOptionState.linted"
       :onChange="checkedLint"
     />
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useElementSize } from "@vueuse/core";
-import { useEditorValue } from "src/composables/useEditorValue";
+import { editorValue } from "src/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "src/utils";
 import { urlParamsInst } from "src/utils";
 import MonacoEditor from "./Monaco.vue";
@@ -10,7 +10,6 @@ defineProps(["language"]);
 
 const editorContainer = ref(null);
 const { width, height } = useElementSize(editorContainer);
-const editorValue = useEditorValue();
 
 const setValue = (newValue: string) => {
   editorValue.value = newValue;
