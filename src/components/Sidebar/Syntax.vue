@@ -1,32 +1,30 @@
 <script setup lang="ts">
+import { syntaxOptionState } from "src/composables/state";
 import Checkbox from "../ui/Checkbox.vue";
 import Select from "../ui/Select.vue";
 
-const props = defineProps(["syntaxState"]);
-const emit = defineEmits(["update:syntaxState"]);
-
 function changeSourceType(sourceType: string) {
-  props.syntaxState.sourceType = sourceType;
+  syntaxOptionState.value.sourceType = sourceType;
 }
 
 function changeLanguage(language: string) {
-  props.syntaxState.language = language;
+  syntaxOptionState.value.language = language;
 }
 
 function checkedSyntax(checked: boolean) {
-  props.syntaxState.syntax = checked;
+  syntaxOptionState.value.syntax = checked;
 }
 
 function checkedJSX(checked: boolean) {
-  props.syntaxState.jsx = checked;
+  syntaxOptionState.value.jsx = checked;
 }
 
 function checkedTSX(checked: boolean) {
-  props.syntaxState.tsx = checked;
+  syntaxOptionState.value.tsx = checked;
 }
 
 function checkedDTS(checked: boolean) {
-  props.syntaxState.dts = checked;
+  syntaxOptionState.value.dts = checked;
 }
 </script>
 
@@ -37,7 +35,7 @@ function checkedDTS(checked: boolean) {
         Syntax Options
       </div>
       <Checkbox
-        :checked="syntaxState.syntax"
+        :checked="syntaxOptionState.syntax"
         :onChange="checkedSyntax"
         id="syntax"
         title="Check Syntax"
@@ -45,7 +43,7 @@ function checkedDTS(checked: boolean) {
     </div>
 
     <Select
-      :initValue="syntaxState.sourceType"
+      :initValue="syntaxOptionState.sourceType"
       title="Source"
       :onChange="changeSourceType"
       :options="[
@@ -54,7 +52,7 @@ function checkedDTS(checked: boolean) {
       ]"
     />
     <Select
-      :initValue="syntaxState.language"
+      :initValue="syntaxOptionState.language"
       title="Language"
       :onChange="changeLanguage"
       :options="[
@@ -64,23 +62,29 @@ function checkedDTS(checked: boolean) {
     />
 
     <Checkbox
-      :checked="syntaxState.language === 'javascript' && syntaxState.jsx"
+      :checked="
+        syntaxOptionState.language === 'javascript' && syntaxOptionState.jsx
+      "
       :onChange="checkedJSX"
-      :disabled="syntaxState.language === 'typescript'"
+      :disabled="syntaxOptionState.language === 'typescript'"
       id="jsx"
       title="JSX"
     />
     <Checkbox
-      :checked="syntaxState.language === 'typescript' && syntaxState.tsx"
+      :checked="
+        syntaxOptionState.language === 'typescript' && syntaxOptionState.tsx
+      "
       :onChange="checkedTSX"
-      :disabled="syntaxState.language === 'javascript'"
+      :disabled="syntaxOptionState.language === 'javascript'"
       id="Tsx"
       title="TSX"
     />
     <Checkbox
-      :checked="syntaxState.language === 'typescript' && syntaxState.dts"
+      :checked="
+        syntaxOptionState.language === 'typescript' && syntaxOptionState.dts
+      "
       :onChange="checkedDTS"
-      :disabled="syntaxState.language === 'javascript'"
+      :disabled="syntaxOptionState.language === 'javascript'"
       id="d.ts"
       title="D.TS"
     />
