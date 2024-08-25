@@ -9,11 +9,9 @@ const syntaxState = useSyntaxOptionState();
 
 <template>
   <Suspense>
-    <div
-      class="flex w-screen w-max-screen h-screen h-max-screen bg-white dark:bg-[#1b1b1f]"
-    >
+    <div class="flex w-screen h-screen bg-white dark:bg-[#1b1b1f]">
       <Sidebar :syntaxState="syntaxState" />
-      <div class="flex flex-col w-screen h-full max-h-full">
+      <div class="flex flex-col flex-1 min-w-0">
         <Header />
         <main class="flex w-full h-[calc(100%-4rem)]">
           <Editor :syntaxState="syntaxState" />
