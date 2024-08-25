@@ -1,96 +1,79 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor";
-import {
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  type PropType,
-} from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import "src/composables/useEditorWorker";
 
-// TODO refactor `<script setup>`
-// eslint-disable-next-line import/no-default-export
-export default defineComponent({
-  name: "MonacoEditor",
-  props: {
-    original: String,
-    value: String,
-    language: { type: String },
-    theme: { type: String },
-    options: {
-      type: Object as PropType<monaco.editor.IStandaloneEditorConstructionOptions>,
-      default: () => ({}),
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
+defineOptions({ name: "MonacoEditor" });
+
+const props = defineProps<{
+  value: string;
+  language: string;
+  theme?: string;
+  options?: monaco.editor.IStandaloneEditorConstructionOptions;
+  readonly?: boolean;
+}>();
+const emit = defineEmits([
+  "editorWillMount",
+  "editorDidMount",
+  "change",
+  "update:modelValue",
+]);
+
+const container: any = ref(null);
+let instance: monaco.editor.IStandaloneCodeEditor | null = null;
+
+const isDark = useDark({
+  onChanged(isDark) {
+    if (!instance) return;
+    monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
   },
-  emits: ["editorWillMount", "editorDidMount", "change", "update:modelValue"],
-  setup(props, { emit }) {
-    const container: any = ref(null);
-    let instance: monaco.editor.IStandaloneCodeEditor | null = null;
+});
 
-    const isDark = useDark({
-      onChanged(isDark) {
-        if (!instance) return;
-        monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
-      },
-    });
+const initMonaco = () => {
+  const editorProps: monaco.editor.IStandaloneEditorConstructionOptions = {
+    minimap: { enabled: false },
+    fontSize: 14,
+    scrollBeyondLastLine: true,
+    fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
+    ...props.options,
+    value: props.value,
+    language: props.language,
+    theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
+    automaticLayout: true,
+  };
 
-    const initMonaco = () => {
-      const editorProps: monaco.editor.IStandaloneEditorConstructionOptions = {
-        minimap: { enabled: false },
-        fontSize: 14,
-        scrollBeyondLastLine: true,
-        fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
-        ...props,
-        theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
-        automaticLayout: true,
-      };
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    allowComments: true,
+    enableSchemaRequest: true,
+    trailingCommas: "ignore",
+  });
 
-      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-        allowComments: true,
-        enableSchemaRequest: true,
-        trailingCommas: "ignore",
-      });
+  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+    target: monaco.languages.typescript.ScriptTarget.ESNext,
+    module: monaco.languages.typescript.ModuleKind.ESNext,
+    allowNonTsExtensions: true,
+    moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+    noEmit: true,
+    esModuleInterop: true,
+    jsx: monaco.languages.typescript.JsxEmit.Preserve,
+  });
 
-      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-        target: monaco.languages.typescript.ScriptTarget.ESNext,
-        module: monaco.languages.typescript.ModuleKind.ESNext,
-        allowNonTsExtensions: true,
-        moduleResolution:
-          monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-        noEmit: true,
-        esModuleInterop: true,
-        jsx: monaco.languages.typescript.JsxEmit.Preserve,
-      });
+  instance = monaco.editor.create(container.value, editorProps);
 
-      instance = monaco.editor.create(container.value, editorProps);
+  instance.onDidChangeModelContent(() => {
+    const value = instance!.getValue();
+    emit("update:modelValue", value);
+  });
+  emit("editorDidMount", instance);
+};
 
-      instance.onDidChangeModelContent(() => {
-        const value = instance!.getValue();
-        emit("update:modelValue", value);
-      });
-      emit("editorDidMount", instance);
-    };
+onMounted(() => {
+  initMonaco();
+});
 
-    onMounted(() => {
-      initMonaco();
-    });
-
-    onBeforeUnmount(() => {
-      if (instance) {
-        instance.dispose();
-      }
-    });
-
-    return {
-      container,
-    };
-  },
+onBeforeUnmount(() => {
+  instance?.dispose();
 });
 </script>
 

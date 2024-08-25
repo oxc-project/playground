@@ -5,7 +5,9 @@ import { urlParamsInst } from "src/utils/url";
 import { ref } from "vue";
 import MonacoEditor from "./Monaco.vue";
 
-defineProps(["language"]);
+defineProps<{
+  language: string;
+}>();
 
 const editorContainer = ref(null);
 
