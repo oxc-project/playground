@@ -12,10 +12,12 @@ export const highlighterPromise = createHighlighterCore({
   loadWasm: getWasm,
 });
 
+export type ShikiLang = "json" | "tsx";
+
 export function highlight(
   highlighter: HighlighterCore,
   code: string,
-  lang: "json" | "tsx",
+  lang: ShikiLang,
 ) {
   return highlighter.codeToHtml(code, {
     lang,
