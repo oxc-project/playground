@@ -13,6 +13,7 @@ export interface SyntaxOptions {
   tsx: boolean;
   dts: boolean;
   linted: boolean;
+  preserveParens: boolean;
 }
 
 export const syntaxOptionState = ref<SyntaxOptions>({
@@ -23,6 +24,7 @@ export const syntaxOptionState = ref<SyntaxOptions>({
   tsx: true,
   dts: false,
   linted: true,
+  preserveParens: true,
 });
 
 const rawUrlState = atou(location.hash!.slice(1));
