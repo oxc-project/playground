@@ -1,13 +1,9 @@
-import { useDark, useLocalStorage } from "@vueuse/core";
-import {
-  PLAYGROUND_CODE_STORAGE,
-  PLAYGROUND_SYNTAX_STORAGE,
-} from "src/utils/constants";
+import { useDark } from "@vueuse/core";
+import { PLAYGROUND_DEMO_CODE } from "src/utils/constants";
+import { atou, utoa } from "src/utils/url";
+import { ref, watchEffect } from "vue";
 
-/**
- * Global state containing the text value of the monaco code editor.
- */
-export const editorValue = useLocalStorage(PLAYGROUND_CODE_STORAGE, "");
+export const editorValue = ref("");
 
 export interface SyntaxOptions {
   language: string;
@@ -19,17 +15,29 @@ export interface SyntaxOptions {
   linted: boolean;
 }
 
-export const syntaxOptionState = useLocalStorage<SyntaxOptions>(
-  PLAYGROUND_SYNTAX_STORAGE,
-  {
-    language: "typescript",
-    sourceType: "module",
-    syntax: true,
-    jsx: false,
-    tsx: true,
-    dts: true,
-    linted: true,
-  },
-);
+export const syntaxOptionState = ref<SyntaxOptions>({
+  language: "typescript",
+  sourceType: "module",
+  syntax: true,
+  jsx: false,
+  tsx: true,
+  dts: true,
+  linted: true,
+});
+
+const rawUrlState = atou(location.hash!.slice(1));
+const urlState = rawUrlState && JSON.parse(rawUrlState);
+if (rawUrlState) {
+  syntaxOptionState.value = urlState.o;
+}
+editorValue.value = urlState?.c || PLAYGROUND_DEMO_CODE;
+
+watchEffect(() => {
+  const serialized = JSON.stringify({
+    c: editorValue.value === PLAYGROUND_DEMO_CODE ? "" : editorValue.value,
+    o: syntaxOptionState.value,
+  });
+  location.hash = utoa(serialized);
+});
 
 export const dark = useDark();
