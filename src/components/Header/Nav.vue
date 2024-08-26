@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowTopRightIcon } from "@radix-icons/vue";
+import ArrowTopRightIcon from "~icons/ri/arrow-right-up-line";
 import {
   NavigationMenu,
   NavigationMenuItem,

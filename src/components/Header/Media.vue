@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import {
-  DiscordLogoIcon,
-  GithubLogoIcon,
-  TwitterLogoIcon,
-} from "@radix-icons/vue";
+import DiscordLogoIcon from "~icons/ri/discord-line";
+import GitHubLogoIcon from "~icons/ri/github-fill";
+import TwitterLogoIcon from "~icons/ri/twitter-fill";
 </script>
 
 <template>
@@ -45,7 +43,7 @@ import {
           target="_blank"
           rel="noopener"
         >
-          <GithubLogoIcon
+          <GitHubLogoIcon
             class="block w-5 h-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
