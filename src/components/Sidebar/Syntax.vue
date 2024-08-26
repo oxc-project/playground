@@ -68,5 +68,10 @@ function checkedDTS(checked: boolean) {
       title="D.TS"
       @update:model-value="checkedDTS"
     />
+    <Checkbox
+      id="preserveParens"
+      v-model="syntaxOptionState.preserveParens"
+      title="preserveParens"
+    />
   </div>
 </template>
