@@ -20,7 +20,7 @@
     "format": "prettier",
     "typecheck": "vue-tsc",
     "lint": "eslint --cache",
-    "prepare": "husky"
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
@@ -45,11 +45,11 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.9.1",
-    "husky": "^9.0.11",
     "lint-staged": "^15.2.5",
     "postcss": "^8.4.38",
     "prettier": "^3.3.1",
     "shiki": "^1.14.1",
+    "simple-git-hooks": "^2.11.1",
     "tailwindcss": "^3.4.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
@@ -57,6 +57,9 @@
   },
   "engines": {
     "node": ">=20.14.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"
