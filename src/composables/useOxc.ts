@@ -31,12 +31,19 @@ export const useOxc = createGlobalState(async () => {
 
   function run() {
     const start = performance.now();
+    const errors: unknown[] = [];
+    const originalError = console.error;
+    console.error = function (...msgs) {
+      errors.push(...msgs);
+      return originalError.apply(this, msgs);
+    };
     try {
       oxc.run(editorValue.value, toRaw(options));
     } catch (error_) {
       console.error(error_);
-      error.value = error_;
+      error.value = errors.length ? errors : error_;
     }
+    console.error = originalError;
     runDuration.value = +(performance.now() - start).toFixed(1);
     triggerRef(state);
   }

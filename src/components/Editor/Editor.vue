@@ -8,12 +8,16 @@ import Output from "./OutputPanel.vue";
 const { error } = await useOxc();
 
 const errorStr = computed(() => {
-  if (!error.value) return "";
-  if (error.value instanceof Error) {
-    return error.value.stack;
-  }
-  return String(error.value);
+  return Array.isArray(error.value)
+    ? error.value.map(stringifyError).join("\n")
+    : stringifyError(error);
 });
+
+function stringifyError(error: unknown) {
+  if (!error) return "";
+  if (error instanceof Error) return error.stack;
+  return String(error);
+}
 </script>
 
 <template>
