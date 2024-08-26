@@ -6,7 +6,7 @@ import initWasm, {
   type OxcParserOptions,
   type OxcRunOptions,
 } from "@oxc/oxc_wasm";
-import { createGlobalState, useAsyncState } from "@vueuse/core";
+import { createGlobalState } from "@vueuse/core";
 import { computed, reactive, ref, triggerRef, watch } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
@@ -23,7 +23,7 @@ async function initialize(): Promise<Oxc> {
   return new Oxc();
 }
 
-export const useOxc = createGlobalState(() => {
+export const useOxc = createGlobalState(async () => {
   const runDuration = ref<number>();
 
   const options = reactive<OxcOptions>({
@@ -35,12 +35,10 @@ export const useOxc = createGlobalState(() => {
     minifier: {},
     codegen: {},
   });
-  const { state: core, isReady } = useAsyncState(initialize, undefined);
-  const state = computed(() => core.value);
+  const oxc = await initialize();
+  const state = computed(() => oxc);
 
   function run() {
-    if (!isReady.value) return;
-    const oxc = core.value;
     if (!oxc) {
       throw new Error(
         "[run] oxc store is ready but oxc instance is undefined.",
@@ -60,7 +58,7 @@ export const useOxc = createGlobalState(() => {
     triggerRef(state);
   }
 
-  watch([isReady, core, options, editorValue], run, { deep: true });
+  watch([options, editorValue], run, { deep: true });
 
   // set oxc options when syntax options change
   watch(
@@ -77,7 +75,6 @@ export const useOxc = createGlobalState(() => {
   // component unmounts, which messes things up for other components.
 
   return {
-    isReady,
     oxc: state,
     options,
     duration: runDuration,

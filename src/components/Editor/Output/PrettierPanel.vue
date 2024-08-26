@@ -3,7 +3,7 @@ import { useOxc } from "src/composables/useOxc";
 import { highlight, highlighterPromise } from "src/utils/shiki";
 import { computed } from "vue";
 
-const { oxc } = useOxc();
+const { oxc } = await useOxc();
 const highlighter = await highlighterPromise;
 
 const codeWithColor = computed(() => {

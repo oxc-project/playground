@@ -37,6 +37,7 @@
     "vue-tsc": "^2.0.21"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.241",
     "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@sxzz/eslint-config": "^3.17.4",
     "@types/node": "^22.0.0",
@@ -51,6 +52,7 @@
     "tailwindcss": "^3.4.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
+    "unplugin-icons": "^0.19.2",
     "vite": "^5.2.13"
   },
   "engines": {
