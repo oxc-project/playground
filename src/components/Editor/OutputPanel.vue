@@ -14,7 +14,7 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
 
 <template>
   <TabsRoot
-    class="flex flex-col flex-nowrap h-full contain-layout"
+    class="flex flex-col flex-nowrap h-full flex-1"
     default-value="ast"
     orientation="horizontal"
     activation-mode="manual"
