@@ -1,22 +1,7 @@
-import initWasm, {
-  Oxc,
-  type OxcCodegenOptions,
-  type OxcLinterOptions,
-  type OxcMinifierOptions,
-  type OxcParserOptions,
-  type OxcRunOptions,
-} from "@oxc/oxc_wasm";
+import initWasm, { Oxc, type OxcOptions } from "@oxc/oxc_wasm";
 import { createGlobalState } from "@vueuse/core";
 import { computed, reactive, ref, triggerRef, watch } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
-
-interface OxcOptions {
-  run: OxcRunOptions;
-  parser: OxcParserOptions;
-  linter: OxcLinterOptions;
-  minifier: OxcMinifierOptions;
-  codegen: OxcCodegenOptions;
-}
 
 async function initialize(): Promise<Oxc> {
   await initWasm();
@@ -26,14 +11,19 @@ async function initialize(): Promise<Oxc> {
 export const useOxc = createGlobalState(async () => {
   const runDuration = ref<number>();
 
-  const options = reactive<OxcOptions>({
+  const options = reactive<Required<OxcOptions>>({
     run: {
       syntax: true,
+      scope: true,
+      symbol: true,
+      prettierIr: true,
+      prettierFormat: true,
     },
     parser: {},
     linter: {},
     minifier: {},
     codegen: {},
+    typeChecking: {},
   });
   const oxc = await initialize();
   const state = computed(() => oxc);
@@ -46,14 +36,7 @@ export const useOxc = createGlobalState(async () => {
     }
 
     const start = performance.now();
-    oxc.sourceText = editorValue.value;
-    oxc.run(
-      options.run,
-      options.parser,
-      options.linter,
-      options.codegen,
-      options.minifier,
-    );
+    oxc.run(editorValue.value, options);
     runDuration.value = performance.now() - start;
     triggerRef(state);
   }

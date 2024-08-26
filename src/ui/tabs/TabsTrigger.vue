@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   TabsTrigger,
-  // SwitchThumb,
   useForwardPropsEmits,
   type TabsTriggerProps,
 } from "radix-vue";

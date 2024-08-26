@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { useOxc } from "src/composables/useOxc";
-import { highlight, highlighterPromise } from "src/utils/shiki";
 import { computed } from "vue";
+import OutputPreview from "./OutputPreview.vue";
 
 const { oxc } = await useOxc();
-const highlighter = await highlighterPromise;
-
-const codegenWithColor = computed(() => {
-  if (!oxc.value?.codegenText) return "";
-  return highlight(highlighter, oxc.value.codegenText, "tsx");
-});
+const code = computed(() => oxc.value.codegenText);
 </script>
 
 <template>
-  <div
-    class="flex-1 text-sm overflow-auto leading-relaxed"
-    v-html="codegenWithColor"
-  />
+  <OutputPreview :code lang="tsx" />
 </template>
