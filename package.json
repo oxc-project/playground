@@ -28,7 +28,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "fflate": "^0.8.2",
-    "lodash.throttle": "^4.1.1",
     "lucide-vue-next": "^0.429.0",
     "monaco-editor": "^0.50.0",
     "radix-vue": "^1.8.3",
@@ -40,7 +39,6 @@
   "devDependencies": {
     "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@sxzz/eslint-config": "^3.17.4",
-    "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "autoprefixer": "^10.4.19",
