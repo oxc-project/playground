@@ -25,5 +25,8 @@ const astWithColor = computed(() => {
 </script>
 
 <template>
-  <div class="overflow-scroll h-screen" v-html="astWithColor" />
+  <div
+    class="flex-1 text-sm overflow-auto leading-relaxed"
+    v-html="astWithColor"
+  />
 </template>
