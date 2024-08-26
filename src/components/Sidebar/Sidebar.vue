@@ -6,7 +6,7 @@ import Syntax from "./Syntax.vue";
 
 <template>
   <aside
-    class="hidden pc:block w-52 h-screen px-8 box-content bg-[#f6f6f7] dark:bg-[#161618]"
+    class="hidden pc:block w-52 h-screen overflow-x-auto px-8 box-content bg-[#f6f6f7] dark:bg-[#161618]"
   >
     <Logo />
     <div class="flex flex-col gap-6">
