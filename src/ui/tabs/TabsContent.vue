@@ -20,7 +20,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <TabsContent :class="cn('flex h-full', props.class)" v-bind="forwarded">
+  <TabsContent :class="cn(props.class, 'flex max-h-full')" v-bind="forwarded">
     <slot />
   </TabsContent>
 </template>

@@ -15,7 +15,7 @@ const setValue = (newValue: string) => {
 </script>
 
 <template>
-  <div class="w-full min-w-0 py-2">
+  <div class="w-full min-w-0 py-2 flex-1">
     <MonacoEditor
       ref="editorContainer"
       :language="language"
