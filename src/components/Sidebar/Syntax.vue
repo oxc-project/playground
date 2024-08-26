@@ -3,28 +3,18 @@ import { syntaxOptionState } from "src/composables/state";
 import Checkbox from "../ui/Checkbox.vue";
 import Select from "../ui/Select.vue";
 
-function changeSourceType(sourceType: "module" | "script") {
-  syntaxOptionState.value.sourceType = sourceType;
-}
-
-function changeLanguage(language: string) {
-  syntaxOptionState.value.language = language;
-}
-
-function checkedSyntax(checked: boolean) {
-  syntaxOptionState.value.syntax = checked;
-}
-
-function checkedJSX(checked: boolean) {
-  syntaxOptionState.value.jsx = checked;
-}
-
 function checkedTSX(checked: boolean) {
   syntaxOptionState.value.tsx = checked;
+  if (checked) {
+    syntaxOptionState.value.dts = false;
+  }
 }
 
 function checkedDTS(checked: boolean) {
   syntaxOptionState.value.dts = checked;
+  if (checked) {
+    syntaxOptionState.value.tsx = false;
+  }
 }
 </script>
 
@@ -36,53 +26,47 @@ function checkedDTS(checked: boolean) {
       </div>
       <Checkbox
         id="syntax"
-        :checked="syntaxOptionState.syntax"
-        :on-change="checkedSyntax"
+        v-model="syntaxOptionState.syntax"
         title="Check Syntax"
       />
     </div>
 
     <Select
-      :init-value="syntaxOptionState.sourceType"
+      v-model="syntaxOptionState.sourceType"
       title="Source"
       :options="[
         { value: 'module', label: 'Module' },
         { value: 'script', label: 'Script' },
       ]"
-      @change="changeSourceType"
     />
     <Select
-      :init-value="syntaxOptionState.language"
+      v-model="syntaxOptionState.language"
       title="Language"
       :options="[
         { value: 'typescript', label: 'TypeScript' },
         { value: 'javascript', label: 'JavaScript' },
       ]"
-      @change="changeLanguage"
     />
 
     <Checkbox
       v-if="syntaxOptionState.language === 'javascript'"
       id="jsx"
-      :checked="syntaxOptionState.jsx"
-      :on-change="checkedJSX"
+      v-model="syntaxOptionState.jsx"
       title="JSX"
     />
     <Checkbox
       v-if="syntaxOptionState.language === 'typescript'"
-      id="Tsx"
-      :checked="syntaxOptionState.tsx"
-      :on-change="checkedTSX"
+      id="tsx"
+      :model-value="syntaxOptionState.tsx"
       title="TSX"
+      @update:model-value="checkedTSX"
     />
     <Checkbox
+      v-if="syntaxOptionState.language === 'typescript'"
       id="d.ts"
-      :checked="
-        syntaxOptionState.language === 'typescript' && syntaxOptionState.dts
-      "
-      :on-change="checkedDTS"
-      :disabled="syntaxOptionState.language === 'javascript'"
+      :model-value="syntaxOptionState.dts"
       title="D.TS"
+      @update:model-value="checkedDTS"
     />
   </div>
 </template>

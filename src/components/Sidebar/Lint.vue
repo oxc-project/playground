@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { syntaxOptionState } from "src/composables/state";
 import Checkbox from "../ui/Checkbox.vue";
-
-function checkedLint(checked: boolean) {
-  syntaxOptionState.value.linted = checked;
-}
 </script>
 
 <template>
@@ -14,9 +10,8 @@ function checkedLint(checked: boolean) {
     </p>
     <Checkbox
       id="lint-enable"
-      title="Enable Lint"
-      :checked="syntaxOptionState.linted"
-      :on-change="checkedLint"
+      v-model="syntaxOptionState.linted"
+      title="Enable"
     />
   </div>
 </template>
