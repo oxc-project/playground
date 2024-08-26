@@ -12,7 +12,7 @@ type Symbol = {
   references: Omit<Reference, "symbolId">[];
 };
 const symbols = ref<Symbol[]>([]);
-const { oxc } = useOxc();
+const { oxc } = await useOxc();
 
 const watchSymbols = watch(oxc, () => {
   const { symbols: symbolTable } = oxc.value!;
