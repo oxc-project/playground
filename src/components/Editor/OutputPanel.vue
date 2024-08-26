@@ -21,7 +21,7 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
   >
     <TabsList
       as="nav"
-      class="flex overflow-auto gap-2 items-center px-2 py-3 border-b"
+      class="flex flex-wrap gap-2 items-center px-2 py-3 border-b"
     >
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
