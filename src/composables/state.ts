@@ -21,7 +21,7 @@ export const syntaxOptionState = ref<SyntaxOptions>({
   syntax: true,
   jsx: false,
   tsx: true,
-  dts: true,
+  dts: false,
   linted: true,
 });
 

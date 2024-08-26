@@ -4,9 +4,12 @@ import { Checkbox } from "src/ui/checkbox";
 defineProps<{
   id: string;
   title: string;
-  checked?: boolean;
+  modelValue?: boolean;
   disabled?: boolean;
-  onChange?: (value: boolean) => void;
+}>();
+
+defineEmits<{
+  "update:modelValue": [value: boolean];
 }>();
 </script>
 
@@ -15,9 +18,9 @@ defineProps<{
     <Checkbox
       :id="id"
       class="mr-2 bg-white dark:bg-[#1b1b1f] data-[state=checked]:bg-[#3451b2] dark:data-[state=checked]:bg-[#a8b1ff] data-[state=checked]:text-white dark:data-[state=checked]:text-[#2e2e32]"
-      :default-checked="checked"
+      :checked="modelValue"
       :disabled="disabled"
-      @update:checked="onChange"
+      @update:checked="$emit('update:modelValue', $event)"
     />
     <label class="text-sm text-[#3c3c43] dark:text-[#fffff5]/[.86]" :for="id">
       {{ title }}

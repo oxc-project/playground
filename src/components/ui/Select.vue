@@ -7,22 +7,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "src/ui/select";
-import { ref } from "vue";
 
-const props = defineProps<{
+defineProps<{
   title: string;
-  initValue?: string;
-
+  modelValue: string;
   options: {
     value: T;
     label: string;
   }[];
 }>();
-const emit = defineEmits<{
-  change: [value: T];
+defineEmits<{
+  "update:modelValue": [value: T];
 }>();
-
-const modelValue = ref(props.initValue || props.options?.[0]?.value);
 </script>
 
 <template>
@@ -31,8 +27,8 @@ const modelValue = ref(props.initValue || props.options?.[0]?.value);
       {{ title }}
     </p>
     <Select
-      v-model="modelValue"
-      @update:model-value="emit('change', $event as T)"
+      :model-value="modelValue"
+      @update:model-value="$emit('update:modelValue', $event as T)"
     >
       <SelectTrigger
         class="w-[180px] bg-white dark:bg-[#1b1b1f] focus:ring-offset-0 focus:outline-none focus:ring-0"
