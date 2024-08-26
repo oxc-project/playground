@@ -37,7 +37,7 @@ export const useOxc = createGlobalState(async () => {
       console.error(error_);
       error.value = error_;
     }
-    runDuration.value = performance.now() - start;
+    runDuration.value = +(performance.now() - start).toFixed(1);
     triggerRef(state);
   }
   watch([options, editorValue], run, { deep: true });
