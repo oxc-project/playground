@@ -1,6 +1,6 @@
 import initWasm, { Oxc, type OxcOptions } from "@oxc/oxc_wasm";
 import { createGlobalState } from "@vueuse/core";
-import { computed, reactive, ref, triggerRef, watch } from "vue";
+import { computed, reactive, ref, toRaw, triggerRef, watch } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
 async function initialize(): Promise<Oxc> {
@@ -27,20 +27,19 @@ export const useOxc = createGlobalState(async () => {
   });
   const oxc = await initialize();
   const state = computed(() => oxc);
+  const error = ref<unknown>();
 
   function run() {
-    if (!oxc) {
-      throw new Error(
-        "[run] oxc store is ready but oxc instance is undefined.",
-      );
-    }
-
     const start = performance.now();
-    oxc.run(editorValue.value, options);
+    try {
+      oxc.run(editorValue.value, toRaw(options));
+    } catch (error_) {
+      console.error(error_);
+      error.value = error_;
+    }
     runDuration.value = performance.now() - start;
     triggerRef(state);
   }
-
   watch([options, editorValue], run, { deep: true });
 
   // set oxc options when syntax options change
@@ -49,6 +48,7 @@ export const useOxc = createGlobalState(async () => {
     (syntaxOption) => {
       options.parser.sourceType = syntaxOption.sourceType;
       options.parser.sourceFilename = `test.${getExtname(syntaxOption)}`;
+      options.parser.preserveParens = syntaxOption.preserveParens;
       options.run.lint = syntaxOption.linted;
     },
     { deep: true, immediate: true },
@@ -59,6 +59,7 @@ export const useOxc = createGlobalState(async () => {
 
   return {
     oxc: state,
+    error,
     options,
     duration: runDuration,
   };
