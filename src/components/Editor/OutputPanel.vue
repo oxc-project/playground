@@ -21,13 +21,15 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
   >
     <TabsList
       as="nav"
-      class="flex flex-grow-0 flex-shrink relative gap-2 items-center px-2 py-3 max-h-1/5 before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-px before:bg-no-repeat before:bg-[#e2e2e3] dark:before:bg-[#2e2e32]"
+      class="flex overflow-auto gap-2 items-center px-2 py-3 border-b"
     >
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
       <TabsTrigger value="ir">IR</TabsTrigger>
       <TabsTrigger value="prettier">Prettier</TabsTrigger>
-      <TabsTrigger value="format">Format (Prettier)</TabsTrigger>
+      <TabsTrigger value="format">
+        <div class="text-nowrap">Format (Prettier)</div>
+      </TabsTrigger>
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
     </TabsList>
