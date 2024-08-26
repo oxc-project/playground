@@ -7,7 +7,7 @@ import Sidebar from "src/components/Sidebar/Sidebar.vue";
 
 <template>
   <Suspense>
-    <div class="flex w-screen lg:h-screen bg-white dark:bg-[#1b1b1f]">
+    <div class="flex w-screen md:h-screen bg-white dark:bg-[#1b1b1f]">
       <Sidebar />
       <div class="flex flex-col flex-1 min-w-0">
         <Header />
