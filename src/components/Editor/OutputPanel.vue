@@ -33,7 +33,7 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
     </TabsList>
-    <div class="w-full max-h-full overflow-scroll">
+    <div class="min-h-0 min-w-0">
       <TabsContent value="ast">
         <AstPanel />
       </TabsContent>
