@@ -23,9 +23,6 @@ importers:
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
-      lodash.throttle:
-        specifier: ^4.1.1
-        version: 4.1.1
       lucide-vue-next:
         specifier: ^0.429.0
         version: 0.429.0(vue@3.4.38(typescript@5.5.4))
@@ -54,9 +51,6 @@ importers:
       '@sxzz/eslint-config':
         specifier: ^3.17.4
         version: 3.17.4(@typescript-eslint/eslint-plugin@8.2.0(@typescript-eslint/parser@8.2.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
-      '@types/lodash.throttle':
-        specifier: ^4.1.9
-        version: 4.1.9
       '@types/node':
         specifier: ^22.0.0
         version: 22.5.0
@@ -653,12 +647,6 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/lodash.throttle@4.1.9':
-    resolution: {integrity: sha512-PCPVfpfueguWZQB7pJQK890F2scYKoDUL3iM522AptHWn7d5NQmeS/LTEHIcLr5PaTzl3dK2Z0xSUHHTHwaL5g==}
-
-  '@types/lodash@4.17.6':
-    resolution: {integrity: sha512-OpXEVoCKSS3lQqjx9GGGOapBeuW5eUboYHRlHP9urXPX25IKZ6AnP5ZRxtVf63iieUbsHxLn8NQ5Nlftc6yzAA==}
 
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
@@ -1685,9 +1673,6 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-
-  lodash.throttle@4.1.1:
-    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -2852,12 +2837,6 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/json-schema@7.0.15': {}
-
-  '@types/lodash.throttle@4.1.9':
-    dependencies:
-      '@types/lodash': 4.17.6
-
-  '@types/lodash@4.17.6': {}
 
   '@types/mdast@3.0.15':
     dependencies:
@@ -4034,8 +4013,6 @@ snapshots:
       p-locate: 5.0.0
 
   lodash.merge@4.6.2: {}
-
-  lodash.throttle@4.1.1: {}
 
   lodash@4.17.21: {}
 
