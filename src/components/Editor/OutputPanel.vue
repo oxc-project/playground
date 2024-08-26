@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useOxc } from "src/composables/useOxc";
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "src/ui/tabs";
 import AstPanel from "./Output/AstPanel.vue";
 import CodegenPanel from "./Output/CodegenPanel.vue";
@@ -10,6 +11,8 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
 
 // NOTE: using a loop with TabsTriggers breaks all tabs; all tabs get considered
 // as active.
+
+const { duration } = await useOxc();
 </script>
 
 <template>
@@ -21,7 +24,7 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
   >
     <TabsList
       as="nav"
-      class="flex flex-wrap gap-2 items-center px-2 py-3 border-b"
+      class="flex flex-wrap gap-2 items-center px-2 py-3 border-b relative"
     >
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
@@ -56,5 +59,6 @@ import SymbolPanel from "./Output/SymbolPanel.vue";
         <SymbolPanel />
       </TabsContent>
     </div>
+    <div class="absolute bottom-2 right-2 opacity-60">{{ duration }} ms</div>
   </TabsRoot>
 </template>
