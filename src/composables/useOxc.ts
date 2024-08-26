@@ -1,200 +1,103 @@
 import initWasm, {
   Oxc,
-  OxcCodegenOptions,
-  OxcLinterOptions,
-  OxcMinifierOptions,
-  OxcParserOptions,
-  OxcRunOptions,
+  type OxcCodegenOptions,
+  type OxcLinterOptions,
+  type OxcMinifierOptions,
+  type OxcParserOptions,
+  type OxcRunOptions,
 } from "@oxc/oxc_wasm";
 import { createGlobalState, useAsyncState } from "@vueuse/core";
-import { computed, reactive, ref, watch, type Ref } from "vue";
+import { computed, reactive, ref, triggerRef, watch } from "vue";
 import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
 
-interface OxcStore {
-  oxc: Oxc;
-  options: Partial<{
-    run: OxcRunOptions;
-    parser: OxcParserOptions;
-    linter: OxcLinterOptions;
-    minifier: OxcMinifierOptions;
-    codegen: OxcCodegenOptions;
-  }>;
+interface OxcOptions {
+  run: OxcRunOptions;
+  parser: OxcParserOptions;
+  linter: OxcLinterOptions;
+  minifier: OxcMinifierOptions;
+  codegen: OxcCodegenOptions;
 }
 
-export interface OxcState {
-  /**
-   * Set to `true` when wasm runtime has initialized. Indicates that {@link oxc}
-   * and {@link options} are not `undefined` and can be used.
-   */
-  isReady: Ref<boolean>;
-  /**
-   * State resulting from the most previous {@link Oxc.run run}.
-   */
-  oxc: Partial<
-    Pick<
-      Oxc,
-      "ast" | "ir" | "symbols" | "scopeText" | "codegenText" | "diagnostics"
-    >
-  >;
-  /**
-   * Controls parsing, linting, codegen, and minification.
-   */
-  options: Ref<OxcStore["options"]>;
-  /**
-   * Duration, in ms, of the most recent run. `undefined` before the first run.
-   */
-  duration: Ref<number | undefined>;
-}
-
-async function initialize(): Promise<OxcStore> {
+async function initialize(): Promise<Oxc> {
   await initWasm();
-  const opts = {
-    oxc: new Oxc(),
-    options: {
-      run: new OxcRunOptions(),
-      parser: new OxcParserOptions(),
-      linter: new OxcLinterOptions(),
-      minifier: new OxcMinifierOptions(),
-      codegen: new OxcCodegenOptions(),
-    },
-  };
-  opts.options.run.symbol = true;
-  return opts;
+  return new Oxc();
 }
 
 export const useOxc = createGlobalState(() => {
   const runDuration = ref<number>();
-  const oxcInternal = useAsyncState<OxcStore | undefined>(
-    initialize,
-    undefined,
-  );
-  // NOTE: we can't just expose the above state b/c oxc.run() mutates itself in
-  // place and updates won't propagate to the UI.
-  const oxcState = reactive<
-    Partial<
-      Pick<
-        Oxc,
-        "ast" | "ir" | "symbols" | "scopeText" | "codegenText" | "diagnostics"
-      >
-    >
-  >({});
-  const options = computed(() => oxcInternal.state.value?.options);
 
-  const run = () => {
-    if (!oxcInternal.isReady) {
-      return;
-    }
-    const {
-      oxc,
-      options: { run, parser, linter, codegen, minifier },
-    } = oxcInternal.state.value!;
+  const options = reactive<OxcOptions>({
+    run: {
+      syntax: true,
+    },
+    parser: {},
+    linter: {},
+    minifier: {},
+    codegen: {},
+  });
+  const { state: core, isReady } = useAsyncState(initialize, undefined);
+  const state = computed(() => core.value);
 
-    if (!oxc || !run || !parser || !linter || !codegen || !minifier) {
+  function run() {
+    if (!isReady.value) return;
+    const oxc = core.value;
+    if (!oxc) {
       throw new Error(
-        "[run]oxc store is ready but one or more options are missing.",
+        "[run] oxc store is ready but oxc instance is undefined.",
       );
     }
 
-    const sourceFilename = getFilename(syntaxOptionState.value);
-    parser.sourceFilename = sourceFilename;
-    run.lint = syntaxOptionState.value.linted;
-    run.syntax = true;
-
-    const start = new Date();
-    oxc.run(run, parser, linter, codegen, minifier);
-    runDuration.value = Date.now() - start.getTime();
-
-    oxcState.ast = oxc.ast;
-    oxcState.ir = oxc.ir;
-    oxcState.symbols = oxc.symbols;
-    oxcState.scopeText = oxc.scopeText;
-    oxcState.codegenText = oxc.codegenText;
-    oxcState.diagnostics = oxc.diagnostics;
-  };
-
-  // re-run when editor value changes
-  watch(editorValue, () => {
-    if (!oxcInternal.isReady.value) {
-      return;
-    }
-    const oxc = oxcInternal.state.value?.oxc;
-    if (!oxc) {
-      return;
-    }
-
-    if (editorValue.value === oxc.sourceText) {
-      return;
-    }
-
+    const start = performance.now();
     oxc.sourceText = editorValue.value;
-    run();
-  });
+    oxc.run(
+      options.run,
+      options.parser,
+      options.linter,
+      options.codegen,
+      options.minifier,
+    );
+    runDuration.value = performance.now() - start;
+    triggerRef(state);
+  }
 
-  // re-run when syntax options changes
+  watch([isReady, core, options, editorValue], run, { deep: true });
+
+  // set oxc options when syntax options change
   watch(
     syntaxOptionState,
     (syntaxOption) => {
-      if (!oxcInternal.isReady.value) {
-        return;
-      }
-
-      const {
-        options: { run: runOptions, parser },
-      } = oxcInternal.state.value!;
-
-      const sourceFilename = getFilename(syntaxOption);
-      const { linted } = syntaxOption;
-
-      if (
-        parser?.sourceFilename === sourceFilename &&
-        runOptions?.lint === linted
-      ) {
-        return;
-      }
-
-      run();
+      options.parser.sourceType = syntaxOption.sourceType;
+      options.parser.sourceFilename = `test.${getExtname(syntaxOption)}`;
+      options.run.lint = syntaxOption.linted;
     },
-    { deep: true },
+    { deep: true, immediate: true },
   );
-
-  // run for the first time when wasm initializes
-  watch(oxcInternal.isReady, (isReady) => {
-    if (isReady) {
-      oxcInternal.state.value!.oxc!.sourceText = editorValue.value;
-      run();
-    }
-  });
-
-  // re-run when options change
-  watch(oxcInternal.state, () => run());
 
   // NOTE: do not free() on unmount. that hook is fired any time any consuming
   // component unmounts, which messes things up for other components.
 
   return {
-    isReady: oxcInternal.isReady,
-    oxc: oxcState,
+    isReady,
+    oxc: state,
     options,
     duration: runDuration,
   };
 });
 
-function getFilename(syntaxOption: SyntaxOptions) {
+function getExtname(syntaxOption: SyntaxOptions) {
   if (syntaxOption.language === "typescript") {
     if (syntaxOption.tsx) {
-      return "test.tsx";
+      return "tsx";
     }
     if (syntaxOption.dts) {
-      return "test.d.ts";
+      return "d.ts";
     }
-    return "test.ts";
+    return "ts";
   }
-
   if (syntaxOption.language === "javascript") {
     if (syntaxOption.jsx) {
-      return "test.jsx";
+      return "jsx";
     }
-
-    return "test.js";
+    return "js";
   }
 }

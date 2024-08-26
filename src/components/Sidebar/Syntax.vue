@@ -3,7 +3,7 @@ import { syntaxOptionState } from "src/composables/state";
 import Checkbox from "../ui/Checkbox.vue";
 import Select from "../ui/Select.vue";
 
-function changeSourceType(sourceType: string) {
+function changeSourceType(sourceType: "module" | "script") {
   syntaxOptionState.value.sourceType = sourceType;
 }
 
@@ -45,20 +45,20 @@ function checkedDTS(checked: boolean) {
     <Select
       :init-value="syntaxOptionState.sourceType"
       title="Source"
-      :on-change="changeSourceType"
       :options="[
         { value: 'module', label: 'Module' },
         { value: 'script', label: 'Script' },
       ]"
+      @change="changeSourceType"
     />
     <Select
       :init-value="syntaxOptionState.language"
       title="Language"
-      :on-change="changeLanguage"
       :options="[
         { value: 'typescript', label: 'TypeScript' },
         { value: 'javascript', label: 'JavaScript' },
       ]"
+      @change="changeLanguage"
     />
 
     <Checkbox

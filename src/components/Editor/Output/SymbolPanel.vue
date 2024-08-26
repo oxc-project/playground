@@ -15,7 +15,7 @@ const symbols = ref<Symbol[]>([]);
 const { oxc } = useOxc();
 
 const watchSymbols = watch(oxc, () => {
-  const { symbols: symbolTable } = oxc;
+  const { symbols: symbolTable } = oxc.value!;
   if (!symbolTable) {
     symbols.value = [];
     return;

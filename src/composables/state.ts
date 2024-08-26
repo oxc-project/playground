@@ -7,7 +7,7 @@ export const editorValue = ref("");
 
 export interface SyntaxOptions {
   language: string;
-  sourceType: string;
+  sourceType: "module" | "script";
   syntax: boolean;
   jsx: boolean;
   tsx: boolean;

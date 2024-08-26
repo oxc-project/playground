@@ -8,8 +8,8 @@ const { oxc } = useOxc();
 const highlighter = await highlighterPromise;
 
 const astWithColor = computed(() => {
-  if (!oxc.ast) return "";
-  return highlighter.codeToHtml(JSON.stringify(oxc.ast, undefined, 2), {
+  if (!oxc.value?.ast) return "";
+  return highlighter.codeToHtml(JSON.stringify(oxc.value.ast, undefined, 2), {
     lang: "json",
     theme: dark.value ? "vitesse-dark" : "vitesse-light",
     transformers: [

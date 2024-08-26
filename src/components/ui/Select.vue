@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string">
 import {
   Select,
   SelectContent,
@@ -12,11 +12,14 @@ import { ref } from "vue";
 const props = defineProps<{
   title: string;
   initValue?: string;
-  onChange?: (value: string) => void;
+
   options: {
-    value: string;
+    value: T;
     label: string;
   }[];
+}>();
+const emit = defineEmits<{
+  change: [value: T];
 }>();
 
 const modelValue = ref(props.initValue || props.options?.[0]?.value);
@@ -27,7 +30,10 @@ const modelValue = ref(props.initValue || props.options?.[0]?.value);
     <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
       {{ title }}
     </p>
-    <Select v-model="modelValue" @update:model-value="onChange">
+    <Select
+      v-model="modelValue"
+      @update:model-value="emit('change', $event as T)"
+    >
       <SelectTrigger
         class="w-[180px] bg-white dark:bg-[#1b1b1f] focus:ring-offset-0 focus:outline-none focus:ring-0"
       >
