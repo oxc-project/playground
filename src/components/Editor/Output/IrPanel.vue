@@ -8,7 +8,7 @@ const highlighter = await highlighterPromise;
 
 const codegenWithColor = computed(() => {
   if (!oxc.value?.ir) return "";
-  return highlight(highlighter, oxc.value.ir, "tsx");
+  return highlight(highlighter, oxc.value.ir as any as string, "tsx");
 });
 </script>
 
