@@ -12,7 +12,7 @@ import SymbolPanel from './Output/SymbolPanel.vue'
 // NOTE: using a loop with TabsTriggers breaks all tabs; all tabs get considered
 // as active.
 
-const { duration } = await useOxc()
+const { options, duration } = await useOxc()
 </script>
 
 <template>
@@ -28,12 +28,18 @@ const { duration } = await useOxc()
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
       <TabsTrigger value="ir">IR</TabsTrigger>
-      <TabsTrigger value="prettier">Prettier</TabsTrigger>
-      <TabsTrigger value="format">
+      <TabsTrigger value="prettier" :disabled="!options.run.prettierIr">
+        Prettier
+      </TabsTrigger>
+      <TabsTrigger value="format" :disabled="!options.run.prettierFormat">
         <div class="text-nowrap">Format (Prettier)</div>
       </TabsTrigger>
-      <TabsTrigger value="scope">Scope</TabsTrigger>
-      <TabsTrigger value="symbol">Symbol</TabsTrigger>
+      <TabsTrigger value="scope" :disabled="!options.run.scope">
+        Scope
+      </TabsTrigger>
+      <TabsTrigger value="symbol" :disabled="!options.run.symbol">
+        Symbol
+      </TabsTrigger>
     </TabsList>
 
     <div class="min-h-0 min-w-0">
