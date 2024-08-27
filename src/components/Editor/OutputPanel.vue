@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useOxc } from 'src/composables/oxc'
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from 'src/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'src/ui/tabs'
 import AstPanel from './Output/AstPanel.vue'
 import CodegenPanel from './Output/CodegenPanel.vue'
 import FormatPanel from './Output/FormatPanel.vue'
@@ -16,15 +16,14 @@ const { duration } = await useOxc()
 </script>
 
 <template>
-  <TabsRoot
+  <Tabs
     class="flex flex-col flex-nowrap h-full flex-1"
     default-value="ast"
-    orientation="horizontal"
     activation-mode="manual"
   >
     <TabsList
       as="nav"
-      class="flex flex-wrap gap-2 items-center px-2 py-3 border-b relative"
+      class="flex flex-shrink-0 overflow-auto gap-2 rounded-none justify-start h-auto p-2 relative"
     >
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
@@ -36,6 +35,7 @@ const { duration } = await useOxc()
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
     </TabsList>
+
     <div class="min-h-0 min-w-0">
       <TabsContent value="ast">
         <AstPanel />
@@ -60,5 +60,5 @@ const { duration } = await useOxc()
       </TabsContent>
     </div>
     <div class="absolute bottom-2 right-2 opacity-60">{{ duration }} ms</div>
-  </TabsRoot>
+  </Tabs>
 </template>
