@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useOxc } from "src/composables/useOxc";
-import OutputPreview from "./OutputPreview.vue";
+import { useOxc } from 'src/composables/oxc'
+import OutputPreview from './OutputPreview.vue'
 
-const { oxc } = await useOxc();
+const { oxc } = await useOxc()
 </script>
 
 <template>

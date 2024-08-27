@@ -1,69 +1,69 @@
 <script lang="ts" setup>
-import { useDark } from "@vueuse/core";
-import * as monaco from "monaco-editor";
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
-import "src/composables/useEditorWorker";
+import { useDark } from '@vueuse/core'
+import * as monaco from 'monaco-editor'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import 'src/composables/editor.worker'
 
-defineOptions({ name: "MonacoEditor" });
+defineOptions({ name: 'MonacoEditor' })
 
 const props = defineProps<{
-  modelValue: string;
-  language: string;
-  theme?: string;
-  options?: monaco.editor.IStandaloneEditorConstructionOptions;
-  readonly?: boolean;
-  filename: string;
-}>();
+  modelValue: string
+  language: string
+  theme?: string
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
+  readonly?: boolean
+  filename: string
+}>()
 const emit = defineEmits([
-  "editorWillMount",
-  "editorDidMount",
-  "change",
-  "update:modelValue",
-]);
+  'editorWillMount',
+  'editorDidMount',
+  'change',
+  'update:modelValue',
+])
 
-const container: any = ref(null);
-let instance: monaco.editor.IStandaloneCodeEditor | undefined;
-let model: monaco.editor.ITextModel = initModel();
+const container: any = ref(null)
+let instance: monaco.editor.IStandaloneCodeEditor | undefined
+let model: monaco.editor.ITextModel = initModel()
 
 model.onDidChangeContent(() => {
-  const value = model.getValue();
-  emit("update:modelValue", value);
-});
+  const value = model.getValue()
+  emit('update:modelValue', value)
+})
 
 function initModel() {
   return monaco.editor.createModel(
     props.modelValue,
     props.language,
     monaco.Uri.file(props.filename),
-  );
+  )
 }
 
 const isDark = useDark({
   onChanged(isDark) {
-    if (!instance) return;
-    monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
+    if (!instance) return
+    monaco.editor.setTheme(isDark ? 'vs-dark' : 'vs')
   },
-});
+})
 
 watch(
   () => props.language,
   () => {
     if (model) {
-      monaco.editor.setModelLanguage(model, props.language);
+      monaco.editor.setModelLanguage(model, props.language)
     }
   },
-);
+)
 
 watch(
   () => props.filename,
   () => {
     if (instance) {
-      model.dispose();
-      model = initModel();
-      instance.setModel(model);
+      model.dispose()
+      model = initModel()
+      instance.setModel(model)
     }
   },
-);
+)
 
 function initMonaco() {
   const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
@@ -72,25 +72,25 @@ function initMonaco() {
     scrollBeyondLastLine: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,
-    theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
+    theme: props.theme || (isDark.value ? 'vs-dark' : 'vs'),
     automaticLayout: true,
     readOnly: props.readonly,
-  };
+  }
 
-  instance = monaco.editor.create(container.value, editorOptions);
-  instance.setModel(model);
+  instance = monaco.editor.create(container.value, editorOptions)
+  instance.setModel(model)
 
-  emit("editorDidMount", instance);
+  emit('editorDidMount', instance)
 }
 
 onMounted(() => {
-  initMonaco();
-});
+  initMonaco()
+})
 
 onBeforeUnmount(() => {
-  model.dispose();
-  instance?.dispose();
-});
+  model.dispose()
+  instance?.dispose()
+})
 </script>
 
 <template>

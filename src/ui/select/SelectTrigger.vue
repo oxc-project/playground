@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from 'lucide-vue-next'
 import {
   SelectIcon,
   SelectTrigger,
   useForwardProps,
   type SelectTriggerProps,
-} from "radix-vue";
-import { cn } from "src/utils/cn";
-import { computed, type HTMLAttributes } from "vue";
+} from 'radix-vue'
+import { cn } from 'src/utils/cn'
+import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<
-  SelectTriggerProps & { class?: HTMLAttributes["class"] }
->();
+  SelectTriggerProps & { class?: HTMLAttributes['class'] }
+>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
+  const { class: _, ...delegated } = props
 
-  return delegated;
-});
+  return delegated
+})
 
-const forwardedProps = useForwardProps(delegatedProps);
+const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
 <template>

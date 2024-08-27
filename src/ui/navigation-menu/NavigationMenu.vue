@@ -4,24 +4,24 @@ import {
   useForwardPropsEmits,
   type NavigationMenuRootEmits,
   type NavigationMenuRootProps,
-} from "radix-vue";
-import { cn } from "src/utils/cn";
-import { computed, type HTMLAttributes } from "vue";
-import NavigationMenuViewport from "./NavigationMenuViewport.vue";
+} from 'radix-vue'
+import { cn } from 'src/utils/cn'
+import { computed, type HTMLAttributes } from 'vue'
+import NavigationMenuViewport from './NavigationMenuViewport.vue'
 
 const props = defineProps<
-  NavigationMenuRootProps & { class?: HTMLAttributes["class"] }
->();
+  NavigationMenuRootProps & { class?: HTMLAttributes['class'] }
+>()
 
-const emits = defineEmits<NavigationMenuRootEmits>();
+const emits = defineEmits<NavigationMenuRootEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
+  const { class: _, ...delegated } = props
 
-  return delegated;
-});
+  return delegated
+})
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>

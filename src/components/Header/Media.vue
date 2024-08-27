@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DiscordLogoIcon from "~icons/ri/discord-line";
-import GitHubLogoIcon from "~icons/ri/github-fill";
-import TwitterLogoIcon from "~icons/ri/twitter-fill";
+import DiscordLogoIcon from '~icons/ri/discord-line'
+import GitHubLogoIcon from '~icons/ri/github-fill'
+import TwitterLogoIcon from '~icons/ri/twitter-fill'
 </script>
 
 <template>
