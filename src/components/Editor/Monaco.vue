@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor";
-import { onBeforeUnmount, onMounted, ref, watch, watchEffect } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import "src/composables/useEditorWorker";
 
 defineOptions({ name: "MonacoEditor" });
 
 const props = defineProps<{
-  value: string;
+  modelValue: string;
   language: string;
   theme?: string;
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
@@ -47,7 +47,7 @@ const initMonaco = () => {
     scrollBeyondLastLine: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,
-    value: props.value,
+    value: props.modelValue,
     language: props.language,
     theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
     automaticLayout: true,
