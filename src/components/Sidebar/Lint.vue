@@ -7,7 +7,7 @@ const { options } = await useOxc()
 
 <template>
   <div class="flex flex-col gap-2">
-    <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+    <p class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]">
       Lint Options
     </p>
     <Checkbox id="lint-enable" v-model="options.run.lint" title="Enable" />

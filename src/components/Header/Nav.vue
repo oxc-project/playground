@@ -20,12 +20,12 @@ import {
             rel="noopener"
           >
             <span
-              class="text-sm font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
             >
               Guide
             </span>
             <ArrowTopRightIcon
-              class="w-3 h-3 ml-1 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
           </a>
         </NavigationMenuLink>
@@ -40,11 +40,11 @@ import {
             rel="noopener"
           >
             <span
-              class="text-sm font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
               >Learn</span
             >
             <ArrowTopRightIcon
-              class="w-3 h-3 ml-1 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
           </a>
         </NavigationMenuLink>
@@ -56,19 +56,19 @@ import {
           href="https://oxc-project.github.io/docs/contribute/introduction.html"
         >
           <span
-            class="text-sm font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+            class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
           >
             Contribute
           </span>
           <ArrowTopRightIcon
-            class="w-3 h-3 ml-1 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
           />
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm font-medium text-[#3451b2] dark:text-[#a8b1ff]"
+          <span class="text-sm text-[#3451b2] font-medium dark:text-[#a8b1ff]"
             >Playground</span
           >
         </NavigationMenuLink>
@@ -83,7 +83,7 @@ import {
             rel="noopener"
           >
             <span
-              class="text-sm font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
             >
               Resources
             </span>

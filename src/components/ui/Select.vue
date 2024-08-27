@@ -24,7 +24,7 @@ defineEmits<{
 
 <template>
   <div class="flex flex-col gap-2">
-    <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+    <p class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]">
       {{ title }}
     </p>
     <Select
@@ -33,7 +33,7 @@ defineEmits<{
       @update:model-value="$emit('update:modelValue', $event as T)"
     >
       <SelectTrigger
-        class="w-[180px] bg-white dark:bg-[#1b1b1f] focus:ring-offset-0 focus:outline-none focus:ring-0"
+        class="w-[180px] bg-white dark:bg-[#1b1b1f] focus:outline-none focus:ring-0 focus:ring-offset-0"
       >
         <SelectValue class="text-[#3c3c43] dark:text-[#fffff5]/[.86]" />
       </SelectTrigger>

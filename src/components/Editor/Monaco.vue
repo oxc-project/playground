@@ -94,5 +94,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="container" class="w-full h-full" />
+  <div ref="container" class="h-full w-full" />
 </template>

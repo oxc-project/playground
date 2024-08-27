@@ -28,7 +28,7 @@ const toggleDark = useToggle(isDark)
 
 <template>
   <div
-    class="hidden xl:flex items-center before:content-[''] before:w-px before:h-6 before:ml-2 before:mr-4 before:bg-[#e2e2e3] dark:before:bg-[#2e2e32]"
+    class="hidden items-center before:ml-2 before:mr-4 before:h-6 before:w-px xl:flex before:bg-[#e2e2e3] before:content-[''] dark:before:bg-[#2e2e32]"
   >
     <SwitchRoot
       v-bind="forwarded"

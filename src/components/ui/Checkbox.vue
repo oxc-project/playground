@@ -18,7 +18,7 @@ defineEmits<{
   <div class="flex items-center">
     <Checkbox
       :id="id"
-      class="mr-2 bg-white dark:bg-[#1b1b1f] data-[state=checked]:bg-[#3451b2] dark:data-[state=checked]:bg-[#a8b1ff] data-[state=checked]:text-white dark:data-[state=checked]:text-[#2e2e32]"
+      class="mr-2 bg-white dark:bg-[#1b1b1f] data-[state=checked]:bg-[#3451b2] data-[state=checked]:text-white dark:data-[state=checked]:bg-[#a8b1ff] dark:data-[state=checked]:text-[#2e2e32]"
       :checked="modelValue"
       :disabled="disabled"
       :default-checked="defaultChecked"

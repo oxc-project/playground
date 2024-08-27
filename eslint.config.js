@@ -1,2 +1,2 @@
 import { sxzz } from '@sxzz/eslint-config'
-export default sxzz({}, { unocss: false })
+export default sxzz({}, { unocss: true })
