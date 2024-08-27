@@ -1,7 +1,9 @@
 import initWasm, { Oxc, type OxcOptions } from "@oxc/oxc_wasm";
 import { createGlobalState } from "@vueuse/core";
-import { computed, reactive, ref, toRaw, triggerRef, watch } from "vue";
-import { editorValue, syntaxOptionState, type SyntaxOptions } from "./state";
+import { PLAYGROUND_DEMO_CODE } from "src/utils/constants";
+import { atou, utoa } from "src/utils/url";
+import { computed, ref, toRaw, triggerRef, watch, watchEffect } from "vue";
+import { editorValue } from "./state";
 
 async function initialize(): Promise<Oxc> {
   await initWasm();
@@ -11,7 +13,7 @@ async function initialize(): Promise<Oxc> {
 export const useOxc = createGlobalState(async () => {
   const runDuration = ref<number>();
 
-  const options = reactive<Required<OxcOptions>>({
+  const options = ref<Required<OxcOptions>>({
     run: {
       syntax: true,
       scope: true,
@@ -38,7 +40,7 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
-      oxc.run(editorValue.value, toRaw(options));
+      oxc.run(editorValue.value, toRaw(options.value));
     } catch (error_) {
       console.error(error_);
       error.value = errors.length ? errors : error_;
@@ -49,17 +51,42 @@ export const useOxc = createGlobalState(async () => {
   }
   watch([options, editorValue], run, { deep: true });
 
-  // set oxc options when syntax options change
-  watch(
-    syntaxOptionState,
-    (syntaxOption) => {
-      options.parser.sourceType = syntaxOption.sourceType;
-      options.parser.sourceFilename = `test.${getExtname(syntaxOption)}`;
-      options.parser.preserveParens = syntaxOption.preserveParens;
-      options.run.lint = syntaxOption.linted;
-    },
-    { deep: true, immediate: true },
-  );
+  // // set oxc options when syntax options change
+  // watch(
+  //   syntaxOptionState,
+  //   (syntaxOption) => {
+  //     options.parser.sourceType = syntaxOption.sourceType;
+  //     options.parser.sourceFilename = `test.${getExtname(syntaxOption)}`;
+  //     options.parser.preserveParens = syntaxOption.preserveParens;
+  //     options.run.lint = syntaxOption.linted;
+  //     options.minifier.compress = true;
+  //     options.minifier.mangle = true;
+  //   },
+  //   { deep: true, immediate: true },
+  // );
+
+  const rawUrlState = atou(location.hash!.slice(1));
+  const urlState = rawUrlState && JSON.parse(rawUrlState);
+  if (rawUrlState) {
+    options.value = urlState.o;
+  }
+  editorValue.value = urlState?.c || PLAYGROUND_DEMO_CODE;
+
+  watchEffect(() => {
+    const serialized = JSON.stringify({
+      c: editorValue.value === PLAYGROUND_DEMO_CODE ? "" : editorValue.value,
+      o: options.value,
+    });
+    location.hash = utoa(serialized);
+  });
+
+  const monacoLanguage = computed(() => {
+    const filename = options.value.parser.sourceFilename || "test.tsx";
+    const ext = filename.split(".").pop()!;
+    if (["ts", "mts", "cts", "tsx"].includes(ext)) return "typescript";
+    if (["js", "mjs", "cjs", "jsx"].includes(ext)) return "javascript";
+    return "plaintext";
+  });
 
   // NOTE: do not free() on unmount. that hook is fired any time any consuming
   // component unmounts, which messes things up for other components.
@@ -69,23 +96,6 @@ export const useOxc = createGlobalState(async () => {
     error,
     options,
     duration: runDuration,
+    monacoLanguage,
   };
 });
-
-function getExtname(syntaxOption: SyntaxOptions) {
-  if (syntaxOption.language === "typescript") {
-    if (syntaxOption.tsx) {
-      return "tsx";
-    }
-    if (syntaxOption.dts) {
-      return "d.ts";
-    }
-    return "ts";
-  }
-  if (syntaxOption.language === "javascript") {
-    if (syntaxOption.jsx) {
-      return "jsx";
-    }
-    return "js";
-  }
-}

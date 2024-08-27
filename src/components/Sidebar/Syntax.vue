@@ -1,19 +1,51 @@
 <script setup lang="ts">
-import { syntaxOptionState } from "src/composables/state";
+import { useOxc } from "src/composables/useOxc";
+import { computed } from "vue";
 import Checkbox from "../ui/Checkbox.vue";
 import Select from "../ui/Select.vue";
 
-function checkedTSX(checked: boolean) {
-  syntaxOptionState.value.tsx = checked;
-  if (checked) {
-    syntaxOptionState.value.dts = false;
-  }
+const { options } = await useOxc();
+
+function getFilename() {
+  return options.value.parser.sourceFilename || "test.tsx";
 }
 
-function checkedDTS(checked: boolean) {
-  syntaxOptionState.value.dts = checked;
+function setFilename(language: string, jsx: boolean, dts: boolean) {
+  let ext: string;
+  if (dts) {
+    ext = "d.ts";
+  } else {
+    ext = `${language === "typescript" ? "ts" : "js"}${jsx ? "x" : ""}`;
+  }
+  options.value.parser.sourceFilename = `test.${ext}`;
+}
+
+const language = computed({
+  get: () => (/\.[cm]?tsx?/.test(getFilename()) ? "typescript" : "javascript"),
+  set: (value) => setFilename(value, jsx.value, dts.value),
+});
+
+const jsx = computed({
+  get: () => /\.[jt]sx/.test(getFilename()),
+  set: (value) => setFilename(language.value, value, dts.value),
+});
+
+const dts = computed({
+  get: () => getFilename().endsWith(".d.ts"),
+  set: (value) => setFilename(language.value, jsx.value, value),
+});
+
+function toggleJsx(checked: boolean) {
+  if (checked && language.value === "typescript") {
+    dts.value = false;
+  }
+  jsx.value = checked;
+}
+
+function toggleDts(checked: boolean) {
+  dts.value = checked;
   if (checked) {
-    syntaxOptionState.value.tsx = false;
+    jsx.value = false;
   }
 }
 </script>
@@ -24,23 +56,21 @@ function checkedDTS(checked: boolean) {
       <div class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
         Syntax Options
       </div>
-      <Checkbox
-        id="syntax"
-        v-model="syntaxOptionState.syntax"
-        title="Check Syntax"
-      />
+      <Checkbox id="syntax" v-model="options.run.syntax" title="Check Syntax" />
     </div>
 
     <Select
-      v-model="syntaxOptionState.sourceType"
+      v-model="options.parser.sourceType"
       title="Source"
+      default-value="module"
       :options="[
         { value: 'module', label: 'Module' },
         { value: 'script', label: 'Script' },
       ]"
     />
+
     <Select
-      v-model="syntaxOptionState.language"
+      v-model="language"
       title="Language"
       :options="[
         { value: 'typescript', label: 'TypeScript' },
@@ -49,28 +79,23 @@ function checkedDTS(checked: boolean) {
     />
 
     <Checkbox
-      v-if="syntaxOptionState.language === 'javascript'"
       id="jsx"
-      v-model="syntaxOptionState.jsx"
-      title="JSX"
+      :title="language === 'javascript' ? 'JSX' : 'TSX'"
+      :model-value="jsx"
+      @update:model-value="toggleJsx"
     />
+
     <Checkbox
-      v-if="syntaxOptionState.language === 'typescript'"
-      id="tsx"
-      :model-value="syntaxOptionState.tsx"
-      title="TSX"
-      @update:model-value="checkedTSX"
-    />
-    <Checkbox
-      v-if="syntaxOptionState.language === 'typescript'"
+      v-if="language === 'typescript'"
       id="d.ts"
-      :model-value="syntaxOptionState.dts"
+      :model-value="dts"
       title="D.TS"
-      @update:model-value="checkedDTS"
+      @update:model-value="toggleDts"
     />
+
     <Checkbox
       id="preserveParens"
-      v-model="syntaxOptionState.preserveParens"
+      v-model="options.parser.preserveParens"
       title="preserveParens"
     />
   </div>

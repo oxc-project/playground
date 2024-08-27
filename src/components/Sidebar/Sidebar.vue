@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { useOxc } from "src/composables/useOxc";
+import { computed } from "vue";
+import OutputPreview from "../Editor/Output/OutputPreview.vue";
 import Logo from "../Logo/Logo.vue";
 import Lint from "./Lint.vue";
 import Syntax from "./Syntax.vue";
+
+const { options } = await useOxc();
+const rawOptions = computed(() => JSON.stringify(options.value, null, 2));
 </script>
 
 <template>
@@ -12,6 +18,10 @@ import Syntax from "./Syntax.vue";
     <div class="flex flex-col gap-6">
       <Syntax />
       <Lint />
+      <details>
+        <summary>Raw options (dev)</summary>
+        <OutputPreview :code="rawOptions" lang="json" class="text-xs" />
+      </details>
     </div>
   </aside>
 </template>
