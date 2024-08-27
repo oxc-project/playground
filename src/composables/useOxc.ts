@@ -51,20 +51,6 @@ export const useOxc = createGlobalState(async () => {
   }
   watch([options, editorValue], run, { deep: true });
 
-  // // set oxc options when syntax options change
-  // watch(
-  //   syntaxOptionState,
-  //   (syntaxOption) => {
-  //     options.parser.sourceType = syntaxOption.sourceType;
-  //     options.parser.sourceFilename = `test.${getExtname(syntaxOption)}`;
-  //     options.parser.preserveParens = syntaxOption.preserveParens;
-  //     options.run.lint = syntaxOption.linted;
-  //     options.minifier.compress = true;
-  //     options.minifier.mangle = true;
-  //   },
-  //   { deep: true, immediate: true },
-  // );
-
   const rawUrlState = atou(location.hash!.slice(1));
   const urlState = rawUrlState && JSON.parse(rawUrlState);
   if (rawUrlState) {
@@ -77,7 +63,7 @@ export const useOxc = createGlobalState(async () => {
       c: editorValue.value === PLAYGROUND_DEMO_CODE ? "" : editorValue.value,
       o: options.value,
     });
-    location.hash = utoa(serialized);
+    history.replaceState({}, "", `#${utoa(serialized)}`);
   });
 
   const monacoLanguage = computed(() => {
