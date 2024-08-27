@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useOxc } from "src/composables/useOxc";
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "src/ui/tabs";
-import AstPanel from "./Output/AstPanel.vue";
-import CodegenPanel from "./Output/CodegenPanel.vue";
-import FormatPanel from "./Output/FormatPanel.vue";
-import IrPanel from "./Output/IrPanel.vue";
-import PrettierPanel from "./Output/PrettierPanel.vue";
-import ScopePanel from "./Output/ScopePanel.vue";
-import SymbolPanel from "./Output/SymbolPanel.vue";
+import { useOxc } from 'src/composables/oxc'
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from 'src/ui/tabs'
+import AstPanel from './Output/AstPanel.vue'
+import CodegenPanel from './Output/CodegenPanel.vue'
+import FormatPanel from './Output/FormatPanel.vue'
+import IrPanel from './Output/IrPanel.vue'
+import PrettierPanel from './Output/PrettierPanel.vue'
+import ScopePanel from './Output/ScopePanel.vue'
+import SymbolPanel from './Output/SymbolPanel.vue'
 
 // NOTE: using a loop with TabsTriggers breaks all tabs; all tabs get considered
 // as active.
 
-const { duration } = await useOxc();
+const { duration } = await useOxc()
 </script>
 
 <template>

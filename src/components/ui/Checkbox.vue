@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { Checkbox } from "src/ui/checkbox";
+import { Checkbox } from 'src/ui/checkbox'
 
 defineProps<{
-  id: string;
-  title: string;
-  modelValue?: boolean;
-  disabled?: boolean;
-  defaultChecked?: boolean;
-}>();
+  id: string
+  title: string
+  modelValue?: boolean
+  disabled?: boolean
+  defaultChecked?: boolean
+}>()
 
 defineEmits<{
-  "update:modelValue": [value: boolean];
-}>();
+  'update:modelValue': [value: boolean]
+}>()
 </script>
 
 <template>

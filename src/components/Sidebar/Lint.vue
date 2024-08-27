@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useOxc } from "src/composables/useOxc";
-import Checkbox from "../ui/Checkbox.vue";
+import { useOxc } from 'src/composables/oxc'
+import Checkbox from '../ui/Checkbox.vue'
 
-const { options } = await useOxc();
+const { options } = await useOxc()
 </script>
 
 <template>

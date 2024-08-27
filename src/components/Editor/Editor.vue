@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { useOxc } from "src/composables/useOxc";
-import { computed } from "vue";
-import Code from "./Code.vue";
-import Output from "./OutputPanel.vue";
+import { useOxc } from 'src/composables/oxc'
+import { computed } from 'vue'
+import Code from './Code.vue'
+import Output from './OutputPanel.vue'
 
-const { error, monacoLanguage, options } = await useOxc();
+const { error, monacoLanguage, options } = await useOxc()
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
-    ? error.value.map(stringifyError).join("\n")
-    : stringifyError(error);
-});
+    ? error.value.map(stringifyError).join('\n')
+    : stringifyError(error)
+})
 
 function stringifyError(error: unknown) {
-  if (!error) return "";
-  if (error instanceof Error) return error.stack;
-  return String(error);
+  if (!error) return ''
+  if (error instanceof Error) return error.stack
+  return String(error)
 }
 </script>
 

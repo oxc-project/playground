@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { X } from "lucide-vue-next";
+import { X } from 'lucide-vue-next'
 import {
   DialogClose,
   DialogContent,
@@ -8,22 +8,22 @@ import {
   useForwardPropsEmits,
   type DialogContentEmits,
   type DialogContentProps,
-} from "radix-vue";
-import { cn } from "src/utils/cn";
-import { computed, type HTMLAttributes } from "vue";
+} from 'radix-vue'
+import { cn } from 'src/utils/cn'
+import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<
-  DialogContentProps & { class?: HTMLAttributes["class"] }
->();
-const emits = defineEmits<DialogContentEmits>();
+  DialogContentProps & { class?: HTMLAttributes['class'] }
+>()
+const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
+  const { class: _, ...delegated } = props
 
-  return delegated;
-});
+  return delegated
+})
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>

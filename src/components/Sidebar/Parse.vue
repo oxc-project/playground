@@ -1,51 +1,51 @@
 <script setup lang="ts">
-import { useOxc } from "src/composables/useOxc";
-import { computed } from "vue";
-import Checkbox from "../ui/Checkbox.vue";
-import Select from "../ui/Select.vue";
+import { useOxc } from 'src/composables/oxc'
+import { computed } from 'vue'
+import Checkbox from '../ui/Checkbox.vue'
+import Select from '../ui/Select.vue'
 
-const { options } = await useOxc();
+const { options } = await useOxc()
 
 function getFilename() {
-  return options.value.parser.sourceFilename || "test.tsx";
+  return options.value.parser.sourceFilename || 'test.tsx'
 }
 
 function setFilename(language: string, jsx: boolean, dts: boolean) {
-  let ext: string;
+  let ext: string
   if (dts) {
-    ext = "d.ts";
+    ext = 'd.ts'
   } else {
-    ext = `${language === "typescript" ? "ts" : "js"}${jsx ? "x" : ""}`;
+    ext = `${language === 'typescript' ? 'ts' : 'js'}${jsx ? 'x' : ''}`
   }
-  options.value.parser.sourceFilename = `test.${ext}`;
+  options.value.parser.sourceFilename = `test.${ext}`
 }
 
 const language = computed({
-  get: () => (/\.[cm]?tsx?/.test(getFilename()) ? "typescript" : "javascript"),
+  get: () => (/\.[cm]?tsx?/.test(getFilename()) ? 'typescript' : 'javascript'),
   set: (value) => setFilename(value, jsx.value, dts.value),
-});
+})
 
 const jsx = computed({
   get: () => /\.[jt]sx/.test(getFilename()),
   set: (value) => setFilename(language.value, value, dts.value),
-});
+})
 
 const dts = computed({
-  get: () => getFilename().endsWith(".d.ts"),
+  get: () => getFilename().endsWith('.d.ts'),
   set: (value) => setFilename(language.value, jsx.value, value),
-});
+})
 
 function toggleJsx(checked: boolean) {
-  if (checked && language.value === "typescript") {
-    dts.value = false;
+  if (checked && language.value === 'typescript') {
+    dts.value = false
   }
-  jsx.value = checked;
+  jsx.value = checked
 }
 
 function toggleDts(checked: boolean) {
-  dts.value = checked;
+  dts.value = checked
   if (checked) {
-    jsx.value = false;
+    jsx.value = false
   }
 }
 </script>

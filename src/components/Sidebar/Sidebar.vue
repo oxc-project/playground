@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Logo from "../Logo/Logo.vue";
-import Lint from "./Lint.vue";
-import OptionsDialog from "./OptionsDialog.vue";
-import Parse from "./Parse.vue";
+import Logo from '../Logo/Logo.vue'
+import Lint from './Lint.vue'
+import OptionsDialog from './OptionsDialog.vue'
+import Parse from './Parse.vue'
 </script>
 
 <template>

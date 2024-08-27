@@ -1,10 +1,10 @@
-import * as monaco from "monaco-editor";
+import * as monaco from 'monaco-editor'
 
 monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
-  trailingCommas: "ignore",
-});
+  trailingCommas: 'ignore',
+})
 
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   allowJs: true,
@@ -15,4 +15,4 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   noEmit: true,
   esModuleInterop: true,
   jsx: monaco.languages.typescript.JsxEmit.React,
-});
+})

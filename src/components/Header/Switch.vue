@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { useDark, useToggle } from "@vueuse/core";
+import { useDark, useToggle } from '@vueuse/core'
 import {
   SwitchRoot,
   SwitchThumb,
   useForwardPropsEmits,
   type SwitchRootEmits,
   type SwitchRootProps,
-} from "radix-vue";
-import { cn } from "src/utils/cn";
-import { computed, type HTMLAttributes } from "vue";
+} from 'radix-vue'
+import { cn } from 'src/utils/cn'
+import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<
-  SwitchRootProps & { class?: HTMLAttributes["class"] }
->();
-const emits = defineEmits<SwitchRootEmits>();
+  SwitchRootProps & { class?: HTMLAttributes['class'] }
+>()
+const emits = defineEmits<SwitchRootEmits>()
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
+  const { class: _, ...delegated } = props
 
-  return delegated;
-});
+  return delegated
+})
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>

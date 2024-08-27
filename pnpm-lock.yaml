@@ -51,6 +51,9 @@ importers:
       '@sxzz/eslint-config':
         specifier: ^3.17.4
         version: 3.17.4(@typescript-eslint/eslint-plugin@8.2.0(@typescript-eslint/parser@8.2.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
+      '@sxzz/prettier-config':
+        specifier: ^2.0.2
+        version: 2.0.2
       '@types/node':
         specifier: ^22.0.0
         version: 22.5.0
@@ -629,6 +632,9 @@ packages:
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0 || ^9.0.0
+
+  '@sxzz/prettier-config@2.0.2':
+    resolution: {integrity: sha512-yBKxaIr6WqgHTaLgX0g6gxNuMllkwR1QGeXynfJGmyD+XrZqO96t9xT5Mfbr9H3+N56SXY9/yFvP/e8lcJI7KA==}
 
   '@tanstack/virtual-core@3.8.6':
     resolution: {integrity: sha512-UJeU4SBrx3hqULNzJ3oC0kgJ5miIAg+FwomxMTlQNxob6ppTInifANHd9ukETvzdzxr6zt3CjQ0rttQpVjbt6Q==}
@@ -2899,6 +2905,8 @@ snapshots:
       - svelte
       - svelte-eslint-parser
       - typescript
+
+  '@sxzz/prettier-config@2.0.2': {}
 
   '@tanstack/virtual-core@3.8.6': {}
 

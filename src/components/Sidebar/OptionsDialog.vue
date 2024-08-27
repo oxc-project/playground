@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import SettingIcon from "~icons/ri/settings-line";
-import { useOxc } from "src/composables/useOxc";
-import { Button } from "src/ui/button";
+import SettingIcon from '~icons/ri/settings-line'
+import { useOxc } from 'src/composables/oxc'
+import { Button } from 'src/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "src/ui/dialog";
-import { computed } from "vue";
-import Monaco from "../Editor/Monaco.vue";
+} from 'src/ui/dialog'
+import { computed } from 'vue'
+import Monaco from '../Editor/Monaco.vue'
 
-const { options } = await useOxc();
+const { options } = await useOxc()
 const optionsString = computed({
   get: () => JSON.stringify(options.value, null, 2),
   set: (value: string) => {
     try {
-      options.value = JSON.parse(value);
+      options.value = JSON.parse(value)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   },
-});
+})
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ArrowTopRightIcon from "~icons/ri/arrow-right-up-line";
+import ArrowTopRightIcon from '~icons/ri/arrow-right-up-line'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "src/ui/navigation-menu";
+} from 'src/ui/navigation-menu'
 </script>
 
 <template>
