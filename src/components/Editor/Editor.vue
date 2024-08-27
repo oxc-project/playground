@@ -4,7 +4,7 @@ import { computed } from "vue";
 import Code from "./Code.vue";
 import Output from "./OutputPanel.vue";
 
-const { error, monacoLanguage } = await useOxc();
+const { error, monacoLanguage, options } = await useOxc();
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
@@ -21,7 +21,10 @@ function stringifyError(error: unknown) {
 
 <template>
   <main class="flex flex-1 flex-col md:flex-row min-h-0">
-    <Code :language="monacoLanguage" />
+    <Code
+      :language="monacoLanguage"
+      :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
+    />
     <div class="w-full h-px md:w-px md:h-full bg-[#e2e2e3] dark:bg-[#2e2e32]" />
     <div class="flex-1 min-w-0">
       <Output v-if="!error" />
