@@ -29,10 +29,10 @@ const { options, duration } = await useOxc()
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
       <TabsTrigger value="ir">IR</TabsTrigger>
       <TabsTrigger value="prettier" :disabled="!options.run.prettierIr">
-        Prettier
+        Prettier IR
       </TabsTrigger>
       <TabsTrigger value="format" :disabled="!options.run.prettierFormat">
-        <div class="text-nowrap">Format (Prettier)</div>
+        Prettier
       </TabsTrigger>
       <TabsTrigger value="scope" :disabled="!options.run.scope">
         Scope
@@ -42,7 +42,7 @@ const { options, duration } = await useOxc()
       </TabsTrigger>
     </TabsList>
 
-    <div class="min-h-0 min-w-0">
+    <div class="h-full min-h-0 min-w-0">
       <TabsContent value="ast">
         <AstPanel />
       </TabsContent>
