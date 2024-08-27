@@ -51,9 +51,9 @@ function toggleDts(checked: boolean) {
 </script>
 
 <template>
-  <div class="pt-4 flex flex-col gap-4">
+  <div class="flex flex-col gap-4 pt-4">
     <div class="flex flex-col gap-2">
-      <div class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
+      <div class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]">
         Syntax Options
       </div>
       <Checkbox id="syntax" v-model="options.run.syntax" title="Check Syntax" />

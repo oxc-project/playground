@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import './assets/index.css'
-import './assets/reset.css'
+import '@unocss/reset/tailwind.css'
+import 'uno.css'
 
 createApp(App).mount('#app')

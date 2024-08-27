@@ -17,13 +17,13 @@ const { options, duration } = await useOxc()
 
 <template>
   <Tabs
-    class="flex flex-col flex-nowrap h-full flex-1"
+    class="h-full flex flex-1 flex-col flex-nowrap"
     default-value="ast"
     activation-mode="manual"
   >
     <TabsList
       as="nav"
-      class="flex flex-shrink-0 overflow-auto gap-2 rounded-none justify-start h-auto p-2 relative"
+      class="relative h-auto flex flex-shrink-0 justify-start gap-2 overflow-auto rounded-none p-2"
     >
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>

@@ -7,7 +7,7 @@ import Parse from './Parse.vue'
 
 <template>
   <aside
-    class="hidden pc:block w-52 h-screen overflow-x-auto px-8 box-content bg-[#f6f6f7] dark:bg-[#161618]"
+    class="box-content hidden h-screen w-52 overflow-x-auto bg-[#f6f6f7] px-8 lg:block dark:bg-[#161618]"
   >
     <Logo />
     <div class="flex flex-col gap-6">

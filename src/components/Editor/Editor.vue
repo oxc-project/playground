@@ -20,17 +20,17 @@ function stringifyError(error: unknown) {
 </script>
 
 <template>
-  <main class="flex flex-1 flex-col md:flex-row min-h-0">
+  <main class="min-h-0 flex flex-1 flex-col md:flex-row">
     <Code
       :language="monacoLanguage"
       :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
     />
-    <div class="w-full h-px md:w-px md:h-full bg-[#e2e2e3] dark:bg-[#2e2e32]" />
-    <div class="flex-1 min-w-0">
+    <div class="h-px w-full bg-[#e2e2e3] md:h-full md:w-px dark:bg-[#2e2e32]" />
+    <div class="min-w-0 flex-1">
       <Output v-if="!error" />
       <pre
         v-else
-        class="text-red-400 p-2 overflow-auto h-full text-sm"
+        class="h-full overflow-auto p-2 text-sm text-red-400"
         v-text="errorStr"
       />
     </div>

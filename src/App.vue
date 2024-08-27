@@ -8,9 +8,9 @@ import { loadingOxc } from 'src/composables/oxc'
 
 <template>
   <Suspense>
-    <div class="flex w-screen md:h-screen bg-white dark:bg-[#1b1b1f]">
+    <div class="w-screen flex bg-white md:h-screen dark:bg-[#1b1b1f]">
       <Sidebar />
-      <div class="flex flex-col flex-1 min-w-0">
+      <div class="min-w-0 flex flex-1 flex-col">
         <Header />
         <Editor />
       </div>
@@ -18,9 +18,9 @@ import { loadingOxc } from 'src/composables/oxc'
 
     <template #fallback>
       <div
-        class="flex flex-col gap-4 items-center justify-center text-2xl w-screen h-screen"
+        class="h-screen w-screen flex flex-col items-center justify-center gap-4 text-2xl"
       >
-        <LoadingIcon class="text-6xl animate-spin" />
+        <LoadingIcon class="animate-spin text-6xl" />
         <span v-if="loadingOxc">Loading Oxc wasm...</span>
         <span v-else>Loading resources...</span>
       </div>

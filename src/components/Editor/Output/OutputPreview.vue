@@ -17,7 +17,7 @@ const codeWithColor = computed(() => {
 
 <template>
   <div
-    class="flex-1 text-sm overflow-auto leading-relaxed"
+    class="flex-1 overflow-auto text-sm leading-relaxed"
     v-html="codeWithColor"
   />
 </template>
