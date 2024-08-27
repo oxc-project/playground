@@ -1,5 +1,5 @@
 import initWasm, { Oxc, type OxcOptions } from "@oxc/oxc_wasm";
-import { createGlobalState } from "@vueuse/core";
+import { createGlobalState, useAsyncState } from "@vueuse/core";
 import { PLAYGROUND_DEMO_CODE } from "src/utils/constants";
 import { atou, utoa } from "src/utils/url";
 import { computed, ref, toRaw, triggerRef, watch, watchEffect } from "vue";
@@ -9,6 +9,11 @@ async function initialize(): Promise<Oxc> {
   await initWasm();
   return new Oxc();
 }
+
+export const loadingOxc = ref(true);
+export const oxcPromise = initialize().finally(
+  () => (loadingOxc.value = false),
+);
 
 export const useOxc = createGlobalState(async () => {
   const runDuration = ref<number>();
@@ -27,7 +32,7 @@ export const useOxc = createGlobalState(async () => {
     codegen: {},
     typeChecking: {},
   });
-  const oxc = await initialize();
+  const oxc = await oxcPromise;
   const state = computed(() => oxc);
   const error = ref<unknown>();
 
