@@ -12,6 +12,7 @@ const props = defineProps<{
   theme?: string;
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
   readonly?: boolean;
+  filename: string;
 }>();
 const emit = defineEmits([
   "editorWillMount",
@@ -21,7 +22,21 @@ const emit = defineEmits([
 ]);
 
 const container: any = ref(null);
-let instance: monaco.editor.IStandaloneCodeEditor | null = null;
+let instance: monaco.editor.IStandaloneCodeEditor | undefined;
+let model: monaco.editor.ITextModel = initModel();
+
+model.onDidChangeContent(() => {
+  const value = model.getValue();
+  emit("update:modelValue", value);
+});
+
+function initModel() {
+  return monaco.editor.createModel(
+    props.modelValue,
+    props.language,
+    monaco.Uri.file(props.filename),
+  );
+}
 
 const isDark = useDark({
   onChanged(isDark) {
@@ -33,56 +48,47 @@ const isDark = useDark({
 watch(
   () => props.language,
   () => {
-    const model = instance?.getModel();
     if (model) {
       monaco.editor.setModelLanguage(model, props.language);
     }
   },
 );
 
-const initMonaco = () => {
-  const editorProps: monaco.editor.IStandaloneEditorConstructionOptions = {
+watch(
+  () => props.filename,
+  () => {
+    if (instance) {
+      model.dispose();
+      model = initModel();
+      instance.setModel(model);
+    }
+  },
+);
+
+function initMonaco() {
+  const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
     minimap: { enabled: false },
     fontSize: 14,
     scrollBeyondLastLine: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,
-    value: props.modelValue,
-    language: props.language,
     theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
     automaticLayout: true,
+    readOnly: props.readonly,
   };
 
-  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-    allowComments: true,
-    enableSchemaRequest: true,
-    trailingCommas: "ignore",
-  });
+  instance = monaco.editor.create(container.value, editorOptions);
+  instance.setModel(model);
 
-  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-    target: monaco.languages.typescript.ScriptTarget.ESNext,
-    module: monaco.languages.typescript.ModuleKind.ESNext,
-    allowNonTsExtensions: true,
-    moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-    noEmit: true,
-    esModuleInterop: true,
-    jsx: monaco.languages.typescript.JsxEmit.Preserve,
-  });
-
-  instance = monaco.editor.create(container.value, editorProps);
-
-  instance.onDidChangeModelContent(() => {
-    const value = instance!.getValue();
-    emit("update:modelValue", value);
-  });
   emit("editorDidMount", instance);
-};
+}
 
 onMounted(() => {
   initMonaco();
 });
 
 onBeforeUnmount(() => {
+  model.dispose();
   instance?.dispose();
 });
 </script>

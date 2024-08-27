@@ -39,7 +39,11 @@ const optionsString = computed({
         <DialogTitle class="text-center">Customize Options</DialogTitle>
       </DialogHeader>
 
-      <Monaco v-model="optionsString" language="json" />
+      <Monaco
+        v-model="optionsString"
+        language="json"
+        filename="/options.json"
+      />
     </DialogContent>
   </Dialog>
 </template>
