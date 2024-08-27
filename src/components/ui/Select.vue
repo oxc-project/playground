@@ -10,7 +10,8 @@ import {
 
 defineProps<{
   title: string;
-  modelValue: string;
+  modelValue?: string;
+  defaultValue?: T;
   options: {
     value: T;
     label: string;
@@ -28,6 +29,7 @@ defineEmits<{
     </p>
     <Select
       :model-value="modelValue"
+      :default-value="defaultValue as string"
       @update:model-value="$emit('update:modelValue', $event as T)"
     >
       <SelectTrigger

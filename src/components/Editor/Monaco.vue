@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch, watchEffect } from "vue";
 import "src/composables/useEditorWorker";
 
 defineOptions({ name: "MonacoEditor" });
@@ -29,6 +29,16 @@ const isDark = useDark({
     monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
   },
 });
+
+watch(
+  () => props.language,
+  () => {
+    const model = instance?.getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, props.language);
+    }
+  },
+);
 
 const initMonaco = () => {
   const editorProps: monaco.editor.IStandaloneEditorConstructionOptions = {

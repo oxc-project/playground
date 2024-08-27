@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { syntaxOptionState } from "src/composables/state";
+import { useOxc } from "src/composables/useOxc";
 import Checkbox from "../ui/Checkbox.vue";
+
+const { options } = await useOxc();
 </script>
 
 <template>
@@ -8,10 +10,6 @@ import Checkbox from "../ui/Checkbox.vue";
     <p class="font-medium text-[#3c3c43] dark:text-[#fffff5]/[.86]">
       Lint Options
     </p>
-    <Checkbox
-      id="lint-enable"
-      v-model="syntaxOptionState.linted"
-      title="Enable"
-    />
+    <Checkbox id="lint-enable" v-model="options.run.lint" title="Enable" />
   </div>
 </template>
