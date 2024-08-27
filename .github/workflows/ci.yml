@@ -2,6 +2,8 @@ name: CI
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *" # Build and deploy every 3 hours.
   pull_request:
     types:
       - opened
@@ -22,6 +24,7 @@ concurrency:
 jobs:
   check-typos:
     name: Check typos
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -86,7 +89,7 @@ jobs:
       # https://www.raulmelo.me/en/blog/deploying-netlify-github-actions-guide
       - name: Deploy to Netlify
         id: netlify_deploy
-        if: env.SITE_ID
+        if: env.SITE_ID && github.event_name != 'schedule'
         run: |
           prod_flag=""
           if [ "${{ github.ref_name }}" = "main" ]; then prod_flag="--prod"; fi
