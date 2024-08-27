@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ArrowTopRightIcon from '~icons/ri/arrow-right-up-line'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,8 +23,8 @@ import {
             >
               Guide
             </span>
-            <ArrowTopRightIcon
-              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            <div
+              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
           </a>
         </NavigationMenuLink>
@@ -43,8 +42,8 @@ import {
               class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
               >Learn</span
             >
-            <ArrowTopRightIcon
-              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            <div
+              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
           </a>
         </NavigationMenuLink>
@@ -60,8 +59,8 @@ import {
           >
             Contribute
           </span>
-          <ArrowTopRightIcon
-            class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+          <div
+            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
           />
         </NavigationMenuLink>
       </NavigationMenuItem>

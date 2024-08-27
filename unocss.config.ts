@@ -1,4 +1,4 @@
-import { defineConfig, presetUno } from 'unocss'
+import { defineConfig, presetAttributify, presetIcons, presetUno } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
 import { presetShadcn } from 'unocss-preset-shadcn'
 
@@ -10,6 +10,8 @@ export default defineConfig({
       color: 'slate',
       darkSelector: '.dark',
     }),
+    presetIcons({ scale: 1.2 }),
+    presetAttributify(),
   ],
   content: {
     pipeline: {
