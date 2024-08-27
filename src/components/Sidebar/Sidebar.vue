@@ -4,7 +4,7 @@ import { computed } from "vue";
 import OutputPreview from "../Editor/Output/OutputPreview.vue";
 import Logo from "../Logo/Logo.vue";
 import Lint from "./Lint.vue";
-import Syntax from "./Syntax.vue";
+import Parse from "./Parse.vue";
 
 const { options } = await useOxc();
 const rawOptions = computed(() => JSON.stringify(options.value, null, 2));
@@ -16,7 +16,7 @@ const rawOptions = computed(() => JSON.stringify(options.value, null, 2));
   >
     <Logo />
     <div class="flex flex-col gap-6">
-      <Syntax />
+      <Parse />
       <Lint />
       <details>
         <summary>Raw options (dev)</summary>

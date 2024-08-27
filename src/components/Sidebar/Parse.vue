@@ -96,6 +96,7 @@ function toggleDts(checked: boolean) {
     <Checkbox
       id="preserveParens"
       v-model="options.parser.preserveParens"
+      :default-checked="true"
       title="preserveParens"
     />
   </div>
