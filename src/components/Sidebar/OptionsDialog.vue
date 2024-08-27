@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SettingIcon from '~icons/ri/settings-line'
 import { useOxc } from 'src/composables/oxc'
 import { Button } from 'src/ui/button'
 import {
@@ -28,8 +27,8 @@ const optionsString = computed({
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button variant="outline" class="gap-1">
-        <SettingIcon />
+      <Button variant="outline" class="gap2">
+        <div i-ri:settings-line />
         Edit Options
       </Button>
     </DialogTrigger>

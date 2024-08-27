@@ -1,8 +1,4 @@
-<script setup lang="ts">
-import DiscordLogoIcon from '~icons/ri/discord-line'
-import GitHubLogoIcon from '~icons/ri/github-fill'
-import TwitterLogoIcon from '~icons/ri/twitter-fill'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div
@@ -17,8 +13,8 @@ import TwitterLogoIcon from '~icons/ri/twitter-fill'
           target="_blank"
           rel="noopener"
         >
-          <TwitterLogoIcon
-            class="block h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+          <div
+            class="i-ri:twitter-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
       </li>
@@ -30,8 +26,8 @@ import TwitterLogoIcon from '~icons/ri/twitter-fill'
           target="_blank"
           rel="noopener"
         >
-          <DiscordLogoIcon
-            class="block h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+          <div
+            class="i-ri:discord-line h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
       </li>
@@ -43,8 +39,8 @@ import TwitterLogoIcon from '~icons/ri/twitter-fill'
           target="_blank"
           rel="noopener"
         >
-          <GitHubLogoIcon
-            class="block h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+          <div
+            class="i-ri:github-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
       </li>
