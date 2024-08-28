@@ -83,17 +83,26 @@ function toggleDts(checked: boolean) {
 
     <Checkbox
       v-if="language === 'typescript'"
-      id="d.ts"
+      id="dts"
       :model-value="dts"
       title="D.TS"
       @update:model-value="toggleDts"
     />
 
     <Checkbox
+      id="allowReturnOutsideFunction"
+      v-model="options.parser.allowReturnOutsideFunction"
+      title="allowReturnOutsideFunction"
+      font-mono
+      label-class="text-xs"
+    />
+
+    <Checkbox
       id="preserveParens"
       v-model="options.parser.preserveParens"
-      :default-checked="true"
+      default-checked
       title="preserveParens"
+      font-mono
     />
   </div>
 </template>
