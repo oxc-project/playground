@@ -2,6 +2,7 @@
 import { useOxc } from 'src/composables/oxc'
 import { computed } from 'vue'
 import Code from './Code.vue'
+import CopyContainer from './CopyContainer.vue'
 import Output from './OutputPanel.vue'
 
 const { error, monacoLanguage, options } = await useOxc()
@@ -28,11 +29,12 @@ function stringifyError(error: unknown) {
     <div class="h-px w-full bg-[#e2e2e3] md:h-full md:w-px dark:bg-[#2e2e32]" />
     <div class="min-w-0 flex-1">
       <Output v-if="!error" />
-      <pre
-        v-else
-        class="h-full overflow-auto p-2 text-sm text-red-400"
-        v-text="errorStr"
-      />
+      <CopyContainer v-else :value="errorStr || ''" class="min-w-0 w-full flex">
+        <pre
+          class="h-full overflow-auto p-2 text-sm text-red-400"
+          v-text="errorStr"
+        />
+      </CopyContainer>
     </div>
   </main>
 </template>
