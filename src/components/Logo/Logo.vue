@@ -6,7 +6,7 @@
     >
       <img
         class="mr-2 h-6 w-6"
-        src="https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/logo-round-min.png"
+        src="https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/round.png"
         alt="logo"
       />
       <span
