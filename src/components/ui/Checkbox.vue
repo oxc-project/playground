@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Checkbox } from 'src/ui/checkbox'
+import { cn } from 'src/utils/cn'
 
 defineProps<{
   id: string
@@ -7,6 +8,7 @@ defineProps<{
   modelValue?: boolean
   disabled?: boolean
   defaultChecked?: boolean
+  labelClass?: string
 }>()
 
 defineEmits<{
@@ -24,7 +26,12 @@ defineEmits<{
       :default-checked="defaultChecked"
       @update:checked="$emit('update:modelValue', $event)"
     />
-    <label class="text-sm text-[#3c3c43] dark:text-[#fffff5]/[.86]" :for="id">
+    <label
+      :class="
+        cn('text-sm text-[#3c3c43] dark:text-[#fffff5]/[.86]', labelClass)
+      "
+      :for="id"
+    >
       {{ title }}
     </label>
   </div>
