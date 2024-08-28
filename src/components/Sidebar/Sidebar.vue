@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Logo from '../Logo/Logo.vue'
-import Lint from './Lint.vue'
+import Linter from './Linter.vue'
 import OptionsDialog from './OptionsDialog.vue'
 import Parse from './Parse.vue'
 import Prettier from './Prettier.vue'
+import Transformer from './Transformer.vue'
 </script>
 
 <template>
@@ -13,7 +14,8 @@ import Prettier from './Prettier.vue'
     <Logo />
     <div class="flex flex-col gap-6">
       <Parse />
-      <Lint />
+      <Linter />
+      <Transformer />
       <Prettier />
       <OptionsDialog />
     </div>

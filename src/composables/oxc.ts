@@ -21,12 +21,13 @@ export const useOxc = createGlobalState(async () => {
       syntax: true,
       scope: true,
       symbol: true,
+      transform: false,
     },
     parser: {},
     linter: {},
-    minifier: {},
+    transformer: {},
     codegen: {},
-    typeChecking: {},
+    minifier: {},
   })
   const oxc = await oxcPromise
   const state = computed(() => oxc)

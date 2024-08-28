@@ -52,12 +52,11 @@ function toggleDts(checked: boolean) {
 
 <template>
   <div class="flex flex-col gap-4 pt-4">
-    <div class="text-muted-foreground font-medium">Syntax</div>
+    <div class="text-muted-foreground font-medium">Source Type</div>
 
-    <Checkbox id="syntax" v-model="options.run.syntax" title="Check Syntax" />
     <Select
       v-model="options.parser.sourceType"
-      title="Source"
+      title="Module Type"
       default-value="module"
       :options="[
         { value: 'module', label: 'Module' },
@@ -87,6 +86,14 @@ function toggleDts(checked: boolean) {
       :model-value="dts"
       title="D.TS"
       @update:model-value="toggleDts"
+    />
+
+    <div class="text-muted-foreground font-medium">Parser</div>
+
+    <Checkbox
+      id="syntax"
+      v-model="options.run.syntax"
+      title="Check Syntax Errors"
     />
 
     <Checkbox
