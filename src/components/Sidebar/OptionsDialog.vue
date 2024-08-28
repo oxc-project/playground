@@ -29,13 +29,13 @@ const optionsString = computed({
     <DialogTrigger as-child>
       <Button variant="outline" class="gap2">
         <div i-ri:settings-line />
-        Edit Options
+        Edit as JSON
       </Button>
     </DialogTrigger>
 
     <DialogContent class="h-[80vh] max-w-5xl">
       <DialogHeader>
-        <DialogTitle class="text-center">Customize Options</DialogTitle>
+        <DialogTitle class="text-center">Oxc Options</DialogTitle>
       </DialogHeader>
 
       <Monaco

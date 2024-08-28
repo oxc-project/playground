@@ -21,8 +21,6 @@ export const useOxc = createGlobalState(async () => {
       syntax: true,
       scope: true,
       symbol: true,
-      prettierIr: true,
-      prettierFormat: true,
     },
     parser: {},
     linter: {},

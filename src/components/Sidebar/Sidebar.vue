@@ -3,6 +3,7 @@ import Logo from '../Logo/Logo.vue'
 import Lint from './Lint.vue'
 import OptionsDialog from './OptionsDialog.vue'
 import Parse from './Parse.vue'
+import Prettier from './Prettier.vue'
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import Parse from './Parse.vue'
     <div class="flex flex-col gap-6">
       <Parse />
       <Lint />
+      <Prettier />
       <OptionsDialog />
     </div>
   </aside>
