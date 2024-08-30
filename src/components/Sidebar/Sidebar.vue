@@ -15,10 +15,14 @@ import Transformer from './Transformer.vue'
     <Logo />
     <div class="flex flex-col gap-6">
       <Parse />
+      <hr />
       <Linter />
+      <hr />
       <Transformer />
+      <hr />
       <Minifier />
       <!-- <Prettier /> -->
+      <hr />
       <OptionsDialog />
     </div>
   </aside>
