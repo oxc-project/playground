@@ -9,7 +9,7 @@ import {
 } from 'src/ui/select'
 
 defineProps<{
-  title: string
+  title?: string
   modelValue?: string
   defaultValue?: T
   options: {
@@ -23,8 +23,11 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <p class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]">
+  <div class="flex flex-col">
+    <p
+      v-if="title"
+      class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]"
+    >
       {{ title }}
     </p>
     <Select
