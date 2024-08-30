@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Logo from '../Logo/Logo.vue'
 import Linter from './Linter.vue'
+import Minifier from './Minifier.vue'
 import OptionsDialog from './OptionsDialog.vue'
 import Parse from './Parse.vue'
-import Prettier from './Prettier.vue'
+// import Prettier from './Prettier.vue'
 import Transformer from './Transformer.vue'
 </script>
 
@@ -16,7 +17,8 @@ import Transformer from './Transformer.vue'
       <Parse />
       <Linter />
       <Transformer />
-      <Prettier />
+      <Minifier />
+      <!-- <Prettier /> -->
       <OptionsDialog />
     </div>
   </aside>

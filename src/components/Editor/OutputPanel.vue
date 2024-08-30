@@ -28,12 +28,14 @@ const { options, duration } = await useOxc()
       <TabsTrigger value="ast">AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
       <TabsTrigger value="ir">IR</TabsTrigger>
+      <!--
       <TabsTrigger value="prettier" :disabled="!options.run.prettierIr">
         Prettier IR
       </TabsTrigger>
       <TabsTrigger value="format" :disabled="!options.run.prettierFormat">
         Prettier
       </TabsTrigger>
+      -->
       <TabsTrigger value="scope" :disabled="!options.run.scope">
         Scope
       </TabsTrigger>
