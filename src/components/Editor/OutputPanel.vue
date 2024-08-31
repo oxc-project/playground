@@ -9,10 +9,7 @@ import PrettierPanel from './Output/PrettierPanel.vue'
 import ScopePanel from './Output/ScopePanel.vue'
 import SymbolPanel from './Output/SymbolPanel.vue'
 
-// NOTE: using a loop with TabsTriggers breaks all tabs; all tabs get considered
-// as active.
-
-const { options, duration } = await useOxc()
+const { duration } = await useOxc()
 </script>
 
 <template>
@@ -36,12 +33,8 @@ const { options, duration } = await useOxc()
         Prettier
       </TabsTrigger>
       -->
-      <TabsTrigger value="scope" :disabled="!options.run.scope">
-        Scope
-      </TabsTrigger>
-      <TabsTrigger value="symbol" :disabled="!options.run.symbol">
-        Symbol
-      </TabsTrigger>
+      <TabsTrigger value="scope"> Scope </TabsTrigger>
+      <TabsTrigger value="symbol"> Symbol </TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">

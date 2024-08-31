@@ -19,6 +19,7 @@ export const useOxc = createGlobalState(async () => {
   const options = ref<Required<OxcOptions>>({
     run: {
       syntax: true,
+      lint: true,
       scope: true,
       symbol: true,
       transform: false,
