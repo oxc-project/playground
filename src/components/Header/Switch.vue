@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
 import {
   SwitchRoot,
   SwitchThumb,
@@ -7,6 +6,7 @@ import {
   type SwitchRootEmits,
   type SwitchRootProps,
 } from 'radix-vue'
+import { dark } from 'src/composables/state'
 import { cn } from 'src/utils/cn'
 import { computed, type HTMLAttributes } from 'vue'
 
@@ -21,9 +21,6 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 </script>
 
 <template>
@@ -32,7 +29,7 @@ const toggleDark = useToggle(isDark)
   >
     <SwitchRoot
       v-bind="forwarded"
-      v-model:checked="isDark"
+      v-model:checked="dark"
       role="switch"
       :class="
         cn(
@@ -40,15 +37,17 @@ const toggleDark = useToggle(isDark)
           props.class,
         )
       "
-      @click="toggleDark()"
     >
       <SwitchThumb
         :class="
           cn(
             'pointer-events-none block h-5 w-5 rounded-full bg-white dark:bg-[#1b1b1f] shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+            'flex items-center justify-center',
           )
         "
-      />
+      >
+        <div :class="dark ? 'i-ri:moon-line' : 'i-ri:sun-line'" scale-70 />
+      </SwitchThumb>
     </SwitchRoot>
   </div>
 </template>
