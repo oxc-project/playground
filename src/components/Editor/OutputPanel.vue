@@ -33,8 +33,8 @@ const { duration } = await useOxc()
         Prettier
       </TabsTrigger>
       -->
-      <TabsTrigger value="scope"> Scope </TabsTrigger>
-      <TabsTrigger value="symbol"> Symbol </TabsTrigger>
+      <TabsTrigger value="scope">Scope</TabsTrigger>
+      <TabsTrigger value="symbol">Symbol</TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">

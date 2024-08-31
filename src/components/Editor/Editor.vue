@@ -3,9 +3,10 @@ import { useOxc } from 'src/composables/oxc'
 import { computed } from 'vue'
 import Code from './Code.vue'
 import CopyContainer from './CopyContainer.vue'
+import DiagnosticPanel from './DiagnosticPanel.vue'
 import Output from './OutputPanel.vue'
 
-const { oxc, error, monacoLanguage, options } = await useOxc()
+const { error, monacoLanguage, options } = await useOxc()
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
@@ -22,17 +23,18 @@ function stringifyError(error: unknown) {
 
 <template>
   <main class="min-h-0 flex flex-1 flex-col md:flex-row">
-    <div class="min-w-0 flex-1 py-2">
-      <div class="h-2/3 w-full">
+    <div class="min-w-0 flex flex-1 flex-col py-2">
+      <div class="min-h-0 flex-grow-2 flex-basis-none">
         <Code
           :language="monacoLanguage"
           :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
         />
       </div>
-      <div class="h-1/3 w-full px-4">
-        <div v-for="d in oxc.getDiagnostics()" :key="d.message">
-          {{ d.severity }}: {{ d.message }}
-        </div>
+
+      <div
+        class="min-h-0 flex flex-1 flex-col gap2 overflow-scroll border-t px-3 py-2 text-sm font-mono op80"
+      >
+        <DiagnosticPanel />
       </div>
     </div>
 
