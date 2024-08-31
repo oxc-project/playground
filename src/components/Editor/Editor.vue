@@ -6,7 +6,7 @@ import CopyContainer from './CopyContainer.vue'
 import DiagnosticPanel from './DiagnosticPanel.vue'
 import Output from './OutputPanel.vue'
 
-const { error, monacoLanguage, options } = await useOxc()
+const { oxc, error, monacoLanguage, options } = await useOxc()
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
@@ -32,6 +32,7 @@ function stringifyError(error: unknown) {
       </div>
 
       <div
+        v-if="oxc.getDiagnostics().length"
         class="min-h-0 flex flex-1 flex-col gap2 overflow-scroll border-t px-3 py-2 text-sm font-mono op80"
       >
         <DiagnosticPanel />
