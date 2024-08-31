@@ -1,7 +1,14 @@
 <script lang="ts" setup>
 import { useDark } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import {
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  shallowRef,
+  watch,
+  watchEffect,
+} from 'vue'
 import 'src/composables/editor.worker'
 
 defineOptions({ name: 'MonacoEditor' })
@@ -13,6 +20,7 @@ const props = defineProps<{
   options?: monaco.editor.IStandaloneEditorConstructionOptions
   readonly?: boolean
   filename: string
+  markers?: monaco.editor.IMarkerData[]
 }>()
 const emit = defineEmits([
   'editorWillMount',
@@ -23,11 +31,14 @@ const emit = defineEmits([
 
 const container: any = ref(null)
 let instance: monaco.editor.IStandaloneCodeEditor | undefined
-let model: monaco.editor.ITextModel = initModel()
+const model = shallowRef<monaco.editor.ITextModel>(initModel())
 
-model.onDidChangeContent(() => {
-  const value = model.getValue()
-  emit('update:modelValue', value)
+watchEffect((onCleanup) => {
+  const { dispose } = model.value.onDidChangeContent(() => {
+    const value = model.value.getValue()
+    emit('update:modelValue', value)
+  })
+  onCleanup(() => dispose())
 })
 
 function initModel() {
@@ -48,9 +59,7 @@ const isDark = useDark({
 watch(
   () => props.language,
   () => {
-    if (model) {
-      monaco.editor.setModelLanguage(model, props.language)
-    }
+    monaco.editor.setModelLanguage(model.value, props.language)
   },
 )
 
@@ -58,9 +67,19 @@ watch(
   () => props.filename,
   () => {
     if (instance) {
-      model.dispose()
-      model = initModel()
-      instance.setModel(model)
+      model.value.dispose()
+      model.value = initModel()
+      instance.setModel(model.value)
+    }
+  },
+)
+
+watch(
+  () => props.markers,
+  () => {
+    if (!instance) return
+    if (props.markers) {
+      monaco.editor.setModelMarkers(model.value, 'oxc', props.markers)
     }
   },
 )
@@ -78,7 +97,7 @@ function initMonaco() {
   }
 
   instance = monaco.editor.create(container.value, editorOptions)
-  instance.setModel(model)
+  instance.setModel(model.value)
 
   emit('editorDidMount', instance)
 }
@@ -88,8 +107,13 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  model.dispose()
+  model.value.dispose()
   instance?.dispose()
+})
+
+const getPositionAt = (offset: number) => model.value.getPositionAt(offset)
+defineExpose({
+  getPositionAt,
 })
 </script>
 

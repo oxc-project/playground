@@ -6,6 +6,11 @@ monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   trailingCommas: 'ignore',
 })
 
+monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+  noSemanticValidation: true,
+  noSyntaxValidation: true,
+  noSuggestionDiagnostics: true,
+})
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   allowJs: true,
   target: monaco.languages.typescript.ScriptTarget.ESNext,

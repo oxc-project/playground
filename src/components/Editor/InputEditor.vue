@@ -1,0 +1,49 @@
+<script setup lang="ts">
+import { templateRef } from '@vueuse/core'
+import * as monaco from 'monaco-editor'
+import { useOxc } from 'src/composables/oxc'
+import { editorValue } from 'src/composables/state'
+import { computed } from 'vue'
+import Monaco from './Monaco.vue'
+
+defineProps<{
+  language: string
+  filename: string
+}>()
+
+const { oxc } = await useOxc()
+
+const monacoRef = templateRef<InstanceType<typeof Monaco>>('monacoRef')
+const getPositionAt = computed(() => monacoRef.value?.getPositionAt)
+
+const markers = computed((): monaco.editor.IMarkerData[] => {
+  if (!getPositionAt.value) return []
+
+  const diagnostics = oxc.value.getDiagnostics()
+  return diagnostics.map((d) => {
+    const startPos = getPositionAt.value(d.start)
+    const endPos = getPositionAt.value(d.end)
+    return {
+      severity:
+        d.severity === 'Warning'
+          ? monaco.MarkerSeverity.Warning
+          : monaco.MarkerSeverity.Error,
+      startLineNumber: startPos.lineNumber,
+      startColumn: startPos.column,
+      endLineNumber: endPos.lineNumber,
+      endColumn: endPos.column,
+      message: `Oxc error: ${d.message}`,
+    }
+  })
+})
+</script>
+
+<template>
+  <Monaco
+    ref="monacoRef"
+    v-model="editorValue"
+    :language="language"
+    :filename
+    :markers
+  />
+</template>

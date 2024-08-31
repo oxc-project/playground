@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useOxc } from 'src/composables/oxc'
 import { computed } from 'vue'
-import Code from './Code.vue'
 import CopyContainer from './CopyContainer.vue'
 import DiagnosticPanel from './DiagnosticPanel.vue'
+import InputEditor from './InputEditor.vue'
 import Output from './OutputPanel.vue'
 
 const { oxc, error, monacoLanguage, options } = await useOxc()
@@ -25,7 +25,7 @@ function stringifyError(error: unknown) {
   <main class="min-h-0 flex flex-1 flex-col md:flex-row">
     <div class="min-w-0 flex flex-1 flex-col py-2">
       <div class="min-h-0 flex-grow-2 flex-basis-none">
-        <Code
+        <InputEditor
           :language="monacoLanguage"
           :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
         />
