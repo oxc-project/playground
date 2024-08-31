@@ -9,7 +9,5 @@ defineProps<{
 </script>
 
 <template>
-  <div class="min-w-0 flex-1 py-2">
-    <Monaco v-model="editorValue" :language="language" :filename />
-  </div>
+  <Monaco v-model="editorValue" :language="language" :filename />
 </template>
