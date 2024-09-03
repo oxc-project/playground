@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { templateRef } from '@vueuse/core'
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import { useOxc } from 'src/composables/oxc'
 import { editorValue } from 'src/composables/state'
 import { computed } from 'vue'
@@ -20,7 +20,7 @@ const markers = computed((): monaco.editor.IMarkerData[] => {
   if (!getPositionAt.value) return []
 
   const diagnostics = oxc.value.getDiagnostics()
-  return diagnostics.map((d) => {
+  return diagnostics.map((d: any) => {
     const startPos = getPositionAt.value(d.start)
     const endPos = getPositionAt.value(d.end)
     return {
@@ -32,7 +32,7 @@ const markers = computed((): monaco.editor.IMarkerData[] => {
       startColumn: startPos.column,
       endLineNumber: endPos.lineNumber,
       endColumn: endPos.column,
-      message: `Oxc error: ${d.message}`,
+      message: `Oxc ${d.severity}: ${d.message}`,
     }
   })
 })
