@@ -1,25 +1,22 @@
-// @ts-nocheck
-import * as json from 'monaco-editor/esm/vs/language/json/monaco.contribution'
-import * as typescript from 'monaco-editor/esm/vs/language/typescript/monaco.contribution'
-
-json.jsonDefaults.setDiagnosticsOptions({
+import * as monaco from 'monaco-editor'
+monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
   trailingCommas: 'ignore',
 })
 
-typescript.typescriptDefaults.setDiagnosticsOptions({
+monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
   noSemanticValidation: true,
   noSyntaxValidation: true,
   noSuggestionDiagnostics: true,
 })
-typescript.typescriptDefaults.setCompilerOptions({
+monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   allowJs: true,
-  target: typescript.ScriptTarget.ESNext,
-  module: typescript.ModuleKind.ESNext,
+  target: monaco.languages.typescript.ScriptTarget.ESNext,
+  module: monaco.languages.typescript.ModuleKind.ESNext,
   allowNonTsExtensions: true,
-  moduleResolution: typescript.ModuleResolutionKind.NodeJs,
+  moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
   noEmit: true,
   esModuleInterop: true,
-  jsx: typescript.JsxEmit.React,
+  jsx: monaco.languages.typescript.JsxEmit.React,
 })
