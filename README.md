@@ -1,6 +1,6 @@
 # Oxc Playground
 
-[oxc-playground.netlify.app](https://oxc-playground.netlify.app)
+[playground.oxc.rs](https://playground.oxc.rs)
 
 ## Development
 
