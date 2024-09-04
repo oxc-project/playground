@@ -89,7 +89,7 @@ jobs:
       # https://www.raulmelo.me/en/blog/deploying-netlify-github-actions-guide
       - name: Deploy to Netlify
         id: netlify_deploy
-        if: env.SITE_ID && secrets.NETLIFY_SITE_ID
+        if: env.SITE_ID
         run: |
           prod_flag=""
           if [ "${{ github.ref_name }}" = "main" ]; then prod_flag="--prod"; fi
