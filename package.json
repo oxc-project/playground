@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.62.3",
+    "@viz-js/viz": "^3.8.0",
     "@vueuse/core": "^11.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -39,10 +40,12 @@
     "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@sxzz/eslint-config": "^4.0.0",
     "@sxzz/prettier-config": "^2.0.2",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.5.0",
     "@vitejs/plugin-vue": "^5.1.2",
     "eslint": "^9.9.1",
     "lint-staged": "^15.2.9",
+    "lodash-es": "^4.17.21",
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "shiki": "^1.14.1",
@@ -58,7 +61,7 @@
     "node": ">=20.14.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpx lint-staged"
+    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"

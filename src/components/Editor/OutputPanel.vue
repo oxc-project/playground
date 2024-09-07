@@ -3,6 +3,7 @@ import { useOxc } from 'src/composables/oxc'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'src/ui/tabs'
 import AstPanel from './Output/AstPanel.vue'
 import CodegenPanel from './Output/CodegenPanel.vue'
+import ControlflowPanel from './Output/ControlflowPanel.vue'
 import FormatPanel from './Output/FormatPanel.vue'
 import IrPanel from './Output/IrPanel.vue'
 import PrettierPanel from './Output/PrettierPanel.vue'
@@ -35,6 +36,7 @@ const { duration } = await useOxc()
       -->
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
+      <TabsTrigger value="cfg">ControlflowGraph</TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">
@@ -58,6 +60,9 @@ const { duration } = await useOxc()
       </TabsContent>
       <TabsContent value="symbol">
         <SymbolPanel />
+      </TabsContent>
+      <TabsContent value="cfg">
+        <ControlflowPanel />
       </TabsContent>
     </div>
     <div class="absolute bottom-2 right-2 opacity-60">{{ duration }} ms</div>
