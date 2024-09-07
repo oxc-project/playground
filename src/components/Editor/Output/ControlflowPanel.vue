@@ -16,7 +16,7 @@ const debouncedHandler = debounce((value) => {
   })
 }, 100)
 
-watch(() => oxc.value.cfgString, debouncedHandler)
+watch(() => oxc.value.cfgString, debouncedHandler, { immediate: true })
 </script>
 
 <template>
