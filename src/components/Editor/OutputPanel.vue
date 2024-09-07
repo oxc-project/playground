@@ -36,7 +36,7 @@ const { duration } = await useOxc()
       -->
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
-      <TabsTrigger value="cfg">Controlflow</TabsTrigger>
+      <TabsTrigger value="cfg">ControlflowGraph</TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">
