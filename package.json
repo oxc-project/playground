@@ -61,7 +61,7 @@
     "node": ">=20.14.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpx lint-staged"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"

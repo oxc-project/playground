@@ -3,12 +3,12 @@ import { useOxc } from 'src/composables/oxc'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'src/ui/tabs'
 import AstPanel from './Output/AstPanel.vue'
 import CodegenPanel from './Output/CodegenPanel.vue'
+import ControlflowPanel from './Output/ControlflowPanel.vue'
 import FormatPanel from './Output/FormatPanel.vue'
 import IrPanel from './Output/IrPanel.vue'
 import PrettierPanel from './Output/PrettierPanel.vue'
 import ScopePanel from './Output/ScopePanel.vue'
 import SymbolPanel from './Output/SymbolPanel.vue'
-import ControlflowPanel from './Output/ControlflowPanel.vue'
 
 const { duration } = await useOxc()
 </script>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useOxc } from 'src/composables/oxc'
-import { instance } from "@viz-js/viz";
-import { Ref, ref, watch } from 'vue';
+import { instance } from '@viz-js/viz'
 import { debounce } from 'lodash-es'
+import { useOxc } from 'src/composables/oxc'
+import { ref, watch, type Ref } from 'vue'
 
 const { oxc } = await useOxc()
 
@@ -10,16 +10,15 @@ const panel: Ref<null | HTMLDivElement> = ref(null)
 
 const debouncedHandler = debounce((value) => {
   instance().then((viz) => {
-    let svg = viz.renderSVGElement(value);
+    const svg = viz.renderSVGElement(value)
     panel.value!.innerHTML = ''
-    panel.value!.appendChild(svg)
+    panel.value!.append(svg)
   })
 }, 100)
 
 watch(() => oxc.value.cfgString, debouncedHandler)
-
 </script>
 
 <template>
-  <div ref="panel"></div>
+  <div ref="panel" />
 </template>
