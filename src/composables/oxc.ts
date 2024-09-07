@@ -2,7 +2,15 @@ import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
 import { PLAYGROUND_DEMO_CODE } from 'src/utils/constants'
 import { atou, utoa } from 'src/utils/url'
-import { computed, ref, toRaw, triggerRef, watch, watchEffect } from 'vue'
+import {
+  computed,
+  ref,
+  shallowRef,
+  toRaw,
+  triggerRef,
+  watch,
+  watchEffect,
+} from 'vue'
 import { editorValue } from './state'
 
 async function initialize(): Promise<Oxc> {
@@ -31,7 +39,7 @@ export const useOxc = createGlobalState(async () => {
     minifier: {},
   })
   const oxc = await oxcPromise
-  const state = computed(() => oxc)
+  const state = shallowRef(oxc)
   const error = ref<unknown>()
 
   function run() {
