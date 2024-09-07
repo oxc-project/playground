@@ -8,6 +8,7 @@ import IrPanel from './Output/IrPanel.vue'
 import PrettierPanel from './Output/PrettierPanel.vue'
 import ScopePanel from './Output/ScopePanel.vue'
 import SymbolPanel from './Output/SymbolPanel.vue'
+import ControlflowPanel from './Output/ControlflowPanel.vue'
 
 const { duration } = await useOxc()
 </script>
@@ -35,6 +36,7 @@ const { duration } = await useOxc()
       -->
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
+      <TabsTrigger value="cfg">Controlflow</TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">
@@ -58,6 +60,9 @@ const { duration } = await useOxc()
       </TabsContent>
       <TabsContent value="symbol">
         <SymbolPanel />
+      </TabsContent>
+      <TabsContent value="cfg">
+        <ControlflowPanel />
       </TabsContent>
     </div>
     <div class="absolute bottom-2 right-2 opacity-60">{{ duration }} ms</div>
