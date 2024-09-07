@@ -5,7 +5,7 @@ const { oxc } = await useOxc()
 </script>
 
 <template>
-  <div v-for="d in oxc.getDiagnostics()" :key="d.message">
-    {{ d.severity }}: {{ d.message }}
+  <div v-for="(diag, i) in oxc.getDiagnostics()" :key="i">
+    {{ diag.severity }}: {{ diag.message }}
   </div>
 </template>
