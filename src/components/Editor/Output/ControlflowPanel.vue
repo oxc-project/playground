@@ -1,24 +1,26 @@
 <script setup lang="ts">
 import { instance } from '@viz-js/viz'
-import { useDebounceFn } from '@vueuse/core'
+import { debouncedWatch } from '@vueuse/core'
 import { useOxc } from 'src/composables/oxc'
-import { ref, watch, type Ref } from 'vue'
+import { useTemplateRef } from 'vue'
+
+const viz = await instance()
 
 const { oxc } = await useOxc()
+const panelEl = useTemplateRef('panel')
 
-const panel: Ref<null | HTMLDivElement> = ref(null)
-
-const debouncedHandler = useDebounceFn((value) => {
-  instance().then((viz) => {
+debouncedWatch(
+  () => oxc.value.controlFlowGraph,
+  (value) => {
     const svg = viz.renderSVGElement(value)
-    panel.value!.innerHTML = ''
-    panel.value!.append(svg)
-  })
-}, 100)
-
-watch(() => oxc.value.controlFlowGraph, debouncedHandler, { immediate: true })
+    panelEl.value!.innerHTML = ''
+    panelEl.value!.append(svg)
+  },
+  { immediate: true, debounce: 100 },
+)
 </script>
 
 <template>
+  <!-- eslint-disable-next-line vue/no-unused-refs -->
   <div ref="panel" />
 </template>
