@@ -21,6 +21,8 @@ debouncedWatch(
 </script>
 
 <template>
-  <!-- eslint-disable-next-line vue/no-unused-refs -->
-  <div ref="panel" />
+  <div class="overflow-auto">
+    <!-- eslint-disable-next-line vue/no-unused-refs -->
+    <div ref="panel" />
+  </div>
 </template>
