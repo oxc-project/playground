@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { templateRef } from '@vueuse/core'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import * as monaco from 'monaco-editor'
 import { useOxc } from 'src/composables/oxc'
 import { editorValue } from 'src/composables/state'
 import { computed } from 'vue'

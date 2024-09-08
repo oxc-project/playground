@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDark } from '@vueuse/core'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import * as monaco from 'monaco-editor'
 import {
   onBeforeUnmount,
   onMounted,
