@@ -26,25 +26,28 @@ const checked = ref(false)
 
 <template>
   <div class="overflow-auto">
-    <div class="flex flex-col gap-2.5">
+    <div class="m-1 flex flex-col gap-2.5">
       <label
         class="flex flex-row items-center gap-4 [&>.checkbox]:hover:bg-neutral-100"
       >
         <CheckboxRoot
           v-model:checked="checked"
-          class="h-[25px] w-[25px] flex appearance-none items-center justify-center rounded-[4px] bg-white shadow-[0_2px_10px] shadow-black outline-none hover:bg-black focus-within:shadow-[0_0_0_2px_black]"
+          class="h-[25px] w-[25px] flex appearance-none items-center justify-center rounded-[4px] bg-[#ccc] shadow-[0_2px_10px] shadow-black outline-none hover:bg-[#aaa] focus-within:shadow-[0_0_0_2px_black]"
         >
           <CheckboxIndicator
-            class="h-full w-full flex items-center justify-center rounded bg-white"
+            class="h-full w-full flex items-center justify-center rounded bg-[#ccc]"
           >
-            <Icon icon="radix-icons:check" class="text-grass11 h-3.5 w-3.5" />
+            <Icon
+              icon="radix-icons:check"
+              class="text-grass11 h-3.5 w-3.5 bg-white"
+            />
           </CheckboxIndicator>
         </CheckboxRoot>
-        <span class="select-none text-white">Raw</span>
+        <span class="select-none text-black">Raw</span>
       </label>
     </div>
     <!-- eslint-disable-next-line vue/no-unused-refs -->
-    <!-- <div ref="panel" /> -->
-    <OutputPreview :code="oxc.controlFlowGraph" lang="tsx" />
+    <div v-show="!checked" ref="panel" />
+    <OutputPreview v-show="checked" :code="oxc.controlFlowGraph" lang="tsx" />
   </div>
 </template>
