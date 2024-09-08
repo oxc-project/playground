@@ -7,7 +7,7 @@ import { useTemplateRef } from 'vue'
 const viz = await instance()
 
 const { oxc } = await useOxc()
-const panelEl = useTemplateRef('panel')
+const panelEl = useTemplateRef<HTMLDivElement | null>('panel')
 
 debouncedWatch(
   () => oxc.value.controlFlowGraph,
