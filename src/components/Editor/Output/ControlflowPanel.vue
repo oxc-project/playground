@@ -25,7 +25,7 @@ const raw = ref(false)
 </script>
 
 <template>
-  <div class="w-full flex flex-col">
+  <div class="w-full flex flex-col overflow-auto">
     <Checkbox id="raw" v-model="raw" title="Raw" class="p-2" />
 
     <OutputPreview v-show="raw" :code="oxc.controlFlowGraph" lang="tsx" />
