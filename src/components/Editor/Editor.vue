@@ -23,7 +23,7 @@ function stringifyError(error: unknown) {
 
 <template>
   <main class="min-h-0 flex flex-1 flex-col md:flex-row">
-    <div class="min-w-0 flex flex-1 flex-col py-2">
+    <div class="min-w-0 flex flex-1 flex-col pt-2">
       <div class="min-h-0 flex-grow-2 flex-basis-none">
         <InputEditor
           :language="monacoLanguage"
@@ -33,7 +33,7 @@ function stringifyError(error: unknown) {
 
       <div
         v-if="oxc.getDiagnostics().length"
-        class="min-h-0 flex flex-1 flex-col gap2 overflow-scroll border-t px-3 py-2 text-sm font-mono op80"
+        class="min-h-0 flex flex-1 flex-col gap2 overflow-auto border-t px-3 py-2 text-sm font-mono op80"
       >
         <DiagnosticPanel />
       </div>
