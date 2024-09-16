@@ -24,7 +24,7 @@ function stringifyError(error: unknown) {
 <template>
   <main class="min-h-0 flex flex-1 flex-col md:flex-row">
     <div class="min-w-0 flex flex-1 flex-col pt-2">
-      <div class="min-h-0 flex-grow-2 flex-basis-none">
+      <div class="min-h-50vh flex-grow-2 flex-basis-none">
         <InputEditor
           :language="monacoLanguage"
           :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
