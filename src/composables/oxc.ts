@@ -37,6 +37,9 @@ export const useOxc = createGlobalState(async () => {
     transformer: {},
     codegen: {},
     minifier: {},
+    controlFlow: {
+      verbose: false,
+    },
   })
   const oxc = await oxcPromise
   const state = shallowRef(oxc)
