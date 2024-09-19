@@ -3,12 +3,12 @@ import { instance } from '@viz-js/viz'
 import { debouncedWatch } from '@vueuse/core'
 import Checkbox from 'src/components/ui/Checkbox.vue'
 import { useOxc } from 'src/composables/oxc'
-import { ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef, watch } from 'vue'
 import OutputPreview from './OutputPreview.vue'
 
 const viz = await instance()
 
-const { oxc } = await useOxc()
+const { oxc, options } = await useOxc()
 const panelEl = useTemplateRef<HTMLDivElement>('panel')
 
 debouncedWatch(
@@ -22,13 +22,22 @@ debouncedWatch(
 )
 
 const raw = ref(false)
+const verbose = ref(false)
+
+watch(
+  () => verbose.value,
+  (val) => {
+    options.value.controlFlow.verbose = val
+  },
+)
 </script>
 
 <template>
   <div class="w-full flex flex-col overflow-auto">
     <Checkbox id="raw" v-model="raw" title="Raw" class="p-2" />
+    <Checkbox id="verbose" v-model="verbose" title="Verbose" class="p-2" />
 
-    <OutputPreview v-show="raw" :code="oxc.controlFlowGraph" lang="tsx" />
+    <OutputPreview v-show="raw" :code="oxc.controlFlowGraph" lang="text" />
     <!-- eslint-disable-next-line vue/no-unused-refs -->
     <div v-show="!raw" ref="panel" />
   </div>
