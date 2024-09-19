@@ -38,7 +38,7 @@ export const useOxc = createGlobalState(async () => {
     codegen: {},
     minifier: {},
     controlFlow: {
-      verbose: true,
+      verbose: false,
     },
   })
   const oxc = await oxcPromise
