@@ -8,7 +8,7 @@ const symbols = computed(() => {
   const { symbols: symbolTable } = oxc.value
   if (!symbolTable) return []
 
-  return symbolTable.declarations.map((astNodeId, symbolId) => {
+  return symbolTable.declarations.map((nodeId, symbolId) => {
     const name = symbolTable.names[symbolId]
     const span = symbolTable.spans[symbolId]
     const flags = symbolTable.flags[symbolId]
@@ -21,7 +21,7 @@ const symbols = computed(() => {
     return {
       name,
       span,
-      astNodeId,
+      nodeId,
       scopeId,
       flags,
       references,
