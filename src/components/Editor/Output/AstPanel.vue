@@ -4,7 +4,12 @@ import { computed } from 'vue'
 import OutputPreview from './OutputPreview.vue'
 
 const { oxc } = await useOxc()
-const code = computed(() => JSON.stringify(oxc.value.ast, undefined, 2))
+const code = computed(() => {
+  const comments = oxc.value.getComments()
+  const errors = oxc.value.getDiagnostics()
+  const program = oxc.value.ast
+  return JSON.stringify({ program, comments, errors }, undefined, 2)
+})
 </script>
 
 <template>
