@@ -86,6 +86,9 @@ import {
             >
               Resources
             </span>
+            <div
+              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            />
           </a>
         </NavigationMenuLink>
       </NavigationMenuItem>
