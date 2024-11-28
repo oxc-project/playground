@@ -34,7 +34,9 @@ export const useOxc = createGlobalState(async () => {
     },
     parser: {},
     linter: {},
-    transformer: {},
+    transformer: {
+      target: 'es2015'
+    },
     codegen: {},
     minifier: {},
     controlFlow: {
