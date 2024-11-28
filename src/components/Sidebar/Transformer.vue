@@ -13,5 +13,13 @@ const { options } = await useOxc()
       v-model="options.run.transform"
       title="Enable"
     />
+    <div class="flex gap-1">
+      <span>Target</span>
+      <input
+        style="width: 50%"
+        class="ml-2 dark:bg-[#1b1b1f]"
+        v-model="options.transformer.target"
+      />
+    </div>
   </div>
 </template>
