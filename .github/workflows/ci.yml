@@ -58,7 +58,6 @@ jobs:
     needs: wasm
     name: Build Playground
     runs-on: ubuntu-latest
-    # Check if the event is not triggered by a fork
     env:
       SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
     steps:
@@ -84,7 +83,7 @@ jobs:
 
       - name: Install Netlify
         if: env.SITE_ID
-        run: pnpm install -g netlify-cli@17.10.1
+        run: pnpm install -g netlify-cli@17.37.2
 
       # https://www.raulmelo.me/en/blog/deploying-netlify-github-actions-guide
       - name: Deploy to Netlify
@@ -93,6 +92,7 @@ jobs:
         run: |
           prod_flag=""
           if [ "${{ github.ref_name }}" = "main" ]; then prod_flag="--prod"; fi
+          echo $prod_flag
           netlify deploy \
             --dir dist \
             --site ${{ secrets.NETLIFY_SITE_ID }} \
@@ -100,6 +100,7 @@ jobs:
             $prod_flag \
             --json \
             > deploy_output.json
+          cat deploy_output.json
 
       - name: Generate URL Preview
         id: url_preview
