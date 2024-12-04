@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import CopyContainer from 'src/components/Editor/CopyContainer.vue'
-import { highlight, highlighterPromise, type ShikiLang } from 'src/utils/shiki'
+import { highlight, highlighter, type ShikiLang } from 'src/utils/shiki'
 import { computed } from 'vue'
 
 const props = defineProps<{
   code?: string
   lang: ShikiLang
 }>()
-
-const highlighter = await highlighterPromise
 
 const codeWithColor = computed(() => {
   if (!props.code) return ''

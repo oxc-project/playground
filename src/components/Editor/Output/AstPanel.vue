@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { useOxc } from 'src/composables/oxc'
 import { computed } from 'vue'
-import OutputPreview from './OutputPreview.vue'
+// import OutputPreview from './OutputPreview.vue'
+import AstProperty from '../../ast/Property.vue'
 
 const { oxc } = await useOxc()
-const code = computed(() => {
+const value = computed(() => {
   const comments = oxc.value.getComments()
   const errors = oxc.value.getDiagnostics()
   const program = oxc.value.ast
-  return JSON.stringify({ program, comments, errors }, undefined, 2)
+  return { program, comments, errors }
 })
+
+// const code = computed(() => {
+//   return JSON.stringify(value.value, undefined, 2)
+// })
 </script>
 
 <template>
-  <OutputPreview :code lang="json" />
+  <div w-full overflow-auto pl4 text-sm leading-relaxed font-mono>
+    <AstProperty :value root open />
+  </div>
+  <!-- TODO switcher -->
+  <!-- <OutputPreview :code lang="json" /> -->
 </template>

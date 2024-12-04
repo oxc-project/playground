@@ -1,5 +1,6 @@
 import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
+import { editorValue } from 'src/composables/state'
 import { PLAYGROUND_DEMO_CODE } from 'src/utils/constants'
 import { atou, utoa } from 'src/utils/url'
 import {
@@ -11,7 +12,6 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import { editorValue } from './state'
 
 async function initialize(): Promise<Oxc> {
   await initWasm()
@@ -35,7 +35,7 @@ export const useOxc = createGlobalState(async () => {
     parser: {},
     linter: {},
     transformer: {
-      target: 'es2015'
+      target: 'es2015',
     },
     codegen: {},
     minifier: {},

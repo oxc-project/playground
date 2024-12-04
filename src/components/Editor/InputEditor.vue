@@ -9,6 +9,7 @@ import Monaco from './Monaco.vue'
 defineProps<{
   language: string
   filename: string
+  main?: boolean
 }>()
 
 const { oxc } = await useOxc()
@@ -45,5 +46,6 @@ const markers = computed((): monaco.editor.IMarkerData[] => {
     :language="language"
     :filename
     :markers
+    :main
   />
 </template>

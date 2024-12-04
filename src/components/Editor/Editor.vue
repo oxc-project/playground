@@ -28,6 +28,7 @@ function stringifyError(error: unknown) {
         <InputEditor
           :language="monacoLanguage"
           :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
+          main
         />
       </div>
 

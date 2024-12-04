@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useDark } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
+import { editorCursor, outputHoverRange } from 'src/composables/state'
 import {
   onBeforeUnmount,
   onMounted,
@@ -21,6 +22,7 @@ const props = defineProps<{
   readonly?: boolean
   filename: string
   markers?: monaco.editor.IMarkerData[]
+  main?: boolean
 }>()
 const emit = defineEmits([
   'editorWillMount',
@@ -100,6 +102,35 @@ function initMonaco() {
   instance.setModel(model.value)
 
   emit('editorDidMount', instance)
+
+  if (props.main) {
+    instance.onDidChangeCursorPosition((e) => {
+      editorCursor.value = model.value.getOffsetAt(e.position)
+    })
+
+    let decorationsCollection:
+      | monaco.editor.IEditorDecorationsCollection
+      | undefined
+
+    watchEffect(() => {
+      if (outputHoverRange.value) {
+        decorationsCollection?.clear()
+        const start = model.value.getPositionAt(outputHoverRange.value[0])
+        const end = model.value.getPositionAt(outputHoverRange.value[1])
+        decorationsCollection = instance!.createDecorationsCollection([
+          {
+            range: monaco.Range.fromPositions(start, end),
+            options: {
+              isWholeLine: false,
+              className: 'ast-highlight',
+            },
+          },
+        ])
+      } else {
+        decorationsCollection?.clear()
+      }
+    })
+  }
 }
 
 onMounted(() => {

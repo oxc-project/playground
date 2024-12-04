@@ -1,5 +1,10 @@
 import { useDark } from '@vueuse/core'
 import { ref } from 'vue'
+import type { Range } from 'src/utils/range'
 
 export const dark = useDark()
 export const editorValue = ref('')
+
+export const editorCursor = ref(0)
+export const autoFocus = ref(true)
+export const outputHoverRange = ref<Range>()
