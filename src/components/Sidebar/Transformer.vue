@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useOxc } from 'src/composables/oxc'
+import { Input } from '../../ui/input'
 import Checkbox from '../ui/Checkbox.vue'
 
 const { options } = await useOxc()
@@ -13,13 +14,9 @@ const { options } = await useOxc()
       v-model="options.run.transform"
       title="Enable"
     />
-    <div class="flex gap-1">
-      <span>Target</span>
-      <input
-        style="width: 50%"
-        class="ml-2 dark:bg-[#1b1b1f]"
-        v-model="options.transformer.target"
-      />
-    </div>
+    <label class="flex items-center gap-2">
+      Target
+      <Input v-model="options.transformer.target" class="p3!" />
+    </label>
   </div>
 </template>
