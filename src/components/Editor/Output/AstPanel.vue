@@ -2,7 +2,7 @@
 import { useOxc } from 'src/composables/oxc'
 import { computed } from 'vue'
 // import OutputPreview from './OutputPreview.vue'
-import AstProperty from '../../ast/Property.vue'
+import AstProperty from 'src/components/ast/Property.vue'
 
 const { oxc } = await useOxc()
 const value = computed(() => {
