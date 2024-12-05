@@ -8,13 +8,13 @@
       <li>
         <a
           class="mx-2 block"
-          href="https://twitter.com/boshen_c"
+          href="https://bsky.app/profile/boshen.github.io"
           aria-label="twitter"
           target="_blank"
           rel="noopener"
         >
           <div
-            class="i-ri:twitter-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="i-ri:bluesky-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
       </li>
@@ -27,7 +27,7 @@
           rel="noopener"
         >
           <div
-            class="i-ri:discord-line h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="i-ri:discord-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
           />
         </a>
       </li>
