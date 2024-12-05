@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { useOxc } from 'src/composables/oxc'
-import { computed } from 'vue'
-// import OutputPreview from './OutputPreview.vue'
 import AstProperty from 'src/components/ast/Property.vue'
+import Checkbox from 'src/components/ui/Checkbox.vue'
+import { useOxc } from 'src/composables/oxc'
+import { computed, ref } from 'vue'
+import OutputPreview from './OutputPreview.vue'
+
+const raw = ref(false)
 
 const { oxc } = await useOxc()
 const value = computed(() => {
@@ -12,15 +15,18 @@ const value = computed(() => {
   return { program, comments, errors }
 })
 
-// const code = computed(() => {
-//   return JSON.stringify(value.value, undefined, 2)
-// })
+const code = computed(() => {
+  return JSON.stringify(value.value, undefined, 2)
+})
 </script>
 
 <template>
-  <div w-full overflow-auto pl4 text-sm leading-relaxed font-mono>
-    <AstProperty :value root open />
+  <div w-full overflow-auto p2>
+    <Checkbox id="raw" v-model="raw" title="Raw" />
+
+    <OutputPreview v-if="raw" :code lang="json" />
+    <div v-else pl4 pt2 text-sm leading-relaxed font-mono>
+      <AstProperty :value root open />
+    </div>
   </div>
-  <!-- TODO switcher -->
-  <!-- <OutputPreview :code lang="json" /> -->
 </template>
