@@ -5,28 +5,7 @@ import OutputPreview from './OutputPreview.vue'
 
 const { oxc } = await useOxc()
 const symbols = computed(() => {
-  const { symbols: symbolTable } = oxc.value
-  if (!symbolTable) return []
-
-  return symbolTable.declarations.map((nodeId, symbolId) => {
-    const name = symbolTable.names[symbolId]
-    const span = symbolTable.spans[symbolId]
-    const flags = symbolTable.flags[symbolId]
-    const scopeId = symbolTable.scopeIds[symbolId]
-    const referenceIds = symbolTable.resolvedReferences[symbolId]
-    const references = referenceIds
-      .map((id) => symbolTable.references[id])
-      .map(({ symbolId, ...reference }) => reference)
-
-    return {
-      name,
-      span,
-      nodeId,
-      scopeId,
-      flags,
-      references,
-    }
-  })
+  return oxc.value.symbols
 })
 const code = computed(() => JSON.stringify(symbols.value, undefined, 2))
 </script>
