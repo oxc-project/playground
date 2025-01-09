@@ -14,7 +14,7 @@ import {
         <NavigationMenuLink as-child>
           <a
             class="flex items-center px-3"
-            href="https://oxc-project.github.io/docs/guide/introduction.html"
+            href="https://oxc.rs/docs/guide/introduction.html"
             target="_blank"
             rel="noopener"
           >
@@ -34,7 +34,7 @@ import {
         <NavigationMenuLink as-child>
           <a
             class="flex items-center px-3"
-            href="https://oxc-project.github.io/docs/learn/parser_in_rust/intro.html"
+            href="https://oxc.rs/docs/learn/parser_in_rust/intro.html"
             target="_blank"
             rel="noopener"
           >
@@ -52,7 +52,7 @@ import {
       <NavigationMenuItem>
         <NavigationMenuLink
           class="flex items-center px-3"
-          href="https://oxc-project.github.io/docs/contribute/introduction.html"
+          href="https://oxc.rs/docs/contribute/introduction.html"
         >
           <span
             class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
