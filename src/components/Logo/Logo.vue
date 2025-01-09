@@ -2,7 +2,7 @@
   <div class="h-16 flex items-center justify-between">
     <a
       class="h-full w-full flex items-center border-b border-[#e2e2e3] dark:border-[#2e2e32]"
-      href="https://oxc-project.github.io"
+      href="https://oxc.rs"
     >
       <img
         class="mr-2 h-6 w-6"

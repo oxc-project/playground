@@ -6,7 +6,7 @@
   "description": "oxc playground",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://oxc-project.github.io",
+  "homepage": "https://oxc.rs",
   "bugs": "https://github.com/oxc-project/playground/issues",
   "repository": {
     "type": "git",
