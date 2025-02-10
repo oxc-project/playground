@@ -29,7 +29,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fflate": "^0.8.2",
-    "lucide-vue-next": "^0.469.0",
+    "lucide-vue-next": "^0.475.0",
     "monaco-editor": "^0.52.2",
     "radix-vue": "^1.9.11",
     "tailwind-merge": "^3.0.0",
@@ -53,7 +53,7 @@
     "unocss-preset-animations": "^1.1.0",
     "unocss-preset-shadcn": "^0.3.1",
     "vite": "^6.0.6",
-    "vue-tsc": "~2.1.10"
+    "vue-tsc": "~2.2.0"
   },
   "engines": {
     "node": ">=20.14.0"
