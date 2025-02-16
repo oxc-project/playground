@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 import { autoFocus, outputHoverRange } from '~/composables/state'
 import { checkRange, getRange } from '~/utils/range'
 import { useHighlightColor } from '~/utils/shiki'
-import { computed, ref, watch } from 'vue'
 import AstSummaryValue from './SummaryValue.vue'
 import AstValue from './Value.vue'
 
@@ -108,6 +108,7 @@ defineExpose({ isHovering })
   <div
     ref="container"
     relative
+    w-fit
     :class="isHovering && exactHover && 'ast-highlight'"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
