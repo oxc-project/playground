@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useOxc } from '~/composables/oxc'
 import { Button } from '~/ui/button'
 import {
@@ -8,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/ui/dialog'
-import { computed } from 'vue'
 import Monaco from '../Editor/Monaco.vue'
 
 const { options } = await useOxc()

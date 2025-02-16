@@ -7,8 +7,8 @@ import {
   type CheckboxRootEmits,
   type CheckboxRootProps,
 } from 'radix-vue'
-import { cn } from '~/utils/cn'
 import { computed, type HTMLAttributes } from 'vue'
+import { cn } from '~/utils/cn'
 
 const props = defineProps<
   CheckboxRootProps & { class?: HTMLAttributes['class'] }

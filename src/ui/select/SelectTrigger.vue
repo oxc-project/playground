@@ -6,8 +6,8 @@ import {
   useForwardProps,
   type SelectTriggerProps,
 } from 'radix-vue'
-import { cn } from '~/utils/cn'
 import { computed, type HTMLAttributes } from 'vue'
+import { cn } from '~/utils/cn'
 
 const props = defineProps<
   SelectTriggerProps & { class?: HTMLAttributes['class'] }

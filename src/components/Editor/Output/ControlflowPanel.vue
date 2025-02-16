@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { instance } from '@viz-js/viz'
 import { debouncedWatch } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
 import Checkbox from '~/components/ui/Checkbox.vue'
 import { useOxc } from '~/composables/oxc'
-import { ref, useTemplateRef } from 'vue'
 import OutputPreview from './OutputPreview.vue'
 
 const viz = await instance()

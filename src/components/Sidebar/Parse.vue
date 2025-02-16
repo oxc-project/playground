@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useOxc } from '~/composables/oxc'
 import { computed } from 'vue'
+import { useOxc } from '~/composables/oxc'
 import Checkbox from '../ui/Checkbox.vue'
 import Select from '../ui/Select.vue'
 

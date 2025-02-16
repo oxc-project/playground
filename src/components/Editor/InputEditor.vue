@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { templateRef } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
+import { computed } from 'vue'
 import { useOxc } from '~/composables/oxc'
 import { editorValue } from '~/composables/state'
-import { computed } from 'vue'
 import Monaco from './Monaco.vue'
 
 defineProps<{

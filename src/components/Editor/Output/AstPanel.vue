@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import AstProperty from '~/components/ast/Property.vue'
 import Checkbox from '~/components/ui/Checkbox.vue'
 import { useOxc } from '~/composables/oxc'
-import { computed, ref } from 'vue'
 import OutputPreview from './OutputPreview.vue'
 
 const raw = ref(false)
