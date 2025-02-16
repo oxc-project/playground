@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Checkbox } from 'src/ui/checkbox'
-import { cn } from 'src/utils/cn'
+import { Checkbox } from '~/ui/checkbox'
+import { cn } from '~/utils/cn'
 
 defineProps<{
   id: string

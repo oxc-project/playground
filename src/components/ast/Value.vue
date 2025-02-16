@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTemplateRefsList } from '@vueuse/core'
-import { useHighlightColor } from 'src/utils/shiki'
+import { useHighlightColor } from '~/utils/shiki'
 import { computed, watchEffect } from 'vue'
 import AstBrackets from './Brackets.vue'
 import AstProperty from './Property.vue'

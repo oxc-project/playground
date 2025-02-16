@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Editor from 'src/components/Editor/Editor.vue'
-import Header from 'src/components/Header/Header.vue'
-import Sidebar from 'src/components/Sidebar/Sidebar.vue'
-import { loadingOxc } from 'src/composables/oxc'
+import Editor from '~/components/Editor/Editor.vue'
+import Header from '~/components/Header/Header.vue'
+import Sidebar from '~/components/Sidebar/Sidebar.vue'
+import { loadingOxc } from '~/composables/oxc'
 </script>
 
 <template>

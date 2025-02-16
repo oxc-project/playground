@@ -1,6 +1,6 @@
 import { useDark } from '@vueuse/core'
 import { ref } from 'vue'
-import type { Range } from 'src/utils/range'
+import type { Range } from '~/utils/range'
 
 export const dark = useDark()
 export const editorValue = ref('')

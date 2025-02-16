@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useOxc } from 'src/composables/oxc'
-import { Button } from 'src/ui/button'
+import { useOxc } from '~/composables/oxc'
+import { Button } from '~/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from 'src/ui/dialog'
+} from '~/ui/dialog'
 import { computed } from 'vue'
 import Monaco from '../Editor/Monaco.vue'
 

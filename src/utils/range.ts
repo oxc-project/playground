@@ -1,4 +1,4 @@
-import { editorCursor } from 'src/composables/state'
+import { editorCursor } from '~/composables/state'
 
 export type Range = [start: number, end: number]
 

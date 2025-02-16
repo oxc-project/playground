@@ -1,8 +1,8 @@
 import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
-import { editorValue } from 'src/composables/state'
-import { PLAYGROUND_DEMO_CODE } from 'src/utils/constants'
-import { atou, utoa } from 'src/utils/url'
+import { editorValue } from '~/composables/state'
+import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
+import { atou, utoa } from '~/utils/url'
 import {
   computed,
   ref,

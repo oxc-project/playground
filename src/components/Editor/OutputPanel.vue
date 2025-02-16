@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useOxc } from 'src/composables/oxc'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'src/ui/tabs'
+import { useOxc } from '~/composables/oxc'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
 import AstPanel from './Output/AstPanel.vue'
 import CodegenPanel from './Output/CodegenPanel.vue'
 import ControlflowPanel from './Output/ControlflowPanel.vue'

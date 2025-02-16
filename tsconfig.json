@@ -7,7 +7,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "src/*": ["./src/*"]
+      "~/*": ["./src/*"]
     },
     "strict": true,
     "noEmit": true,

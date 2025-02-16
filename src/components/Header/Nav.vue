@@ -4,7 +4,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from 'src/ui/navigation-menu'
+} from '~/ui/navigation-menu'
 </script>
 
 <template>

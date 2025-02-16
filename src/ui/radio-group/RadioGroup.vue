@@ -5,7 +5,7 @@ import {
   type RadioGroupRootEmits,
   type RadioGroupRootProps,
 } from 'radix-vue'
-import { cn } from 'src/utils/cn'
+import { cn } from '~/utils/cn'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<

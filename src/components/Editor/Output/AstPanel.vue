@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AstProperty from 'src/components/ast/Property.vue'
-import Checkbox from 'src/components/ui/Checkbox.vue'
-import { useOxc } from 'src/composables/oxc'
+import AstProperty from '~/components/ast/Property.vue'
+import Checkbox from '~/components/ui/Checkbox.vue'
+import { useOxc } from '~/composables/oxc'
 import { computed, ref } from 'vue'
 import OutputPreview from './OutputPreview.vue'
 

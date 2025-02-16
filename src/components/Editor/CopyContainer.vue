@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { Button } from 'src/ui/button'
+import { Button } from '~/ui/button'
 
 const props = defineProps<{ value: string }>()
 const { copied, copy } = useClipboard()

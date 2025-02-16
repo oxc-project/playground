@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from 'src/ui/select'
+} from '~/ui/select'
 
 defineProps<{
   title?: string

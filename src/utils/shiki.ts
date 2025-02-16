@@ -6,7 +6,7 @@ import langTsx from 'shiki/langs/tsx.mjs'
 import langTs from 'shiki/langs/typescript.mjs'
 import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
 import vitesseLight from 'shiki/themes/vitesse-light.mjs'
-import { dark } from 'src/composables/state'
+import { dark } from '~/composables/state'
 import { computed, toValue } from 'vue'
 
 export const highlighter = createHighlighterCoreSync({

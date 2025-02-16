@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { autoFocus, outputHoverRange } from 'src/composables/state'
-import { checkRange, getRange } from 'src/utils/range'
-import { useHighlightColor } from 'src/utils/shiki'
+import { autoFocus, outputHoverRange } from '~/composables/state'
+import { checkRange, getRange } from '~/utils/range'
+import { useHighlightColor } from '~/utils/shiki'
 import { computed, ref, watch } from 'vue'
 import AstSummaryValue from './SummaryValue.vue'
 import AstValue from './Value.vue'

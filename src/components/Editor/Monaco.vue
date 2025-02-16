@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useDark } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
-import { editorCursor, outputHoverRange } from 'src/composables/state'
 import {
   onBeforeUnmount,
   onMounted,
@@ -10,7 +9,8 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import 'src/composables/editor.worker'
+import { editorCursor, outputHoverRange } from '~/composables/state'
+import '~/composables/editor.worker'
 
 defineOptions({ name: 'MonacoEditor' })
 

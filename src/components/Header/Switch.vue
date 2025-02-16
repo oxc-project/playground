@@ -6,8 +6,8 @@ import {
   type SwitchRootEmits,
   type SwitchRootProps,
 } from 'radix-vue'
-import { dark } from 'src/composables/state'
-import { cn } from 'src/utils/cn'
+import { dark } from '~/composables/state'
+import { cn } from '~/utils/cn'
 import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<
