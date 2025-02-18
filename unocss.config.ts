@@ -13,7 +13,7 @@ export default defineConfig({
     presetWind3(),
     presetAnimations(),
     presetShadcn({
-      color: 'slate',
+      color: 'blue',
       darkSelector: '.dark',
     }),
     presetIcons({ scale: 1.2 }),

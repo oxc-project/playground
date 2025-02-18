@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import Checkbox from '~/components/ui/Checkbox.vue'
+import Select from '~/components/ui/Select.vue'
 import { useOxc } from '~/composables/oxc'
-import Checkbox from '../ui/Checkbox.vue'
-import Select from '../ui/Select.vue'
 
 const { options } = await useOxc()
 
@@ -51,8 +51,8 @@ function toggleDts(checked: boolean) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 pt-4">
-    <div class="text-muted-foreground font-medium">Parser</div>
+  <div flex flex-col gap2 pt4>
+    <div font-medium>Parser</div>
 
     <Select
       v-model="options.parser.sourceType"
@@ -72,39 +72,31 @@ function toggleDts(checked: boolean) {
     />
 
     <Checkbox
-      id="jsx"
-      :title="language === 'javascript' ? 'JSX' : 'TSX'"
+      :label="language === 'javascript' ? 'JSX' : 'TSX'"
       :model-value="jsx"
       @update:model-value="toggleJsx"
     />
 
     <Checkbox
       v-if="language === 'typescript'"
-      id="dts"
       :model-value="dts"
-      title="D.TS"
+      label="D.TS"
       @update:model-value="toggleDts"
     />
 
-    <Checkbox
-      id="syntax"
-      v-model="options.run.syntax"
-      title="Check Syntax Errors"
-    />
+    <Checkbox v-model="options.run.syntax" label="Check Syntax Errors" />
 
     <Checkbox
-      id="allowReturnOutsideFunction"
       v-model="options.parser.allowReturnOutsideFunction"
-      title="allowReturnOutsideFunction"
+      label="allowReturnOutsideFunction"
       font-mono
       label-class="text-xs"
     />
 
     <Checkbox
-      id="preserveParens"
       v-model="options.parser.preserveParens"
       default-checked
-      title="preserveParens"
+      label="preserveParens"
       font-mono
     />
   </div>

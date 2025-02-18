@@ -9,6 +9,7 @@ const props = defineProps<
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
+
   return delegated
 })
 </script>
