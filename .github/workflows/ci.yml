@@ -41,7 +41,7 @@ jobs:
           repository: oxc-project/oxc
           ref: main
 
-      - uses: Boshen/setup-rust@main
+      - uses: oxc-project/setup-rust@cd82e1efec7fef815e2c23d296756f31c7cdc03d # v1.0.0
         with:
           save-cache: ${{ github.ref_name == 'main' }}
           tools: wasm-pack,just
@@ -83,7 +83,7 @@ jobs:
 
       - name: Install Netlify
         if: env.SITE_ID
-        run: pnpm install -g netlify-cli@17.37.2
+        run: pnpm install -g netlify-cli@18.1.0
 
       # https://www.raulmelo.me/en/blog/deploying-netlify-github-actions-guide
       - name: Deploy to Netlify
