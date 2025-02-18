@@ -18,5 +18,10 @@ const { options } = await useOxc()
       Target
       <Input v-model="options.transformer.target" class="p3!" />
     </label>
+    <Checkbox
+      id="id-enable"
+      v-model="options.transformer.isolatedDeclarations"
+      title="Isolated Declarations DTS Emit"
+    />
   </div>
 </template>
