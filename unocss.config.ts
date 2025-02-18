@@ -2,7 +2,7 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetUno,
+  presetWind3,
   transformerDirectives,
 } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
@@ -10,7 +10,7 @@ import { presetShadcn } from 'unocss-preset-shadcn'
 
 export default defineConfig({
   presets: [
-    presetUno(),
+    presetWind3(),
     presetAnimations(),
     presetShadcn({
       color: 'slate',
