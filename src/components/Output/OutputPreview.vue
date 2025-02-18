@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import CopyContainer from '~/components/Editor/CopyContainer.vue'
+import CopyContainer from '~/components/CopyContainer.vue'
 import { highlight, highlighter, type ShikiLang } from '~/utils/shiki'
 
 const props = defineProps<{

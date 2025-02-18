@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/ui/dialog'
-import Monaco from '../Editor/Monaco.vue'
+import MonacoEditor from '../MonacoEditor.vue'
 
 const { options } = await useOxc()
 const optionsString = computed({
@@ -38,7 +38,7 @@ const optionsString = computed({
         <DialogTitle class="text-center">Oxc Options</DialogTitle>
       </DialogHeader>
 
-      <Monaco
+      <MonacoEditor
         v-model="optionsString"
         language="json"
         filename="/options.json"

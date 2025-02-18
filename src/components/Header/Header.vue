@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Logo from '../Logo/Logo.vue'
+import Logo from '../sidebar/Logo.vue'
 import Media from './Media.vue'
 import Nav from './Nav.vue'
 import Switch from './Switch.vue'

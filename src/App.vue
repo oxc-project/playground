@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Editor from '~/components/Editor/Editor.vue'
-import Header from '~/components/Header/Header.vue'
-import Sidebar from '~/components/Sidebar/Sidebar.vue'
+import Header from '~/components/header/Header.vue'
+import IoContainer from '~/components/IoContainer.vue'
+import Sidebar from '~/components/sidebar/Sidebar.vue'
 import { loadingOxc } from '~/composables/oxc'
 </script>
 
@@ -11,7 +11,7 @@ import { loadingOxc } from '~/composables/oxc'
       <Sidebar />
       <div class="min-w-0 flex flex-1 flex-col">
         <Header />
-        <Editor />
+        <IoContainer />
       </div>
     </div>
 

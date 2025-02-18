@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Logo from '../Logo/Logo.vue'
 import Linter from './Linter.vue'
+import Logo from './Logo.vue'
 import Minifier from './Minifier.vue'
 import OptionsDialog from './OptionsDialog.vue'
 import Parse from './Parse.vue'

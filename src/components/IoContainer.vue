@@ -2,9 +2,9 @@
 import { computed } from 'vue'
 import { useOxc } from '~/composables/oxc'
 import CopyContainer from './CopyContainer.vue'
-import DiagnosticPanel from './DiagnosticPanel.vue'
-import InputEditor from './InputEditor.vue'
-import Output from './OutputPanel.vue'
+import InputEditor from './input/InputEditor.vue'
+import DiagnosticPanel from './output/DiagnosticPanel.vue'
+import Output from './output/OutputPanel.vue'
 
 const { oxc, error, monacoLanguage, options } = await useOxc()
 

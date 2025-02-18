@@ -4,7 +4,7 @@ import * as monaco from 'monaco-editor'
 import { computed } from 'vue'
 import { useOxc } from '~/composables/oxc'
 import { editorValue } from '~/composables/state'
-import Monaco from './Monaco.vue'
+import MonacoEditor from '../MonacoEditor.vue'
 
 defineProps<{
   language: string
@@ -14,7 +14,7 @@ defineProps<{
 
 const { oxc } = await useOxc()
 
-const monacoRef = templateRef<InstanceType<typeof Monaco>>('monacoRef')
+const monacoRef = templateRef<InstanceType<typeof MonacoEditor>>('monacoRef')
 const getPositionAt = computed(() => monacoRef.value?.getPositionAt)
 
 const markers = computed((): monaco.editor.IMarkerData[] => {
@@ -40,7 +40,7 @@ const markers = computed((): monaco.editor.IMarkerData[] => {
 </script>
 
 <template>
-  <Monaco
+  <MonacoEditor
     ref="monacoRef"
     v-model="editorValue"
     :language="language"
