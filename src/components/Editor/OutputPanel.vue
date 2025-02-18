@@ -23,9 +23,9 @@ const { duration } = await useOxc()
       as="nav"
       class="relative h-auto flex flex-shrink-0 justify-start gap-2 overflow-auto rounded-none p-2"
     >
-      <TabsTrigger value="ast">AST</TabsTrigger>
+      <TabsTrigger value="ast">estree AST</TabsTrigger>
+      <TabsTrigger value="ir">Rust AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
-      <TabsTrigger value="ir">IR</TabsTrigger>
       <!--
       <TabsTrigger value="prettier" :disabled="!options.run.prettierIr">
         Prettier IR
