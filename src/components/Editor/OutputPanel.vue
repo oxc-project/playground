@@ -5,8 +5,8 @@ import CodegenPanel from './Output/CodegenPanel.vue'
 import ControlflowPanel from './Output/ControlflowPanel.vue'
 import EsTreePanel from './Output/EsTreePanel.vue'
 import FormatPanel from './Output/FormatPanel.vue'
-import IrPanel from './Output/IrPanel.vue'
 import PrettierPanel from './Output/PrettierPanel.vue'
+import RustAstPanel from './Output/RustAstPanel.vue'
 import ScopePanel from './Output/ScopePanel.vue'
 import SymbolPanel from './Output/SymbolPanel.vue'
 
@@ -47,7 +47,7 @@ const { duration } = await useOxc()
         <CodegenPanel />
       </TabsContent>
       <TabsContent value="ir">
-        <IrPanel />
+        <RustAstPanel />
       </TabsContent>
       <TabsContent value="prettier">
         <PrettierPanel />
