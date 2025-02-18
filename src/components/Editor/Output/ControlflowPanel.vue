@@ -26,19 +26,13 @@ const raw = ref(false)
 
 <template>
   <div class="w-full flex flex-col">
-    <div class="flex">
-      <Checkbox id="raw" v-model="raw" title="Raw" class="p-2" />
-      <Checkbox
-        id="verbose"
-        v-model="options.controlFlow.verbose"
-        title="Verbose"
-        class="p-2"
-      />
+    <div flex gap4 p2>
+      <Checkbox v-model="raw" label="Raw" />
+      <Checkbox v-model="options.controlFlow.verbose" label="Verbose" />
     </div>
 
     <div class="overflow-auto">
       <OutputPreview v-show="raw" :code="oxc.controlFlowGraph" lang="text" />
-      <!-- eslint-disable-next-line vue/no-unused-refs -->
       <div v-show="!raw" ref="panel" />
     </div>
   </div>

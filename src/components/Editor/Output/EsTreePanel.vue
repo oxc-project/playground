@@ -22,7 +22,7 @@ const code = computed(() => {
 
 <template>
   <div w-full overflow-auto p2>
-    <Checkbox id="raw" v-model="raw" title="Raw" />
+    <Checkbox v-model="raw" label="Raw" />
 
     <OutputPreview v-if="raw" :code lang="json" />
     <div v-else pl4 pt2 text-sm leading-relaxed font-mono>

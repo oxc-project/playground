@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useOxc } from '~/composables/oxc'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
-import AstPanel from './Output/AstPanel.vue'
 import CodegenPanel from './Output/CodegenPanel.vue'
 import ControlflowPanel from './Output/ControlflowPanel.vue'
+import EsTreePanel from './Output/EsTreePanel.vue'
 import FormatPanel from './Output/FormatPanel.vue'
 import IrPanel from './Output/IrPanel.vue'
 import PrettierPanel from './Output/PrettierPanel.vue'
@@ -41,7 +41,7 @@ const { duration } = await useOxc()
 
     <div class="h-full min-h-0 min-w-0">
       <TabsContent value="ast">
-        <AstPanel />
+        <EsTreePanel />
       </TabsContent>
       <TabsContent value="codegen">
         <CodegenPanel />
