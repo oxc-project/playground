@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Codegen from './Codegen.vue'
 import Linter from './Linter.vue'
 import Logo from './Logo.vue'
 import Minifier from './Minifier.vue'
@@ -22,6 +23,8 @@ import Transformer from './Transformer.vue'
       <hr />
       <Minifier />
       <!-- <Prettier /> -->
+      <hr />
+      <Codegen />
       <hr />
       <OptionsDialog />
     </div>

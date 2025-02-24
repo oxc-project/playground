@@ -38,7 +38,9 @@ export const useOxc = createGlobalState(async () => {
       target: 'es2015',
       isolatedDeclarations: false,
     },
-    codegen: {},
+    codegen: {
+      enableSourcemap: true,
+    },
     minifier: {},
     controlFlow: {
       verbose: false,
