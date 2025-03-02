@@ -6,9 +6,14 @@ import OutputPreview from './OutputPreview.vue'
 const { oxc } = await useOxc()
 
 const sourcemapLink = computed(() => {
-  const code = oxc.value.codegenText
-  const map = oxc.value.codegenSourcemapText
+  let code = oxc.value.codegenText
+  let map = oxc.value.codegenSourcemapText
   if (code && map) {
+    // encoding url hash for
+    // https://github.com/evanw/source-map-visualization/blob/f3e9dfec20e7bfd9625d03dd0d427affa74a9c43/code.js#L2004-L2023
+    const utf16ToUTF8 = (x: string) => unescape(encodeURIComponent(x))
+    code = utf16ToUTF8(code)
+    map = utf16ToUTF8(map)
     const hash = btoa(`${code.length}\0${code}${map.length}\0${map}`)
     return `https://evanw.github.io/source-map-visualization/#${hash}`
   }
