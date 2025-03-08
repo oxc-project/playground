@@ -1,5 +1,6 @@
 import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
+import { parseAsync } from 'oxc-parser'
 import {
   computed,
   ref,
@@ -17,6 +18,18 @@ async function initialize(): Promise<Oxc> {
   await initWasm()
   return new Oxc()
 }
+
+parseAsync(
+  'test.tsx',
+  `
+  const a = 1
+  const b: number = 2
+  const c = a + b
+  console.log(c)
+`,
+).then((ast) => {
+  console.log(ast)
+})
 
 export const loadingOxc = ref(true)
 export const oxcPromise = initialize().finally(() => (loadingOxc.value = false))
