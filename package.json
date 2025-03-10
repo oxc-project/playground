@@ -26,7 +26,7 @@
     "@radix-icons/vue": "^1.0.0",
     "@unocss/reset": "^66.0.0",
     "@viz-js/viz": "^3.11.0",
-    "@vueuse/core": "^12.7.0",
+    "@vueuse/core": "^13.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fflate": "^0.8.2",
