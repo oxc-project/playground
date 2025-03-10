@@ -32,7 +32,10 @@ export const useOxc = createGlobalState(async () => {
       symbol: true,
       transform: false,
     },
-    parser: {},
+    parser: {
+      allowReturnOutsideFunction: true,
+      preserveParens: true,
+    },
     linter: {},
     transformer: {
       target: 'es2015',
