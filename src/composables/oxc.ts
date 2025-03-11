@@ -1,4 +1,4 @@
-import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
+import initWasm, { Oxc, type OxcOptions } from '@oxc/playground'
 import { createGlobalState } from '@vueuse/core'
 import {
   computed,

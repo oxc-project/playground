@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.2.5",
-    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
+    "@oxc/playground": "link:../oxc/napi/playground",
     "@sxzz/eslint-config": "^6.0.0",
     "@sxzz/prettier-config": "^2.2.0",
     "@types/node": "^22.13.4",
