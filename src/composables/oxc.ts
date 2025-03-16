@@ -1,5 +1,6 @@
 import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
+import * as oxcPlayground from 'oxc-playground'
 import {
   computed,
   ref,
@@ -14,6 +15,8 @@ import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
 
 async function initialize(): Promise<Oxc> {
+  const oxc = new oxcPlayground.Oxc()
+  console.log(oxc)
   await initWasm()
   return new Oxc()
 }

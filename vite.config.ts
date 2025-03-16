@@ -10,7 +10,20 @@ export default defineConfig({
       '~': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    target: 'esnext',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext',
+    },
+    include: ['oxc-playground'],
+  },
   server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
     fs: {
       allow: [__dirname, '../oxc/npm/oxc-wasm'],
     },
