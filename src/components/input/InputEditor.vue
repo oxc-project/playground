@@ -20,10 +20,10 @@ const getPositionAt = computed(() => monacoRef.value?.getPositionAt)
 const markers = computed((): monaco.editor.IMarkerData[] => {
   if (!getPositionAt.value) return []
 
-  const diagnostics = oxc.value.getDiagnostics()
-  return diagnostics.map((d: any) => {
-    const startPos = getPositionAt.value(d.start)
-    const endPos = getPositionAt.value(d.end)
+  const diagnostics = oxc.value.getDiagnostics2()
+  return diagnostics.map((d) => {
+    const startPos = getPositionAt.value(d.labels[0].start ?? 0)
+    const endPos = getPositionAt.value(d.labels[0].end ?? 0)
     return {
       severity:
         d.severity === 'Warning'
