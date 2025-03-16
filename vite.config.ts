@@ -25,7 +25,8 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
     fs: {
-      allow: [__dirname, '../oxc/npm/oxc-wasm'],
+      // allow: [__dirname, '../oxc/npm/oxc-wasm'],
+      allow: [__dirname, '../oxc/napi/playground'],
     },
   },
   plugins: [Vue(), UnoCSS()],
