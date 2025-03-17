@@ -13,7 +13,6 @@ on:
   push:
     branches:
       - main
-      - 'renovate/**'
     paths-ignore:
       - README.md
 
@@ -41,18 +40,29 @@ jobs:
           repository: oxc-project/oxc
           ref: main
 
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
       - uses: oxc-project/setup-rust@cd82e1efec7fef815e2c23d296756f31c7cdc03d # v1.0.0
         with:
           save-cache: ${{ github.ref_name == 'main' }}
-          tools: wasm-pack,just
+          tools: just
 
-      - run: just build-wasm
+      - run: rustup target add wasm32-wasip1-threads
+
+      - run: just build-playground
 
       - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
           if-no-files-found: error
-          name: wasm
-          path: npm/oxc-wasm
+          name: playground
+          path: napi/playground
 
   build:
     needs: wasm
@@ -76,8 +86,8 @@ jobs:
       - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           merge-multiple: true
-          name: wasm
-          path: ../oxc/npm/oxc-wasm
+          name: playground
+          path: ../oxc/napi/playground
 
       - run: pnpm run build
 

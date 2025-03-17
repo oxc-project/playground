@@ -1,4 +1,3 @@
-import initWasm, { Oxc, type OxcOptions } from '@oxc/oxc_wasm'
 import { createGlobalState } from '@vueuse/core'
 import {
   computed,
@@ -12,9 +11,10 @@ import {
 import { editorValue } from '~/composables/state'
 import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
+import type { Oxc, OxcOptions } from 'oxc-playground'
 
 async function initialize(): Promise<Oxc> {
-  await initWasm()
+  const { Oxc } = await import('oxc-playground')
   return new Oxc()
 }
 

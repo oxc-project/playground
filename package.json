@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.2.5",
-    "@oxc/oxc_wasm": "link:../oxc/npm/oxc-wasm",
     "@sxzz/eslint-config": "^6.0.0",
     "@sxzz/prettier-config": "^2.2.0",
     "@types/node": "^22.13.4",
@@ -45,6 +44,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "eslint": "^9.20.1",
     "lint-staged": "^15.4.3",
+    "oxc-playground": "link:../oxc/napi/playground",
     "postcss": "^8.5.2",
     "prettier": "^3.5.1",
     "shiki": "^3.0.0",
