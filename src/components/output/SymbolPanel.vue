@@ -7,10 +7,6 @@ const { oxc } = await useOxc()
 const code = computed(() => {
   return oxc.value.symbolsJson
 })
-// const symbols = computed(() => {
-//   return JSON.parse(oxc.value.symbolsJson)
-// })
-// const code = computed(() => JSON.stringify(symbols.value, undefined, 2))
 </script>
 
 <template>

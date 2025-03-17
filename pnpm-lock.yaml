@@ -45,9 +45,6 @@ importers:
       '@iconify-json/ri':
         specifier: ^1.2.5
         version: 1.2.5
-      '@oxc/oxc_wasm':
-        specifier: link:../oxc/npm/oxc-wasm
-        version: link:../oxc/npm/oxc-wasm
       '@sxzz/eslint-config':
         specifier: ^6.0.0
         version: 6.0.2(@types/eslint@9.6.1)(@typescript-eslint/eslint-plugin@8.26.1(@typescript-eslint/parser@8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(@unocss/eslint-plugin@66.0.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
