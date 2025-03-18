@@ -33,7 +33,7 @@ function stringifyError(error: unknown) {
       </div>
 
       <div
-        v-if="oxc.getDiagnostics2().length"
+        v-if="oxc.getDiagnostics().length"
         class="min-h-0 flex flex-1 flex-col gap2 overflow-auto border-t px-3 py-2 text-sm font-mono op80"
       >
         <DiagnosticPanel />

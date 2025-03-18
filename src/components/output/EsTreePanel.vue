@@ -10,7 +10,7 @@ const raw = ref(false)
 const { oxc } = await useOxc()
 const value = computed(() => {
   const comments = oxc.value.getComments()
-  const errors = oxc.value.getDiagnostics2()
+  const errors = oxc.value.getDiagnostics()
   // TODO: move wrapper to oxc
   // const program = oxc.value.ast
   const program = JSON.parse(oxc.value.astJson, function (key, value) {
