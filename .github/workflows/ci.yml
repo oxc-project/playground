@@ -100,6 +100,7 @@ jobs:
         id: netlify_deploy
         if: env.SITE_ID
         run: |
+          mv _headers dist
           prod_flag=""
           if [ "${{ github.ref_name }}" = "main" ]; then prod_flag="--prod"; fi
           echo $prod_flag
