@@ -62,7 +62,9 @@ jobs:
         with:
           if-no-files-found: error
           name: playground
-          path: napi/playground
+          path: |
+            napi/playground
+            napi/parser/wrap.mjs
 
   build:
     needs: wasm
@@ -87,7 +89,7 @@ jobs:
         with:
           merge-multiple: true
           name: playground
-          path: ../oxc/napi/playground
+          path: ../oxc/napi
 
       - run: pnpm run build
 
