@@ -11,27 +11,7 @@ const { oxc } = await useOxc()
 const value = computed(() => {
   const comments = oxc.value.getComments()
   const errors = oxc.value.getDiagnostics()
-  // TODO: move wrapper to oxc
-  // const program = oxc.value.ast
-  const program = JSON.parse(oxc.value.astJson, function (key, value) {
-    if (
-      value === null &&
-      key === 'value' &&
-      Object.hasOwn(this, 'type') &&
-      this.type === 'Literal'
-    ) {
-      if (Object.hasOwn(this, 'bigint')) {
-        return BigInt(this.bigint)
-      }
-      if (Object.hasOwn(this, 'regex')) {
-        const { regex } = this
-        try {
-          return new RegExp(regex.pattern, regex.flags)
-        } catch {}
-      }
-    }
-    return value
-  })
+  const program = oxc.value.ast
   return { program, comments, errors }
 })
 
