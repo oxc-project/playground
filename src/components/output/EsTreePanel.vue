@@ -11,7 +11,13 @@ const { oxc } = await useOxc()
 const value = computed(() => {
   const comments = oxc.value.getComments()
   const errors = oxc.value.getDiagnostics()
-  const program = oxc.value.ast
+  let program = {}
+  try {
+    // Here may throw errors, 'cause access `ast` will automatically invoke `JSON.parse()`.
+    program = oxc.value.ast
+  } catch (error) {
+    console.error(error)
+  }
   return { program, comments, errors }
 })
 
