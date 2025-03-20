@@ -89,11 +89,12 @@ export const useOxc = createGlobalState(async () => {
   editorValue.value = urlState?.c || PLAYGROUND_DEMO_CODE
 
   watchEffect(() => {
+    const serialized = JSON.stringify({
+      c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
+      o: options.value,
+    })
+
     try {
-      const serialized = JSON.stringify({
-        c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
-        o: options.value,
-      })
       history.replaceState({}, '', `#${utoa(serialized)}`)
     } catch (error) {
       console.error(error)
