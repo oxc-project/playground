@@ -73,11 +73,19 @@ export const useOxc = createGlobalState(async () => {
   }
   watch([options, editorValue], run, { deep: true })
 
-  const rawUrlState = atou(location.hash!.slice(1))
-  const urlState = rawUrlState && JSON.parse(rawUrlState)
-  if (rawUrlState) {
+  let rawUrlState: string | undefined
+  let urlState: any
+  try {
+    rawUrlState = atou(location.hash!.slice(1))
+    urlState = rawUrlState && JSON.parse(rawUrlState)
+  } catch (error) {
+    console.error(error)
+  }
+
+  if (urlState?.o) {
     options.value = urlState.o
   }
+
   editorValue.value = urlState?.c || PLAYGROUND_DEMO_CODE
 
   watchEffect(() => {
@@ -85,7 +93,12 @@ export const useOxc = createGlobalState(async () => {
       c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
       o: options.value,
     })
-    history.replaceState({}, '', `#${utoa(serialized)}`)
+
+    try {
+      history.replaceState({}, '', `#${utoa(serialized)}`)
+    } catch (error) {
+      console.error(error)
+    }
   })
 
   const monacoLanguage = computed(() => {
