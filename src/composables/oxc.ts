@@ -82,7 +82,7 @@ export const useOxc = createGlobalState(async () => {
     console.error(error)
   }
 
-  if (rawUrlState && urlState?.o) {
+  if (urlState?.o) {
     options.value = urlState.o
   }
 
