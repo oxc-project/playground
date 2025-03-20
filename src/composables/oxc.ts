@@ -74,7 +74,7 @@ export const useOxc = createGlobalState(async () => {
   watch([options, editorValue], run, { deep: true })
 
   let rawUrlState = ''
-  let urlState = null
+  let urlState: any
   try {
     rawUrlState = atou(location.hash!.slice(1))
     urlState = rawUrlState && JSON.parse(rawUrlState)
