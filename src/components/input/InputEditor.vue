@@ -22,8 +22,8 @@ const markers = computed((): monaco.editor.IMarkerData[] => {
 
   const diagnostics = oxc.value.getDiagnostics()
   return diagnostics.map((d) => {
-    const startPos = getPositionAt.value(d.labels[0].start ?? 0)
-    const endPos = getPositionAt.value(d.labels[0].end ?? 0)
+    const startPos = getPositionAt.value(d.labels[0]?.start ?? 0)
+    const endPos = getPositionAt.value(d.labels[0]?.end ?? 0)
     return {
       severity:
         d.severity === 'Warning'
