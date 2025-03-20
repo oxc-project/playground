@@ -17,8 +17,6 @@ export default defineConfig({
     esbuildOptions: {
       target: 'esnext',
     },
-    // TODO: optimized linked dep needs restart with `--force` to pick up changes
-    include: ['oxc-playground'],
   },
   server: {
     // These two cross origin headers are used to fix the following error:
