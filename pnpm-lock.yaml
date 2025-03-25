@@ -59,7 +59,7 @@ importers:
         version: 66.0.0(eslint@9.23.0(jiti@2.4.2))(typescript@5.8.2)
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
-        version: 5.2.3(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+        version: 5.2.3(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
       eslint:
         specifier: ^9.20.1
         version: 9.23.0(jiti@2.4.2)
@@ -86,16 +86,16 @@ importers:
         version: 5.8.2
       unocss:
         specifier: ^66.0.0
-        version: 66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+        version: 66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
       unocss-preset-animations:
         specifier: ^1.1.1
-        version: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
+        version: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
       unocss-preset-shadcn:
         specifier: ^0.5.0
-        version: 0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
+        version: 0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
       vite:
         specifier: ^6.1.0
-        version: 6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
+        version: 6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
       vue-tsc:
         specifier: ~2.2.2
         version: 2.2.8(typescript@5.8.2)
@@ -2342,8 +2342,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite@6.2.2:
-    resolution: {integrity: sha512-yW7PeMM+LkDzc7CgJuRLMW2Jz0FxMOsVJ8Lv3gpgW9WLcb9cTW+121UEr1hvmfR7w3SegR5ItvYyzVz1vxNJgQ==}
+  vite@6.2.3:
+    resolution: {integrity: sha512-IzwM54g4y9JA/xAeBPNaDXiBF8Jsgl3VBQ2YQ/wOY6fyW3xMdSoltIV3Bo59DErdqdE6RxUfv8W69DvUorE4Eg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -3033,13 +3033,13 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unocss/astro@66.0.0(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
+  '@unocss/astro@66.0.0(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       '@unocss/core': 66.0.0
       '@unocss/reset': 66.0.0
-      '@unocss/vite': 66.0.0(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+      '@unocss/vite': 66.0.0(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
     optionalDependencies:
-      vite: 6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
+      vite: 6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - vue
 
@@ -3177,7 +3177,7 @@ snapshots:
     dependencies:
       '@unocss/core': 66.0.0
 
-  '@unocss/vite@66.0.0(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
+  '@unocss/vite@66.0.0(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@unocss/config': 66.0.0
@@ -3187,7 +3187,7 @@ snapshots:
       magic-string: 0.30.17
       tinyglobby: 0.2.12
       unplugin-utils: 0.2.4
-      vite: 6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
+      vite: 6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - vue
 
@@ -3226,9 +3226,9 @@ snapshots:
   '@unrs/rspack-resolver-binding-win32-x64-msvc@1.2.2':
     optional: true
 
-  '@vitejs/plugin-vue@5.2.3(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
+  '@vitejs/plugin-vue@5.2.3(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
-      vite: 6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
+      vite: 6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
       vue: 3.5.13(typescript@5.8.2)
 
   '@viz-js/viz@3.11.0': {}
@@ -4974,19 +4974,19 @@ snapshots:
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
-  unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))):
+  unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))):
     dependencies:
       '@unocss/preset-wind': 66.0.0
-      unocss: 66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+      unocss: 66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
 
-  unocss-preset-shadcn@0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))):
+  unocss-preset-shadcn@0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))):
     dependencies:
-      unocss: 66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
-      unocss-preset-animations: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
+      unocss: 66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+      unocss-preset-animations: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
 
-  unocss@66.0.0(postcss@8.5.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)):
+  unocss@66.0.0(postcss@8.5.3)(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)):
     dependencies:
-      '@unocss/astro': 66.0.0(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+      '@unocss/astro': 66.0.0(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
       '@unocss/cli': 66.0.0
       '@unocss/core': 66.0.0
       '@unocss/postcss': 66.0.0(postcss@8.5.3)
@@ -5003,9 +5003,9 @@ snapshots:
       '@unocss/transformer-compile-class': 66.0.0
       '@unocss/transformer-directives': 66.0.0
       '@unocss/transformer-variant-group': 66.0.0
-      '@unocss/vite': 66.0.0(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
+      '@unocss/vite': 66.0.0(vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
     optionalDependencies:
-      vite: 6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
+      vite: 6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - postcss
       - supports-color
@@ -5043,7 +5043,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0):
+  vite@6.2.3(@types/node@22.13.11)(jiti@2.4.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.1
       postcss: 8.5.3
