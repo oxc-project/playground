@@ -7,8 +7,8 @@ const { options } = await useOxc()
 
 <template>
   <div flex flex-col gap2>
-    <div font-medium>Prettier</div>
-    <Checkbox v-model="options.run.prettierIr" label="Prettier IR" />
-    <Checkbox v-model="options.run.prettierFormat" label="Prettier Format" />
+    <div font-medium>Formatter</div>
+    <Checkbox v-model="options.run.formatterIr" label="Formatter IR" />
+    <Checkbox v-model="options.run.formatterFormat" label="Formatter Format" />
   </div>
 </template>

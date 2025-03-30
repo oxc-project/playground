@@ -6,5 +6,5 @@ const { oxc } = await useOxc()
 </script>
 
 <template>
-  <OutputPreview :code="oxc.prettierIrText" lang="tsx" />
+  <OutputPreview :code="oxc.formatterIrText" lang="tsx" />
 </template>

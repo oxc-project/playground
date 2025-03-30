@@ -5,7 +5,7 @@ import CodegenPanel from './CodegenPanel.vue'
 import ControlflowPanel from './ControlflowPanel.vue'
 import EsTreePanel from './EsTreePanel.vue'
 import FormatPanel from './FormatPanel.vue'
-import PrettierPanel from './PrettierPanel.vue'
+import FormatterPanel from './FormatterPanel.vue'
 import RustAstPanel from './RustAstPanel.vue'
 import ScopePanel from './ScopePanel.vue'
 import SymbolPanel from './SymbolPanel.vue'
@@ -27,11 +27,11 @@ const { duration } = await useOxc()
       <TabsTrigger value="ir">Rust AST</TabsTrigger>
       <TabsTrigger value="codegen">Codegen</TabsTrigger>
       <!--
-      <TabsTrigger value="prettier" :disabled="!options.run.prettierIr">
-        Prettier IR
+      <TabsTrigger value="formatter" :disabled="!options.run.formatterIr">
+        Formatter IR
       </TabsTrigger>
-      <TabsTrigger value="format" :disabled="!options.run.prettierFormat">
-        Prettier
+      <TabsTrigger value="format" :disabled="!options.run.formatterFormat">
+        Formatter
       </TabsTrigger>
       -->
       <TabsTrigger value="scope">Scope</TabsTrigger>
@@ -49,8 +49,8 @@ const { duration } = await useOxc()
       <TabsContent value="ir">
         <RustAstPanel />
       </TabsContent>
-      <TabsContent value="prettier">
-        <PrettierPanel />
+      <TabsContent value="formatter">
+        <FormatterPanel />
       </TabsContent>
       <TabsContent value="format">
         <FormatPanel />
