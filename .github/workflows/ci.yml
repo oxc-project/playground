@@ -57,6 +57,7 @@ jobs:
       - run: rustup target add wasm32-wasip1-threads
 
       - run: just build-playground
+      - run: git rev-parse --short HEAD > napi/playground/git-commit
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

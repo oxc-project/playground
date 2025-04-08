@@ -1,14 +1,24 @@
 import { spawnSync } from 'node:child_process'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 
-const { stdout } = spawnSync('git', ['rev-parse', '--short', 'HEAD'], {
-  cwd: '../oxc/napi/playground',
-  encoding: 'utf8',
-})
-const sha = stdout.trim()
+let oxcCommit: string | undefined
+
+const COMMIT_FILE = '../oxc/napi/playground/git-commit'
+if (existsSync(COMMIT_FILE)) {
+  oxcCommit = readFileSync('../oxc/napi/playground/git-commit', 'utf8').trim()
+}
+
+if (!oxcCommit) {
+  const { stdout } = spawnSync('git', ['rev-parse', '--short', 'HEAD'], {
+    cwd: '../oxc/napi/playground',
+    encoding: 'utf8',
+  })
+  oxcCommit = stdout.trim()
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +28,7 @@ export default defineConfig({
     },
   },
   define: {
-    'import.meta.env.OXC_COMMIT': JSON.stringify(sha),
+    'import.meta.env.OXC_COMMIT': JSON.stringify(oxcCommit),
   },
   build: {
     target: 'esnext',
