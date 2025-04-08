@@ -1,7 +1,14 @@
+import { spawnSync } from 'node:child_process'
 import path from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
+
+const { stdout } = spawnSync('git', ['rev-parse', '--short', 'HEAD'], {
+  cwd: '../oxc/napi/playground',
+  encoding: 'utf8',
+})
+const sha = stdout.trim()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,6 +16,9 @@ export default defineConfig({
     alias: {
       '~': path.resolve(__dirname, './src'),
     },
+  },
+  define: {
+    'import.meta.env.OXC_COMMIT': JSON.stringify(sha),
   },
   build: {
     target: 'esnext',
