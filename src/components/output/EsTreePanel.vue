@@ -22,7 +22,11 @@ const value = computed(() => {
 })
 
 const code = computed(() => {
-  return JSON.stringify(value.value, undefined, 2)
+  // Trim off first and last lines which contain `{"node":` and `,"fixes":[]}`
+  let json = oxc.value.astJson
+  json = json.slice(json.indexOf('\n') + 1)
+  json = json.slice(0, json.lastIndexOf('\n'))
+  return json
 })
 </script>
 
