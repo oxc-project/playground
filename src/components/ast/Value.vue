@@ -10,17 +10,21 @@ const emit = defineEmits<{
   'update:hover': [value: boolean]
 }>()
 
+const isArrayOrObject = computed(() => {
+  if (props.data === null) return false
+  if (Array.isArray(props.data)) return true
+  if (Object.prototype.toString.call(props.data) === '[object Object]')
+    return true
+  return false
+})
 const hasChildren = computed(
-  () =>
-    typeof props.data === 'object' &&
-    props.data != null &&
-    Object.keys(props.data).length > 0,
+  () => isArrayOrObject.value && Object.keys(props.data).length > 0,
 )
 
 const value = computed<string | undefined>(() => {
-  if (typeof props.data === 'object' && props.data !== null) return
-  if (typeof props.data === 'bigint') return String(props.data)
-  return props.data == null ? String(props.data) : JSON.stringify(props.data)
+  if (typeof props.data === 'bigint') return `${String(props.data)}n`
+  if (props.data instanceof RegExp) return props.data.toString()
+  return JSON.stringify(props.data)
 })
 const valueColor = useHighlightColor(value)
 
@@ -32,7 +36,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <template v-if="typeof data === 'object' && data != null">
+  <template v-if="isArrayOrObject">
     <AstBrackets :data>
       <div v-if="hasChildren" ml6>
         <template v-for="(item, key) of data" :key="key">
