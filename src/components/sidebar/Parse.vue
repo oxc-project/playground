@@ -84,8 +84,6 @@ function toggleDts(checked: boolean) {
       @update:model-value="toggleDts"
     />
 
-    <Checkbox v-model="options.run.syntax" label="Check Syntax Errors" />
-
     <Checkbox
       v-model="options.parser.allowReturnOutsideFunction"
       label="allowReturnOutsideFunction"
@@ -99,5 +97,7 @@ function toggleDts(checked: boolean) {
       label="preserveParens"
       font-mono
     />
+
+    <Checkbox v-model="options.run.syntax" label="Show Semantic Errors" />
   </div>
 </template>
