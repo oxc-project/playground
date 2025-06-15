@@ -39,7 +39,7 @@
     "@iconify-json/ri": "^1.2.5",
     "@sxzz/eslint-config": "^7.0.1",
     "@sxzz/prettier-config": "^2.2.1",
-    "@types/node": "^22.15.17",
+    "@types/node": "^24.0.0",
     "@unocss/eslint-plugin": "^66.1.1",
     "@vitejs/plugin-vue": "^5.2.4",
     "eslint": "^9.26.0",
