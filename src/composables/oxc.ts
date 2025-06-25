@@ -86,7 +86,7 @@ export const useOxc = createGlobalState(async () => {
     options.value = urlState.o
   }
 
-  editorValue.value = urlState?.c || PLAYGROUND_DEMO_CODE
+  editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE
 
   watchEffect(() => {
     const serialized = JSON.stringify({
