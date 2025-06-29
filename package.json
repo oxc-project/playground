@@ -41,7 +41,7 @@
     "@sxzz/prettier-config": "^2.2.1",
     "@types/node": "^24.0.0",
     "@unocss/eslint-plugin": "^66.1.1",
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue": "^6.0.0",
     "eslint": "^9.26.0",
     "lint-staged": "^16.0.0",
     "oxc-playground": "link:../oxc/napi/playground",
