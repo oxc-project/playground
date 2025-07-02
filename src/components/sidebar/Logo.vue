@@ -24,7 +24,7 @@ const commit = import.meta.env.OXC_COMMIT
       font-mono
       op50
       target="_blank"
-      >@{{ commit }}</a
+      >@{{ commit.slice(0, 7) }}</a
     >
   </div>
 </template>

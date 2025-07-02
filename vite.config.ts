@@ -13,7 +13,7 @@ if (existsSync(COMMIT_FILE)) {
 }
 
 if (!oxcCommit) {
-  const { stdout } = spawnSync('git', ['rev-parse', '--short', 'HEAD'], {
+  const { stdout } = spawnSync('git', ['rev-parse', 'HEAD'], {
     cwd: '../oxc/napi/playground',
     encoding: 'utf8',
   })
