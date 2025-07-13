@@ -2,7 +2,7 @@
   "name": "@oxc-project/playground",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.13.1",
   "description": "oxc playground",
   "type": "module",
   "license": "MIT",
