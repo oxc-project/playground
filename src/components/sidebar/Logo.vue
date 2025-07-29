@@ -19,6 +19,7 @@ const commit = import.meta.env.OXC_COMMIT
       </span>
     </a>
     <a
+      v-if="commit"
       :href="`https://github.com/oxc-project/oxc/commit/${commit}`"
       text-xs
       font-mono
