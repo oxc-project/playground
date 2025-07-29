@@ -8,3 +8,6 @@ export const editorValue = ref('')
 export const editorCursor = ref(0)
 export const autoFocus = ref(true)
 export const outputHoverRange = ref<Range>()
+
+// Active tab state for output panel
+export const activeTab = ref('ast')

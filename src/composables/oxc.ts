@@ -8,7 +8,7 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import { editorValue } from '~/composables/state'
+import { editorValue, activeTab } from '~/composables/state'
 import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
 import type { Oxc, OxcOptions } from 'oxc-playground'
@@ -71,7 +71,7 @@ export const useOxc = createGlobalState(async () => {
     runDuration.value = +(performance.now() - start).toFixed(1)
     triggerRef(state)
   }
-  watch([options, editorValue], run, { deep: true })
+  watch([options, editorValue, activeTab], run, { deep: true })
 
   let rawUrlState: string | undefined
   let urlState: any
@@ -86,12 +86,17 @@ export const useOxc = createGlobalState(async () => {
     options.value = urlState.o
   }
 
+  if (urlState?.t) {
+    activeTab.value = urlState.t
+  }
+
   editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE
 
   watchEffect(() => {
     const serialized = JSON.stringify({
       c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
       o: options.value,
+      t: activeTab.value === 'ast' ? '' : activeTab.value,
     })
 
     try {
