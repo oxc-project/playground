@@ -8,7 +8,7 @@ import {
   watch,
   watchEffect,
 } from 'vue'
-import { editorValue, activeTab } from '~/composables/state'
+import { activeTab, editorValue } from '~/composables/state'
 import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
 import type { Oxc, OxcOptions } from 'oxc-playground'
@@ -96,7 +96,7 @@ export const useOxc = createGlobalState(async () => {
     const serialized = JSON.stringify({
       c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
       o: options.value,
-      t: activeTab.value === 'ast' ? '' : activeTab.value,
+      t: activeTab.value,
     })
 
     try {

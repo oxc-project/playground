@@ -17,6 +17,7 @@ const { duration } = await useOxc()
 <template>
   <Tabs
     v-model="activeTab"
+    default-value="ast"
     class="h-full flex flex-1 flex-col flex-nowrap"
     activation-mode="manual"
   >
