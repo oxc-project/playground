@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useOxc } from '~/composables/oxc'
+import { activeTab } from '~/composables/state'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
 import CodegenPanel from './CodegenPanel.vue'
 import ControlflowPanel from './ControlflowPanel.vue'
@@ -15,8 +16,9 @@ const { duration } = await useOxc()
 
 <template>
   <Tabs
-    class="h-full flex flex-1 flex-col flex-nowrap"
+    v-model="activeTab"
     default-value="ast"
+    class="h-full flex flex-1 flex-col flex-nowrap"
     activation-mode="manual"
   >
     <TabsList
