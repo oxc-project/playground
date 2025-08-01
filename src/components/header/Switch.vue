@@ -25,7 +25,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <div
-    class="hidden items-center before:ml-4 before:mr-6 before:h-6 before:w-px xl:flex before:bg-gray-300 before:content-[''] dark:before:bg-gray-600"
+    class="hidden items-center before:ml-4 before:mr-6 before:h-6 before:w-px xl:flex before:bg-[#e2e2e3] before:content-[''] dark:before:bg-[#2e2e32]"
   >
     <SwitchRoot
       v-bind="forwarded"
@@ -33,11 +33,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       role="switch"
       :class="
         cn(
-          'peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
-          'bg-gray-200 border-gray-300 hover:bg-gray-300',
-          'dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600',
-          'data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500',
-          'data-[state=checked]:hover:bg-blue-600 data-[state=checked]:hover:border-blue-600',
+          'peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full bg-[#8e96aa]/[.16] dark:bg-[#657585]/[.16] border border-[#c2c2c4] dark:border-[#3c3f44] hover:border-[#a8b1ff] dark:hover:border-[#a8b1ff] transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
           props.class,
         )
       "
@@ -45,23 +41,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <SwitchThumb
         :class="
           cn(
-            'pointer-events-none block h-5 w-5 rounded-full shadow-lg ring-0 transition-all duration-300 ease-in-out data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+            'pointer-events-none block h-5 w-5 rounded-full bg-white dark:bg-[#1b1b1f] shadow-lg ring-0 transition-all duration-300 ease-in-out data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
             'flex items-center justify-center',
-            'bg-white dark:bg-white',
-            'data-[state=checked]:bg-white dark:data-[state=checked]:bg-white',
           )
         "
       >
-        <div 
-          :class="[
-            dark ? 'i-ri:moon-line text-blue-600' : 'i-ri:sun-line text-yellow-500',
-            'scale-75 transition-all duration-300'
-          ]" 
-        />
+        <div :class="dark ? 'i-ri:moon-line' : 'i-ri:sun-line'" scale-70 />
       </SwitchThumb>
     </SwitchRoot>
-    <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
-      {{ dark ? 'Dark' : 'Light' }}
-    </span>
   </div>
 </template>

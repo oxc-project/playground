@@ -11,21 +11,21 @@ import Transformer from './Transformer.vue'
 
 <template>
   <aside
-    class="box-content hidden h-screen w-52 overflow-x-auto bg-white/95 backdrop-blur-md px-6 py-4 lg:block shadow-lg border-r border-gray-200/80 dark:bg-gray-900/95 dark:border-gray-700/80"
+    class="box-content hidden h-screen w-52 overflow-x-auto bg-[#f6f6f7] backdrop-blur-md px-6 py-4 lg:block shadow-lg border-r dark:bg-[#161618]"
   >
     <Logo />
     <div class="flex flex-col gap-4 mt-4">
       <Parse />
-      <hr class="border-gray-200 dark:border-gray-700" />
+      <hr />
       <Linter />
-      <hr class="border-gray-200 dark:border-gray-700" />
+      <hr />
       <Transformer />
-      <hr class="border-gray-200 dark:border-gray-700" />
+      <hr />
       <Minifier />
       <!-- <Prettier /> -->
-      <hr class="border-gray-200 dark:border-gray-700" />
+      <hr />
       <Codegen />
-      <hr class="border-gray-200 dark:border-gray-700" />
+      <hr />
       <OptionsDialog />
     </div>
   </aside>
