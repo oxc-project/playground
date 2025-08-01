@@ -9,22 +9,22 @@ import {
 
 <template>
   <NavigationMenu>
-    <NavigationMenuList>
+    <NavigationMenuList class="gap-2">
       <NavigationMenuItem>
         <NavigationMenuLink as-child>
           <a
-            class="flex items-center px-3"
+            class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
             href="https://oxc.rs/docs/guide/introduction.html"
             target="_blank"
             rel="noopener"
           >
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
             >
               Guide
             </span>
             <div
-              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="i-ri:arrow-right-up-line ml-2 h-3 w-3 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </a>
         </NavigationMenuLink>
@@ -33,17 +33,17 @@ import {
       <NavigationMenuItem>
         <NavigationMenuLink as-child>
           <a
-            class="flex items-center px-3"
+            class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
             href="https://oxc.rs/docs/learn/parser_in_rust/intro.html"
             target="_blank"
             rel="noopener"
           >
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
               >Learn</span
             >
             <div
-              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="i-ri:arrow-right-up-line ml-2 h-3 w-3 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </a>
         </NavigationMenuLink>
@@ -51,23 +51,23 @@ import {
 
       <NavigationMenuItem>
         <NavigationMenuLink
-          class="flex items-center px-3"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
           href="https://oxc.rs/docs/contribute/introduction.html"
         >
           <span
-            class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+            class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
           >
             Contribute
           </span>
           <div
-            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            class="i-ri:arrow-right-up-line ml-2 h-3 w-3 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           />
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
-        <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm text-[#3451b2] font-medium dark:text-[#a8b1ff]"
+        <NavigationMenuLink class="flex items-center px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900/30" href="#" active>
+          <span class="text-sm font-semibold text-blue-700 dark:text-blue-300"
             >Playground</span
           >
         </NavigationMenuLink>
@@ -76,18 +76,18 @@ import {
       <NavigationMenuItem>
         <NavigationMenuLink as-child>
           <a
-            class="flex items-center px-3"
+            class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
             href="#"
             target="_blank"
             rel="noopener"
           >
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
             >
               Resources
             </span>
             <div
-              class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="i-ri:arrow-right-up-line ml-2 h-3 w-3 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </a>
         </NavigationMenuLink>

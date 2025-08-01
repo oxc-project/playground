@@ -7,10 +7,10 @@ import Switch from './Switch.vue'
 
 <template>
   <header
-    class="h-16 w-full flex justify-between border-b border-[#e2e2e3] px-8 dark:border-[#2e2e32]"
+    class="h-16 w-full flex justify-between border-b border-gray-200/80 backdrop-blur-md bg-white/90 px-8 shadow-sm dark:border-gray-700/80 dark:bg-gray-900/90"
   >
     <Logo class="visible lg:invisible" />
-    <div class="hidden md:flex">
+    <div class="hidden md:flex items-center gap-2">
       <Nav />
       <Switch />
       <Media />

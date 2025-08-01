@@ -1,3 +1,47 @@
 .ast-highlight {
   --at-apply: 'bg-blue-400/30 dark:bg-blue-400/20';
 }
+
+/* Enhanced global styles for better visual hierarchy */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+}
+
+/* Improved code highlighting */
+.monaco-editor {
+  --at-apply: 'rounded-lg';
+}
+
+/* Enhanced borders and separators */
+.separator {
+  --at-apply: 'bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600';
+}
+
+/* Improved focus states */
+.focus-ring {
+  --at-apply: 'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900';
+}
+
+/* Better button hover effects */
+.btn-hover {
+  --at-apply: 'transition-all duration-200 ease-in-out hover:shadow-md hover:scale-105';
+}
+
+/* Enhanced card styles */
+.card {
+  --at-apply: 'bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700';
+}
+
+/* Improved text colors */
+.text-primary {
+  --at-apply: 'text-gray-900 dark:text-gray-100';
+}
+
+.text-secondary {
+  --at-apply: 'text-gray-600 dark:text-gray-400';
+}
+
+.text-muted {
+  --at-apply: 'text-gray-500 dark:text-gray-500';
+}
