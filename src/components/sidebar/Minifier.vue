@@ -1,15 +1,46 @@
 <script setup lang="ts">
 import Checkbox from '~/components/ui/Checkbox.vue'
 import { useOxc } from '~/composables/oxc'
+import { Switch } from '~/ui/switch'
 
 const { options } = await useOxc()
 </script>
 
 <template>
-  <div flex="~ col" gap2>
-    <div font-medium>Minifier</div>
-    <Checkbox v-model="options.minifier.compress" label="Minify Syntax" />
-    <Checkbox v-model="options.minifier.whitespace" label="Minify Whitespace" />
-    <Checkbox v-model="options.minifier.mangle" label="Mangle Symbols" />
+  <div flex flex-col gap2>
+    <label flex items-center gap2>
+      <Switch v-model:checked="options.run.compress" />
+      <div font-small>Minify Syntax</div>
+    </label>
+  </div>
+
+  <div flex flex-col gap2>
+    <label flex items-center gap2>
+      <Switch v-model:checked="options.run.whitespace" />
+      <div font-small>Minify Whitespace</div>
+    </label>
+  </div>
+
+  <div flex flex-col gap2>
+    <label flex items-center gap2>
+      <Switch v-model:checked="options.run.mangle" />
+      <div font-small>Mangle Names</div>
+    </label>
+
+    <Checkbox
+      v-model="options.mangle.topLevel"
+      default-checked
+      label="topLevel"
+      font-mono
+      label-class="text-xs"
+    />
+
+    <Checkbox
+      v-model="options.mangle.keepNames"
+      default-checked
+      label="keepNames"
+      font-mono
+      label-class="text-xs"
+    />
   </div>
 </template>

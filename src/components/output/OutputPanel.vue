@@ -1,17 +1,26 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
 import { useOxc } from '~/composables/oxc'
 import { activeTab } from '~/composables/state'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
+
 import CodegenPanel from './CodegenPanel.vue'
 import ControlflowPanel from './ControlflowPanel.vue'
 import EsTreePanel from './EsTreePanel.vue'
-import FormatPanel from './FormatPanel.vue'
 import FormatterPanel from './FormatterPanel.vue'
 import RustAstPanel from './RustAstPanel.vue'
 import ScopePanel from './ScopePanel.vue'
 import SymbolPanel from './SymbolPanel.vue'
 
-const { duration } = await useOxc()
+const { options } = await useOxc()
+
+function activateFormatter() {
+  options.value.run.formatter = activeTab.value === 'formatter'
+}
+
+watch([activeTab], activateFormatter)
+
+onMounted(activateFormatter)
 </script>
 
 <template>
@@ -25,17 +34,10 @@ const { duration } = await useOxc()
       as="nav"
       class="relative h-auto flex flex-shrink-0 justify-start gap-2 overflow-auto rounded-none p-2"
     >
+      <TabsTrigger value="codegen">Printed</TabsTrigger>
       <TabsTrigger value="ast">ESTree AST</TabsTrigger>
       <TabsTrigger value="ir">Rust AST</TabsTrigger>
-      <TabsTrigger value="codegen">Codegen</TabsTrigger>
-      <!--
-      <TabsTrigger value="formatter" :disabled="!options.run.formatterIr">
-        Formatter IR
-      </TabsTrigger>
-      <TabsTrigger value="format" :disabled="!options.run.formatterFormat">
-        Formatter
-      </TabsTrigger>
-      -->
+      <TabsTrigger value="formatter">Formatter</TabsTrigger>
       <TabsTrigger value="scope">Scope</TabsTrigger>
       <TabsTrigger value="symbol">Symbol</TabsTrigger>
       <TabsTrigger value="cfg">Controlflow Graph</TabsTrigger>
@@ -54,9 +56,6 @@ const { duration } = await useOxc()
       <TabsContent value="formatter">
         <FormatterPanel />
       </TabsContent>
-      <TabsContent value="format">
-        <FormatPanel />
-      </TabsContent>
       <TabsContent value="scope">
         <ScopePanel />
       </TabsContent>
@@ -67,6 +66,5 @@ const { duration } = await useOxc()
         <ControlflowPanel />
       </TabsContent>
     </div>
-    <div class="absolute bottom-2 right-2 opacity-60">{{ duration }} ms</div>
   </Tabs>
 </template>

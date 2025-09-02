@@ -8,6 +8,6 @@ const { options } = await useOxc()
 <template>
   <label flex items-center gap2>
     <Switch v-model:checked="options.run.lint" />
-    <div font-medium>Linter</div>
+    <div font-small>Linter</div>
   </label>
 </template>

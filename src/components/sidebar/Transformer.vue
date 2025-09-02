@@ -11,7 +11,7 @@ const { options } = await useOxc()
   <div flex flex-col gap2>
     <label flex items-center gap2>
       <Switch v-model:checked="options.run.transform" />
-      <div font-medium>Transformer</div>
+      <div font-small>Transformer</div>
     </label>
 
     <label flex items-center gap-2 text-sm>
@@ -20,8 +20,26 @@ const { options } = await useOxc()
     </label>
 
     <Checkbox
-      v-model="options.transformer.isolatedDeclarations"
-      label="Isolated Declarations"
+      v-model="options.transformer.useDefineForClassFields"
+      default-checked
+      label="useDefineForClassFields"
+      font-mono
+      label-class="text-xs"
+    />
+  </div>
+
+  <div flex flex-col gap2>
+    <label flex items-center gap2>
+      <Switch v-model:checked="options.run.isolatedDeclarations" />
+      <div font-small>Isolated Declarations</div>
+    </label>
+
+    <Checkbox
+      v-model="options.isolatedDeclarations.stripInternal"
+      default-checked
+      label="stripInternal"
+      font-mono
+      label-class="text-xs"
     />
   </div>
 </template>

@@ -27,7 +27,7 @@ function stringifyError(error: unknown) {
       <div class="min-h-50vh flex-grow-2 flex-basis-none">
         <InputEditor
           :language="monacoLanguage"
-          :filename="`/${options.parser.sourceFilename || 'test.tsx'}`"
+          :filename="`/test.${options.parser.extension}`"
           main
         />
       </div>

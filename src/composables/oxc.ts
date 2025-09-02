@@ -22,29 +22,44 @@ export const loadingOxc = ref(true)
 export const oxcPromise = initialize().finally(() => (loadingOxc.value = false))
 
 export const useOxc = createGlobalState(async () => {
-  const runDuration = ref<number>()
-
   const options = ref<Required<OxcOptions>>({
     run: {
-      syntax: true,
       lint: true,
+      formatter: false,
+      formatterIr: false,
+      transform: false,
+      isolatedDeclarations: false,
+      whitespace: false,
+      mangle: false,
+      compress: false,
       scope: true,
       symbol: true,
-      transform: false,
     },
     parser: {
+      extension: 'tsx',
       allowReturnOutsideFunction: true,
       preserveParens: true,
+      allowV8Intrinsics: true,
     },
     linter: {},
     transformer: {
       target: 'es2015',
-      isolatedDeclarations: false,
+      useDefineForClassFields: true,
+    },
+    isolatedDeclarations: {
+      stripInternal: false,
     },
     codegen: {
-      enableSourcemap: true,
+      normal: true,
+      jsdoc: true,
+      annotation: true,
+      legal: true,
     },
-    minifier: {},
+    compress: {},
+    mangle: {
+      topLevel: true,
+      keepNames: false,
+    },
     controlFlow: {
       verbose: false,
     },
@@ -54,7 +69,6 @@ export const useOxc = createGlobalState(async () => {
   const error = ref<unknown>()
 
   function run() {
-    const start = performance.now()
     const errors: unknown[] = []
     const originalError = console.error
     console.error = function (...msgs) {
@@ -68,7 +82,6 @@ export const useOxc = createGlobalState(async () => {
       error.value = errors.length ? errors : error_
     }
     console.error = originalError
-    runDuration.value = +(performance.now() - start).toFixed(1)
     triggerRef(state)
   }
   watch([options, editorValue, activeTab], run, { deep: true })
@@ -107,7 +120,7 @@ export const useOxc = createGlobalState(async () => {
   })
 
   const monacoLanguage = computed(() => {
-    const filename = options.value.parser.sourceFilename || 'test.tsx'
+    const filename = `test.${options.value.parser.extension}`
     const ext = filename.split('.').pop()!
     if (['ts', 'mts', 'cts', 'tsx'].includes(ext)) return 'typescript'
     if (['js', 'mjs', 'cjs', 'jsx'].includes(ext)) return 'javascript'
@@ -121,7 +134,6 @@ export const useOxc = createGlobalState(async () => {
     oxc: state,
     error,
     options,
-    duration: runDuration,
     monacoLanguage,
   }
 })

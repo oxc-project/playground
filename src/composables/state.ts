@@ -10,4 +10,4 @@ export const autoFocus = ref(true)
 export const outputHoverRange = ref<Range>()
 
 // Active tab state for output panel
-export const activeTab = ref('ast')
+export const activeTab = ref('codegen')
