@@ -11,12 +11,13 @@ const { oxc, error, monacoLanguage, options } = await useOxc()
 const errorStr = computed(() => {
   return Array.isArray(error.value)
     ? error.value.map(stringifyError).join('\n')
-    : stringifyError(error)
+    : stringifyError(error.value)
 })
 
 function stringifyError(error: unknown) {
   if (!error) return ''
-  if (error instanceof Error) return error.stack
+  if (error instanceof Error)
+    return [error.message, error.stack].filter(Boolean).join('\n')
   return String(error)
 }
 </script>
