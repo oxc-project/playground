@@ -77,6 +77,8 @@ export const useOxc = createGlobalState(async () => {
     }
     try {
       oxc.run(editorValue.value, toRaw(options.value))
+      // Reset error if successful
+      error.value = undefined
     } catch (error_) {
       console.error(error_)
       error.value = errors.length ? errors : error_
