@@ -52,7 +52,7 @@
     "typescript": "^5.8.3",
     "unocss": "^66.3.2",
     "unocss-preset-animations": "^1.2.1",
-    "unocss-preset-shadcn": "^0.5.0",
+    "unocss-preset-shadcn": "^1.0.0",
     "vite": "npm:rolldown-vite@latest",
     "vue-tsc": "~3.0.1"
   },
