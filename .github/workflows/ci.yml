@@ -54,7 +54,7 @@ jobs:
       - run: just build-playground
       - run: git rev-parse --short HEAD > napi/playground/git-commit
 
-      - run: cd .. && mv playground oxc
+      - run: cd .. && mv playground oxc && mkdir playground
 
       - uses: taiki-e/checkout-action@b13d20b7cda4e2f325ef19895128f7ff735c0b3d # v1.3.1
 
