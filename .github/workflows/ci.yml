@@ -20,6 +20,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+permissions: {}
+
 jobs:
   check-typos:
     name: Check typos
