@@ -31,9 +31,11 @@ jobs:
         with:
           files: .
 
-  wasm:
-    name: Build Wasm
+  build:
+    name: Build
     runs-on: ubuntu-latest
+    env:
+      SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
@@ -52,31 +54,11 @@ jobs:
       - run: just build-playground
       - run: git rev-parse --short HEAD > napi/playground/git-commit
 
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          if-no-files-found: error
-          name: playground
-          path: |
-            napi/playground
-            napi/parser/wrap.mjs
+      - run: cd .. && mv playground oxc
 
-  build:
-    needs: wasm
-    name: Build Playground
-    runs-on: ubuntu-latest
-    env:
-      SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-    steps:
       - uses: taiki-e/checkout-action@b13d20b7cda4e2f325ef19895128f7ff735c0b3d # v1.3.1
 
       - uses: oxc-project/setup-node@f42e3bda950c7454575e78ee4eaac880a077700c # v1.0.0
-
-      # Download after to invalidate the version from pnpm cache
-      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
-        with:
-          merge-multiple: true
-          name: playground
-          path: ../oxc/napi
 
       - run: pnpm run build
 
