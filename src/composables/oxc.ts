@@ -45,6 +45,8 @@ export const useOxc = createGlobalState(async () => {
     transformer: {
       target: 'es2015',
       useDefineForClassFields: true,
+      experimentalDecorators: true,
+      emitDecoratorMetadata: true,
     },
     isolatedDeclarations: {
       stripInternal: false,
