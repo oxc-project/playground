@@ -37,6 +37,12 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    rollupOptions: {
+      external: (id) => {
+        // Externalize oxc-playground if it's not available
+        return id === 'oxc-playground'
+      },
+    },
   },
   experimental: {
     enableNativePlugin: true,
