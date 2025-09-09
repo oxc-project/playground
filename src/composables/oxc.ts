@@ -14,53 +14,8 @@ import { atou, utoa } from '~/utils/url'
 import type { Oxc, OxcOptions } from 'oxc-playground'
 
 async function initialize(): Promise<Oxc> {
-  // Mock implementation for demonstration
-  class MockOxc implements Oxc {
-    run(): void {
-      // Mock implementation
-    }
-    getDiagnostics(): any[] {
-      return []
-    }
-    get codegenText(): string {
-      return '// Mock codegen output'
-    }
-    get codegenSourcemapText(): string {
-      return '{"version":3,"file":"mock.js","sources":[],"mappings":""}'
-    }
-    get controlFlowGraph(): string {
-      return '// Mock control flow graph'
-    }
-    getComments(): any[] {
-      return []
-    }
-    get ast(): any {
-      return {}
-    }
-    get astJson(): string {
-      return '{}'
-    }
-    get formatterFormattedText(): string {
-      return '// Mock formatted code'
-    }
-    get ir(): string {
-      return '// Mock IR'
-    }
-    get scopeText(): string {
-      return '// Mock scope text'
-    }
-    get symbolsJson(): string {
-      return '{}'
-    }
-  }
-
-  try {
-    const { Oxc } = await import('oxc-playground')
-    return new Oxc()
-  } catch {
-    // Return mock if oxc-playground is not available
-    return new MockOxc() as Oxc
-  }
+  const { Oxc } = await import('oxc-playground')
+  return new Oxc()
 }
 
 export const loadingOxc = ref(true)
