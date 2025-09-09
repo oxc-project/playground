@@ -26,6 +26,20 @@ const { options } = await useOxc()
       font-mono
       label-class="text-xs"
     />
+
+    <Checkbox
+      v-model="options.transformer.experimentalDecorators"
+      label="experimentalDecorators"
+      font-mono
+      label-class="text-xs"
+    />
+
+    <Checkbox
+      v-model="options.transformer.emitDecoratorMetadata"
+      label="emitDecoratorMetadata"
+      font-mono
+      label-class="text-xs"
+    />
   </div>
 
   <div flex flex-col gap2>

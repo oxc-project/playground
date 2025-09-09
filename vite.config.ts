@@ -12,12 +12,17 @@ if (existsSync(COMMIT_FILE)) {
   oxcCommit = readFileSync('../oxc/napi/playground/git-commit', 'utf8').trim()
 }
 
-if (!oxcCommit) {
+if (!oxcCommit && existsSync('../oxc/napi/playground')) {
   const { stdout } = spawnSync('git', ['rev-parse', 'HEAD'], {
     cwd: '../oxc/napi/playground',
     encoding: 'utf8',
   })
-  oxcCommit = stdout.trim()
+  oxcCommit = stdout?.trim()
+}
+
+// Fallback to a default commit hash if oxc directory doesn't exist
+if (!oxcCommit) {
+  oxcCommit = 'dev-build'
 }
 
 // https://vitejs.dev/config/
