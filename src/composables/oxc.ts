@@ -11,14 +11,55 @@ import {
 import { activeTab, editorValue } from '~/composables/state'
 import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
+import type { Oxc, OxcOptions } from 'oxc-playground'
 
-async function initialize() {
+async function initialize(): Promise<Oxc> {
+  // Mock implementation for demonstration
+  class MockOxc implements Oxc {
+    run(): void {
+      // Mock implementation
+    }
+    getDiagnostics(): any[] {
+      return []
+    }
+    get codegenText(): string {
+      return '// Mock codegen output'
+    }
+    get codegenSourcemapText(): string {
+      return '{"version":3,"file":"mock.js","sources":[],"mappings":""}'
+    }
+    get controlFlowGraph(): string {
+      return '// Mock control flow graph'
+    }
+    getComments(): any[] {
+      return []
+    }
+    get ast(): any {
+      return {}
+    }
+    get astJson(): string {
+      return '{}'
+    }
+    get formatterFormattedText(): string {
+      return '// Mock formatted code'
+    }
+    get ir(): string {
+      return '// Mock IR'
+    }
+    get scopeText(): string {
+      return '// Mock scope text'
+    }
+    get symbolsJson(): string {
+      return '{}'
+    }
+  }
+
   try {
     const { Oxc } = await import('oxc-playground')
     return new Oxc()
   } catch {
-    // Fallback for development when oxc-playground is not available
-    return {} as any
+    // Return mock if oxc-playground is not available
+    return new MockOxc() as Oxc
   }
 }
 
@@ -26,7 +67,7 @@ export const loadingOxc = ref(true)
 export const oxcPromise = initialize().finally(() => (loadingOxc.value = false))
 
 export const useOxc = createGlobalState(async () => {
-  const options = ref({
+  const options = ref<Required<OxcOptions>>({
     run: {
       lint: true,
       formatter: false,
@@ -82,7 +123,7 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs)
     }
     try {
-      oxc.run?.(editorValue.value, toRaw(options.value))
+      oxc.run(editorValue.value, toRaw(options.value))
       // Reset error if successful
       error.value = undefined
     } catch (error_) {
