@@ -33,6 +33,9 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
+  experimental: {
+    enableNativePlugin: true,
+  },
   server: {
     // These two cross origin headers are used to fix the following error:
     // TypeError: Failed to execute 'decode' on 'TextDecoder': The provided ArrayBufferView value must not be shared.
