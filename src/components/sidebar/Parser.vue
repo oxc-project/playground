@@ -13,7 +13,7 @@ function handleShowOptions() {
 </script>
 
 <template>
-  <div flex flex-col gap2 pt4>
+  <div flex flex-col gap-3>
     <div font-medium>Parser</div>
 
     <label flex items-center gap-2 text-sm>
@@ -25,7 +25,7 @@ function handleShowOptions() {
       <button @click="handleShowOptions">Options</button>
     </div>
 
-    <div v-if="showOptions" flex flex-col gap-1>
+    <div v-if="showOptions" flex flex-col gap-2>
       <Checkbox
         v-model="options.parser.preserveParens"
         default-checked
