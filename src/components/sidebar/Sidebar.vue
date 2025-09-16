@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Codegen from './Codegen.vue'
+import Define from './Define.vue'
 import Linter from './Linter.vue'
 import Logo from './Logo.vue'
 import Minifier from './Minifier.vue'
@@ -19,6 +20,8 @@ import Transformer from './Transformer.vue'
       <Linter />
       <hr />
       <Transformer />
+      <hr />
+      <Define />
       <hr />
       <Minifier />
       <hr />
