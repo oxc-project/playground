@@ -65,6 +65,8 @@ export const useOxc = createGlobalState(async () => {
     controlFlow: {
       verbose: false,
     },
+    inject: { inject: {} },
+    define: { define: {} },
   })
   const oxc = await oxcPromise
   const state = shallowRef(oxc)
