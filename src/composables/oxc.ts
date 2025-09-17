@@ -40,6 +40,7 @@ export const useOxc = createGlobalState(async () => {
       allowReturnOutsideFunction: true,
       preserveParens: true,
       allowV8Intrinsics: true,
+      semanticErrors: true,
     },
     linter: {},
     transformer: {
