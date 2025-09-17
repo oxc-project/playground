@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: taiki-e/checkout-action@b13d20b7cda4e2f325ef19895128f7ff735c0b3d # v1.3.1
-      - uses: crate-ci/typos@master
+      - uses: crate-ci/typos@85f62a8a84f939ae994ab3763f01a0296d61a7ee # v1.36.2
         with:
           files: .
 
@@ -46,6 +46,7 @@ jobs:
         with:
           repository: oxc-project/oxc
           ref: main
+          persist-credentials: false
 
       - uses: oxc-project/setup-node@beeabdfbd12652a18a61ff476a59b62518bc1c7b # v1.0.3
 
@@ -78,7 +79,7 @@ jobs:
         run: |
           mv _headers dist
           prod_flag=""
-          if [ "${{ github.ref_name }}" = "main" ]; then prod_flag="--prod"; fi
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then prod_flag="--prod"; fi
           echo $prod_flag
           netlify deploy \
             --dir dist \
