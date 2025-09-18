@@ -34,6 +34,7 @@ export const useOxc = createGlobalState(async () => {
       compress: false,
       scope: true,
       symbol: true,
+      cfg: true,
     },
     parser: {
       extension: 'tsx',
