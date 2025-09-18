@@ -27,6 +27,12 @@ function handleShowOptions() {
 
     <div v-if="showOptions" flex flex-col gap-2>
       <Checkbox
+        v-model="options.parser.semanticErrors"
+        label="semanticErrors"
+        font-mono
+        label-class="text-xs"
+      />
+      <Checkbox
         v-model="options.parser.preserveParens"
         default-checked
         label="preserveParens"
