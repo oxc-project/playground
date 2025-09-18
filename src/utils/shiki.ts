@@ -1,58 +1,141 @@
 import { useMemoize, type MaybeRefOrGetter } from '@vueuse/core'
-import { createHighlighterCoreSync, type HighlighterCore } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import langJson from 'shiki/langs/json.mjs'
-import langTsx from 'shiki/langs/tsx.mjs'
-import langTs from 'shiki/langs/typescript.mjs'
-import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
-import vitesseLight from 'shiki/themes/vitesse-light.mjs'
-import { computed, toValue } from 'vue'
+import { computed, ref, toValue, watchEffect } from 'vue'
 import { dark } from '~/composables/state'
+import type { HighlighterCore } from 'shiki/core'
 
-export const highlighter = createHighlighterCoreSync({
-  themes: [vitesseLight, vitesseDark],
-  langs: [langJson, langTs, langTsx],
-  engine: createJavaScriptRegexEngine(),
-})
+// Global highlighter instance - loaded lazily
+let highlighterInstance: HighlighterCore | null = null
+const isLoading = ref(false)
+const isLoaded = ref(false)
+
+export async function createHighlighter(): Promise<HighlighterCore> {
+  if (highlighterInstance) return highlighterInstance
+
+  if (isLoading.value) {
+    // Wait for existing load to complete
+    return new Promise((resolve) => {
+      const checkLoaded = () => {
+        if (highlighterInstance) {
+          resolve(highlighterInstance)
+        } else {
+          setTimeout(checkLoaded, 10)
+        }
+      }
+      checkLoaded()
+    })
+  }
+
+  isLoading.value = true
+
+  try {
+    const [
+      { createHighlighterCore },
+      { createJavaScriptRegexEngine },
+      langJson,
+      langTs,
+      langTsx,
+      vitesseLight,
+      vitesseDark,
+    ] = await Promise.all([
+      import('shiki/core'),
+      import('shiki/engine/javascript'),
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/typescript.mjs'),
+      import('shiki/langs/tsx.mjs'),
+      import('shiki/themes/vitesse-light.mjs'),
+      import('shiki/themes/vitesse-dark.mjs'),
+    ])
+
+    highlighterInstance = await createHighlighterCore({
+      themes: [vitesseLight.default, vitesseDark.default],
+      langs: [langJson.default, langTs.default, langTsx.default],
+      engine: createJavaScriptRegexEngine(),
+    })
+
+    isLoaded.value = true
+    return highlighterInstance
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Export reactive state for components to check loading status
+export const shikiLoading = computed(() => isLoading.value)
+export const shikiLoaded = computed(() => isLoaded.value)
 
 export type ShikiLang = 'json' | 'tsx' | 'text'
 
-export function highlight(
-  highlighter: HighlighterCore,
+export async function highlight(
   code: string,
   lang: ShikiLang,
-) {
-  return highlighter.codeToHtml(code, {
-    lang,
-    theme: dark.value ? 'vitesse-dark' : 'vitesse-light',
-    transformers: [
-      {
-        name: 'add-style',
-        pre(node) {
-          this.addClassToHast(node, '!bg-transparent p-2')
+): Promise<string> {
+  try {
+    const highlighter = await createHighlighter()
+    return highlighter.codeToHtml(code, {
+      lang,
+      theme: dark.value ? 'vitesse-dark' : 'vitesse-light',
+      transformers: [
+        {
+          name: 'add-style',
+          pre(node) {
+            this.addClassToHast(node, '!bg-transparent p-2')
+          },
         },
-      },
-    ],
-  })
+      ],
+    })
+  } catch (error) {
+    console.warn('Failed to load Shiki highlighter:', error)
+    // Fallback to plain text with basic styling
+    return `<pre class="!bg-transparent p-2"><code>${escapeHtml(code)}</code></pre>`
+  }
 }
 
-const highlightToken = useMemoize((code: string, theme: string) => {
-  return highlighter.codeToTokens(code, {
-    lang: 'typescript',
-    theme,
-  })
+function escapeHtml(text: string): string {
+  const div = document.createElement('div')
+  div.textContent = text
+  return div.innerHTML
+}
+
+const highlightToken = useMemoize(async (code: string, theme: string) => {
+  try {
+    const highlighter = await createHighlighter()
+    return highlighter.codeToTokens(code, {
+      lang: 'typescript',
+      theme,
+    })
+  } catch {
+    return { tokens: [[{ color: '#666666' }]] } // Fallback gray color
+  }
 })
 
 export function useHighlightColor(
   content: MaybeRefOrGetter<string | undefined>,
 ) {
-  return computed(() => {
+  const color = ref('#666666') // Default color
+
+  // Reactive computation that updates color when content or theme changes
+  watchEffect(async () => {
     const code = toValue(content)
-    if (code == null) return ''
-    const theme = `vitesse-${dark.value ? 'dark' : 'light'}`
-    const result = highlightToken(code, theme)
-    const token = result.tokens[0]
-    const idx = code.startsWith('"') && token.length > 1 ? 1 : 0
-    return token[idx].color
+    if (code == null) {
+      color.value = ''
+      return
+    }
+
+    if (!isLoaded.value && !isLoading.value) {
+      color.value = '#666666' // Default color when not loaded
+      return
+    }
+
+    try {
+      const theme = `vitesse-${dark.value ? 'dark' : 'light'}`
+      const result = await highlightToken(code, theme)
+      const token = result.tokens[0]
+      const idx = code.startsWith('"') && token.length > 1 ? 1 : 0
+      color.value = token[idx].color || '#666666'
+    } catch {
+      color.value = '#666666' // Fallback color
+    }
   })
+
+  return computed(() => color.value)
 }
