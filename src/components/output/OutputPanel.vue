@@ -14,13 +14,14 @@ import SymbolPanel from './SymbolPanel.vue'
 
 const { options } = await useOxc()
 
-function activateFormatter() {
+function updateRunOptions() {
   options.value.run.formatter = activeTab.value === 'formatter'
+  options.value.run.cfg = activeTab.value === 'cfg'
 }
 
-watch([activeTab], activateFormatter)
+watch([activeTab], updateRunOptions)
 
-onMounted(activateFormatter)
+onMounted(updateRunOptions)
 </script>
 
 <template>
