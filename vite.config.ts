@@ -32,6 +32,40 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Vue ecosystem
+          if (id.includes('vue') || id.includes('@vueuse')) {
+            return 'vue-vendor'
+          }
+
+          // UI libraries
+          if (
+            id.includes('radix-vue') ||
+            id.includes('class-variance-authority') ||
+            id.includes('clsx') ||
+            id.includes('tailwind-merge') ||
+            id.includes('@radix-icons')
+          ) {
+            return 'ui-vendor'
+          }
+
+          // Monaco Editor core
+          if (id.includes('monaco-editor/esm/vs/editor/editor.api')) {
+            return 'monaco-vendor'
+          }
+
+          // Utility libraries
+          if (id.includes('fflate')) {
+            return 'utils-vendor'
+          }
+
+          // Keep dynamic imports as separate chunks (Shiki, Viz)
+          // They will be handled automatically by Vite
+        },
+      },
+    },
   },
   experimental: {
     enableNativePlugin: true,
