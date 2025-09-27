@@ -1,6 +1,4 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import 'monaco-editor/esm/vs/language/json/monaco.contribution'
-import 'monaco-editor/esm/vs/language/typescript/monaco.contribution'
+import * as monaco from 'monaco-editor'
 monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
