@@ -97,7 +97,7 @@ jobs:
           NETLIFY_PREVIEW_URL=$(jq -r '.deploy_url' deploy_output.json)
           echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> $GITHUB_OUTPUT
 
-      - uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
+      - uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         if: env.SITE_ID && github.event_name == 'pull_request'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
