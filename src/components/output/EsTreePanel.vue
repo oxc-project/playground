@@ -31,11 +31,15 @@ const code = computed(() => {
 </script>
 
 <template>
-  <div w-full overflow-auto p2>
-    <Checkbox v-model="raw" label="Raw" />
+  <div class="w-full overflow-auto p-3">
+    <div
+      class="mb-3 inline-block rounded-lg from-blue-50/30 to-purple-50/30 bg-gradient-to-r p-2 dark:from-blue-950/10 dark:to-purple-950/10"
+    >
+      <Checkbox v-model="raw" label="Raw" />
+    </div>
 
     <OutputPreview v-if="raw" :code lang="json" />
-    <div v-else pl4 pt2 text-sm leading-relaxed font-mono>
+    <div v-else class="pl-4 pt-2 text-sm leading-relaxed font-mono">
       <AstProperty :value root open />
     </div>
   </div>

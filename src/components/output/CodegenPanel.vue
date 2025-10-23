@@ -26,17 +26,17 @@ const sourcemapLink = computed(() => {
     <OutputPreview :code="oxc.codegenText" lang="tsx" />
     <a
       v-if="sourcemapLink"
-      class="m-2 flex items-center self-start text-sm opacity-80"
+      class="group m-3 flex items-center self-start border border-[#e2e2e3]/50 rounded-lg px-3 py-2 text-sm transition-all dark:border-[#2e2e32]/50 hover:border-blue-200 hover:bg-blue-50/50 hover:shadow-md dark:hover:border-blue-800/50 dark:hover:bg-blue-950/20"
       :href="sourcemapLink"
       target="_blank"
       rel="noopener"
     >
       <span
-        class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+        class="text-[#3c3c43] font-medium transition-colors dark:text-[#fffff5]/[.86] group-hover:text-[#3451b2] dark:group-hover:text-[#a8b1ff]"
         >Visualize source map</span
       >
       <div
-        class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+        class="i-ri:arrow-right-up-line ml-2 h-4 w-4 text-[#3c3c43]/[.56] transition-transform group-hover:translate-x-0.5 dark:text-[#fffff5]/[.6] group-hover:-translate-y-0.5"
       />
     </a>
   </div>

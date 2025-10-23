@@ -33,7 +33,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       role="switch"
       :class="
         cn(
-          'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full bg-[#8e96aa]/[.16] dark:bg-[#657585]/[.16] border border-[#c2c2c4] dark:border-[#3c3f44] hover:border-[#a8b1ff] dark:hover:border-[#a8b1ff] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+          'peer inline-flex h-7 w-13 shrink-0 cursor-pointer items-center rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-950/40 dark:to-purple-950/40 border-2 border-[#c2c2c4] dark:border-[#3c3f44] hover:border-[#a8b1ff] dark:hover:border-[#a8b1ff] transition-all shadow-sm hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50',
           props.class,
         )
       "
@@ -41,12 +41,19 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <SwitchThumb
         :class="
           cn(
-            'pointer-events-none block h-5 w-5 rounded-full bg-white dark:bg-[#1b1b1f] shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+            'pointer-events-none block h-5 w-5 rounded-full bg-gradient-to-br from-white to-blue-50 dark:from-[#1b1b1f] dark:to-blue-950/50 shadow-lg ring-2 ring-white/20 transition-all data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-1',
             'flex items-center justify-center',
           )
         "
       >
-        <div :class="dark ? 'i-ri:moon-line' : 'i-ri:sun-line'" scale-70 />
+        <div
+          :class="
+            dark
+              ? 'i-ri:moon-line text-blue-400'
+              : 'i-ri:sun-line text-amber-500'
+          "
+          class="scale-75 transition-all"
+        />
       </SwitchThumb>
     </SwitchRoot>
   </div>
