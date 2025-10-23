@@ -21,11 +21,15 @@ function handleCopy() {
     <Button
       variant="ghost"
       size="sm"
-      class="absolute right-4 top-4 op0 transition-opacity group-hover:opacity-100"
+      class="absolute right-4 top-4 border border-[#e2e2e3] bg-white/80 opacity-0 shadow-lg backdrop-blur-sm transition-all dark:border-[#2e2e32] dark:bg-[#1b1b1f]/80 group-hover:opacity-100 hover:shadow-xl"
       @click="handleCopy"
     >
       <div
-        :class="copied ? 'i-ri:check-line text-green' : 'i-ri:file-copy-line'"
+        :class="
+          copied
+            ? 'i-ri:check-line text-green-500'
+            : 'i-ri:file-copy-line text-blue-500 dark:text-blue-400'
+        "
       />
     </Button>
   </div>

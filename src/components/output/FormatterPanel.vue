@@ -44,7 +44,9 @@ const formatterConfig = computed({
       v-model="activeFormatterTab"
       class="h-full w-full flex flex-1 flex-col overflow-hidden pb-40px"
     >
-      <TabsList class="mx-2 mt-2 w-fit">
+      <TabsList
+        class="mx-3 mt-3 w-fit border border-[#e2e2e3]/50 rounded-lg from-blue-50/50 to-purple-50/50 bg-gradient-to-r p-1 dark:border-[#2e2e32]/50 dark:from-blue-950/20 dark:to-purple-950/20"
+      >
         <TabsTrigger value="output"> Output </TabsTrigger>
         <TabsTrigger value="ir"> IR </TabsTrigger>
       </TabsList>
@@ -58,11 +60,20 @@ const formatterConfig = computed({
       </TabsContent>
     </Tabs>
 
-    <details>
-      <summary cursor-pointer select-none>
-        Configure Options (Click to expand)
+    <details
+      class="mx-3 mb-3 overflow-hidden border border-[#e2e2e3] rounded-xl shadow-sm transition-all dark:border-[#2e2e32] hover:shadow-md"
+    >
+      <summary
+        class="cursor-pointer select-none from-blue-50/30 to-purple-50/30 bg-gradient-to-r p-3 text-sm font-medium transition-all dark:from-blue-950/10 hover:from-blue-50/50 dark:to-purple-950/10 hover:to-purple-50/50 dark:hover:from-blue-950/20 dark:hover:to-purple-950/20"
+      >
+        <span class="inline-flex items-center gap-2">
+          <span class="i-ri:settings-line" />
+          Configure Options (Click to expand)
+        </span>
       </summary>
-      <div class="h-400px flex-1 overflow-hidden border rounded-md">
+      <div
+        class="h-400px flex-1 overflow-hidden border-t border-[#e2e2e3] dark:border-[#2e2e32]"
+      >
         <MonacoEditor
           v-model="formatterConfig"
           language="json"
@@ -75,7 +86,12 @@ const formatterConfig = computed({
             wordWrap: 'on',
           }"
         />
-        <div v-if="configError" text-sm text-red-500>⚠️ {{ configError }}</div>
+        <div
+          v-if="configError"
+          class="bg-red-50 p-2 text-sm text-red-500 dark:bg-red-950/20"
+        >
+          ⚠️ {{ configError }}
+        </div>
       </div>
     </details>
   </div>
