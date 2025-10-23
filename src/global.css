@@ -63,8 +63,15 @@
 }
 
 /* Smooth transitions for all interactive elements */
-button, a, input, select, textarea {
+button, a, input, select, textarea, label {
   transition: all var(--transition-base);
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Enhanced focus states */
