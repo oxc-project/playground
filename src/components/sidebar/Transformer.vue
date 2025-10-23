@@ -8,54 +8,58 @@ const { options } = await useOxc()
 </script>
 
 <template>
-  <div flex flex-col gap-3>
-    <label flex items-center gap-2>
-      <Switch v-model:checked="options.run.transform" />
-      <div font-small>Transformer</div>
-    </label>
+  <section class="flex flex-col gap-6" aria-labelledby="transformer-heading">
+    <div class="flex flex-col gap-3">
+      <label class="flex items-center gap-2">
+        <Switch v-model:checked="options.run.transform" />
+        <h2 id="transformer-heading" class="text-base font-medium">
+          Transformer
+        </h2>
+      </label>
 
-    <label flex items-center gap-2 text-sm>
-      <span text-secondary-foreground>Target</span>
-      <Input v-model="options.transformer.target" class="h-8 p-1" />
-    </label>
+      <label class="flex items-center gap-2 text-sm">
+        <span class="text-secondary-foreground">Target</span>
+        <Input v-model="options.transformer.target" class="h-8 p-1" />
+      </label>
 
-    <div flex flex-col gap-2>
+      <div class="flex flex-col gap-2">
+        <Checkbox
+          v-model="options.transformer.useDefineForClassFields"
+          default-checked
+          label="useDefineForClassFields"
+          font-mono
+          label-class="text-xs"
+        />
+
+        <Checkbox
+          v-model="options.transformer.experimentalDecorators"
+          label="experimentalDecorators"
+          font-mono
+          label-class="text-xs"
+        />
+
+        <Checkbox
+          v-model="options.transformer.emitDecoratorMetadata"
+          label="emitDecoratorMetadata"
+          font-mono
+          label-class="text-xs"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <label class="flex items-center gap-2">
+        <Switch v-model:checked="options.run.isolatedDeclarations" />
+        <h3 class="text-base font-medium">Isolated Declarations</h3>
+      </label>
+
       <Checkbox
-        v-model="options.transformer.useDefineForClassFields"
+        v-model="options.isolatedDeclarations.stripInternal"
         default-checked
-        label="useDefineForClassFields"
-        font-mono
-        label-class="text-xs"
-      />
-
-      <Checkbox
-        v-model="options.transformer.experimentalDecorators"
-        label="experimentalDecorators"
-        font-mono
-        label-class="text-xs"
-      />
-
-      <Checkbox
-        v-model="options.transformer.emitDecoratorMetadata"
-        label="emitDecoratorMetadata"
+        label="stripInternal"
         font-mono
         label-class="text-xs"
       />
     </div>
-  </div>
-
-  <div mt-4 flex flex-col gap-3>
-    <label flex items-center gap-2>
-      <Switch v-model:checked="options.run.isolatedDeclarations" />
-      <div font-small>Isolated Declarations</div>
-    </label>
-
-    <Checkbox
-      v-model="options.isolatedDeclarations.stripInternal"
-      default-checked
-      label="stripInternal"
-      font-mono
-      label-class="text-xs"
-    />
-  </div>
+  </section>
 </template>

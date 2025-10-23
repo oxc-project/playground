@@ -18,31 +18,33 @@ const optionsString = computed({
     try {
       options.value = JSON.parse(value)
     } catch (error) {
-      console.error(error)
+      console.error('Failed to parse JSON options:', error)
     }
   },
 })
 </script>
 
 <template>
-  <Dialog>
-    <DialogTrigger as-child>
-      <Button variant="outline" class="gap2">
-        <div i-ri:settings-line />
-        Edit as JSON
-      </Button>
-    </DialogTrigger>
+  <section aria-label="Advanced options">
+    <Dialog>
+      <DialogTrigger as-child>
+        <Button variant="outline" class="w-full gap-2">
+          <span class="i-ri:settings-line" aria-hidden="true" />
+          <span>Edit as JSON</span>
+        </Button>
+      </DialogTrigger>
 
-    <DialogContent class="h-[80vh] max-w-5xl">
-      <DialogHeader>
-        <DialogTitle class="text-center">Oxc Options</DialogTitle>
-      </DialogHeader>
+      <DialogContent class="h-[80vh] max-w-5xl">
+        <DialogHeader>
+          <DialogTitle class="text-center">Oxc Options</DialogTitle>
+        </DialogHeader>
 
-      <MonacoEditor
-        v-model="optionsString"
-        language="json"
-        filename="/options.json"
-      />
-    </DialogContent>
-  </Dialog>
+        <MonacoEditor
+          v-model="optionsString"
+          language="json"
+          filename="/options.json"
+        />
+      </DialogContent>
+    </Dialog>
+  </section>
 </template>

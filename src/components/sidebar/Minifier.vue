@@ -7,28 +7,30 @@ const { options } = await useOxc()
 </script>
 
 <template>
-  <div flex flex-col gap-4>
-    <div flex flex-col gap-2>
-      <label flex items-center gap-2>
+  <section class="flex flex-col gap-4" aria-labelledby="minifier-heading">
+    <div class="flex flex-col gap-2">
+      <label class="flex items-center gap-2">
         <Switch v-model:checked="options.run.compress" />
-        <div font-small>Minify Syntax</div>
+        <h2 id="minifier-heading" class="text-base font-medium">
+          Minify Syntax
+        </h2>
       </label>
     </div>
 
-    <div flex flex-col gap-2>
-      <label flex items-center gap-2>
+    <div class="flex flex-col gap-2">
+      <label class="flex items-center gap-2">
         <Switch v-model:checked="options.run.whitespace" />
-        <div font-small>Minify Whitespace</div>
+        <h3 class="text-base font-medium">Minify Whitespace</h3>
       </label>
     </div>
 
-    <div flex flex-col gap-3>
-      <label flex items-center gap-2>
+    <div class="flex flex-col gap-3">
+      <label class="flex items-center gap-2">
         <Switch v-model:checked="options.run.mangle" />
-        <div font-small>Mangle Names</div>
+        <h3 class="text-base font-medium">Mangle Names</h3>
       </label>
 
-      <div ml-2 flex flex-col gap-2>
+      <div class="ml-2 flex flex-col gap-2">
         <Checkbox
           v-model="options.mangle.topLevel"
           default-checked
@@ -46,5 +48,5 @@ const { options } = await useOxc()
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
