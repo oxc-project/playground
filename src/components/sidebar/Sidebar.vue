@@ -11,7 +11,7 @@ import Transformer from './Transformer.vue'
 
 <template>
   <aside
-    class="box-content hidden h-screen w-56 overflow-x-auto border-r border-[#e2e2e3]/40 from-[#fafafa] to-[#f6f6f7] bg-gradient-to-b px-6 shadow-sm lg:block dark:border-[#2e2e32]/40 dark:from-[#161618] dark:to-[#121214] dark:bg-gradient-to-b"
+    class="box-content hidden h-screen w-56 overflow-x-auto overflow-y-auto border-r border-[#e2e2e3]/40 from-[#fafafa] to-[#f6f6f7] bg-gradient-to-b px-4 shadow-sm lg:block dark:border-[#2e2e32]/40 dark:from-[#161618] dark:to-[#121214] dark:bg-gradient-to-b lg:px-6"
   >
     <Logo />
     <div class="flex flex-col gap-6 py-6">

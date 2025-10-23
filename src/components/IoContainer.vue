@@ -33,9 +33,9 @@ function stringifyError(error: unknown) {
   <main class="min-h-0 flex flex-1">
     <Splitter :direction="splitterDirection" class="flex-1">
       <SplitterPanel :default-size="50" :min-size="20" class="flex flex-col">
-        <div class="min-w-0 flex flex-1 flex-col pt-2">
+        <div class="min-w-0 flex flex-1 flex-col pt-1 md:pt-2">
           <div
-            class="min-h-50vh flex-grow-2 flex-basis-none overflow-hidden rounded-tl-xl shadow-inner"
+            class="min-h-50vh flex-grow-2 flex-basis-none overflow-hidden shadow-inner md:rounded-tl-xl"
           >
             <InputEditor
               :language="monacoLanguage"
@@ -58,7 +58,9 @@ function stringifyError(error: unknown) {
       />
 
       <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
-        <div class="h-full min-w-0 overflow-hidden rounded-tr-xl shadow-inner">
+        <div
+          class="h-full min-w-0 overflow-hidden shadow-inner md:rounded-tr-xl"
+        >
           <Output v-if="!error" class="h-full overflow-auto" />
           <CopyContainer
             v-else

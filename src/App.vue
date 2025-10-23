@@ -8,7 +8,7 @@ import { loadingOxc } from '~/composables/oxc'
 <template>
   <Suspense>
     <div
-      class="w-screen flex from-white via-blue-50/30 to-purple-50/20 bg-gradient-to-br md:h-screen dark:from-[#1b1b1f] dark:via-[#1b1b2f] dark:to-[#1f1b2f] dark:bg-gradient-to-br"
+      class="h-screen w-screen flex overflow-hidden from-white via-blue-50/30 to-purple-50/20 bg-gradient-to-br dark:from-[#1b1b1f] dark:via-[#1b1b2f] dark:to-[#1f1b2f] dark:bg-gradient-to-br"
     >
       <Sidebar />
       <div class="min-w-0 flex flex-1 flex-col">
@@ -31,12 +31,12 @@ import { loadingOxc } from '~/composables/oxc'
         </div>
         <span
           v-if="loadingOxc"
-          class="from-blue-600 to-purple-600 bg-gradient-to-r bg-clip-text text-2xl text-transparent font-medium dark:from-blue-400 dark:to-purple-400"
+          class="from-blue-600 to-purple-600 bg-gradient-to-r bg-clip-text px-4 text-center text-xl text-transparent font-medium dark:from-blue-400 dark:to-purple-400 md:text-2xl"
           >Loading Oxc wasm...</span
         >
         <span
           v-else
-          class="from-blue-600 to-purple-600 bg-gradient-to-r bg-clip-text text-2xl text-transparent font-medium dark:from-blue-400 dark:to-purple-400"
+          class="from-blue-600 to-purple-600 bg-gradient-to-r bg-clip-text px-4 text-center text-xl text-transparent font-medium dark:from-blue-400 dark:to-purple-400 md:text-2xl"
           >Loading resources...</span
         >
         <div class="mt-4 flex gap-2">
