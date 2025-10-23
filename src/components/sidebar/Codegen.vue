@@ -7,9 +7,15 @@ const { options } = await useOxc()
 
 <template>
   <div flex flex-col gap-3>
-    <div font-medium>Codegen</div>
+    <div
+      class="text-base text-[#3c3c43] font-semibold dark:text-[#fffff5]/[.86]"
+    >
+      Codegen
+    </div>
 
-    <div flex flex-col gap-2>
+    <div
+      class="flex flex-col gap-3 border border-[#e2e2e3]/50 rounded-lg bg-[#f6f6f7]/50 p-3 dark:border-[#2e2e32]/50 dark:bg-[#161618]/50"
+    >
       <Checkbox
         v-model="options.codegen.normal"
         label="comment"

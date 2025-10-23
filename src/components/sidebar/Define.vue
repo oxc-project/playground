@@ -22,11 +22,23 @@ watch([leftValue, rightValue], () => {
 
 <template>
   <div flex flex-col gap-3>
-    <div font-small>Define Plugin</div>
+    <div
+      class="text-base text-[#3c3c43] font-semibold dark:text-[#fffff5]/[.86]"
+    >
+      Define Plugin
+    </div>
 
-    <div flex gap-2>
-      <Input v-model="leftValue" class="h-8 flex-1 p-1" placeholder="Key" />
-      <Input v-model="rightValue" class="h-8 flex-1 p-1" placeholder="Value" />
+    <div class="flex gap-2">
+      <Input
+        v-model="leftValue"
+        class="h-9 flex-1 border-[#e2e2e3] rounded-lg p-2 text-xs transition-colors dark:border-[#2e2e32] focus:border-[#3451b2] dark:focus:border-[#a8b1ff]"
+        placeholder="Key"
+      />
+      <Input
+        v-model="rightValue"
+        class="h-9 flex-1 border-[#e2e2e3] rounded-lg p-2 text-xs transition-colors dark:border-[#2e2e32] focus:border-[#3451b2] dark:focus:border-[#a8b1ff]"
+        placeholder="Value"
+      />
     </div>
   </div>
 </template>
