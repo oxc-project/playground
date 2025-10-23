@@ -11,23 +11,27 @@ import Transformer from './Transformer.vue'
 
 <template>
   <aside
-    class="box-content hidden h-screen w-52 overflow-x-auto bg-[#f6f6f7] px-6 lg:block dark:bg-[#161618]"
+    class="box-content hidden h-screen w-52 overflow-x-hidden overflow-y-auto bg-[#f6f6f7] px-6 lg:block dark:bg-[#161618]"
+    aria-label="Sidebar navigation"
   >
     <Logo />
-    <div class="flex flex-col gap-6 py-6">
+    <nav
+      class="flex flex-col gap-6 py-6"
+      aria-label="Oxc configuration options"
+    >
       <Parser />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Linter />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Transformer />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Define />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Minifier />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Codegen />
-      <hr />
+      <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <OptionsDialog />
-    </div>
+    </nav>
   </aside>
 </template>

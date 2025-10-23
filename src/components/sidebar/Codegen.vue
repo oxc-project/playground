@@ -6,10 +6,10 @@ const { options } = await useOxc()
 </script>
 
 <template>
-  <div flex flex-col gap-3>
-    <div font-medium>Codegen</div>
+  <section class="flex flex-col gap-3" aria-labelledby="codegen-heading">
+    <h2 id="codegen-heading" class="text-base font-medium">Codegen</h2>
 
-    <div flex flex-col gap-2>
+    <div class="flex flex-col gap-2" role="group" aria-label="Codegen options">
       <Checkbox
         v-model="options.codegen.normal"
         label="comment"
@@ -38,5 +38,5 @@ const { options } = await useOxc()
         label-class="text-xs"
       />
     </div>
-  </div>
+  </section>
 </template>
