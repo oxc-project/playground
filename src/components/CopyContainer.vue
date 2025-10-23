@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 import { Button } from '~/ui/button'
+import { cn } from '~/utils/cn'
+import type { HTMLAttributes } from 'vue'
 
-const props = defineProps<{ value: string }>()
+const props = defineProps<{
+  value: string
+  class?: HTMLAttributes['class']
+}>()
 const { copied, copy } = useClipboard()
 
 function handleCopy() {
@@ -11,7 +16,7 @@ function handleCopy() {
 </script>
 
 <template>
-  <div class="group relative">
+  <div :class="cn('group relative h-full', props.class)">
     <slot />
     <Button
       variant="ghost"

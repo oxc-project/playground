@@ -42,8 +42,8 @@ function stringifyError(error: unknown) {
     </div>
 
     <div class="h-px w-full bg-[#e2e2e3] md:h-full md:w-px dark:bg-[#2e2e32]" />
-    <div class="min-w-0 flex-1">
-      <Output v-if="!error" />
+    <div class="min-w-0 flex-1 overflow-hidden">
+      <Output v-if="!error" class="h-full overflow-auto" />
       <CopyContainer v-else :value="errorStr || ''" class="min-w-0 w-full flex">
         <pre
           class="h-full overflow-auto p-2 text-sm text-red-400"

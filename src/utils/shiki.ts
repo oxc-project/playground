@@ -63,7 +63,7 @@ export async function createHighlighter(): Promise<HighlighterCore> {
 export const shikiLoading = computed(() => isLoading.value)
 export const shikiLoaded = computed(() => isLoaded.value)
 
-export type ShikiLang = 'json' | 'tsx' | 'text'
+export type ShikiLang = 'json' | 'tsx' | 'text' | 'typescript'
 
 export async function highlight(
   code: string,
