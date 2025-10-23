@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useOxc } from '~/composables/oxc'
+import { Splitter, SplitterPanel, SplitterResizeHandle } from '~/ui/splitter'
 import CopyContainer from './CopyContainer.vue'
 import InputEditor from './input/InputEditor.vue'
 import DiagnosticPanel from './output/DiagnosticPanel.vue'
@@ -24,32 +25,43 @@ function stringifyError(error: unknown) {
 
 <template>
   <main class="min-h-0 flex flex-1 flex-col md:flex-row">
-    <div class="min-w-0 flex flex-1 flex-col pt-2">
-      <div class="min-h-50vh flex-grow-2 flex-basis-none">
-        <InputEditor
-          :language="monacoLanguage"
-          :filename="`/test.${options.parser.extension}`"
-          main
-        />
-      </div>
+    <Splitter direction="horizontal" class="flex-1">
+      <SplitterPanel :default-size="50" :min-size="20" class="flex flex-col">
+        <div class="min-w-0 flex flex-1 flex-col pt-2">
+          <div class="min-h-50vh flex-grow-2 flex-basis-none">
+            <InputEditor
+              :language="monacoLanguage"
+              :filename="`/test.${options.parser.extension}`"
+              main
+            />
+          </div>
 
-      <div
-        v-if="oxc.getDiagnostics().length"
-        class="min-h-0 flex flex-1 flex-col gap2 overflow-auto border-t px-3 py-2 text-sm font-mono op80"
-      >
-        <DiagnosticPanel />
-      </div>
-    </div>
+          <div
+            v-if="oxc.getDiagnostics().length"
+            class="min-h-0 flex flex-1 flex-col gap2 overflow-auto border-t px-3 py-2 text-sm font-mono op80"
+          >
+            <DiagnosticPanel />
+          </div>
+        </div>
+      </SplitterPanel>
 
-    <div class="h-px w-full bg-[#e2e2e3] md:h-full md:w-px dark:bg-[#2e2e32]" />
-    <div class="min-w-0 flex-1 overflow-hidden">
-      <Output v-if="!error" class="h-full overflow-auto" />
-      <CopyContainer v-else :value="errorStr || ''" class="min-w-0 w-full flex">
-        <pre
-          class="h-full overflow-auto p-2 text-sm text-red-400"
-          v-text="errorStr"
-        />
-      </CopyContainer>
-    </div>
+      <SplitterResizeHandle />
+
+      <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
+        <div class="h-full min-w-0 overflow-hidden">
+          <Output v-if="!error" class="h-full overflow-auto" />
+          <CopyContainer
+            v-else
+            :value="errorStr || ''"
+            class="min-w-0 w-full flex"
+          >
+            <pre
+              class="h-full overflow-auto p-2 text-sm text-red-400"
+              v-text="errorStr"
+            />
+          </CopyContainer>
+        </div>
+      </SplitterPanel>
+    </Splitter>
   </main>
 </template>
