@@ -1,5 +1,5 @@
-import { useMemoize, type MaybeRefOrGetter } from '@vueuse/core'
-import { computed, ref, toValue, watchEffect } from 'vue'
+import { useMemoize } from '@vueuse/core'
+import { computed, ref, toValue, watchEffect, type MaybeRefOrGetter } from 'vue'
 import { dark } from '~/composables/state'
 import type { HighlighterCore } from 'shiki/core'
 
