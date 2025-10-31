@@ -58,7 +58,7 @@ jobs:
       - run: rustup target add wasm32-wasip1-threads
 
       - run: just build-playground
-      - run: git rev-parse --short HEAD > napi/playground/git-commit
+      - run: git rev-parse HEAD > napi/playground/git-commit
 
       - run: cd .. && mv playground oxc && mkdir playground
 
