@@ -8,6 +8,13 @@ import OutputPreview from './OutputPreview.vue'
 const { oxc, options } = await useOxc()
 const activeFormatterTab = ref('output')
 const configError = ref<string>('')
+// whether the details element is open
+const detailsOpen = ref(true)
+
+function onDetailsToggle(e: Event) {
+  const t = e.target as HTMLDetailsElement | null
+  detailsOpen.value = !!t?.open
+}
 
 const formatterConfig = computed({
   get: () => {
@@ -42,7 +49,7 @@ const formatterConfig = computed({
   <div class="h-full flex flex-col">
     <Tabs
       v-model="activeFormatterTab"
-      class="h-full w-full flex flex-1 flex-col overflow-hidden pb-40px"
+      class="h-full w-full flex flex-1 flex-col overflow-hidden"
     >
       <TabsList class="mx-2 mt-2 w-fit">
         <TabsTrigger value="output"> Output </TabsTrigger>
@@ -58,11 +65,40 @@ const formatterConfig = computed({
       </TabsContent>
     </Tabs>
 
-    <details>
-      <summary cursor-pointer select-none>
-        Configure Options (Click to expand)
+    <details
+      open
+      class="mt-3 border bg-transparent"
+      @toggle="onDetailsToggle($event)"
+    >
+      <summary
+        :aria-expanded="detailsOpen"
+        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-slate-100 px-4 py-2 text-sm font-medium dark:bg-slate-900"
+      >
+        <div>
+          Configure Options
+          <span class="ml-2 text-xs text-slate-500">
+            {{ detailsOpen ? '(Click to collapse)' : '(Click to expand)' }}
+          </span>
+        </div>
+        <svg
+          class="chev h-4 w-4 text-slate-600 transition-transform duration-150 dark:text-slate-300"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M6 8L10 12L14 8"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </summary>
-      <div class="h-400px flex-1 overflow-hidden border rounded-md">
+      <div
+        class="h-300px flex-1 overflow-hidden border-t rounded-b-md bg-white dark:bg-slate-950"
+      >
         <MonacoEditor
           v-model="formatterConfig"
           language="json"
@@ -75,8 +111,24 @@ const formatterConfig = computed({
             wordWrap: 'on',
           }"
         />
-        <div v-if="configError" text-sm text-red-500>⚠️ {{ configError }}</div>
+        <div v-if="configError" class="px-4 py-2 text-sm text-red-500">
+          ⚠️ {{ configError }}
+        </div>
       </div>
     </details>
   </div>
 </template>
+
+<style scoped>
+details summary {
+  list-style: none;
+}
+
+.chev {
+  transform: rotate(-90deg);
+}
+
+details[open] .chev {
+  transform: rotate(0deg);
+}
+</style>

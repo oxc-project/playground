@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { debouncedWatch } from '@vueuse/core'
+import { watchDebounced } from '@vueuse/core'
 import { ref, useTemplateRef } from 'vue'
 import Checkbox from '~/components/ui/Checkbox.vue'
 import { useOxc } from '~/composables/oxc'
@@ -10,7 +10,7 @@ const { oxc, options } = await useOxc()
 const panelEl = useTemplateRef<HTMLDivElement>('panel')
 const isRendering = ref(false)
 
-debouncedWatch(
+watchDebounced(
   [() => oxc.value.controlFlowGraph, panelEl],
   async ([graph, panel]) => {
     if (!panel || !graph) return
