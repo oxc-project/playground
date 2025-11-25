@@ -58,7 +58,6 @@ export const useOxc = createGlobalState(async () => {
       bracketSameLine: false,
       objectWrap: 'preserve',
       singleAttributePerLine: false,
-      experimentalOperatorPosition: 'end',
       experimentalSortImports: undefined,
     },
     transformer: {
