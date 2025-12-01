@@ -26,7 +26,9 @@ const value = computed<string | undefined>(() => {
   if (props.data instanceof RegExp) return props.data.toString()
   return JSON.stringify(props.data)
 })
-const valueColor = useHighlightColor(value)
+const valueColor = computed(() =>
+  isArrayOrObject.value ? undefined : useHighlightColor(value).value,
+)
 
 const properties = useTemplateRefsList<InstanceType<typeof AstProperty>>()
 watchEffect(() => {

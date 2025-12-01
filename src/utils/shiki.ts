@@ -98,6 +98,11 @@ function escapeHtml(text: string): string {
 
 const highlightToken = useMemoize(async (code: string, theme: string) => {
   try {
+    if (code.length > 100) {
+      console.trace()
+      return { tokens: [[{ color: '#666666' }]] }
+    }
+
     const highlighter = await createHighlighter()
     return highlighter.codeToTokens(code, {
       lang: 'typescript',
@@ -126,6 +131,8 @@ export function useHighlightColor(
       return
     }
 
+    const timer_id = `STAGE_1: ${Math.random().toString(36)} + ${code}`
+    console.time(timer_id)
     try {
       const theme = `vitesse-${dark.value ? 'dark' : 'light'}`
       const result = await highlightToken(code, theme)
@@ -135,6 +142,7 @@ export function useHighlightColor(
     } catch {
       color.value = '#666666' // Fallback color
     }
+    console.timeEnd(timer_id)
   })
 
   return computed(() => color.value)
