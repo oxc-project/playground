@@ -121,11 +121,6 @@ export function useHighlightColor(
       return
     }
 
-    if (!isLoaded.value && !isLoading.value) {
-      color.value = '#666666' // Default color when not loaded
-      return
-    }
-
     try {
       const theme = `vitesse-${dark.value ? 'dark' : 'light'}`
       // process the highlight after main rendering completes to prevent laggy
