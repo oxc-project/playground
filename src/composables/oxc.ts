@@ -1,13 +1,5 @@
-import { createGlobalState } from '@vueuse/core'
-import {
-  computed,
-  ref,
-  shallowRef,
-  toRaw,
-  triggerRef,
-  watch,
-  watchEffect,
-} from 'vue'
+import { createGlobalState, watchDebounced } from '@vueuse/core'
+import { computed, ref, shallowRef, toRaw, triggerRef, watch } from 'vue'
 import { activeTab, editorValue } from '~/composables/state'
 import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
 import { atou, utoa } from '~/utils/url'
@@ -129,19 +121,23 @@ export const useOxc = createGlobalState(async () => {
 
   editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE
 
-  watchEffect(() => {
-    const serialized = JSON.stringify({
-      c: editorValue.value === PLAYGROUND_DEMO_CODE ? '' : editorValue.value,
-      o: options.value,
-      t: activeTab.value,
-    })
+  watchDebounced(
+    () => [editorValue.value, options.value, activeTab.value],
+    ([editorValue, options, activeTab]) => {
+      const serialized = JSON.stringify({
+        c: editorValue === PLAYGROUND_DEMO_CODE ? '' : editorValue,
+        o: options,
+        t: activeTab,
+      })
 
-    try {
-      history.replaceState({}, '', `#${utoa(serialized)}`)
-    } catch (error) {
-      console.error(error)
-    }
-  })
+      try {
+        history.replaceState({}, '', `#${utoa(serialized)}`)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    { debounce: 2000 },
+  )
 
   const monacoLanguage = computed(() => {
     const filename = `test.${options.value.parser.extension}`
