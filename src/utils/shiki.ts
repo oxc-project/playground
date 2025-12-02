@@ -128,6 +128,8 @@ export function useHighlightColor(
 
     try {
       const theme = `vitesse-${dark.value ? 'dark' : 'light'}`
+      // process the highlight after main rendering completes to prevent laggy
+      await new Promise((res) => requestIdleCallback(res, { timeout: 500 }))
       const result = await highlightToken(code, theme)
       const token = result.tokens[0]
       const idx = code.startsWith('"') && token.length > 1 ? 1 : 0
