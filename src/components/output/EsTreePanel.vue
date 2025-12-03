@@ -31,7 +31,7 @@ const code = computed(() => {
 </script>
 
 <template>
-  <div w-full overflow-auto p2>
+  <div h-full w-full overflow-auto p2>
     <Checkbox v-model="raw" label="Raw" />
 
     <OutputPreview v-if="raw" :code lang="json" />
