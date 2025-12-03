@@ -1,3 +1,7 @@
 .ast-highlight {
   --at-apply: 'bg-blue-400/30 dark:bg-blue-400/20';
 }
+
+.dark {
+  color-scheme: dark;
+}
