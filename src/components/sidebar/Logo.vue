@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const commit = import.meta.env.OXC_COMMIT
+const commit = import.meta.env.OXC_COMMIT;
 </script>
 
 <template>

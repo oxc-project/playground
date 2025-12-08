@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core'
-import { Button } from '~/ui/button'
-import { cn } from '~/utils/cn'
-import type { HTMLAttributes } from 'vue'
+import { useClipboard } from "@vueuse/core";
+import { Button } from "~/ui/button";
+import { cn } from "~/utils/cn";
+import type { HTMLAttributes } from "vue";
 
 const props = defineProps<{
-  value: string
-  class?: HTMLAttributes['class']
-}>()
-const { copied, copy } = useClipboard()
+  value: string;
+  class?: HTMLAttributes["class"];
+}>();
+const { copied, copy } = useClipboard();
 
 function handleCopy() {
-  copy(props.value || '')
+  copy(props.value || "");
 }
 </script>
 

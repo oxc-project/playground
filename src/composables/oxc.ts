@@ -1,17 +1,19 @@
-import { createGlobalState, watchDebounced } from '@vueuse/core'
-import { computed, ref, shallowRef, toRaw, triggerRef, watch } from 'vue'
-import { activeTab, editorValue } from '~/composables/state'
-import { PLAYGROUND_DEMO_CODE } from '~/utils/constants'
-import { atou, utoa } from '~/utils/url'
-import type { Oxc, OxcOptions } from 'oxc-playground'
+import { createGlobalState, watchDebounced } from "@vueuse/core";
+import { computed, ref, shallowRef, toRaw, triggerRef, watch } from "vue";
+import { activeTab, editorValue } from "~/composables/state";
+import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
+import { atou, utoa } from "~/utils/url";
+import type { Oxc, OxcOptions } from "oxc-playground";
 
 async function initialize(): Promise<Oxc> {
-  const { Oxc } = await import('oxc-playground')
-  return new Oxc()
+  const { Oxc } = await import("oxc-playground");
+  return new Oxc();
 }
 
-export const loadingOxc = ref(true)
-export const oxcPromise = initialize().finally(() => (loadingOxc.value = false))
+export const loadingOxc = ref(true);
+export const oxcPromise = initialize().finally(
+  () => (loadingOxc.value = false),
+);
 
 export const useOxc = createGlobalState(async () => {
   const options = ref<Required<OxcOptions>>({
@@ -28,7 +30,7 @@ export const useOxc = createGlobalState(async () => {
       cfg: true,
     },
     parser: {
-      extension: 'tsx',
+      extension: "tsx",
       allowReturnOutsideFunction: true,
       preserveParens: true,
       allowV8Intrinsics: true,
@@ -38,22 +40,22 @@ export const useOxc = createGlobalState(async () => {
     formatter: {
       useTabs: false,
       tabWidth: 2,
-      endOfLine: 'lf',
+      endOfLine: "lf",
       printWidth: 80,
       singleQuote: false,
       jsxSingleQuote: false,
-      quoteProps: 'as-needed',
-      trailingComma: 'all',
+      quoteProps: "as-needed",
+      trailingComma: "all",
       semi: true,
-      arrowParens: 'always',
+      arrowParens: "always",
       bracketSpacing: true,
       bracketSameLine: false,
-      objectWrap: 'preserve',
+      objectWrap: "preserve",
       singleAttributePerLine: false,
       experimentalSortImports: undefined,
     },
     transformer: {
-      target: 'es2015',
+      target: "es2015",
       useDefineForClassFields: true,
       experimentalDecorators: true,
       emitDecoratorMetadata: true,
@@ -77,75 +79,75 @@ export const useOxc = createGlobalState(async () => {
     },
     inject: { inject: {} },
     define: { define: {} },
-  })
-  const oxc = await oxcPromise
-  const state = shallowRef(oxc)
-  const error = ref<unknown>()
+  });
+  const oxc = await oxcPromise;
+  const state = shallowRef(oxc);
+  const error = ref<unknown>();
 
   function run() {
-    const errors: unknown[] = []
-    const originalError = console.error
+    const errors: unknown[] = [];
+    const originalError = console.error;
     console.error = function (...msgs) {
-      errors.push(...msgs)
-      return originalError.apply(this, msgs)
-    }
+      errors.push(...msgs);
+      return originalError.apply(this, msgs);
+    };
     try {
-      oxc.run(editorValue.value, toRaw(options.value))
+      oxc.run(editorValue.value, toRaw(options.value));
       // Reset error if successful
-      error.value = undefined
+      error.value = undefined;
     } catch (error_) {
-      console.error(error_)
-      error.value = errors.length ? errors : error_
+      console.error(error_);
+      error.value = errors.length ? errors : error_;
     }
-    console.error = originalError
-    triggerRef(state)
+    console.error = originalError;
+    triggerRef(state);
   }
-  watch([options, editorValue, activeTab], run, { deep: true })
+  watch([options, editorValue, activeTab], run, { deep: true });
 
-  let rawUrlState: string | undefined
-  let urlState: any
+  let rawUrlState: string | undefined;
+  let urlState: any;
   try {
-    rawUrlState = atou(location.hash!.slice(1))
-    urlState = rawUrlState && JSON.parse(rawUrlState)
+    rawUrlState = atou(location.hash!.slice(1));
+    urlState = rawUrlState && JSON.parse(rawUrlState);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 
   if (urlState?.o) {
-    options.value = urlState.o
+    options.value = urlState.o;
   }
 
   if (urlState?.t) {
-    activeTab.value = urlState.t
+    activeTab.value = urlState.t;
   }
 
-  editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE
+  editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE;
 
   watchDebounced(
     () => [editorValue.value, options.value, activeTab.value],
     ([editorValue, options, activeTab]) => {
       const serialized = JSON.stringify({
-        c: editorValue === PLAYGROUND_DEMO_CODE ? '' : editorValue,
+        c: editorValue === PLAYGROUND_DEMO_CODE ? "" : editorValue,
         o: options,
         t: activeTab,
-      })
+      });
 
       try {
-        history.replaceState({}, '', `#${utoa(serialized)}`)
+        history.replaceState({}, "", `#${utoa(serialized)}`);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
     { debounce: 2000 },
-  )
+  );
 
   const monacoLanguage = computed(() => {
-    const filename = `test.${options.value.parser.extension}`
-    const ext = filename.split('.').pop()!
-    if (['ts', 'mts', 'cts', 'tsx'].includes(ext)) return 'typescript'
-    if (['js', 'mjs', 'cjs', 'jsx'].includes(ext)) return 'javascript'
-    return 'plaintext'
-  })
+    const filename = `test.${options.value.parser.extension}`;
+    const ext = filename.split(".").pop()!;
+    if (["ts", "mts", "cts", "tsx"].includes(ext)) return "typescript";
+    if (["js", "mjs", "cjs", "jsx"].includes(ext)) return "javascript";
+    return "plaintext";
+  });
 
   // NOTE: do not free() on unmount. that hook is fired any time any consuming
   // component unmounts, which messes things up for other components.
@@ -155,5 +157,5 @@ export const useOxc = createGlobalState(async () => {
     error,
     options,
     monacoLanguage,
-  }
-})
+  };
+});

@@ -1,23 +1,26 @@
 {
   "name": "@oxc-project/playground",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@10.24.0",
   "description": "oxc playground",
-  "type": "module",
   "license": "MIT",
   "homepage": "https://playground.oxc.rs",
-  "bugs": "https://github.com/oxc-project/playground/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oxc-project/playground.git"
   },
+  "bugs": "https://github.com/oxc-project/playground/issues",
   "main": "",
+  "engines": {
+    "node": ">=20.14.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier",
+    "fmt": "oxfmt",
     "typecheck": "vue-tsc",
     "lint": "eslint --cache",
     "prepare": "simple-git-hooks"
@@ -39,15 +42,14 @@
     "@emnapi/core": "^1.5.0",
     "@iconify-json/ri": "^1.2.5",
     "@sxzz/eslint-config": "^7.2.6",
-    "@sxzz/prettier-config": "^2.2.4",
     "@types/node": "^24.5.2",
     "@unocss/eslint-plugin": "^66.5.2",
     "@vitejs/plugin-vue": "^6.0.1",
     "eslint": "^9.36.0",
     "lint-staged": "^16.2.3",
     "oxc-playground": "link:../oxc/napi/playground",
+    "oxfmt": "^0.17.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
     "shiki": "^3.13.0",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.2",
@@ -57,14 +59,13 @@
     "vite": "8.0.0-beta.0",
     "vue-tsc": "~3.1.0"
   },
-  "engines": {
-    "node": ">=20.14.0"
-  },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"
-  },
-  "prettier": "@sxzz/prettier-config"
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": [
+      "eslint --fix --cache",
+      "oxfmt"
+    ]
+  }
 }
