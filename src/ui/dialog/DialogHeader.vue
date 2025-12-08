@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { cn } from '~/utils/cn'
-import type { HTMLAttributes } from 'vue'
+import { cn } from "~/utils/cn";
+import type { HTMLAttributes } from "vue";
 
 const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+  class?: HTMLAttributes["class"];
+}>();
 </script>
 
 <template>

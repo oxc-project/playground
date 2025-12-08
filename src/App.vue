@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Header from '~/components/header/Header.vue'
-import IoContainer from '~/components/IoContainer.vue'
-import Sidebar from '~/components/sidebar/Sidebar.vue'
-import { loadingOxc } from '~/composables/oxc'
+import Header from "~/components/header/Header.vue";
+import IoContainer from "~/components/IoContainer.vue";
+import Sidebar from "~/components/sidebar/Sidebar.vue";
+import { loadingOxc } from "~/composables/oxc";
 </script>
 
 <template>

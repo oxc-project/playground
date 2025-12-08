@@ -6,19 +6,19 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '~/ui/select'
+} from "~/ui/select";
 
 defineProps<{
-  modelValue?: string
-  defaultValue?: T
+  modelValue?: string;
+  defaultValue?: T;
   options: {
-    value: T
-    label: string
-  }[]
-}>()
+    value: T;
+    label: string;
+  }[];
+}>();
 defineEmits<{
-  'update:modelValue': [value: T]
-}>()
+  "update:modelValue": [value: T];
+}>();
 </script>
 
 <template>

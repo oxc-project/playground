@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useOxc } from '~/composables/oxc'
+import { useOxc } from "~/composables/oxc";
 
-const { oxc } = await useOxc()
+const { oxc } = await useOxc();
 </script>
 
 <template>

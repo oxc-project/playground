@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
-import { ref, useTemplateRef } from 'vue'
-import Checkbox from '~/components/ui/Checkbox.vue'
-import { useOxc } from '~/composables/oxc'
-import { renderSVG, vizError, vizLoading } from '~/utils/viz'
-import OutputPreview from './OutputPreview.vue'
+import { watchDebounced } from "@vueuse/core";
+import { ref, useTemplateRef } from "vue";
+import Checkbox from "~/components/ui/Checkbox.vue";
+import { useOxc } from "~/composables/oxc";
+import { renderSVG, vizError, vizLoading } from "~/utils/viz";
+import OutputPreview from "./OutputPreview.vue";
 
-const { oxc, options } = await useOxc()
-const panelEl = useTemplateRef<HTMLDivElement>('panel')
-const isRendering = ref(false)
+const { oxc, options } = await useOxc();
+const panelEl = useTemplateRef<HTMLDivElement>("panel");
+const isRendering = ref(false);
 
 watchDebounced(
   [() => oxc.value.controlFlowGraph, panelEl],
   async ([graph, panel]) => {
-    if (!panel || !graph) return
+    if (!panel || !graph) return;
 
-    isRendering.value = true
+    isRendering.value = true;
 
     try {
-      const svg = await renderSVG(graph)
+      const svg = await renderSVG(graph);
       if (svg && panel) {
-        panel.replaceChildren(svg)
+        panel.replaceChildren(svg);
       } else if (panel) {
         // Show error message if rendering failed
         panel.innerHTML = `
@@ -28,26 +28,26 @@ watchDebounced(
             <p>Failed to render graph visualization.</p>
             <p class="text-sm mt-2">Please use the "Raw" view to see the graph data.</p>
           </div>
-        `
+        `;
       }
     } catch (error) {
-      console.warn('Failed to render control flow graph:', error)
+      console.warn("Failed to render control flow graph:", error);
       if (panel) {
         panel.innerHTML = `
           <div class="p-4 text-center text-red-500">
-            <p>Error rendering graph: ${error instanceof Error ? error.message : 'Unknown error'}</p>
+            <p>Error rendering graph: ${error instanceof Error ? error.message : "Unknown error"}</p>
             <p class="text-sm mt-2">Please use the "Raw" view to see the graph data.</p>
           </div>
-        `
+        `;
       }
     } finally {
-      isRendering.value = false
+      isRendering.value = false;
     }
   },
   { immediate: true, debounce: 100 },
-)
+);
 
-const raw = ref(false)
+const raw = ref(false);
 </script>
 
 <template>
@@ -78,8 +78,8 @@ const raw = ref(false)
           <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
             {{
               vizLoading
-                ? 'Loading graph visualization...'
-                : 'Rendering graph...'
+                ? "Loading graph visualization..."
+                : "Rendering graph..."
             }}
           </p>
         </div>

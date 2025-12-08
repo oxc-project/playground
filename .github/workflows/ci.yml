@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */3 * * *' # Build and deploy every 3 hours.
+    - cron: "0 */3 * * *" # Build and deploy every 3 hours.
   pull_request:
     types:
       - opened
@@ -102,4 +102,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.number }}
-          body: 'Preview URL: ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}'
+          body: "Preview URL: ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}"

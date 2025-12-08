@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Checkbox from '~/components/ui/Checkbox.vue'
-import { useOxc } from '~/composables/oxc'
-import { Input } from '~/ui/input'
-import { Switch } from '~/ui/switch'
+import Checkbox from "~/components/ui/Checkbox.vue";
+import { useOxc } from "~/composables/oxc";
+import { Input } from "~/ui/input";
+import { Switch } from "~/ui/switch";
 
-const { options } = await useOxc()
+const { options } = await useOxc();
 </script>
 
 <template>

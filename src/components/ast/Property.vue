@@ -1,107 +1,109 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { autoFocus, outputHoverRange } from '~/composables/state'
-import { checkRange, getRange } from '~/utils/range'
-import { useHighlightColor } from '~/utils/shiki'
-import AstSummaryValue from './SummaryValue.vue'
-import AstValue from './Value.vue'
+import { computed, ref, watch } from "vue";
+import { autoFocus, outputHoverRange } from "~/composables/state";
+import { checkRange, getRange } from "~/utils/range";
+import { useHighlightColor } from "~/utils/shiki";
+import AstSummaryValue from "./SummaryValue.vue";
+import AstValue from "./Value.vue";
 
 const props = defineProps<{
-  id?: string | number
-  value?: any
-  root?: boolean
-  open?: boolean
-}>()
+  id?: string | number;
+  value?: any;
+  root?: boolean;
+  open?: boolean;
+}>();
 
 const title = computed(() => {
-  if (props.value && typeof props.value === 'object' && 'type' in props.value) {
-    return props.value.type
+  if (props.value && typeof props.value === "object" && "type" in props.value) {
+    return props.value.type;
   }
-  return
-})
-const titleColor = useHighlightColor(() => `${title.value}()`)
+  return;
+});
+const titleColor = useHighlightColor(() => `${title.value}()`);
 
 const openable = computed(
   () =>
-    typeof props.value === 'object' &&
+    typeof props.value === "object" &&
     props.value != null &&
     Object.keys(props.value).length > 0,
-)
+);
 
 const isHovering = computed(() => {
   // children of csstree is iterable but not array
   if (Array.isArray(props.value)) {
-    return Array.from(props.value).some((v) => checkRange(getRange(v)))
+    return Array.from(props.value).some((v) => checkRange(getRange(v)));
   }
-  return checkRange(getRange(props.value))
-})
+  return checkRange(getRange(props.value));
+});
 
-const openManual = ref<boolean>()
+const openManual = ref<boolean>();
 const open = computed(
   () =>
     openable.value &&
     (openManual.value ?? (props.open || (autoFocus.value && isHovering.value))),
-)
+);
 
-const valueCreated = ref(false)
-watch(open, () => (valueCreated.value ||= open.value), { immediate: true })
+const valueCreated = ref(false);
+watch(open, () => (valueCreated.value ||= open.value), { immediate: true });
 
 function toggleOpen() {
-  if (!openable.value) return
+  if (!openable.value) return;
 
   if (
     openManual.value !== undefined &&
     openManual.value !== (props.open || isHovering.value)
   ) {
-    openManual.value = undefined
+    openManual.value = undefined;
   } else {
-    openManual.value = !open.value
+    openManual.value = !open.value;
   }
 }
 
-const key = computed(() => (props.id == null ? undefined : String(props.id)))
-const keyColor = useHighlightColor(key)
+const key = computed(() => (props.id == null ? undefined : String(props.id)));
+const keyColor = useHighlightColor(key);
 const keyClass = computed(
-  () => openable.value && 'cursor-pointer hover:underline whitespace-pre',
-)
+  () => openable.value && "cursor-pointer hover:underline whitespace-pre",
+);
 
 function handleMouseOver(event: MouseEvent) {
   if (props.root) {
-    event.stopPropagation()
-    outputHoverRange.value = undefined
+    event.stopPropagation();
+    outputHoverRange.value = undefined;
   } else if (props.value) {
-    const range = getRange(props.value)
-    if (!range) return
+    const range = getRange(props.value);
+    if (!range) return;
 
-    event.stopPropagation()
-    outputHoverRange.value = range
+    event.stopPropagation();
+    outputHoverRange.value = range;
   }
 }
 
 function handleMouseLeave() {
   if (props.root) {
-    outputHoverRange.value = undefined
+    outputHoverRange.value = undefined;
   }
 }
 
-const container = ref<HTMLDivElement>()
-const exactHover = ref(false)
+const container = ref<HTMLDivElement>();
+const exactHover = ref(false);
 
 function handleSubHoverChange(subHovering: boolean) {
-  exactHover.value = isHovering.value && !subHovering
+  exactHover.value = isHovering.value && !subHovering;
 }
 
 watch(
   [autoFocus, exactHover, isHovering, container],
   ([autoFocus, exactHover, isHovering, container]) => {
     if (autoFocus && exactHover && isHovering && container) {
-      requestAnimationFrame(() => container.scrollIntoView({ block: 'center' }))
+      requestAnimationFrame(() =>
+        container.scrollIntoView({ block: "center" }),
+      );
     }
   },
   { immediate: true },
-)
+);
 
-defineExpose({ isHovering })
+defineExpose({ isHovering });
 </script>
 
 <template>
@@ -121,7 +123,7 @@ defineExpose({ isHovering })
       select-none
       font-semibold
       op70
-      >{{ open ? '-' : '+' }}</span
+      >{{ open ? "-" : "+" }}</span
     >
     <span v-if="key">
       <span

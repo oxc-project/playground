@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import { useMediaQuery } from '@vueuse/core'
-import { computed } from 'vue'
-import { useOxc } from '~/composables/oxc'
-import { Splitter, SplitterPanel, SplitterResizeHandle } from '~/ui/splitter'
-import CopyContainer from './CopyContainer.vue'
-import InputEditor from './input/InputEditor.vue'
-import DiagnosticPanel from './output/DiagnosticPanel.vue'
-import Output from './output/OutputPanel.vue'
+import { useMediaQuery } from "@vueuse/core";
+import { computed } from "vue";
+import { useOxc } from "~/composables/oxc";
+import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
+import CopyContainer from "./CopyContainer.vue";
+import InputEditor from "./input/InputEditor.vue";
+import DiagnosticPanel from "./output/DiagnosticPanel.vue";
+import Output from "./output/OutputPanel.vue";
 
-const { oxc, error, monacoLanguage, options } = await useOxc()
+const { oxc, error, monacoLanguage, options } = await useOxc();
 
-const isMdAndUp = useMediaQuery('(min-width: 768px)')
+const isMdAndUp = useMediaQuery("(min-width: 768px)");
 const splitterDirection = computed(() =>
-  isMdAndUp.value ? 'horizontal' : 'vertical',
-)
+  isMdAndUp.value ? "horizontal" : "vertical",
+);
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
-    ? error.value.map(stringifyError).join('\n')
-    : stringifyError(error.value)
-})
+    ? error.value.map(stringifyError).join("\n")
+    : stringifyError(error.value);
+});
 
 function stringifyError(error: unknown) {
-  if (!error) return ''
+  if (!error) return "";
   if (error instanceof Error)
-    return [error.message, error.stack].filter(Boolean).join('\n')
-  return String(error)
+    return [error.message, error.stack].filter(Boolean).join("\n");
+  return String(error);
 }
 </script>
 

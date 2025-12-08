@@ -1,15 +1,15 @@
-import * as monaco from 'monaco-editor'
+import * as monaco from "monaco-editor";
 monaco.json.jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
-  trailingCommas: 'ignore',
-})
+  trailingCommas: "ignore",
+});
 
 monaco.typescript.typescriptDefaults.setDiagnosticsOptions({
   noSemanticValidation: true,
   noSyntaxValidation: true,
   noSuggestionDiagnostics: true,
-})
+});
 monaco.typescript.typescriptDefaults.setCompilerOptions({
   allowJs: true,
   target: monaco.typescript.ScriptTarget.ESNext,
@@ -19,4 +19,4 @@ monaco.typescript.typescriptDefaults.setCompilerOptions({
   noEmit: true,
   esModuleInterop: true,
   jsx: monaco.typescript.JsxEmit.React,
-})
+});
