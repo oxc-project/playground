@@ -2,7 +2,7 @@
   "name": "@oxc-project/playground",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "pnpm@10.25.0",
   "description": "oxc playground",
   "type": "module",
   "license": "MIT",
@@ -54,7 +54,7 @@
     "unocss": "^66.5.2",
     "unocss-preset-animations": "^1.2.1",
     "unocss-preset-shadcn": "^1.0.1",
-    "vite": "8.0.0-beta.0",
+    "vite": "8.0.0-beta.1",
     "vue-tsc": "~3.1.0"
   },
   "engines": {
