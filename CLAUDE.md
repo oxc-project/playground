@@ -25,7 +25,7 @@ pnpm preview    # Preview production build locally
 ```bash
 pnpm lint       # Run ESLint with cache
 pnpm typecheck  # Run vue-tsc for type checking
-pnpm format     # Run Prettier formatter
+pnpm format     # Run oxfmt formatter
 ```
 
 ## Project Info
