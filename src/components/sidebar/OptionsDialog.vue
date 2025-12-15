@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useOxc } from '~/composables/oxc'
-import { Button } from '~/ui/button'
+import { computed } from "vue";
+import { useOxc } from "~/composables/oxc";
+import { Button } from "~/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '~/ui/dialog'
-import MonacoEditor from '../MonacoEditor.vue'
+} from "~/ui/dialog";
+import MonacoEditor from "../MonacoEditor.vue";
 
-const { options } = await useOxc()
+const { options } = await useOxc();
 const optionsString = computed({
   get: () => JSON.stringify(options.value, null, 2),
   set: (value: string) => {
     try {
-      options.value = JSON.parse(value)
+      options.value = JSON.parse(value);
     } catch (error) {
-      console.error('Failed to parse JSON options:', error)
+      console.error("Failed to parse JSON options:", error);
     }
   },
-})
+});
 </script>
 
 <template>

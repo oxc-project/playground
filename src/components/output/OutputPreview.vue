@@ -1,50 +1,50 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
-import CopyContainer from '~/components/CopyContainer.vue'
+import { computed, ref, watchEffect } from "vue";
+import CopyContainer from "~/components/CopyContainer.vue";
 import {
   highlight,
   shikiLoaded,
   shikiLoading,
   type ShikiLang,
-} from '~/utils/shiki'
+} from "~/utils/shiki";
 
 const props = defineProps<{
-  code?: string
-  lang: ShikiLang
-}>()
+  code?: string;
+  lang: ShikiLang;
+}>();
 
-const highlightedCode = ref('')
-const isHighlighting = ref(false)
+const highlightedCode = ref("");
+const isHighlighting = ref(false);
 
 // Watch for changes and trigger highlighting
 watchEffect(async () => {
   if (!props.code) {
-    highlightedCode.value = ''
-    return
+    highlightedCode.value = "";
+    return;
   }
 
-  isHighlighting.value = true
+  isHighlighting.value = true;
 
   try {
-    const result = await highlight(props.code, props.lang)
-    highlightedCode.value = result
+    const result = await highlight(props.code, props.lang);
+    highlightedCode.value = result;
   } catch (error) {
-    console.warn('Failed to highlight code:', error)
+    console.warn("Failed to highlight code:", error);
     // Fallback to plain text
-    highlightedCode.value = `<pre class="!bg-transparent p-2"><code>${escapeHtml(props.code)}</code></pre>`
+    highlightedCode.value = `<pre class="!bg-transparent p-2"><code>${escapeHtml(props.code)}</code></pre>`;
   } finally {
-    isHighlighting.value = false
+    isHighlighting.value = false;
   }
-})
+});
 
 const showLoading = computed(
   () => isHighlighting.value || (shikiLoading.value && !shikiLoaded.value),
-)
+);
 
 function escapeHtml(text: string): string {
-  const div = document.createElement('div')
-  div.textContent = text
-  return div.innerHTML
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
 }
 </script>
 

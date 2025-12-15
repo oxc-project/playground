@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Codegen from './Codegen.vue'
-import Define from './Define.vue'
-import Linter from './Linter.vue'
-import Logo from './Logo.vue'
-import Minifier from './Minifier.vue'
-import OptionsDialog from './OptionsDialog.vue'
-import Parser from './Parser.vue'
-import Transformer from './Transformer.vue'
+import Codegen from "./Codegen.vue";
+import Define from "./Define.vue";
+import Linter from "./Linter.vue";
+import Logo from "./Logo.vue";
+import Minifier from "./Minifier.vue";
+import OptionsDialog from "./OptionsDialog.vue";
+import Parser from "./Parser.vue";
+import Transformer from "./Transformer.vue";
 </script>
 
 <template>
