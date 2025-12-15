@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useOxc } from '~/composables/oxc'
-import { Input } from '~/ui/input'
+import { ref, watch } from "vue";
+import { useOxc } from "~/composables/oxc";
+import { Input } from "~/ui/input";
 
-const { options } = await useOxc()
+const { options } = await useOxc();
 
-const leftValue = ref('')
-const rightValue = ref('')
+const leftValue = ref("");
+const rightValue = ref("");
 
 watch([leftValue, rightValue], () => {
-  const left = leftValue.value
-  const right = rightValue.value
+  const left = leftValue.value;
+  const right = rightValue.value;
   if (left && right) {
-    options.value.define.define[left] = right
+    options.value.define.define[left] = right;
   }
   if (!left || !right) {
-    delete options.value.define.define[left]
+    delete options.value.define.define[left];
   }
-})
+});
 </script>
 
 <template>

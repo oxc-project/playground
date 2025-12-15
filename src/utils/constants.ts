@@ -17,4 +17,4 @@ const DummyComponent: React.FC = () => {
 }
 
 export default DummyComponent
-`.trim()
+`.trim();

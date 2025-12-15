@@ -1,48 +1,48 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import MonacoEditor from '~/components/MonacoEditor.vue'
-import { useOxc } from '~/composables/oxc'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
-import OutputPreview from './OutputPreview.vue'
+import { computed, ref } from "vue";
+import MonacoEditor from "~/components/MonacoEditor.vue";
+import { useOxc } from "~/composables/oxc";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/ui/tabs";
+import OutputPreview from "./OutputPreview.vue";
 
-const { oxc, options } = await useOxc()
-const activeFormatterTab = ref('output')
-const configError = ref<string>('')
+const { oxc, options } = await useOxc();
+const activeFormatterTab = ref("output");
+const configError = ref<string>("");
 // whether the details element is open
-const detailsOpen = ref(true)
+const detailsOpen = ref(true);
 
 function onDetailsToggle(e: Event) {
-  const t = e.target as HTMLDetailsElement | null
-  detailsOpen.value = !!t?.open
+  const t = e.target as HTMLDetailsElement | null;
+  detailsOpen.value = !!t?.open;
 }
 
 const formatterConfig = computed({
   get: () => {
     try {
-      const config = options.value.formatter || {}
+      const config = options.value.formatter || {};
       // Filter out undefined values for cleaner JSON
       const cleanConfig = Object.fromEntries(
         Object.entries(config).filter(([, v]) => v !== undefined),
-      )
-      return JSON.stringify(cleanConfig, null, 2)
+      );
+      return JSON.stringify(cleanConfig, null, 2);
     } catch {
-      return '{}'
+      return "{}";
     }
   },
   set: (value: string) => {
     try {
-      configError.value = ''
-      const parsed = JSON.parse(value)
+      configError.value = "";
+      const parsed = JSON.parse(value);
       options.value.formatter = {
         ...options.value.formatter,
         ...parsed,
-      }
+      };
     } catch (error) {
       configError.value =
-        error instanceof Error ? error.message : 'Invalid JSON'
+        error instanceof Error ? error.message : "Invalid JSON";
     }
   },
-})
+});
 </script>
 
 <template>
@@ -77,7 +77,7 @@ const formatterConfig = computed({
         <div>
           Configure Options
           <span class="ml-2 text-xs text-slate-500">
-            {{ detailsOpen ? '(Click to collapse)' : '(Click to expand)' }}
+            {{ detailsOpen ? "(Click to collapse)" : "(Click to expand)" }}
           </span>
         </div>
         <svg
