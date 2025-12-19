@@ -92,7 +92,11 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
-      oxc.run(editorValue.value, toRaw(options.value));
+      const rawOptions = toRaw(options.value);
+      if (typeof rawOptions?.linter?.config === "object") {
+        rawOptions.linter.config = JSON.stringify(rawOptions.linter.config);
+      }
+      oxc.run(editorValue.value, rawOptions);
       // Reset error if successful
       error.value = undefined;
     } catch (error_) {
