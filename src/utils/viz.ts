@@ -35,9 +35,7 @@ export async function createVizInstance() {
     return vizInstance;
   } catch (error) {
     const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "Failed to load visualization library";
+      error instanceof Error ? error.message : "Failed to load visualization library";
     loadError.value = errorMessage;
     console.warn("Failed to load @viz-js/viz:", error);
     throw new Error(errorMessage);

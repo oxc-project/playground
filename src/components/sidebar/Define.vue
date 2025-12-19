@@ -22,15 +22,12 @@ watch([leftValue, rightValue], () => {
 
 <template>
   <section class="flex flex-col gap-3" aria-labelledby="define-heading">
-    <h2 id="define-heading" class="text-base font-medium">Define Plugin</h2>
+    <h2 id="define-heading" class="text-base font-medium">
+      Define Plugin
+    </h2>
 
     <div class="flex gap-2" role="group" aria-label="Define key-value pair">
-      <Input
-        v-model="leftValue"
-        class="h-8 flex-1 p-1"
-        placeholder="Key"
-        aria-label="Define key"
-      />
+      <Input v-model="leftValue" class="h-8 flex-1 p-1" placeholder="Key" aria-label="Define key" />
       <Input
         v-model="rightValue"
         class="h-8 flex-1 p-1"

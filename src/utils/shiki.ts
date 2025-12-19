@@ -1,11 +1,5 @@
 import { useMemoize } from "@vueuse/core";
-import {
-  computed,
-  ref,
-  toValue,
-  watchEffect,
-  type MaybeRefOrGetter,
-} from "vue";
+import { computed, ref, toValue, watchEffect, type MaybeRefOrGetter } from "vue";
 import { dark } from "~/composables/state";
 import type { HighlighterCore } from "shiki/core";
 
@@ -71,10 +65,7 @@ export const shikiLoaded = computed(() => isLoaded.value);
 
 export type ShikiLang = "json" | "tsx" | "text" | "typescript";
 
-export async function highlight(
-  code: string,
-  lang: ShikiLang,
-): Promise<string> {
+export async function highlight(code: string, lang: ShikiLang): Promise<string> {
   try {
     const highlighter = await createHighlighter();
     return highlighter.codeToHtml(code, {
@@ -114,9 +105,7 @@ const highlightToken = useMemoize(async (code: string, theme: string) => {
   }
 });
 
-export function useHighlightColor(
-  content: MaybeRefOrGetter<string | undefined>,
-) {
+export function useHighlightColor(content: MaybeRefOrGetter<string | undefined>) {
   const color = ref("#666666"); // Default color
 
   // Reactive computation that updates color when content or theme changes

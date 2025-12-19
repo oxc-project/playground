@@ -30,8 +30,6 @@ const forwardedProps = useForwardProps(delegatedProps);
       )
     "
   >
-    <div
-      class="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md"
-    />
+    <div class="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
   </NavigationMenuIndicator>
 </template>

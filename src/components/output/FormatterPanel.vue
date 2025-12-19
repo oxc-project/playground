@@ -47,13 +47,14 @@ const formatterConfig = computed({
 
 <template>
   <div class="h-full flex flex-col">
-    <Tabs
-      v-model="activeFormatterTab"
-      class="h-full w-full flex flex-1 flex-col overflow-hidden"
-    >
+    <Tabs v-model="activeFormatterTab" class="h-full w-full flex flex-1 flex-col overflow-hidden">
       <TabsList class="mx-2 mt-2 w-fit">
-        <TabsTrigger value="output"> Output </TabsTrigger>
-        <TabsTrigger value="ir"> IR </TabsTrigger>
+        <TabsTrigger value="output">
+          Output
+        </TabsTrigger>
+        <TabsTrigger value="ir">
+          IR
+        </TabsTrigger>
       </TabsList>
 
       <TabsContent force-mount value="output">
@@ -65,11 +66,7 @@ const formatterConfig = computed({
       </TabsContent>
     </Tabs>
 
-    <details
-      open
-      class="mt-3 border bg-transparent"
-      @toggle="onDetailsToggle($event)"
-    >
+    <details open class="mt-3 border bg-transparent" @toggle="onDetailsToggle($event)">
       <summary
         :aria-expanded="detailsOpen"
         class="flex cursor-pointer select-none items-center justify-between gap-3 bg-slate-100 px-4 py-2 text-sm font-medium dark:bg-slate-900"
@@ -96,9 +93,7 @@ const formatterConfig = computed({
           />
         </svg>
       </summary>
-      <div
-        class="h-300px flex-1 overflow-hidden border-t rounded-b-md bg-white dark:bg-slate-950"
-      >
+      <div class="h-300px flex-1 overflow-hidden border-t rounded-b-md bg-white dark:bg-slate-950">
         <MonacoEditor
           v-model="formatterConfig"
           language="json"

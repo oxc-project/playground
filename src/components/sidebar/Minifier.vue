@@ -11,9 +11,7 @@ const { options } = await useOxc();
     <div class="flex flex-col gap-2">
       <label class="flex items-center gap-2">
         <Switch v-model:checked="options.run.compress" />
-        <h2 id="minifier-heading" class="text-base font-medium">
-          Minify Syntax
-        </h2>
+        <h2 id="minifier-heading" class="text-base font-medium">Minify Syntax</h2>
       </label>
     </div>
 

@@ -32,11 +32,7 @@ defineEmits<{
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>
-        <SelectItem
-          v-for="option in options"
-          :key="option.value"
-          :value="option.value"
-        >
+        <SelectItem v-for="option in options" :key="option.value" :value="option.value">
           {{ option.label }}
         </SelectItem>
       </SelectGroup>

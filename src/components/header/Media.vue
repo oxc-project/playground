@@ -13,9 +13,7 @@
           target="_blank"
           rel="noopener"
         >
-          <div
-            class="i-ri:bluesky-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
-          />
+          <div class="i-ri:bluesky-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]" />
         </a>
       </li>
       <li>
@@ -26,9 +24,7 @@
           target="_blank"
           rel="noopener"
         >
-          <div
-            class="i-ri:discord-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
-          />
+          <div class="i-ri:discord-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]" />
         </a>
       </li>
       <li>
@@ -39,9 +35,7 @@
           target="_blank"
           rel="noopener"
         >
-          <div
-            class="i-ri:github-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
-          />
+          <div class="i-ri:github-fill h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]" />
         </a>
       </li>
     </ul>

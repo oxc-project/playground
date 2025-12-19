@@ -11,9 +11,7 @@ async function initialize(): Promise<Oxc> {
 }
 
 export const loadingOxc = ref(true);
-export const oxcPromise = initialize().finally(
-  () => (loadingOxc.value = false),
-);
+export const oxcPromise = initialize().finally(() => (loadingOxc.value = false));
 
 export const useOxc = createGlobalState(async () => {
   const options = ref<Required<OxcOptions>>({

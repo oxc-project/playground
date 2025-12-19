@@ -24,9 +24,7 @@ function handleCopy() {
       class="absolute right-4 top-4 op0 transition-opacity group-hover:opacity-100"
       @click="handleCopy"
     >
-      <div
-        :class="copied ? 'i-ri:check-line text-green' : 'i-ri:file-copy-line'"
-      />
+      <div :class="copied ? 'i-ri:check-line text-green' : 'i-ri:file-copy-line'" />
     </Button>
   </div>
 </template>

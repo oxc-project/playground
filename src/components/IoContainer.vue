@@ -56,15 +56,8 @@ function stringifyError(error: unknown) {
       <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
         <div class="h-full min-w-0 overflow-hidden">
           <Output v-if="!error" class="h-full overflow-auto" />
-          <CopyContainer
-            v-else
-            :value="errorStr || ''"
-            class="min-w-0 w-full flex"
-          >
-            <pre
-              class="h-full overflow-auto p-2 text-sm text-red-400"
-              v-text="errorStr"
-            />
+          <CopyContainer v-else :value="errorStr || ''" class="min-w-0 w-full flex">
+            <pre class="h-full overflow-auto p-2 text-sm text-red-400" v-text="errorStr" />
           </CopyContainer>
         </div>
       </SplitterPanel>

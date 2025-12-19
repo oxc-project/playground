@@ -123,15 +123,9 @@ defineExpose({ isHovering });
       select-none
       font-semibold
       op70
-      >{{ open ? "-" : "+" }}</span
-    >
+    >{{ open ? "-" : "+" }}</span>
     <span v-if="key">
-      <span
-        :class="keyClass"
-        :style="{ color: keyColor }"
-        @click="toggleOpen"
-        v-text="key"
-      />
+      <span :class="keyClass" :style="{ color: keyColor }" @click="toggleOpen" v-text="key" />
       <span op70>:&nbsp;</span>
     </span>
     <span v-if="title">
@@ -140,15 +134,10 @@ defineExpose({ isHovering });
         :style="{ color: titleColor }"
         @click="toggleOpen"
         v-text="title"
-      />&nbsp;</span
-    >
+      />&nbsp;</span>
     <span v-if="!openable || valueCreated" v-show="!openable || open">
       <AstValue :data="value" @update:hover="handleSubHoverChange" />
     </span>
-    <AstSummaryValue
-      v-if="openable && !open"
-      :data="value"
-      @toggle="toggleOpen"
-    />
+    <AstSummaryValue v-if="openable && !open" :data="value" @toggle="toggleOpen" />
   </div>
 </template>

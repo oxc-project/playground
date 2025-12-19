@@ -62,17 +62,10 @@ const raw = ref(false);
 
       <div v-show="!raw" class="relative">
         <!-- Loading states for graph visualization -->
-        <div
-          v-if="(vizLoading || isRendering) && !vizError"
-          class="p-8 text-center"
-        >
+        <div v-if="(vizLoading || isRendering) && !vizError" class="p-8 text-center">
           <div class="animate-pulse space-y-4">
-            <div
-              class="mx-auto h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700"
-            />
-            <div
-              class="mx-auto h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"
-            />
+            <div class="mx-auto h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
+            <div class="mx-auto h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
             <div class="mx-auto h-32 rounded bg-gray-200 dark:bg-gray-700" />
           </div>
           <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">

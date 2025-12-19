@@ -40,8 +40,7 @@ import {
           >
             <span
               class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
-              >Learn</span
-            >
+            >Learn</span>
             <div
               class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
@@ -67,20 +66,13 @@ import {
 
       <NavigationMenuItem>
         <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm text-[#3451b2] font-medium dark:text-[#a8b1ff]"
-            >Playground</span
-          >
+          <span class="text-sm text-[#3451b2] font-medium dark:text-[#a8b1ff]">Playground</span>
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink as-child>
-          <a
-            class="flex items-center px-3"
-            href="#"
-            target="_blank"
-            rel="noopener"
-          >
+          <a class="flex items-center px-3" href="#" target="_blank" rel="noopener">
             <span
               class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
             >

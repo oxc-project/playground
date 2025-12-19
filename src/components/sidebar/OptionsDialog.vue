@@ -36,14 +36,12 @@ const optionsString = computed({
 
       <DialogContent class="h-[80vh] max-w-5xl">
         <DialogHeader>
-          <DialogTitle class="text-center">Oxc Options</DialogTitle>
+          <DialogTitle class="text-center">
+            Oxc Options
+          </DialogTitle>
         </DialogHeader>
 
-        <MonacoEditor
-          v-model="optionsString"
-          language="json"
-          filename="/options.json"
-        />
+        <MonacoEditor v-model="optionsString" language="json" filename="/options.json" />
       </DialogContent>
     </Dialog>
   </section>

@@ -59,11 +59,7 @@ function escapeHtml(text: string): string {
       </div>
 
       <!-- Highlighted content -->
-      <div
-        v-else
-        :class="{ 'opacity-75': showLoading }"
-        v-html="highlightedCode"
-      />
+      <div v-else :class="{ 'opacity-75': showLoading }" v-html="highlightedCode" />
     </div>
   </CopyContainer>
 </template>

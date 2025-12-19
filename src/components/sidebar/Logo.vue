@@ -16,11 +16,7 @@ const commit = import.meta.env.OXC_COMMIT;
         src="https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/round.png"
         alt="Oxc logo"
       />
-      <span
-        class="text-base text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]"
-      >
-        Oxc
-      </span>
+      <span class="text-base text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86]"> Oxc </span>
     </a>
     <a
       :href="`https://github.com/oxc-project/oxc/commit/${commit}`"

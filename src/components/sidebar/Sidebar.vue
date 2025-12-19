@@ -15,10 +15,7 @@ import Transformer from "./Transformer.vue";
     aria-label="Sidebar navigation"
   >
     <Logo />
-    <nav
-      class="flex flex-col gap-6 py-6"
-      aria-label="Oxc configuration options"
-    >
+    <nav class="flex flex-col gap-6 py-6" aria-label="Oxc configuration options">
       <Parser />
       <hr class="border-[#e2e2e3] dark:border-[#2e2e32]" />
       <Linter />

@@ -12,9 +12,7 @@ const { options } = await useOxc();
     <div class="flex flex-col gap-3">
       <label class="flex items-center gap-2">
         <Switch v-model:checked="options.run.transform" />
-        <h2 id="transformer-heading" class="text-base font-medium">
-          Transformer
-        </h2>
+        <h2 id="transformer-heading" class="text-base font-medium">Transformer</h2>
       </label>
 
       <label class="flex items-center gap-2 text-sm">

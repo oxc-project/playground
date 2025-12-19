@@ -16,9 +16,7 @@ import { loadingOxc } from "~/composables/oxc";
     </div>
 
     <template #fallback>
-      <div
-        class="h-screen w-screen flex flex-col items-center justify-center gap-4 text-2xl"
-      >
+      <div class="h-screen w-screen flex flex-col items-center justify-center gap-4 text-2xl">
         <div class="i-ri:loader-2-line animate-spin text-6xl" />
         <span v-if="loadingOxc">Loading Oxc wasm...</span>
         <span v-else>Loading resources...</span>
