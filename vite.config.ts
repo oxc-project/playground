@@ -66,6 +66,11 @@ export default defineConfig({
         },
       },
     },
+    rolldownOptions: {
+      experimental: {
+        strictExecutionOrder: true,
+      },
+    },
   },
   experimental: {
     bundledDev: true,
