@@ -68,6 +68,7 @@ export default defineConfig({
     },
   },
   experimental: {
+    bundledDev: true,
     enableNativePlugin: true,
   },
   server: {
