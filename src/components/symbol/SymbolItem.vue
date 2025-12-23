@@ -50,12 +50,12 @@ function isPrimitive(value: any): boolean {
   return !isObject(value) && !isArray(value);
 }
 
-function formatValue(value: any, key?: string): string {
+function formatValue(value: any, propId?: string | number): string {
   if (value === null) return "null";
   if (value === undefined) return "undefined";
   if (typeof value === "string") {
     // Don't wrap certain fields with quotes (like flags)
-    if (key === "flags") return value;
+    if (propId === "flags") return value;
     return `"${value}"`;
   }
   if (typeof value === "boolean") return String(value);
@@ -73,7 +73,7 @@ function formatValue(value: any, key?: string): string {
     <span v-if="isPrimitive(value)">
       <span
         :class="typeof value === 'string' ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'"
-        v-text="formatValue(value, key)"
+        v-text="formatValue(value, id)"
       />
     </span>
     <span v-else-if="isArray(value)">
