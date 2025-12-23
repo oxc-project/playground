@@ -10,17 +10,29 @@ const raw = ref(false)
 const { oxc } = await useOxc()
 
 const value = computed(() => {
+  // Check if oxc.value.ir is already an object (like ast property)
+  // or if it's a string that needs parsing
+  const ir = oxc.value.ir
+  
+  if (typeof ir === 'object' && ir !== null) {
+    // Already an object, use it directly
+    return ir
+  }
+  
+  // It's a string, try to parse as JSON
   try {
-    // Parse the Rust AST IR as JSON for tree view
-    return JSON.parse(oxc.value.ir)
+    return JSON.parse(ir)
   } catch (error) {
-    console.error('Failed to parse Rust AST:', error)
+    // Not valid JSON, return empty object
+    // Tree view won't work, but raw view will still show the string
+    console.warn('Rust AST is not in JSON format, tree view unavailable')
     return {}
   }
 })
 
 const code = computed(() => {
-  return oxc.value.ir
+  const ir = oxc.value.ir
+  return typeof ir === 'string' ? ir : JSON.stringify(ir, null, 2)
 })
 </script>
 
