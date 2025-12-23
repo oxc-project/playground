@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import AstProperty from '~/components/ast/Property.vue'
+import SymbolItem from '~/components/symbol/SymbolItem.vue'
 import Checkbox from '~/components/ui/Checkbox.vue'
 import { useOxc } from '~/composables/oxc'
 import OutputPreview from './OutputPreview.vue'
@@ -30,7 +30,7 @@ const code = computed(() => {
 
     <OutputPreview v-if="raw" :code lang="json" />
     <div v-else pl4 pt2 text-sm leading-relaxed font-mono>
-      <AstProperty :value root open />
+      <SymbolItem :value root />
     </div>
   </div>
 </template>
