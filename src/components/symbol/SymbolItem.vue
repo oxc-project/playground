@@ -8,9 +8,15 @@ const props = defineProps<{
   id?: string | number;
   value?: any;
   root?: boolean;
+  isArrayItem?: boolean;
 }>();
 
-const key = computed(() => (props.id == null ? undefined : String(props.id)));
+const key = computed(() => {
+  if (props.id == null) return;
+  // Don't show keys for array items
+  if (props.isArrayItem) return;
+  return String(props.id);
+});
 const keyColor = useHighlightColor(key);
 
 function handleMouseOver(event: MouseEvent) {
@@ -44,10 +50,14 @@ function isPrimitive(value: any): boolean {
   return !isObject(value) && !isArray(value);
 }
 
-function formatValue(value: any): string {
+function formatValue(value: any, key?: string): string {
   if (value === null) return "null";
   if (value === undefined) return "undefined";
-  if (typeof value === "string") return `"${value}"`;
+  if (typeof value === "string") {
+    // Don't wrap certain fields with quotes (like flags)
+    if (key === "flags") return value;
+    return `"${value}"`;
+  }
   if (typeof value === "boolean") return String(value);
   if (typeof value === "number") return String(value);
   return String(value);
@@ -63,13 +73,13 @@ function formatValue(value: any): string {
     <span v-if="isPrimitive(value)">
       <span
         :class="typeof value === 'string' ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'"
-        v-text="formatValue(value)"
+        v-text="formatValue(value, key)"
       />
     </span>
     <span v-else-if="isArray(value)">
       <span op70>[</span>
       <div v-for="(item, index) in value" :key="index" pl4>
-        <SymbolItem :id="index" :value="item" />
+        <SymbolItem :value="item" :is-array-item="true" />
       </div>
       <span op70>]</span>
     </span>
