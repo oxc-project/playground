@@ -11,12 +11,10 @@ const { oxc } = await useOxc()
 
 const value = computed(() => {
   try {
-    // Try to parse the IR as JSON
+    // Parse the Rust AST IR as JSON for tree view
     return JSON.parse(oxc.value.ir)
   } catch (error) {
-    // If it's not JSON, return an empty object
-    // The raw view will still show the original text
-    console.error(error)
+    console.error('Failed to parse Rust AST:', error)
     return {}
   }
 })
