@@ -30,7 +30,7 @@ const code = computed(() => {
 
     <OutputPreview v-if="raw" :code lang="json" />
     <div v-else pl4 pt2 text-sm leading-relaxed font-mono>
-      <SymbolItem :value root />
+      <SymbolItem v-for="symbol in value" :key="symbol" :value="symbol" />
     </div>
   </div>
 </template>
