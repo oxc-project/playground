@@ -2,8 +2,6 @@ name: CI
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */3 * * *" # Build and deploy every 3 hours.
   pull_request:
     types:
       - opened
@@ -36,15 +34,13 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
     permissions:
       pull-requests: write
       contents: write
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          repository: oxc-project/oxc
+          repository: ohos-rs/oxc
           ref: main
           persist-credentials: false
 
@@ -68,38 +64,11 @@ jobs:
 
       - run: pnpm run build
 
-      - name: Install Netlify
-        if: env.SITE_ID
-        run: pnpm install -g netlify-cli@18.1.0
-
-      # https://www.raulmelo.me/en/blog/deploying-netlify-github-actions-guide
-      - name: Deploy to Netlify
-        id: netlify_deploy
-        if: env.SITE_ID
-        run: |
-          mv _headers dist
-          prod_flag=""
-          if [ "${GITHUB_REF_NAME}" = "main" ]; then prod_flag="--prod"; fi
-          echo $prod_flag
-          netlify deploy \
-            --dir dist \
-            --site ${{ secrets.NETLIFY_SITE_ID }} \
-            --auth ${{ secrets.NETLIFY_API_TOKEN }} \
-            $prod_flag \
-            --json \
-            > deploy_output.json
-          cat deploy_output.json
-
-      - name: Generate URL Preview
-        id: url_preview
-        if: env.SITE_ID && github.event_name == 'pull_request'
-        run: |
-          NETLIFY_PREVIEW_URL=$(jq -r '.deploy_url' deploy_output.json)
-          echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> $GITHUB_OUTPUT
-
-      - uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
-        if: env.SITE_ID && github.event_name == 'pull_request'
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.number }}
-          body: "Preview URL: ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: c836b46f0b7ff4e3255625fb38bbe1f9
+          projectName: oxc-ark-playground
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
