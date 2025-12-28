@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as monaco from 'monaco-editor'
-import { computed, useTemplateRef, ref, watchEffect } from 'vue';
+import { computed, ref, useTemplateRef, watchEffect } from 'vue';
 import { useOxc } from '~/composables/oxc'
 import { editorValue } from '~/composables/state'
 import MonacoEditor from '../MonacoEditor.vue'
@@ -17,10 +17,9 @@ const monacoRef = useTemplateRef('monacoRef')
 const getPositionAt = computed(() => monacoRef.value?.getPositionAt)
 const markers = ref<monaco.editor.IMarkerData[]>([]);
 
-  
 watchEffect(() => {
   const getPos = getPositionAt.value;
-  if (!getPos) return []
+  if (!getPos) return
 
   const diagnostics = oxc.value.getDiagnostics()
   markers.value = diagnostics.map((d) => {
