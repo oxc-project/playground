@@ -48,7 +48,7 @@
     "eslint": "^9.36.0",
     "lint-staged": "^16.2.3",
     "oxc-playground": "link:../oxc/napi/playground",
-    "oxfmt": "^0.20.0",
+    "oxfmt": "^0.21.0",
     "postcss": "^8.5.6",
     "shiki": "^3.13.0",
     "simple-git-hooks": "^2.13.1",
