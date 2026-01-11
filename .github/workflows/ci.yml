@@ -28,7 +28,7 @@ jobs:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - uses: taiki-e/checkout-action@b13d20b7cda4e2f325ef19895128f7ff735c0b3d # v1.3.1
+      - uses: taiki-e/checkout-action@afad4df3ab3122b166e8226ac83be4d981fb64e8 # v1.3.2
       - uses: crate-ci/typos@bb4666ad77b539a6b4ce4eda7ebb6de553704021 # v1.42.0
         with:
           files: .
@@ -62,7 +62,7 @@ jobs:
 
       - run: cd .. && mv playground oxc && mkdir playground
 
-      - uses: taiki-e/checkout-action@b13d20b7cda4e2f325ef19895128f7ff735c0b3d # v1.3.1
+      - uses: taiki-e/checkout-action@afad4df3ab3122b166e8226ac83be4d981fb64e8 # v1.3.2
 
       - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
 
