@@ -11,9 +11,16 @@
     "eslint-plugin-regexp",
     "eslint-plugin-de-morgan",
     "eslint-plugin-perfectionist",
-    "eslint-plugin-command"
+    "eslint-plugin-command",
+    {
+      "name": "vue-js",
+      "specifier": "eslint-plugin-vue"
+    }
   ],
   "rules": {
-    "import/default": "off" // No default export found in imported module "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+    "import/default": "off", // No default export found in imported module "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+    "vue-js/no-ref-as-operand": "error",
+    "vue-js/no-dupe-keys": "error",
+    "vue-js/no-reserved-keys": "error"
   }
 }
