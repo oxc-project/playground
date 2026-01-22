@@ -4,8 +4,7 @@ import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 
 // @ts-ignore
 globalThis.MonacoEnvironment = {
-  globalAPI: true,
-  getWorker(_: any, label: string) {
+  getWorker(_: string, label: string) {
     if (label === "json") {
       return new jsonWorker();
     }

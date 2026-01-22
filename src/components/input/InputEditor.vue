@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as monaco from "monaco-editor";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { computed, ref, useTemplateRef, watchEffect } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { editorValue } from "~/composables/state";

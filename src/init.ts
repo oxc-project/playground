@@ -1,22 +1,33 @@
-import * as monaco from "monaco-editor";
-monaco.json.jsonDefaults.setDiagnosticsOptions({
+import "monaco-editor/esm/vs/editor/editor.api";
+import "monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution";
+import "monaco-editor/esm/vs/basic-languages/typescript/typescript.contribution";
+import { jsonDefaults } from "monaco-editor/esm/vs/language/json/monaco.contribution";
+import {
+  typescriptDefaults,
+  ScriptTarget,
+  ModuleKind,
+  ModuleResolutionKind,
+  JsxEmit,
+} from "monaco-editor/esm/vs/language/typescript/monaco.contribution";
+
+jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
   trailingCommas: "ignore",
 });
 
-monaco.typescript.typescriptDefaults.setDiagnosticsOptions({
+typescriptDefaults.setDiagnosticsOptions({
   noSemanticValidation: true,
   noSyntaxValidation: true,
   noSuggestionDiagnostics: true,
 });
-monaco.typescript.typescriptDefaults.setCompilerOptions({
+typescriptDefaults.setCompilerOptions({
   allowJs: true,
-  target: monaco.typescript.ScriptTarget.ESNext,
-  module: monaco.typescript.ModuleKind.ESNext,
+  target: ScriptTarget.ESNext,
+  module: ModuleKind.ESNext,
   allowNonTsExtensions: true,
-  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
+  moduleResolution: ModuleResolutionKind.NodeJs,
   noEmit: true,
   esModuleInterop: true,
-  jsx: monaco.typescript.JsxEmit.React,
+  jsx: JsxEmit.React,
 });
