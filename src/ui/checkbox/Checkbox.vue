@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import {
   CheckboxIndicator,
   CheckboxRoot,
@@ -34,7 +34,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
   >
     <CheckboxIndicator class="h-full w-full flex items-center justify-center text-current">
       <slot>
-        <CheckIcon class="h-4 w-4" />
+        <Icon icon="radix-icons:check" class="h-4 w-4" />
       </slot>
     </CheckboxIndicator>
   </CheckboxRoot>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CaretSortIcon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import { SelectIcon, SelectTrigger, useForwardProps, type SelectTriggerProps } from "radix-vue";
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/cn";
@@ -27,7 +27,7 @@ const forwardedProps = useForwardProps(delegatedProps);
   >
     <slot />
     <SelectIcon as-child>
-      <CaretSortIcon class="h-4 w-4 shrink-0 opacity-50" />
+      <Icon icon="radix-icons:caret-sort" class="h-4 w-4 shrink-0 opacity-50" />
     </SelectIcon>
   </SelectTrigger>
 </template>

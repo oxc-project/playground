@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDownIcon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import {
   SelectScrollDownButton,
   useForwardProps,
@@ -25,7 +25,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     :class="cn('flex cursor-default items-center justify-center py-1', props.class)"
   >
     <slot>
-      <ChevronDownIcon />
+      <Icon icon="radix-icons:chevron-down" />
     </slot>
   </SelectScrollDownButton>
 </template>

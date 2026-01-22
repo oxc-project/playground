@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import {
   SelectItem,
   SelectItemIndicator,
@@ -33,7 +33,7 @@ const forwardedProps = useForwardProps(delegatedProps);
   >
     <span class="absolute right-2 h-3.5 w-3.5 flex items-center justify-center">
       <SelectItemIndicator>
-        <CheckIcon class="h-4 w-4" />
+        <Icon icon="radix-icons:check" class="h-4 w-4" />
       </SelectItemIndicator>
     </span>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDownIcon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import { NavigationMenuTrigger, useForwardProps, type NavigationMenuTriggerProps } from "radix-vue";
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/cn";
@@ -22,7 +22,8 @@ const forwardedProps = useForwardProps(delegatedProps);
     :class="cn(navigationMenuTriggerStyle(), 'group', props.class)"
   >
     <slot />
-    <ChevronDownIcon
+    <Icon
+      icon="radix-icons:chevron-down"
       class="relative top-px ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
       aria-hidden="true"
     />

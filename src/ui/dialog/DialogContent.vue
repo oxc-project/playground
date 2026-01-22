@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cross2Icon } from "@radix-icons/vue";
+import { Icon } from "@iconify/vue";
 import {
   DialogClose,
   DialogContent,
@@ -43,7 +43,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
       <DialogClose
         class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
       >
-        <Cross2Icon class="h-4 w-4" />
+        <Icon icon="radix-icons:cross-2" class="h-4 w-4" />
         <span class="sr-only">Close</span>
       </DialogClose>
     </DialogContent>

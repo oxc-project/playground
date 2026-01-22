@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
-    "@radix-icons/vue": "^1.0.0",
     "@viz-js/viz": "^3.24.0",
     "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
