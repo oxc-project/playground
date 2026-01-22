@@ -1,28 +1,24 @@
 {
   "name": "@oxc-project/playground",
-  "type": "module",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.28.0",
   "description": "oxc playground",
-  "license": "MIT",
   "homepage": "https://playground.oxc.rs",
+  "bugs": "https://github.com/oxc-project/playground/issues",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oxc-project/playground.git"
   },
-  "bugs": "https://github.com/oxc-project/playground/issues",
+  "type": "module",
   "main": "",
-  "engines": {
-    "node": ">=20.14.0"
-  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "fmt": "oxfmt",
     "typecheck": "vue-tsc",
-    "lint": "eslint --cache",
+    "lint": "oxlint",
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
@@ -40,14 +36,19 @@
   },
   "devDependencies": {
     "@emnapi/core": "^1.5.0",
-    "@sxzz/eslint-config": "^7.2.6",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
     "@tailwindcss/vite": "^4.1.8",
     "@types/node": "^24.5.2",
     "@vitejs/plugin-vue": "^6.0.1",
-    "eslint": "^9.36.0",
+    "eslint-plugin-command": "^3.4.0",
+    "eslint-plugin-de-morgan": "^2.0.0",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "eslint-plugin-regexp": "^2.8.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "lint-staged": "^16.2.3",
     "oxc-playground": "link:../oxc/napi/playground",
     "oxfmt": "^0.26.0",
+    "oxlint": "^1.41.0",
     "shiki": "^3.13.0",
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.1.8",
@@ -61,6 +62,10 @@
   },
   "lint-staged": {
     "*": "oxfmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "eslint --fix --cache"
-  }
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "oxlint --fix"
+  },
+  "engines": {
+    "node": ">=20.14.0"
+  },
+  "packageManager": "pnpm@10.28.0"
 }

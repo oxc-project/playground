@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "jsdoc", "promise", "node"],
+  "jsPlugins": [
+    "./eslint-local-rules.js",
+    "eslint-plugin-unused-imports",
+    {
+      "name": "@eslint-community/eslint-comments",
+      "specifier": "@eslint-community/eslint-plugin-eslint-comments"
+    },
+    "eslint-plugin-regexp",
+    "eslint-plugin-de-morgan",
+    "eslint-plugin-perfectionist",
+    "eslint-plugin-command"
+  ],
+  "rules": {
+    "import/default": "off" // No default export found in imported module "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+  }
+}

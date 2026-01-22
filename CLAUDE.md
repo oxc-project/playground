@@ -23,7 +23,7 @@ pnpm preview    # Preview production build locally
 ### Code Quality
 
 ```bash
-pnpm lint       # Run ESLint with cache
+pnpm lint       # Run oxlint
 pnpm typecheck  # Run vue-tsc for type checking
 pnpm format     # Run oxfmt formatter
 ```
