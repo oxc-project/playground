@@ -52,7 +52,7 @@ const raw = ref(false);
 
 <template>
   <div class="w-full flex flex-col">
-    <div flex gap4 p2>
+    <div class="flex gap-4 p-2">
       <Checkbox v-model="raw" label="Raw" />
       <Checkbox v-model="options.controlFlow.verbose" label="Verbose" />
     </div>
@@ -69,11 +69,7 @@ const raw = ref(false);
             <div class="mx-auto h-32 rounded bg-gray-200 dark:bg-gray-700" />
           </div>
           <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            {{
-              vizLoading
-                ? "Loading graph visualization..."
-                : "Rendering graph..."
-            }}
+            {{ vizLoading ? "Loading graph visualization..." : "Rendering graph..." }}
           </p>
         </div>
 

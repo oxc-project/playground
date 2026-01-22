@@ -33,16 +33,14 @@ const { options } = await useOxc();
           v-model="options.mangle.topLevel"
           default-checked
           label="topLevel"
-          font-mono
-          label-class="text-xs"
+          label-class="text-xs font-mono"
         />
 
         <Checkbox
           v-model="options.mangle.keepNames"
           default-checked
           label="keepNames"
-          font-mono
-          label-class="text-xs"
+          label-class="text-xs font-mono"
         />
       </div>
     </div>

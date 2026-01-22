@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import { useOxc } from '~/composables/oxc'
-import { activeTab } from '~/composables/state'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/ui/tabs'
+import { onMounted, watch } from "vue";
+import { useOxc } from "~/composables/oxc";
+import { activeTab } from "~/composables/state";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/ui/tabs";
 
-import CodegenPanel from './CodegenPanel.vue'
-import ControlflowPanel from './ControlflowPanel.vue'
-import EsTreePanel from './EsTreePanel.vue'
-import FormatterPanel from './FormatterPanel.vue'
-import RustAstPanel from './RustAstPanel.vue'
-import ScopePanel from './ScopePanel.vue'
-import SymbolPanel from './SymbolPanel.vue'
+import CodegenPanel from "./CodegenPanel.vue";
+import ControlflowPanel from "./ControlflowPanel.vue";
+import EsTreePanel from "./EsTreePanel.vue";
+import FormatterPanel from "./FormatterPanel.vue";
+import RustAstPanel from "./RustAstPanel.vue";
+import ScopePanel from "./ScopePanel.vue";
+import SymbolPanel from "./SymbolPanel.vue";
 
-const { options } = await useOxc()
+const { options } = await useOxc();
 
 function updateRunOptions() {
-  options.value.run.formatter = activeTab.value === 'formatter'
-  options.value.run.cfg = activeTab.value === 'cfg'
+  options.value.run.formatter = activeTab.value === "formatter";
+  options.value.run.cfg = activeTab.value === "cfg";
 }
 
-watch([activeTab], updateRunOptions)
+watch([activeTab], updateRunOptions);
 
-onMounted(updateRunOptions)
+onMounted(updateRunOptions);
 </script>
 
 <template>
@@ -35,13 +35,27 @@ onMounted(updateRunOptions)
       as="nav"
       class="relative h-auto flex flex-shrink-0 justify-start gap-2 overflow-auto rounded-none p-2"
     >
-      <TabsTrigger value="codegen">Printed</TabsTrigger>
-      <TabsTrigger value="ast">ESTree AST</TabsTrigger>
-      <TabsTrigger value="ir">Rust AST</TabsTrigger>
-      <TabsTrigger value="formatter">Formatter</TabsTrigger>
-      <TabsTrigger value="scope">Scope</TabsTrigger>
-      <TabsTrigger value="symbol">Symbol</TabsTrigger>
-      <TabsTrigger value="cfg">Controlflow Graph</TabsTrigger>
+      <TabsTrigger value="codegen">
+        Printed
+      </TabsTrigger>
+      <TabsTrigger value="ast">
+        ESTree AST
+      </TabsTrigger>
+      <TabsTrigger value="ir">
+        Rust AST
+      </TabsTrigger>
+      <TabsTrigger value="formatter">
+        Formatter
+      </TabsTrigger>
+      <TabsTrigger value="scope">
+        Scope
+      </TabsTrigger>
+      <TabsTrigger value="symbol">
+        Symbol
+      </TabsTrigger>
+      <TabsTrigger value="cfg">
+        Controlflow Graph
+      </TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">

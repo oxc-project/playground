@@ -38,8 +38,7 @@ const formatterConfig = computed({
         ...parsed,
       };
     } catch (error) {
-      configError.value =
-        error instanceof Error ? error.message : "Invalid JSON";
+      configError.value = error instanceof Error ? error.message : "Invalid JSON";
     }
   },
 });

@@ -23,9 +23,7 @@ const titleColor = useHighlightColor(() => `${title.value}()`);
 
 const openable = computed(
   () =>
-    typeof props.value === "object" &&
-    props.value != null &&
-    Object.keys(props.value).length > 0,
+    typeof props.value === "object" && props.value != null && Object.keys(props.value).length > 0,
 );
 
 const isHovering = computed(() => {
@@ -39,8 +37,7 @@ const isHovering = computed(() => {
 const openManual = ref<boolean>();
 const open = computed(
   () =>
-    openable.value &&
-    (openManual.value ?? (props.open || (autoFocus.value && isHovering.value))),
+    openable.value && (openManual.value ?? (props.open || (autoFocus.value && isHovering.value))),
 );
 
 const valueCreated = ref(false);
@@ -49,10 +46,7 @@ watch(open, () => (valueCreated.value ||= open.value), { immediate: true });
 function toggleOpen() {
   if (!openable.value) return;
 
-  if (
-    openManual.value !== undefined &&
-    openManual.value !== (props.open || isHovering.value)
-  ) {
+  if (openManual.value !== undefined && openManual.value !== (props.open || isHovering.value)) {
     openManual.value = undefined;
   } else {
     openManual.value = !open.value;
@@ -61,9 +55,7 @@ function toggleOpen() {
 
 const key = computed(() => (props.id == null ? undefined : String(props.id)));
 const keyColor = useHighlightColor(key);
-const keyClass = computed(
-  () => openable.value && "cursor-pointer hover:underline whitespace-pre",
-);
+const keyClass = computed(() => openable.value && "cursor-pointer hover:underline whitespace-pre");
 
 function handleMouseOver(event: MouseEvent) {
   if (props.root) {
@@ -95,9 +87,7 @@ watch(
   [autoFocus, exactHover, isHovering, container],
   ([autoFocus, exactHover, isHovering, container]) => {
     if (autoFocus && exactHover && isHovering && container) {
-      requestAnimationFrame(() =>
-        container.scrollIntoView({ block: "center" }),
-      );
+      requestAnimationFrame(() => container.scrollIntoView({ block: "center" }));
     }
   },
   { immediate: true },
@@ -109,24 +99,19 @@ defineExpose({ isHovering });
 <template>
   <div
     ref="container"
-    relative
-    w-fit
+    class="relative w-fit"
     :class="isHovering && exactHover && 'ast-highlight'"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
   >
     <span
       v-if="openable"
-      left="-3.5"
-      :text="open ? 'red-400' : 'green-400'"
-      absolute
-      select-none
-      font-semibold
-      op70
+      class="absolute left-[-3.5em] select-none font-semibold opacity-70"
+      :class="open ? 'text-red-400' : 'text-green-400'"
     >{{ open ? "-" : "+" }}</span>
     <span v-if="key">
       <span :class="keyClass" :style="{ color: keyColor }" @click="toggleOpen" v-text="key" />
-      <span op70>:&nbsp;</span>
+      <span class="opacity-70">:&nbsp;</span>
     </span>
     <span v-if="title">
       <span

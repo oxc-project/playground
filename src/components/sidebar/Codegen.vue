@@ -12,27 +12,24 @@ const { options } = await useOxc();
     </h2>
 
     <div class="flex flex-col gap-2" role="group" aria-label="Codegen options">
-      <Checkbox v-model="options.codegen.normal" label="comment" font-mono label-class="text-xs" />
+      <Checkbox v-model="options.codegen.normal" label="comment" label-class="text-xs font-mono" />
 
       <Checkbox
         v-model="options.codegen.jsdoc"
         label="jsdoc comment"
-        font-mono
-        label-class="text-xs"
+        label-class="text-xs font-mono"
       />
 
       <Checkbox
         v-model="options.codegen.annotation"
         label="annotation comment"
-        font-mono
-        label-class="text-xs"
+        label-class="text-xs font-mono"
       />
 
       <Checkbox
         v-model="options.codegen.legal"
         label="legal comment"
-        font-mono
-        label-class="text-xs"
+        label-class="text-xs font-mono"
       />
     </div>
   </section>

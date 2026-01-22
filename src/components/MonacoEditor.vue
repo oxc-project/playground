@@ -1,90 +1,78 @@
 <script lang="ts" setup>
-import { useDark } from '@vueuse/core'
-import * as monaco from 'monaco-editor'
-import {
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  shallowRef,
-  watch,
-  watchEffect,
-} from 'vue'
-import { editorCursor, outputHoverRange } from '~/composables/state'
-import '~/composables/editor.worker'
+import { useDark } from "@vueuse/core";
+import * as monaco from "monaco-editor";
+import { onBeforeUnmount, onMounted, ref, shallowRef, watch, watchEffect } from "vue";
+import { editorCursor, outputHoverRange } from "~/composables/state";
+import "~/composables/editor.worker";
 
-defineOptions({ name: 'MonacoEditor' })
+defineOptions({ name: "MonacoEditor" });
 
 const props = defineProps<{
-  modelValue: string
-  language: string
-  theme?: string
-  options?: monaco.editor.IStandaloneEditorConstructionOptions
-  readonly?: boolean
-  filename: string
-  markers?: monaco.editor.IMarkerData[]
-  main?: boolean
-}>()
-const emit = defineEmits([
-  'editorWillMount',
-  'editorDidMount',
-  'change',
-  'update:modelValue',
-])
+  modelValue: string;
+  language: string;
+  theme?: string;
+  options?: monaco.editor.IStandaloneEditorConstructionOptions;
+  readonly?: boolean;
+  filename: string;
+  markers?: monaco.editor.IMarkerData[];
+  main?: boolean;
+}>();
+const emit = defineEmits(["editorWillMount", "editorDidMount", "change", "update:modelValue"]);
 
-const container: any = ref(null)
-let instance: monaco.editor.IStandaloneCodeEditor | undefined
-const model = shallowRef<monaco.editor.ITextModel>(initModel())
+const container: any = ref(null);
+let instance: monaco.editor.IStandaloneCodeEditor | undefined;
+const model = shallowRef<monaco.editor.ITextModel>(initModel());
 
 watchEffect((onCleanup) => {
   const { dispose } = model.value.onDidChangeContent(() => {
-    const value = model.value.getValue()
-    emit('update:modelValue', value)
-  })
-  onCleanup(() => dispose())
-})
+    const value = model.value.getValue();
+    emit("update:modelValue", value);
+  });
+  onCleanup(() => dispose());
+});
 
 function initModel() {
   return monaco.editor.createModel(
     props.modelValue,
     props.language,
     monaco.Uri.file(props.filename),
-  )
+  );
 }
 
 const isDark = useDark({
   onChanged(isDark) {
-    if (!instance) return
-    monaco.editor.setTheme(isDark ? 'vs-dark' : 'vs')
+    if (!instance) return;
+    monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
   },
-})
+});
 
 watch(
   () => props.language,
   () => {
-    monaco.editor.setModelLanguage(model.value, props.language)
+    monaco.editor.setModelLanguage(model.value, props.language);
   },
-)
+);
 
 watch(
   () => props.filename,
   () => {
     if (instance) {
-      model.value.dispose()
-      model.value = initModel()
-      instance.setModel(model.value)
+      model.value.dispose();
+      model.value = initModel();
+      instance.setModel(model.value);
     }
   },
-)
+);
 
 watch(
   () => props.markers,
   () => {
-    if (!instance) return
+    if (!instance) return;
     if (props.markers) {
-      monaco.editor.setModelMarkers(model.value, 'oxc', props.markers)
+      monaco.editor.setModelMarkers(model.value, "oxc", props.markers);
     }
   },
-)
+);
 
 function initMonaco() {
   const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
@@ -93,59 +81,57 @@ function initMonaco() {
     scrollBeyondLastLine: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,
-    theme: props.theme || (isDark.value ? 'vs-dark' : 'vs'),
+    theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
     automaticLayout: true,
     readOnly: props.readonly,
-  }
+  };
 
-  instance = monaco.editor.create(container.value, editorOptions)
-  instance.setModel(model.value)
+  instance = monaco.editor.create(container.value, editorOptions);
+  instance.setModel(model.value);
 
-  emit('editorDidMount', instance)
+  emit("editorDidMount", instance);
 
   if (props.main) {
     instance.onDidChangeCursorPosition((e) => {
-      editorCursor.value = model.value.getOffsetAt(e.position)
-    })
+      editorCursor.value = model.value.getOffsetAt(e.position);
+    });
 
-    let decorationsCollection:
-      | monaco.editor.IEditorDecorationsCollection
-      | undefined
+    let decorationsCollection: monaco.editor.IEditorDecorationsCollection | undefined;
 
     watchEffect(() => {
       if (outputHoverRange.value) {
-        decorationsCollection?.clear()
-        const start = model.value.getPositionAt(outputHoverRange.value[0])
-        const end = model.value.getPositionAt(outputHoverRange.value[1])
+        decorationsCollection?.clear();
+        const start = model.value.getPositionAt(outputHoverRange.value[0]);
+        const end = model.value.getPositionAt(outputHoverRange.value[1]);
         decorationsCollection = instance!.createDecorationsCollection([
           {
             range: monaco.Range.fromPositions(start, end),
             options: {
               isWholeLine: false,
-              className: 'ast-highlight',
+              className: "ast-highlight",
             },
           },
-        ])
+        ]);
       } else {
-        decorationsCollection?.clear()
+        decorationsCollection?.clear();
       }
-    })
+    });
   }
 }
 
 onMounted(() => {
-  initMonaco()
-})
+  initMonaco();
+});
 
 onBeforeUnmount(() => {
-  model.value.dispose()
-  instance?.dispose()
-})
+  model.value.dispose();
+  instance?.dispose();
+});
 
-const getPositionAt = (offset: number) => model.value.getPositionAt(offset)
+const getPositionAt = (offset: number) => model.value.getPositionAt(offset);
 defineExpose({
   getPositionAt,
-})
+});
 </script>
 
 <template>

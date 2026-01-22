@@ -1,14 +1,9 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { computed } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { Button } from "~/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/ui/dialog";
 import MonacoEditor from "../MonacoEditor.vue";
 
 const { options } = await useOxc();
@@ -29,7 +24,7 @@ const optionsString = computed({
     <Dialog>
       <DialogTrigger as-child>
         <Button variant="outline" class="w-full gap-2">
-          <span class="i-ri:settings-line" aria-hidden="true" />
+          <Icon icon="ri:settings-line" aria-hidden="true" />
           <span>Edit as JSON</span>
         </Button>
       </DialogTrigger>

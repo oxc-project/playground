@@ -10,9 +10,7 @@ import {
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/cn";
 
-const props = defineProps<
-  CheckboxRootProps & { class?: HTMLAttributes["class"] }
->();
+const props = defineProps<CheckboxRootProps & { class?: HTMLAttributes["class"] }>();
 const emits = defineEmits<CheckboxRootEmits>();
 
 const delegatedProps = computed(() => {

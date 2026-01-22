@@ -4,22 +4,20 @@ import {
   useForwardPropsEmits,
   type RadioGroupRootEmits,
   type RadioGroupRootProps,
-} from 'radix-vue'
-import { computed, type HTMLAttributes } from 'vue'
-import { cn } from '~/utils/cn'
+} from "radix-vue";
+import { computed, type HTMLAttributes } from "vue";
+import { cn } from "~/utils/cn";
 
-const props = defineProps<
-  RadioGroupRootProps & { class?: HTMLAttributes['class'] }
->()
-const emits = defineEmits<RadioGroupRootEmits>()
+const props = defineProps<RadioGroupRootProps & { class?: HTMLAttributes["class"] }>();
+const emits = defineEmits<RadioGroupRootEmits>();
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  const { class: _, ...delegated } = props;
 
-  return delegated
-})
+  return delegated;
+});
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>

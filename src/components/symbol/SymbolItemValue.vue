@@ -1,74 +1,74 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { outputHoverRange } from '~/composables/state'
-import { getRange } from '~/utils/range'
-import { useHighlightColor } from '~/utils/shiki'
+import { computed } from "vue";
+import { outputHoverRange } from "~/composables/state";
+import { getRange } from "~/utils/range";
+import { useHighlightColor } from "~/utils/shiki";
 
 const props = defineProps<{
-  id?: string | number
-  value?: any
-  root?: boolean
-  isArrayItem?: boolean
-}>()
+  id?: string | number;
+  value?: any;
+  root?: boolean;
+  isArrayItem?: boolean;
+}>();
 
 const key = computed(() => {
-  if (props.id == null) return
+  if (props.id == null) return;
   // Don't show keys for array items
-  if (props.isArrayItem) return
-  return String(props.id)
-})
-const keyColor = useHighlightColor(key)
+  if (props.isArrayItem) return;
+  return String(props.id);
+});
+const keyColor = useHighlightColor(key);
 
 function handleMouseOver(event: MouseEvent) {
   if (props.root) {
-    event.stopPropagation()
-    outputHoverRange.value = undefined
+    event.stopPropagation();
+    outputHoverRange.value = undefined;
   } else if (props.value) {
-    const range = getRange(props.value)
-    if (!range) return
+    const range = getRange(props.value);
+    if (!range) return;
 
-    event.stopPropagation()
-    outputHoverRange.value = range
+    event.stopPropagation();
+    outputHoverRange.value = range;
   }
 }
 
 function handleMouseLeave() {
   if (props.root) {
-    outputHoverRange.value = undefined
+    outputHoverRange.value = undefined;
   }
 }
 
 function isObject(value: any): boolean {
-  return value && typeof value === 'object' && !Array.isArray(value)
+  return value && typeof value === "object" && !Array.isArray(value);
 }
 
 function isArray(value: any): boolean {
-  return Array.isArray(value)
+  return Array.isArray(value);
 }
 
 function isPrimitive(value: any): boolean {
-  return !isObject(value) && !isArray(value)
+  return !isObject(value) && !isArray(value);
 }
 
 function formatValue(value: any, propId?: string | number): string {
-  if (value === null) return 'null'
-  if (value === undefined) return 'undefined'
-  if (typeof value === 'string') {
+  if (value === null) return "null";
+  if (value === undefined) return "undefined";
+  if (typeof value === "string") {
     // Don't wrap certain fields with quotes (like flags)
-    if (propId === 'flags') return value
-    return `"${value}"`
+    if (propId === "flags") return value;
+    return `"${value}"`;
   }
-  if (typeof value === 'boolean') return String(value)
-  if (typeof value === 'number') return String(value)
-  return String(value)
+  if (typeof value === "boolean") return String(value);
+  if (typeof value === "number") return String(value);
+  return String(value);
 }
 </script>
 
 <template>
-  <div relative w-fit @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
+  <div class="relative w-fit" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">
     <span v-if="key">
       <span :style="{ color: keyColor }" v-text="key" />
-      <span op70>:&nbsp;</span>
+      <span class="opacity-70">:&nbsp;</span>
     </span>
     <span v-if="isPrimitive(value)">
       <span
@@ -81,18 +81,18 @@ function formatValue(value: any, propId?: string | number): string {
       />
     </span>
     <span v-else-if="isArray(value)">
-      <span op70>[</span>
-      <div v-for="(item, index) in value" :key="index" pl4>
+      <span class="opacity-70">[</span>
+      <div v-for="(item, index) in value" :key="index" class="pl-4">
         <SymbolItemValue :value="item" :is-array-item="true" />
       </div>
-      <span op70>]</span>
+      <span class="opacity-70">]</span>
     </span>
     <span v-else-if="isObject(value)">
-      <span op70>{</span>
-      <div v-for="(val, k) in value" :key="k" pl4>
+      <span class="opacity-70">{</span>
+      <div v-for="(val, k) in value" :key="k" class="pl-4">
         <SymbolItemValue :id="k" :value="val" />
       </div>
-      <span op70>}</span>
+      <span class="opacity-70">}</span>
     </span>
   </div>
 </template>

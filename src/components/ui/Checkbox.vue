@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { Checkbox } from '~/ui/checkbox'
-import { cn } from '~/utils/cn'
+import { Checkbox } from "~/ui/checkbox";
+import { cn } from "~/utils/cn";
 
 defineProps<{
-  label: string
-  modelValue?: boolean
-  disabled?: boolean
-  defaultChecked?: boolean
-  labelClass?: string
-}>()
+  label: string;
+  modelValue?: boolean;
+  disabled?: boolean;
+  defaultChecked?: boolean;
+  labelClass?: string;
+}>();
 
 defineEmits<{
-  'update:modelValue': [value: boolean]
-}>()
+  "update:modelValue": [value: boolean];
+}>();
 </script>
 
 <template>
-  <label flex items-center gap2>
+  <label class="flex items-center gap-2">
     <Checkbox
       :checked="modelValue"
       :disabled="disabled"
