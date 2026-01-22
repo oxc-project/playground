@@ -1,8 +1,8 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import tailwindcss from "@tailwindcss/vite";
 import Vue from "@vitejs/plugin-vue";
-import UnoCSS from "unocss/vite";
 import { defineConfig } from "vite";
 
 let oxcCommit: string | undefined;
@@ -66,8 +66,14 @@ export default defineConfig({
         },
       },
     },
+    rolldownOptions: {
+      experimental: {
+        strictExecutionOrder: true,
+      },
+    },
   },
   experimental: {
+    bundledDev: true,
     enableNativePlugin: true,
   },
   server: {
@@ -82,5 +88,5 @@ export default defineConfig({
       allow: [__dirname, "../oxc/napi/playground"],
     },
   },
-  plugins: [Vue(), UnoCSS()],
+  plugins: [Vue(), tailwindcss()],
 });

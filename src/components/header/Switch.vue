@@ -1,26 +1,25 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import {
   SwitchRoot,
   SwitchThumb,
   useForwardPropsEmits,
   type SwitchRootEmits,
   type SwitchRootProps,
-} from 'radix-vue'
-import { computed, type HTMLAttributes } from 'vue'
-import { dark } from '~/composables/state'
-import { cn } from '~/utils/cn'
+} from "radix-vue";
+import { computed, type HTMLAttributes } from "vue";
+import { dark } from "~/composables/state";
+import { cn } from "~/utils/cn";
 
-const props = defineProps<
-  SwitchRootProps & { class?: HTMLAttributes['class'] }
->()
-const emits = defineEmits<SwitchRootEmits>()
+const props = defineProps<SwitchRootProps & { class?: HTMLAttributes["class"] }>();
+const emits = defineEmits<SwitchRootEmits>();
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  const { class: _, ...delegated } = props;
 
-  return delegated
-})
+  return delegated;
+});
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -46,7 +45,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
           )
         "
       >
-        <div :class="dark ? 'i-ri:moon-line' : 'i-ri:sun-line'" scale-70 />
+        <Icon :icon="dark ? 'ri:moon-line' : 'ri:sun-line'" class="scale-[0.7]" />
       </SwitchThumb>
     </SwitchRoot>
   </div>

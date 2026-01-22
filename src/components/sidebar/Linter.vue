@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useOxc } from '~/composables/oxc'
-import { Switch } from '~/ui/switch'
+import { useOxc } from "~/composables/oxc";
+import { Switch } from "~/ui/switch";
 
-const { options } = await useOxc()
+const { options } = await useOxc();
 </script>
 
 <template>

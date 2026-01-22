@@ -4,30 +4,30 @@ import {
   useForwardPropsEmits,
   type SplitterResizeHandleEmits,
   type SplitterResizeHandleProps,
-} from 'radix-vue'
-import { computed } from 'vue'
-import { cn } from '~/utils/cn'
+} from "radix-vue";
+import { computed } from "vue";
+import { cn } from "~/utils/cn";
 
 const props = withDefaults(
   defineProps<
     SplitterResizeHandleProps & {
-      withHandle?: boolean
-      class?: string
+      withHandle?: boolean;
+      class?: string;
     }
   >(),
   {
     withHandle: false,
   },
-)
-const emits = defineEmits<SplitterResizeHandleEmits>()
+);
+const emits = defineEmits<SplitterResizeHandleEmits>();
 
 const delegatedProps = computed(() => {
-  const { class: _, withHandle: __, ...delegated } = props
+  const { class: _, withHandle: __, ...delegated } = props;
 
-  return delegated
-})
+  return delegated;
+});
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>

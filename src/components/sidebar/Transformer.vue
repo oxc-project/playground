@@ -25,22 +25,19 @@ const { options } = await useOxc();
           v-model="options.transformer.useDefineForClassFields"
           default-checked
           label="useDefineForClassFields"
-          font-mono
-          label-class="text-xs"
+          label-class="text-xs font-mono"
         />
 
         <Checkbox
           v-model="options.transformer.experimentalDecorators"
           label="experimentalDecorators"
-          font-mono
-          label-class="text-xs"
+          label-class="text-xs font-mono"
         />
 
         <Checkbox
           v-model="options.transformer.emitDecoratorMetadata"
           label="emitDecoratorMetadata"
-          font-mono
-          label-class="text-xs"
+          label-class="text-xs font-mono"
         />
       </div>
     </div>
@@ -55,8 +52,7 @@ const { options } = await useOxc();
         v-model="options.isolatedDeclarations.stripInternal"
         default-checked
         label="stripInternal"
-        font-mono
-        label-class="text-xs"
+        label-class="text-xs font-mono"
       />
     </div>
   </section>

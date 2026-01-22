@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from "vue";
 import CopyContainer from "~/components/CopyContainer.vue";
-import {
-  highlight,
-  shikiLoaded,
-  shikiLoading,
-  type ShikiLang,
-} from "~/utils/shiki";
+import { highlight, shikiLoaded, shikiLoading, type ShikiLang } from "~/utils/shiki";
 
 const props = defineProps<{
   code?: string;

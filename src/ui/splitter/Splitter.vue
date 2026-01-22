@@ -4,12 +4,12 @@ import {
   useForwardPropsEmits,
   type SplitterGroupEmits,
   type SplitterGroupProps,
-} from 'radix-vue'
+} from "radix-vue";
 
-const props = defineProps<SplitterGroupProps>()
-const emits = defineEmits<SplitterGroupEmits>()
+const props = defineProps<SplitterGroupProps>();
+const emits = defineEmits<SplitterGroupEmits>();
 
-const forwarded = useForwardPropsEmits(props, emits)
+const forwarded = useForwardPropsEmits(props, emits);
 </script>
 
 <template>

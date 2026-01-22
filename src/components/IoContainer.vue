@@ -11,9 +11,7 @@ import Output from "./output/OutputPanel.vue";
 const { oxc, error, monacoLanguage, options } = await useOxc();
 
 const isMdAndUp = useMediaQuery("(min-width: 768px)");
-const splitterDirection = computed(() =>
-  isMdAndUp.value ? "horizontal" : "vertical",
-);
+const splitterDirection = computed(() => (isMdAndUp.value ? "horizontal" : "vertical"));
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
@@ -23,8 +21,7 @@ const errorStr = computed(() => {
 
 function stringifyError(error: unknown) {
   if (!error) return "";
-  if (error instanceof Error)
-    return [error.message, error.stack].filter(Boolean).join("\n");
+  if (error instanceof Error) return [error.message, error.stack].filter(Boolean).join("\n");
   return String(error);
 }
 </script>
@@ -44,7 +41,7 @@ function stringifyError(error: unknown) {
 
           <div
             v-if="oxc.getDiagnostics().length"
-            class="min-h-0 flex flex-1 flex-col gap2 overflow-auto border-t px-3 py-2 text-sm font-mono op80"
+            class="min-h-0 flex flex-1 flex-col gap-2 overflow-auto border-t px-3 py-2 text-sm font-mono opacity-80"
           >
             <DiagnosticPanel />
           </div>
