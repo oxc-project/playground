@@ -10,8 +10,22 @@ import { Icon } from "@iconify/vue";
       <li>
         <a
           class="mx-2 block"
+          href="https://x.com/OxcProject"
+          aria-label="x"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon
+            icon="ri:twitter-x-fill"
+            class="h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+          />
+        </a>
+      </li>
+      <li>
+        <a
+          class="mx-2 block"
           href="https://bsky.app/profile/boshen.github.io"
-          aria-label="twitter"
+          aria-label="bluesky"
           target="_blank"
           rel="noopener"
         >
