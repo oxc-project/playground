@@ -11,14 +11,12 @@
     "url": "git+https://github.com/oxc-project/playground.git"
   },
   "type": "module",
-  "main": "",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "dev": "vite dev",
+    "build": "vite build",
     "preview": "vite preview",
-    "fmt": "oxfmt",
-    "typecheck": "vue-tsc",
-    "lint": "oxlint",
+    "fmt": "vite fmt",
+    "lint": "vite lint && vue-tsc",
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
@@ -47,22 +45,20 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "lint-staged": "^16.2.7",
     "oxc-playground": "link:../oxc/napi/playground",
-    "oxfmt": "^0.26.0",
-    "oxlint": "^1.41.0",
     "shiki": "^3.21.0",
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3",
-    "vite": "8.0.0-beta.8",
+    "vite-plus": "0.0.0-ab0b0858cb619f270f5e0a698fea3d6f5622a761",
     "vue-tsc": "~3.2.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "oxlint --fix"
+    "*": "vite fmt --no-error-on-unmatched-pattern",
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vite lint --fix"
   },
   "engines": {
     "node": ">=20.14.0"
