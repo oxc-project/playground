@@ -148,7 +148,7 @@ export const useOxc = createGlobalState(async () => {
     (code) => {
       urlParams.code = code === PLAYGROUND_DEMO_CODE || !code ? undefined : code;
     },
-    { debounce: 2000 },
+    { debounce: 1000 },
   );
 
   const monacoLanguage = computed(() => {
