@@ -45,8 +45,7 @@ export default defineConfig({
             id.includes("radix-vue") ||
             id.includes("class-variance-authority") ||
             id.includes("clsx") ||
-            id.includes("tailwind-merge") ||
-            id.includes("@radix-icons")
+            id.includes("tailwind-merge")
           ) {
             return "ui-vendor";
           }
