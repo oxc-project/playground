@@ -1,6 +1,6 @@
 import { createGlobalState, watchDebounced } from "@vueuse/core";
 import { computed, ref, shallowRef, toRaw, triggerRef, watch } from "vue";
-import { activeTab, editorValue } from "~/composables/state";
+import { activeTab, editorValue, formatterPanels } from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
 import { atou, utoa } from "~/utils/url";
 import type { Oxc, OxcOptions } from "oxc-playground";
@@ -123,15 +123,20 @@ export const useOxc = createGlobalState(async () => {
     activeTab.value = urlState.t;
   }
 
+  if (urlState?.fp) {
+    formatterPanels.value = { ...formatterPanels.value, ...urlState.fp };
+  }
+
   editorValue.value = urlState?.c ?? PLAYGROUND_DEMO_CODE;
 
   watchDebounced(
-    () => [editorValue.value, options.value, activeTab.value],
-    ([editorValue, options, activeTab]) => {
+    () => [editorValue.value, options.value, activeTab.value, formatterPanels.value],
+    ([editorValue, options, activeTab, fp]) => {
       const serialized = JSON.stringify({
         c: editorValue === PLAYGROUND_DEMO_CODE ? "" : editorValue,
         o: options,
         t: activeTab,
+        fp,
       });
 
       try {
@@ -140,7 +145,7 @@ export const useOxc = createGlobalState(async () => {
         console.error(error);
       }
     },
-    { debounce: 2000 },
+    { debounce: 2000, deep: true },
   );
 
   const monacoLanguage = computed(() => {

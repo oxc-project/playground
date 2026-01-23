@@ -11,3 +11,11 @@ export const outputHoverRange = ref<Range>();
 
 // Active tab state for output panel
 export const activeTab = ref("codegen");
+
+// Formatter panel checkbox states
+export const formatterPanels = ref({
+  output: true,
+  ir: false,
+  prettier: false,
+  prettierDoc: false,
+});
