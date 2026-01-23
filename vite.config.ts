@@ -32,42 +32,43 @@ export default defineConfig({
   },
   build: {
     target: "esnext",
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          // Vue ecosystem
-          if (id.includes("vue") || id.includes("@vueuse")) {
-            return "vue-vendor";
-          }
-
-          // UI libraries
-          if (
-            id.includes("radix-vue") ||
-            id.includes("class-variance-authority") ||
-            id.includes("clsx") ||
-            id.includes("tailwind-merge")
-          ) {
-            return "ui-vendor";
-          }
-
-          // Monaco Editor core
-          if (id.includes("monaco-editor/esm/vs/editor/editor.api")) {
-            return "monaco-vendor";
-          }
-
-          // Utility libraries
-          if (id.includes("fflate")) {
-            return "utils-vendor";
-          }
-
-          // Keep dynamic imports as separate chunks (Shiki, Viz)
-          // They will be handled automatically by Vite
-        },
-      },
-    },
+    // Monaco (3.7MB), Viz (1.4MB), Shiki (557KB) are large but unavoidable
+    chunkSizeWarningLimit: 4000,
     rolldownOptions: {
       experimental: {
         strictExecutionOrder: true,
+      },
+      output: {
+        // Disable live bindings for smaller bundle (externals don't change)
+        externalLiveBindings: false,
+        codeSplitting: {
+          groups: [
+            // Monaco Editor - all ESM modules (except workers which are handled separately)
+            {
+              name: "monaco-vendor",
+              test: /monaco-editor\/esm/,
+              priority: 10,
+            },
+            // Shiki syntax highlighter
+            {
+              name: "shiki-vendor",
+              test: /node_modules\/@shikijs|node_modules\/shiki/,
+              priority: 10,
+            },
+            // Vue ecosystem
+            {
+              name: "vue-vendor",
+              test: /node_modules\/(vue|@vue|@vueuse)/,
+              priority: 5,
+            },
+            // UI libraries
+            {
+              name: "ui-vendor",
+              test: /node_modules\/(radix-vue|class-variance-authority|clsx|tailwind-merge)/,
+              priority: 5,
+            },
+          ],
+        },
       },
     },
   },
