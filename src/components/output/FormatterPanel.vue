@@ -2,11 +2,13 @@
 import { computed, ref } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
 import { useOxc } from "~/composables/oxc";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/ui/tabs";
+import { Checkbox } from "~/ui/checkbox";
+import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import OutputPreview from "./OutputPreview.vue";
 
 const { oxc, options } = await useOxc();
-const activeFormatterTab = ref("output");
+const showOutput = ref(true);
+const showIR = ref(false);
 const configError = ref<string>("");
 // whether the details element is open
 const detailsOpen = ref(true);
@@ -45,66 +47,65 @@ const formatterConfig = computed({
 </script>
 
 <template>
-  <div class="h-full flex flex-col">
-    <Tabs v-model="activeFormatterTab" class="h-full w-full flex flex-1 flex-col overflow-hidden">
-      <TabsList class="mx-2 mt-2 w-fit">
-        <TabsTrigger value="output">
-          Output
-        </TabsTrigger>
-        <TabsTrigger value="ir">
-          IR
-        </TabsTrigger>
-      </TabsList>
+  <div class="flex h-full flex-col overflow-hidden">
+    <!-- Checkbox toolbar -->
+    <div class="flex shrink-0 items-center gap-3 border-b border-border px-3 py-2">
+      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
+        <Checkbox id="show-output" v-model:checked="showOutput" />
+        <span :class="showOutput ? 'text-foreground' : 'text-muted-foreground'">Output</span>
+      </label>
+      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
+        <Checkbox id="show-ir" v-model:checked="showIR" />
+        <span :class="showIR ? 'text-foreground' : 'text-muted-foreground'">IR</span>
+      </label>
+    </div>
 
-      <TabsContent force-mount value="output">
+    <!-- Content area -->
+    <div v-if="!showOutput && !showIR" class="flex flex-1 items-center justify-center text-muted-foreground">
+      Select at least one output to display
+    </div>
+
+    <Splitter v-else-if="showOutput && showIR" direction="horizontal" class="min-h-0 flex-1">
+      <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
         <OutputPreview :code="oxc.formatterFormattedText" lang="tsx" />
-      </TabsContent>
+      </SplitterPanel>
 
-      <TabsContent force-mount value="ir">
+      <SplitterResizeHandle with-handle />
+
+      <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
         <OutputPreview :code="oxc.formatterIrText" lang="typescript" />
-      </TabsContent>
-    </Tabs>
+      </SplitterPanel>
+    </Splitter>
 
-    <details open class="mt-3 border bg-transparent" @toggle="onDetailsToggle($event)">
-      <summary
-        :aria-expanded="detailsOpen"
-        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-slate-100 px-4 py-2 text-sm font-medium dark:bg-slate-900"
-      >
+    <div v-else class="min-h-0 flex-1 overflow-auto">
+      <OutputPreview :code="showOutput ? oxc.formatterFormattedText : oxc.formatterIrText"
+        :lang="showOutput ? 'tsx' : 'typescript'" />
+    </div>
+
+    <!-- Configure Options -->
+    <details open class="shrink-0 border-t border-border" @toggle="onDetailsToggle($event)">
+      <summary :aria-expanded="detailsOpen"
+        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-muted px-4 py-2 text-sm font-medium">
         <div>
-          Configure Options
-          <span class="ml-2 text-xs text-slate-500">
+          Configure Options2222
+          <span class="ml-2 text-xs text-muted-foreground">
             {{ detailsOpen ? "(Click to collapse)" : "(Click to expand)" }}
           </span>
         </div>
-        <svg
-          class="chev h-4 w-4 text-slate-600 transition-transform duration-150 dark:text-slate-300"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            d="M6 8L10 12L14 8"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+        <svg class="chev h-4 w-4 text-muted-foreground transition-transform duration-150" viewBox="0 0 20 20"
+          fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
       </summary>
-      <div class="h-300px flex-1 overflow-hidden border-t rounded-b-md bg-white dark:bg-slate-950">
-        <MonacoEditor
-          v-model="formatterConfig"
-          language="json"
-          filename="formatter.json"
-          :options="{
-            minimap: { enabled: false },
-            fontSize: 14,
-            lineNumbers: 'on',
-            scrollBeyondLastLine: false,
-            wordWrap: 'on',
-          }"
-        />
+      <div class="overflow-hidden bg-background" style="height: 300px">
+        <MonacoEditor v-model="formatterConfig" language="json" filename="formatter.json" :options="{
+          minimap: { enabled: false },
+          fontSize: 14,
+          lineNumbers: 'on',
+          scrollBeyondLastLine: false,
+          wordWrap: 'on',
+        }" />
         <div v-if="configError" class="px-4 py-2 text-sm text-red-500">
           ⚠️ {{ configError }}
         </div>
