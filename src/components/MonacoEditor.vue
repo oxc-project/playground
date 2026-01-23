@@ -23,11 +23,11 @@ let instance: monaco.editor.IStandaloneCodeEditor | undefined;
 const model = shallowRef<monaco.editor.ITextModel>(initModel());
 
 watchEffect((onCleanup) => {
-  const { dispose } = model.value.onDidChangeContent(() => {
+  const dispose = model.value.onDidChangeContent(() => {
     const value = model.value.getValue();
     emit("update:modelValue", value);
   });
-  onCleanup(() => dispose());
+  onCleanup(() => dispose);
 });
 
 function initModel() {
