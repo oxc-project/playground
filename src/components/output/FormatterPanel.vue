@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { computed, ref, watch } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
-import { useOxc } from "~/composables/oxc";
+import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
 import { editorValue, formatterPanels } from "~/composables/state";
+import { Button } from "~/ui/button";
 import { Checkbox } from "~/ui/checkbox";
 import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import type { ShikiLang } from "~/utils/shiki";
@@ -87,6 +89,30 @@ function onDetailsToggle(e: Event) {
   detailsOpen.value = !!t?.open;
 }
 
+function openDiffReport() {
+  // Only include config options that differ from defaults
+  const currentConfig = options.value.formatter;
+  const changedConfig: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(currentConfig)) {
+    if (value !== defaultFormatterConfig[key as keyof typeof defaultFormatterConfig]) {
+      changedConfig[key] = value;
+    }
+  }
+  const config = JSON.stringify(changedConfig, null, 2);
+  const playgroundUrl = window.location.href;
+
+  // Field IDs from formatter_diff_report.yaml template
+  const url = new URL("https://github.com/oxc-project/oxc/issues/new");
+  url.searchParams.set("template", "formatter_diff_report.yaml");
+  url.searchParams.set("input", "```tsx\n" + editorValue.value + "\n```");
+  url.searchParams.set("config", "```jsonc\n" + config + "\n```");
+  url.searchParams.set("actual", "Oxfmt version: `latest`\n```tsx\n" + oxc.value.formatterFormattedText + "\n```");
+  url.searchParams.set("oxfmt_playground", playgroundUrl);
+  url.searchParams.set("expect", `Prettier version: \`${prettierVersion}\`\n\`\`\`tsx\n` + prettierOutput.value + "\n```");
+
+  window.open(url.toString(), "_blank");
+}
+
 const formatterConfig = computed({
   get: () => {
     try {
@@ -136,6 +162,12 @@ const formatterConfig = computed({
         <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
         <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'">Prettier Doc</span>
       </label>
+      <div class="ml-auto">
+        <Button variant="outline" size="xs" @click="openDiffReport">
+          <Icon icon="octicon:issue-opened-16" />
+          Report Diff
+        </Button>
+      </div>
     </div>
 
     <!-- Error display -->
