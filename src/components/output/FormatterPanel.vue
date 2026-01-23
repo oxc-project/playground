@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
 import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
@@ -35,8 +35,8 @@ const configError = ref<string>("");
 // whether the details element is open
 const detailsOpen = ref(true);
 
-// Helper to run Prettier with current options
-async function runPrettier() {
+// Run Prettier when code, options, or checkboxes change
+watchEffect(async () => {
   if (!showPrettier.value && !showPrettierDoc.value) return;
   const opts = options.value.formatter;
   await formatPrettier(editorValue.value, {
@@ -52,12 +52,7 @@ async function runPrettier() {
     singleAttributePerLine: opts.singleAttributePerLine,
     jsxSingleQuote: opts.jsxSingleQuote,
   });
-}
-
-// Run Prettier when code or options change (only if checkbox is checked)
-watch([editorValue, () => options.value.formatter], runPrettier, { deep: true });
-// Run Prettier when checkbox is checked (immediate for URL restore)
-watch([showPrettier, showPrettierDoc], runPrettier, { immediate: true });
+});
 
 // Compute visible panels for dynamic layout
 interface Panel {
