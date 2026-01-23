@@ -1,5 +1,5 @@
 import { createGlobalState, useUrlSearchParams, watchDebounced } from "@vueuse/core";
-import { computed, ref, shallowRef, toRaw, triggerRef, watch } from "vue";
+import { computed, ref, shallowRef, toRaw, triggerRef, watch, watchEffect } from "vue";
 import { activeTab, editorValue, formatterPanels } from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
 import type { Oxc, OxcOptions } from "oxc-playground";
@@ -130,26 +130,17 @@ export const useOxc = createGlobalState(async () => {
   }
   watch([options, editorValue, activeTab], run, { deep: true });
 
-  // Sync tab to URL (no debounce needed)
-  watch(activeTab, (tab) => {
-    urlParams.t = tab && tab !== "codegen" ? tab : undefined;
+  // Sync tab and formatter panels to URL (reactive, no debounce needed)
+  watchEffect(() => {
+    urlParams.t = activeTab.value !== "codegen" ? activeTab.value : undefined;
+    const enabledPanels = Object.entries(formatterPanels.value)
+      .filter(([, enabled]) => enabled)
+      .map(([name]) => name);
+    urlParams.formatterPanels =
+      enabledPanels.length === 1 && enabledPanels[0] === "output"
+        ? undefined
+        : enabledPanels.join(",");
   });
-
-  // Sync formatter panels to URL (no debounce needed)
-  watch(
-    formatterPanels,
-    (panels) => {
-      const enabledPanels = Object.entries(panels)
-        .filter(([, enabled]) => enabled)
-        .map(([name]) => name);
-      // Default is only "output" enabled - don't store in URL
-      urlParams.formatterPanels =
-        enabledPanels.length === 1 && enabledPanels[0] === "output"
-          ? undefined
-          : enabledPanels.join(",");
-    },
-    { deep: true },
-  );
 
   // Sync code to URL (debounced to avoid excessive updates while typing)
   watchDebounced(
