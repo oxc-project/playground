@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { Icon } from "@iconify/vue";
+import { computed, ref, watchEffect } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
-import { useOxc } from "~/composables/oxc";
+import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
 import { editorValue, formatterPanels } from "~/composables/state";
+import { Button } from "~/ui/button";
 import { Checkbox } from "~/ui/checkbox";
 import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import type { ShikiLang } from "~/utils/shiki";
@@ -33,8 +35,8 @@ const configError = ref<string>("");
 // whether the details element is open
 const detailsOpen = ref(true);
 
-// Helper to run Prettier with current options
-async function runPrettier() {
+// Run Prettier when code, options, or checkboxes change
+watchEffect(async () => {
   if (!showPrettier.value && !showPrettierDoc.value) return;
   const opts = options.value.formatter;
   await formatPrettier(editorValue.value, {
@@ -50,12 +52,7 @@ async function runPrettier() {
     singleAttributePerLine: opts.singleAttributePerLine,
     jsxSingleQuote: opts.jsxSingleQuote,
   });
-}
-
-// Run Prettier when code or options change (only if checkbox is checked)
-watch([editorValue, () => options.value.formatter], runPrettier, { deep: true });
-// Run Prettier when checkbox is checked (immediate for URL restore)
-watch([showPrettier, showPrettierDoc], runPrettier, { immediate: true });
+});
 
 // Compute visible panels for dynamic layout
 interface Panel {
@@ -85,6 +82,30 @@ const visiblePanels = computed<Panel[]>(() => {
 function onDetailsToggle(e: Event) {
   const t = e.target as HTMLDetailsElement | null;
   detailsOpen.value = !!t?.open;
+}
+
+function openDiffReport() {
+  // Only include config options that differ from defaults
+  const currentConfig = options.value.formatter;
+  const changedConfig: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(currentConfig)) {
+    if (value !== defaultFormatterConfig[key as keyof typeof defaultFormatterConfig]) {
+      changedConfig[key] = value;
+    }
+  }
+  const config = JSON.stringify(changedConfig, null, 2);
+  const playgroundUrl = window.location.href;
+
+  // Field IDs from formatter_diff_report.yaml template
+  const url = new URL("https://github.com/oxc-project/oxc/issues/new");
+  url.searchParams.set("template", "formatter_diff_report.yaml");
+  url.searchParams.set("input", "```tsx\n" + editorValue.value + "\n```");
+  url.searchParams.set("config", "```jsonc\n" + config + "\n```");
+  url.searchParams.set("actual", "Oxfmt version: `latest`\n```tsx\n" + oxc.value.formatterFormattedText + "\n```");
+  url.searchParams.set("oxfmt_playground", playgroundUrl);
+  url.searchParams.set("expect", `Prettier version: \`${prettierVersion}\`\n\`\`\`tsx\n` + prettierOutput.value + "\n```");
+
+  window.open(url.toString(), "_blank");
 }
 
 const formatterConfig = computed({
@@ -136,6 +157,12 @@ const formatterConfig = computed({
         <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
         <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'">Prettier Doc</span>
       </label>
+      <div class="ml-auto">
+        <Button variant="outline" size="xs" @click="openDiffReport">
+          <Icon icon="octicon:issue-opened-16" />
+          Report Diff
+        </Button>
+      </div>
     </div>
 
     <!-- Error display -->
