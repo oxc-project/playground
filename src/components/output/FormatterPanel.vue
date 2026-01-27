@@ -35,6 +35,12 @@ const configError = ref<string>("");
 // whether the details element is open
 const detailsOpen = ref(true);
 
+// Compare Oxfmt output with Prettier output (null = comparison not available)
+const hasDiff = computed(() => {
+  if (!showPrettier.value || prettierError.value) return null;
+  return oxc.value.formatterFormattedText !== prettierOutput.value;
+});
+
 // Run Prettier when code, options, or checkboxes change
 watchEffect(async () => {
   if (!showPrettier.value && !showPrettierDoc.value) return;
@@ -157,8 +163,10 @@ const formatterConfig = computed({
         <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
         <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'">Prettier Doc</span>
       </label>
-      <div class="ml-auto">
-        <Button variant="outline" size="xs" @click="openDiffReport">
+      <div class="ml-auto flex items-center gap-2">
+        <span v-if="hasDiff === true" class="text-xs font-medium text-yellow-600 dark:text-yellow-400">Diff</span>
+        <span v-else-if="hasDiff === false" class="text-xs font-medium text-green-600 dark:text-green-400">Match</span>
+        <Button variant="outline" size="xs" :disabled="hasDiff !== true" @click="openDiffReport">
           <Icon icon="octicon:issue-opened-16" />
           Report Diff
         </Button>
