@@ -4,6 +4,7 @@ import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import Vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite-plus";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 let oxcCommit: string | undefined;
 
@@ -88,5 +89,17 @@ export default defineConfig({
       allow: [__dirname, "../oxc/napi/playground"],
     },
   },
-  plugins: [Vue(), tailwindcss()],
+  plugins: [
+    Vue(),
+    tailwindcss(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: "../oxc/npm/oxfmt/configuration_schema.json",
+          dest: ".",
+          rename: "oxfmt-schema.json",
+        },
+      ],
+    }),
+  ],
 });
