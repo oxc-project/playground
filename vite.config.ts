@@ -12,12 +12,12 @@ if (existsSync(COMMIT_FILE)) {
   oxcCommit = readFileSync("../oxc/napi/playground/git-commit", "utf8").trim();
 }
 
-if (!oxcCommit && existsSync("../oxc/napi/playground")) {
+if (!oxcCommit) {
   const { stdout } = spawnSync("git", ["rev-parse", "HEAD"], {
     cwd: "../oxc/napi/playground",
     encoding: "utf8",
   });
-  oxcCommit = stdout?.trim();
+  oxcCommit = stdout.trim();
 }
 
 // https://vitejs.dev/config/
