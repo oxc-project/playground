@@ -17,7 +17,7 @@ jsonDefaults.setDiagnosticsOptions({
   trailingCommas: "ignore",
   schemas: [
     {
-      uri: oxfmtSchema,
+      uri: new URL(oxfmtSchema, import.meta.url),
       fileMatch: ["formatter.json"],
     },
   ],
