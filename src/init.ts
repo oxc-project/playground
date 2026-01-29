@@ -14,6 +14,12 @@ jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
   trailingCommas: "ignore",
+  schemas: [
+    {
+      uri: "/oxfmt-schema.json",
+      fileMatch: ["formatter.json"],
+    },
+  ],
 });
 
 typescriptDefaults.setDiagnosticsOptions({
