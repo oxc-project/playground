@@ -17,7 +17,7 @@ if (!oxcCommit) {
     cwd: "../oxc/napi/playground",
     encoding: "utf8",
   });
-  oxcCommit = stdout?.trim() || "unknown";
+  oxcCommit = stdout.trim();
 }
 
 // https://vitejs.dev/config/
