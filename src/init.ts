@@ -9,11 +9,18 @@ import {
   ModuleResolutionKind,
   JsxEmit,
 } from "monaco-editor/esm/vs/language/typescript/monaco.contribution";
+import oxfmtSchema from "../../oxc/npm/oxfmt/configuration_schema.json?url";
 
 jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
   enableSchemaRequest: true,
   trailingCommas: "ignore",
+  schemas: [
+    {
+      uri: new URL(oxfmtSchema, import.meta.url).href,
+      fileMatch: ["formatter.json"],
+    },
+  ],
 });
 
 typescriptDefaults.setDiagnosticsOptions({
