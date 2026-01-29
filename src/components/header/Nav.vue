@@ -15,7 +15,7 @@ import {
         <NavigationMenuLink as-child>
           <a
             class="flex items-center px-3"
-            href="https://oxc.rs/docs/guide/introduction.html"
+            href="https://oxc.rs/docs/guide/introduction"
             target="_blank"
             rel="noopener"
           >
@@ -36,34 +36,20 @@ import {
         <NavigationMenuLink as-child>
           <a
             class="flex items-center px-3"
-            href="https://oxc.rs/docs/learn/parser_in_rust/intro.html"
+            href="https://oxc.rs/docs/contribute/introduction"
             target="_blank"
             rel="noopener"
           >
             <span
               class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
-            >Learn</span>
+            >
+              Contribute
+            </span>
             <Icon
               icon="ri:arrow-right-up-line"
               class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
             />
           </a>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-
-      <NavigationMenuItem>
-        <NavigationMenuLink
-          class="flex items-center px-3"
-          href="https://oxc.rs/docs/contribute/introduction.html"
-        >
-          <span
-            class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
-          >
-            Contribute
-          </span>
-          <div
-            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
-          />
         </NavigationMenuLink>
       </NavigationMenuItem>
 
@@ -75,7 +61,33 @@ import {
 
       <NavigationMenuItem>
         <NavigationMenuLink as-child>
-          <a class="flex items-center px-3" href="#" target="_blank" rel="noopener">
+          <a
+            class="flex items-center px-3"
+            href="https://oxc.rs/sponsor"
+            target="_blank"
+            rel="noopener"
+          >
+            <span
+              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+            >
+              Sponsor
+            </span>
+            <Icon
+              icon="ri:arrow-right-up-line"
+              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            />
+          </a>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+
+      <NavigationMenuItem>
+        <NavigationMenuLink as-child>
+          <a
+            class="flex items-center px-3"
+            href="https://oxc.rs/docs/learn/parser_in_rust/intro"
+            target="_blank"
+            rel="noopener"
+          >
             <span
               class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
             >
