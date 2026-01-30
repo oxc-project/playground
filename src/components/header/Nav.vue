@@ -20,13 +20,13 @@ import {
             rel="noopener"
           >
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
             >
               Guide
             </span>
             <Icon
               icon="ri:arrow-right-up-line"
-              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="ml-1 h-3 w-3 text-[#827A89]"
             />
           </a>
         </NavigationMenuLink>
@@ -41,11 +41,11 @@ import {
             rel="noopener"
           >
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
             >Learn</span>
             <Icon
               icon="ri:arrow-right-up-line"
-              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="ml-1 h-3 w-3 text-[#827A89]"
             />
           </a>
         </NavigationMenuLink>
@@ -57,19 +57,19 @@ import {
           href="https://oxc.rs/docs/contribute/introduction.html"
         >
           <span
-            class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+            class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
           >
             Contribute
           </span>
           <div
-            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#827A89]"
           />
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm text-[#3451b2] font-medium dark:text-[#a8b1ff]">Playground</span>
+          <span class="text-sm text-[#0d6a73] font-medium dark:text-[#32F3E9]">Playground</span>
         </NavigationMenuLink>
       </NavigationMenuItem>
 
@@ -77,13 +77,13 @@ import {
         <NavigationMenuLink as-child>
           <a class="flex items-center px-3" href="#" target="_blank" rel="noopener">
             <span
-              class="text-sm text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
+              class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
             >
               Resources
             </span>
             <Icon
               icon="ri:arrow-right-up-line"
-              class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"
+              class="ml-1 h-3 w-3 text-[#827A89]"
             />
           </a>
         </NavigationMenuLink>

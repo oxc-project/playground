@@ -4,7 +4,7 @@ const commit = import.meta.env.OXC_COMMIT;
 
 <template>
   <header
-    class="h-16 flex items-center justify-between border-b border-[#e2e2e3] dark:border-[#2e2e32]"
+    class="h-16 flex items-center justify-between border-b border-[#E5E4E7] dark:border-[#3B3440]"
   >
     <a
       class="h-full flex items-center transition-opacity hover:opacity-80"

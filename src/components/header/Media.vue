@@ -4,7 +4,7 @@ import { Icon } from "@iconify/vue";
 
 <template>
   <div
-    class="hidden items-center before:ml-4 before:mr-2 before:h-6 before:w-px xl:flex before:bg-[#e2e2e3] before:content-[''] dark:before:bg-[#2e2e32]"
+    class="hidden items-center before:ml-4 before:mr-2 before:h-6 before:w-px xl:flex before:bg-[#E5E4E7] before:content-[''] dark:before:bg-[#3B3440]"
   >
     <ul class="flex items-center">
       <li>
@@ -17,7 +17,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:twitter-x-fill"
-            class="h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="h-5 w-5 text-[#16171d] dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9] transition-colors"
           />
         </a>
       </li>
@@ -31,7 +31,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:bluesky-fill"
-            class="h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="h-5 w-5 text-[#16171d] dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9] transition-colors"
           />
         </a>
       </li>
@@ -45,7 +45,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:discord-fill"
-            class="h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="h-5 w-5 text-[#16171d] dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9] transition-colors"
           />
         </a>
       </li>
@@ -59,7 +59,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:github-fill"
-            class="h-5 w-5 text-[#3c3c43]/[.78] dark:text-[#ebebf5]/[.6]"
+            class="h-5 w-5 text-[#16171d] dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9] transition-colors"
           />
         </a>
       </li>
