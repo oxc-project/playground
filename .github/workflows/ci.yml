@@ -35,6 +35,16 @@ jobs:
         with:
           files: .
 
+  check-linter-rules:
+    name: Check linter rules up-to-date
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check:linter-rules
+
   build:
     name: Build
     runs-on: ubuntu-latest

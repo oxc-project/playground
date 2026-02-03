@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const commit = import.meta.env.OXC_COMMIT;
+const commit = import.meta.env.OXC_COMMIT || "unknown";
 </script>
 
 <template>
@@ -15,6 +15,7 @@ const commit = import.meta.env.OXC_COMMIT;
       <img class="mr-2 block h-4 dark:hidden" src="/oxc-dark.svg" alt="Oxc logo" />
     </a>
     <a
+      v-if="commit !== 'unknown'"
       :href="`https://github.com/oxc-project/oxc/commit/${commit}`"
       class="text-xs font-mono opacity-50 transition-opacity hover:opacity-100"
       target="_blank"
