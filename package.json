@@ -17,8 +17,8 @@
     "preview": "vite preview",
     "fmt": "vite fmt",
     "lint": "vue-tsc && vite lint",
-    "generate:linter-rules": "node scripts/generate-linter-rules.mjs",
-    "check:linter-rules": "node scripts/generate-linter-rules.mjs --check",
+    "generate:linter-rules": "node scripts/generate-linter-rules.js",
+    "check:linter-rules": "node scripts/generate-linter-rules.js --check",
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
