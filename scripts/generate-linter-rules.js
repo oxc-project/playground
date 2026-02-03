@@ -1,66 +1,69 @@
 #!/usr/bin/env node
 
-import { execFile } from "node:child_process";
+import { exec } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { tmpdir } from "node:os";
 
 const OUT_JSON = path.join(process.cwd(), "src", "generated", "linter-rules.json");
 
 function runViteLint() {
   return new Promise((resolve, reject) => {
-    const cp = execFile(
-      "pnpm",
-      ["vite", "lint", "--rules", "--format=json"],
-      {
-        encoding: "utf8",
-        maxBuffer: 10 * 1024 * 1024, // 10MB buffer to handle large JSON output
-      },
-      (err, stdout, stderr) => {
-        if (err) return reject(new Error(stderr || err.message));
+    // Use a temp file to avoid stdout buffering limits
+    const tmpFile = path.join(tmpdir(), `vite-lint-${Date.now()}.json`);
 
-        // Try to parse the output as JSON. The linter may print warnings or logs
-        // before and after the JSON payload. Look for array/object that starts
-        // on its own line followed by newline (not like [INFO] which has text after).
-        try {
-          return resolve(JSON.parse(stdout));
-        } catch (e) {
-          // Look for [ or { at start of line, followed by whitespace/newline
-          // This avoids matching things like "[INFO]" which have text after the bracket
-          const arrayMatch = stdout.match(/\n\s*\[\s*$/m) || stdout.match(/\n\s*\[\s*\n/);
-          const objectMatch = stdout.match(/\n\s*\{\s*$/m) || stdout.match(/\n\s*\{\s*\n/);
+    exec(`pnpm vite lint --rules --format=json > "${tmpFile}" 2>&1`, (err, stdout, stderr) => {
+      let data;
+      try {
+        data = fs.readFileSync(tmpFile, "utf8");
+        fs.unlinkSync(tmpFile); // Clean up temp file
+      } catch (readErr) {
+        return reject(new Error(`Failed to read temp file: ${readErr.message}`));
+      }
 
-          let firstOpen = Number.POSITIVE_INFINITY;
-          if (arrayMatch && arrayMatch.index !== undefined) {
-            firstOpen = Math.min(firstOpen, arrayMatch.index + arrayMatch[0].lastIndexOf("["));
-          }
-          if (objectMatch && objectMatch.index !== undefined) {
-            firstOpen = Math.min(firstOpen, objectMatch.index + objectMatch[0].lastIndexOf("{"));
-          }
+      if (err && !data) {
+        return reject(new Error(stderr || err.message));
+      }
 
-          const lastClose = Math.max(stdout.lastIndexOf("]"), stdout.lastIndexOf("}"));
+      // Try to parse the output as JSON. The linter may print warnings or logs
+      // before and after the JSON payload. Look for array/object that starts
+      // on its own line (not like [INFO] which has text immediately after the bracket).
+      try {
+        return resolve(JSON.parse(data));
+      } catch (e) {
+        // Look for [ or { at start of line (after newline), with only whitespace before/after
+        // the bracket on that line. This avoids matching things like "[INFO] message"
+        // Match: newline + optional spaces + bracket + (newline OR whitespace+newline OR end of string)
+        const arrayMatch = data.match(/\n[ \t]*\[(?:\s*\n|\s*$)/);
+        const objectMatch = data.match(/\n[ \t]*\{(?:\s*\n|\s*$)/);
 
-          if (
-            firstOpen === Number.POSITIVE_INFINITY ||
-            lastClose === -1 ||
-            firstOpen >= lastClose
-          ) {
-            return reject(
-              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
-            );
-          }
-
-          const maybe = stdout.slice(firstOpen, lastClose + 1);
-
-          try {
-            return resolve(JSON.parse(maybe));
-          } catch (e2) {
-            return reject(
-              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
-            );
-          }
+        let firstOpen = Number.POSITIVE_INFINITY;
+        if (arrayMatch && arrayMatch.index !== undefined) {
+          firstOpen = Math.min(firstOpen, arrayMatch.index + arrayMatch[0].indexOf("["));
         }
-      },
-    );
+        if (objectMatch && objectMatch.index !== undefined) {
+          firstOpen = Math.min(firstOpen, objectMatch.index + objectMatch[0].indexOf("{"));
+        }
+
+        const lastClose = Math.max(data.lastIndexOf("]"), data.lastIndexOf("}"));
+
+        if (firstOpen === Number.POSITIVE_INFINITY || lastClose === -1 || firstOpen >= lastClose) {
+          return reject(
+            new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
+          );
+        }
+
+        const maybe = data.slice(firstOpen, lastClose + 1);
+
+        try {
+          return resolve(JSON.parse(maybe));
+        } catch (e2) {
+          return reject(
+            new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
+          );
+        }
+      }
+    });
   });
 }
 
