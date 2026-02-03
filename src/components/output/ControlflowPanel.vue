@@ -51,7 +51,7 @@ const raw = ref(false);
 </script>
 
 <template>
-  <div class="w-full flex flex-col">
+  <div class="w-full flex flex-col h-full">
     <div class="flex gap-4 p-2">
       <Checkbox v-model="raw" label="Raw" />
       <Checkbox v-model="options.controlFlow.verbose" label="Verbose" />
