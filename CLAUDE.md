@@ -24,7 +24,7 @@ pnpm preview    # Preview production build locally
 
 ```bash
 pnpm lint       # Run oxlint
-pnpm format     # Run oxfmt formatter
+pnpm fmt        # Run oxfmt formatter
 ```
 
 ## Project Info
