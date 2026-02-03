@@ -16,7 +16,7 @@ export interface LintPlugin {
   rules: LintRule[];
 }
 
-import rulesRaw from "../generated/linter-rules.json";
+import rules from "../generated/linter-rules.json" with { type: "json" };
 
 /**
  * Normalizes the raw `vite lint --rules --format=json` output into the shape
@@ -39,13 +39,12 @@ function normalizePluginFromItems(scope: string, items: any[]): LintPlugin {
 }
 
 function loadPluginsFromJson(): LintPlugin[] {
-  const items: any[] = Array.isArray(rulesRaw) ? rulesRaw : rulesRaw.rules || rulesRaw;
   const groups = new Map<string, any[]>();
 
-  for (const it of items || []) {
-    const scope = it.scope || it.plugin || "eslint";
+  for (const rule of rules || []) {
+    const scope = rule.scope || "eslint";
     if (!groups.has(scope)) groups.set(scope, []);
-    groups.get(scope)!.push(it);
+    groups.get(scope)!.push(rule);
   }
 
   const plugins: LintPlugin[] = Array.from(groups.entries()).map(([scope, arr]) =>
