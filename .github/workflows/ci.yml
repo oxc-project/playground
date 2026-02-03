@@ -33,6 +33,20 @@ jobs:
         with:
           files: .
 
+  lint:
+    name: Lint and Format
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run typecheck and linting
+        run: pnpm run lint
+      - name: Check formatting
+        run: pnpm run fmt --check
+
   build:
     name: Build
     runs-on: ubuntu-latest
