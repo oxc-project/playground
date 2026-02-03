@@ -9,39 +9,58 @@ const OUT_JSON = path.join(process.cwd(), "src", "generated", "linter-rules.json
 function runViteLint() {
   return new Promise((resolve, reject) => {
     const cp = execFile(
-      "vite",
-      ["lint", "--rules", "--format=json"],
-      { encoding: "utf8" },
+      "pnpm",
+      ["vite", "lint", "--rules", "--format=json"],
+      {
+        encoding: "utf8",
+        maxBuffer: 10 * 1024 * 1024, // 10MB buffer to handle large JSON output
+      },
       (err, stdout, stderr) => {
         if (err) return reject(new Error(stderr || err.message));
 
-        // Try to parse the output as JSON. The linter may print non-JSON logs
-        // after the JSON payload; attempt to salvage by truncating to the last
-        // closing bracket.
+        // Try to parse the output as JSON. The linter may print warnings or logs
+        // before and after the JSON payload. Look for array/object that starts
+        // on its own line followed by newline (not like [INFO] which has text after).
         try {
           return resolve(JSON.parse(stdout));
         } catch (e) {
+          // Look for [ or { at start of line, followed by whitespace/newline
+          // This avoids matching things like "[INFO]" which have text after the bracket
+          const arrayMatch = stdout.match(/\n\s*\[\s*$/m) || stdout.match(/\n\s*\[\s*\n/);
+          const objectMatch = stdout.match(/\n\s*\{\s*$/m) || stdout.match(/\n\s*\{\s*\n/);
+
+          let firstOpen = Number.POSITIVE_INFINITY;
+          if (arrayMatch && arrayMatch.index !== undefined) {
+            firstOpen = Math.min(firstOpen, arrayMatch.index + arrayMatch[0].lastIndexOf("["));
+          }
+          if (objectMatch && objectMatch.index !== undefined) {
+            firstOpen = Math.min(firstOpen, objectMatch.index + objectMatch[0].lastIndexOf("{"));
+          }
+
           const lastClose = Math.max(stdout.lastIndexOf("]"), stdout.lastIndexOf("}"));
-          if (lastClose === -1) {
+
+          if (
+            firstOpen === Number.POSITIVE_INFINITY ||
+            lastClose === -1 ||
+            firstOpen >= lastClose
+          ) {
             return reject(
-              new Error("failed to parse JSON output from `vite lint --rules --format=json`"),
+              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
             );
           }
 
-          const maybe = stdout.slice(0, lastClose + 1);
+          const maybe = stdout.slice(firstOpen, lastClose + 1);
+
           try {
             return resolve(JSON.parse(maybe));
           } catch (e2) {
             return reject(
-              new Error("failed to parse JSON output from `vite lint --rules --format=json`"),
+              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
             );
           }
         }
       },
     );
-
-    cp.stdout && cp.stdout.pipe(process.stdout);
-    cp.stderr && cp.stderr.pipe(process.stderr);
   });
 }
 
