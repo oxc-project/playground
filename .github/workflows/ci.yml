@@ -69,7 +69,7 @@ jobs:
       - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
 
       - run: pnpm run build
-      - run: pnpm lint
+      - run: pnpm vite lint
 
       - name: Install Netlify
         if: env.SITE_ID
