@@ -9,15 +9,14 @@ let oxcCommit: string | undefined;
 
 const COMMIT_FILE = "../oxc/napi/playground/git-commit";
 if (existsSync(COMMIT_FILE)) {
-  oxcCommit = readFileSync("../oxc/napi/playground/git-commit", "utf8").trim();
-}
-
-if (!oxcCommit) {
-  const { stdout } = spawnSync("git", ["rev-parse", "HEAD"], {
-    cwd: "../oxc/napi/playground",
-    encoding: "utf8",
-  });
-  oxcCommit = stdout.trim();
+  oxcCommit = readFileSync("../oxc/napi/playground/git-commit", "utf8")?.trim();
+  if (!oxcCommit) {
+    const { stdout } = spawnSync("git", ["rev-parse", "HEAD"], {
+      cwd: "../oxc/napi/playground",
+      encoding: "utf8",
+    });
+    oxcCommit = stdout.trim();
+  }
 }
 
 // https://vitejs.dev/config/
