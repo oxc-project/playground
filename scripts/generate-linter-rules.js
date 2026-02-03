@@ -9,8 +9,8 @@ const OUT_JSON = path.join(process.cwd(), "src", "generated", "linter-rules.json
 function runViteLint() {
   return new Promise((resolve, reject) => {
     const cp = execFile(
-      "pnpm",
-      ["vite", "lint", "--rules", "--format=json"],
+      "vite",
+      ["lint", "--rules", "--format=json"],
       { encoding: "utf8" },
       (err, stdout, stderr) => {
         if (err) return reject(new Error(stderr || err.message));
@@ -24,7 +24,7 @@ function runViteLint() {
           const lastClose = Math.max(stdout.lastIndexOf("]"), stdout.lastIndexOf("}"));
           if (lastClose === -1) {
             return reject(
-              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
+              new Error("failed to parse JSON output from `vite lint --rules --format=json`"),
             );
           }
 
@@ -33,7 +33,7 @@ function runViteLint() {
             return resolve(JSON.parse(maybe));
           } catch (e2) {
             return reject(
-              new Error("failed to parse JSON output from `pnpm vite lint --rules --format=json`"),
+              new Error("failed to parse JSON output from `vite lint --rules --format=json`"),
             );
           }
         }
