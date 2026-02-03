@@ -119,7 +119,7 @@ function updateLinterConfig() {
   if (Object.keys(config).length === 0) {
     options.value.linter = {};
   } else {
-    options.value.linter = config as any;
+    options.value.linter = { config: JSON.stringify(config) };
   }
 }
 </script>
