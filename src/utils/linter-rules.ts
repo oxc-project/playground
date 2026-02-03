@@ -23,30 +23,38 @@ import rulesRaw from "../generated/linter-rules.json";
  * expected by the playground UI. We keep a small TypeScript wrapper so other
  * modules don't need to change.
  */
-function normalizePlugin(plugin: any): LintPlugin {
-  const id = plugin.id || plugin.name?.toLowerCase()?.replace(/\s+/g, "-") || "unknown";
-  const name = plugin.name || plugin.id || id;
-  const isDefault = !!(plugin.isDefault || plugin.default || plugin.is_default);
+// The raw JSON emitted by `pnpm vite lint --rules --format=json` is an
+// array of rule entries like: { scope, value, category, type_aware, default }
+// We group by 'scope' to reconstruct the plugin structure the UI expects.
+function normalizePluginFromItems(scope: string, items: any[]): LintPlugin {
+  const id = scope || "unknown";
+  const name = scope === "eslint" ? "ESLint" : scope.charAt(0).toUpperCase() + scope.slice(1);
+  const isDefault = (items || []).some((r) => r && r.default === true);
 
-  const rulesSrc = plugin.rules || plugin.rulesMeta || plugin.meta?.rules || [];
-  const rules: LintRule[] = (rulesSrc || [])
-    .filter((r: any) => {
-      if (!r) return false;
-      if (r.requiresTypeInformation || r.requiresType || r.type === "type-aware") return false;
-      if (r.meta?.docs?.requiresTypeChecking) return false;
-      return true;
-    })
-    .map((r: any) => ({
-      name: r.name,
-      category: r.category || r.meta?.category || r.meta?.docs?.category || "unknown",
-    }));
+  const rules: LintRule[] = (items || [])
+    .filter((r: any) => r && !r.type_aware) // exclude type-aware rules
+    .map((r: any) => ({ name: r.value, category: r.category || "unknown" }));
 
   return { id, name, isDefault, rules };
 }
 
 function loadPluginsFromJson(): LintPlugin[] {
-  const data = Array.isArray(rulesRaw) ? rulesRaw : rulesRaw.plugins || rulesRaw;
-  return (data || []).map(normalizePlugin);
+  const items: any[] = Array.isArray(rulesRaw) ? rulesRaw : rulesRaw.rules || rulesRaw;
+  const groups = new Map<string, any[]>();
+
+  for (const it of items || []) {
+    const scope = it.scope || it.plugin || "eslint";
+    if (!groups.has(scope)) groups.set(scope, []);
+    groups.get(scope)!.push(it);
+  }
+
+  const plugins: LintPlugin[] = Array.from(groups.entries()).map(([scope, arr]) =>
+    normalizePluginFromItems(scope, arr),
+  );
+
+  // Keep ESLint first for convenience, then sort by id
+  plugins.sort((a, b) => (a.id === "eslint" ? -1 : a.id.localeCompare(b.id)));
+  return plugins;
 }
 
 export const LINT_PLUGINS: LintPlugin[] = loadPluginsFromJson();
