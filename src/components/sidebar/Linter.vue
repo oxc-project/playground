@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
-import { Checkbox } from "~/ui/checkbox";
+import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
 import {
   LINT_PLUGINS,
@@ -13,45 +13,74 @@ import {
 const { options } = await useOxc();
 
 const showRules = ref(false);
-const expandedPlugins = ref<Set<string>>(new Set());
+const searchQuery = ref("");
+const showDropdown = ref(false);
 
-// Track which rules are enabled by the user (using array for better reactivity)
+// Track which rules are enabled by the user
 const enabledRules = ref<string[]>([]);
+
+// Build a flat list of all rules with their full names
+const allRules = computed(() => {
+  const rules: Array<{ fullName: string; plugin: string; name: string; category: string }> = [];
+  for (const plugin of LINT_PLUGINS) {
+    for (const rule of plugin.rules) {
+      rules.push({
+        fullName: getFullRuleName(plugin.id, rule.name),
+        plugin: plugin.name,
+        name: rule.name,
+        category: rule.category,
+      });
+    }
+  }
+  return rules;
+});
+
+// Filter rules based on search query, excluding already enabled rules
+const filteredRules = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+  if (!query) return [];
+
+  return allRules.value
+    .filter(
+      (rule) =>
+        !enabledRules.value.includes(rule.fullName) &&
+        (rule.fullName.toLowerCase().includes(query) ||
+          rule.name.toLowerCase().includes(query) ||
+          rule.plugin.toLowerCase().includes(query))
+    )
+    .slice(0, 20); // Limit to 20 results for performance
+});
 
 function toggleRules() {
   showRules.value = !showRules.value;
 }
 
-function togglePlugin(pluginId: string) {
-  if (expandedPlugins.value.has(pluginId)) {
-    expandedPlugins.value.delete(pluginId);
-  } else {
-    expandedPlugins.value.add(pluginId);
+function addRule(fullName: string) {
+  if (!enabledRules.value.includes(fullName)) {
+    enabledRules.value.push(fullName);
+    updateLinterConfig();
   }
+  searchQuery.value = "";
+  // Keep dropdown open so user can continue adding rules
 }
 
-function isPluginExpanded(pluginId: string): boolean {
-  return expandedPlugins.value.has(pluginId);
-}
-
-function isRuleEnabled(pluginId: string, ruleName: string): boolean {
-  return enabledRules.value.includes(getFullRuleName(pluginId, ruleName));
-}
-
-function toggleRule(pluginId: string, ruleName: string) {
-  const fullName = getFullRuleName(pluginId, ruleName);
+function removeRule(fullName: string) {
   const index = enabledRules.value.indexOf(fullName);
   if (index >= 0) {
     enabledRules.value.splice(index, 1);
-  } else {
-    enabledRules.value.push(fullName);
+    updateLinterConfig();
   }
-  updateLinterConfig();
 }
 
-function getEnabledRulesForPlugin(pluginId: string): number {
-  return enabledRules.value.filter((rule) => rule.startsWith(`${pluginId}/`))
-    .length;
+function onSearchFocus() {
+  showDropdown.value = true;
+}
+
+function onSearchBlur() {
+  // Delay hiding dropdown to allow click events on items
+  setTimeout(() => {
+    showDropdown.value = false;
+  }, 150);
 }
 
 // Build the linter config object from enabled rules
@@ -73,7 +102,7 @@ const linterConfig = computed(() => {
   if (requiredPlugins.length > 0) {
     // We need to include default plugins + required non-default plugins
     const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map(
-      (p) => p.id,
+      (p) => p.id
     );
     config.plugins = [...defaultPlugins, ...requiredPlugins];
   }
@@ -122,60 +151,73 @@ function updateLinterConfig() {
     <div
       v-if="showRules"
       id="linter-rules"
-      class="flex max-h-96 flex-col gap-1 overflow-y-auto"
+      class="flex flex-col gap-2"
       role="region"
       aria-label="Linter rules"
     >
-      <div
-        v-for="plugin in LINT_PLUGINS"
-        :key="plugin.id"
-        class="flex flex-col"
-      >
-        <button
-          type="button"
-          class="flex items-center gap-1 rounded px-1 py-0.5 text-left text-sm transition-colors hover:bg-muted"
-          :aria-expanded="isPluginExpanded(plugin.id)"
-          @click="togglePlugin(plugin.id)"
-        >
-          <Icon
-            icon="ri:arrow-right-s-line"
-            class="h-4 w-4 shrink-0 transition-transform duration-200"
-            :class="{ 'rotate-90': isPluginExpanded(plugin.id) }"
-          />
-          <span class="font-medium">{{ plugin.name }}</span>
-          <span
-            v-if="getEnabledRulesForPlugin(plugin.id) > 0"
-            class="ml-1 rounded-full bg-primary/10 px-1.5 text-xs text-primary"
-          >
-            {{ getEnabledRulesForPlugin(plugin.id) }}
-          </span>
-          <span
-            v-if="plugin.isDefault"
-            class="ml-auto text-xs text-muted-foreground"
-          >
-            default
-          </span>
-        </button>
+      <!-- Search input with dropdown -->
+      <div class="relative">
+        <Input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search rules..."
+          class="h-8 text-xs"
+          @focus="onSearchFocus"
+          @blur="onSearchBlur"
+        />
 
+        <!-- Dropdown list -->
         <div
-          v-if="isPluginExpanded(plugin.id)"
-          class="ml-3 flex flex-col gap-0.5 border-l border-border pl-2"
+          v-if="showDropdown && searchQuery && filteredRules.length > 0"
+          class="absolute left-0 right-0 top-full z-10 mt-1 max-h-48 overflow-y-auto rounded-md border border-border bg-popover shadow-md"
         >
-          <label
-            v-for="rule in plugin.rules"
-            :key="rule.name"
-            class="flex cursor-pointer items-center gap-1.5 rounded px-1 py-0.5 transition-colors hover:bg-muted"
-            :title="`Category: ${rule.category}`"
+          <button
+            v-for="rule in filteredRules"
+            :key="rule.fullName"
+            type="button"
+            class="flex w-full flex-col gap-0.5 px-2 py-1.5 text-left transition-colors hover:bg-muted"
+            @mousedown.prevent="addRule(rule.fullName)"
           >
-            <Checkbox
-              :checked="isRuleEnabled(plugin.id, rule.name)"
-              class="h-3.5 w-3.5"
-              @update:checked="toggleRule(plugin.id, rule.name)"
-            />
-            <span class="truncate font-mono text-xs">{{ rule.name }}</span>
-          </label>
+            <span class="font-mono text-xs">{{ rule.fullName }}</span>
+            <span class="text-xs text-muted-foreground">{{ rule.category }}</span>
+          </button>
+        </div>
+
+        <!-- No results message -->
+        <div
+          v-if="showDropdown && searchQuery && filteredRules.length === 0"
+          class="absolute left-0 right-0 top-full z-10 mt-1 rounded-md border border-border bg-popover p-2 text-xs text-muted-foreground shadow-md"
+        >
+          No matching rules found
         </div>
       </div>
+
+      <!-- Enabled rules list -->
+      <div v-if="enabledRules.length > 0" class="flex flex-col gap-1">
+        <div
+          v-for="rule in enabledRules"
+          :key="rule"
+          class="flex items-center justify-between gap-1 rounded bg-muted px-2 py-1"
+        >
+          <span class="truncate font-mono text-xs">{{ rule }}</span>
+          <button
+            type="button"
+            class="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+            :aria-label="`Remove ${rule}`"
+            @click="removeRule(rule)"
+          >
+            <Icon icon="ri:close-line" class="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <p
+        v-else
+        class="text-xs text-muted-foreground"
+      >
+        Search and add rules above
+      </p>
     </div>
   </section>
 </template>
