@@ -96,7 +96,11 @@ const linterConfig = computed(() => {
     rules[rule] = "error";
   }
 
-  const config: Record<string, unknown> = { rules };
+  const config: Record<string, unknown> = {
+    // Disable default correctness rules so only explicitly enabled rules are active
+    categories: { correctness: "off" },
+    rules,
+  };
 
   // Only add plugins if there are non-default plugins required
   if (requiredPlugins.length > 0) {
