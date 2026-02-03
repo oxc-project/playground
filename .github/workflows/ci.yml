@@ -30,7 +30,6 @@ jobs:
     steps:
       - uses: taiki-e/checkout-action@3ab630d442e198ebb0ca30872832406ca01c46eb # v1.4.0
       - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
-      - run: pnpm lint
       - run: pnpm fmt --check
       - uses: crate-ci/typos@93cbdb2d23269548cf0db0f74d0bc6a09a3f0d5c # v1.43.0
         with:
@@ -70,6 +69,7 @@ jobs:
       - uses: oxc-project/setup-node@8958a8e040102244b619c4a94fccb657a44b1c21 # v1.0.6
 
       - run: pnpm run build
+      - run: pnpm lint
 
       - name: Install Netlify
         if: env.SITE_ID
