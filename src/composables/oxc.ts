@@ -27,7 +27,7 @@ if (urlParams.formatterPanels) {
   };
 }
 if (urlParams.lintRules) {
-  enabledLintRules.value = urlParams.lintRules.split(",");
+  enabledLintRules.value = urlParams.lintRules.split(",").filter(Boolean);
 }
 editorValue.value = urlParams.code || PLAYGROUND_DEMO_CODE;
 
