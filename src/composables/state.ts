@@ -19,3 +19,6 @@ export const formatterPanels = ref({
   prettier: false,
   prettierDoc: false,
 });
+
+// Enabled lint rules
+export const enabledLintRules = ref<string[]>([]);

@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { enabledLintRules } from "~/composables/state";
 import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
 import {
@@ -16,8 +17,8 @@ const showRules = ref(false);
 const searchQuery = ref("");
 const showDropdown = ref(false);
 
-// Track which rules are enabled by the user
-const enabledRules = ref<string[]>([]);
+// Use global state for enabled rules
+const enabledRules = enabledLintRules;
 
 // Build a flat list of all rules with their full names
 const allRules = computed(() => {
