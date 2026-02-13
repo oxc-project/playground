@@ -123,7 +123,7 @@ function updateLinterConfig() {
 }
 
 // Watch for changes to enabled rules and update linter config
-watch(enabledRules, updateLinterConfig, { immediate: true });
+watch(enabledRules, updateLinterConfig, { immediate: true, deep: true });
 </script>
 
 <template>
