@@ -149,9 +149,7 @@ export const useOxc = createGlobalState(async () => {
   // Sync enabled lint rules to URL (reactive, no debounce needed)
   watchEffect(() => {
     urlParams.lintRules =
-      enabledLintRules.value.length > 0
-        ? enabledLintRules.value.join(",")
-        : undefined;
+      enabledLintRules.value.length > 0 ? enabledLintRules.value.join(",") : undefined;
   });
 
   // Sync code to URL (debounced to avoid excessive updates while typing)
