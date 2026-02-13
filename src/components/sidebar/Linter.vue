@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { enabledLintRules } from "~/composables/state";
 import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
 import {
@@ -16,8 +17,8 @@ const showRules = ref(false);
 const searchQuery = ref("");
 const showDropdown = ref(false);
 
-// Track which rules are enabled by the user
-const enabledRules = ref<string[]>([]);
+// Use global state for enabled rules
+const enabledRules = enabledLintRules;
 
 // Build a flat list of all rules with their full names
 const allRules = computed(() => {
@@ -58,7 +59,6 @@ function toggleRules() {
 function addRule(fullName: string) {
   if (!enabledRules.value.includes(fullName)) {
     enabledRules.value.push(fullName);
-    updateLinterConfig();
   }
   searchQuery.value = "";
   // Keep dropdown open so user can continue adding rules
@@ -68,7 +68,6 @@ function removeRule(fullName: string) {
   const index = enabledRules.value.indexOf(fullName);
   if (index >= 0) {
     enabledRules.value.splice(index, 1);
-    updateLinterConfig();
   }
 }
 
@@ -122,6 +121,9 @@ function updateLinterConfig() {
     options.value.linter = { config: JSON.stringify(config) };
   }
 }
+
+// Watch for changes to enabled rules and update linter config
+watch(enabledRules, updateLinterConfig, { immediate: true, deep: true });
 </script>
 
 <template>
