@@ -2,6 +2,7 @@ import { createGlobalState, useUrlSearchParams, watchDebounced } from "@vueuse/c
 import { computed, ref, shallowRef, toRaw, triggerRef, watch, watchEffect } from "vue";
 import { activeTab, editorValue, enabledLintRules, formatterPanels } from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
+import { LINT_PLUGINS, getRequiredPlugins } from "~/utils/linter-rules";
 import type { Oxc, OxcOptions } from "oxc-playground";
 
 // Sync URL state with reactive state using VueUse
@@ -110,6 +111,33 @@ export const useOxc = createGlobalState(async () => {
   const state = shallowRef(oxc);
   const error = ref<unknown>();
 
+  // Compute the linter config directly from enabledLintRules so it's always
+  // in sync when run() fires — this avoids a fragile two-watcher chain where
+  // a component-level watcher in Linter.vue had to update options.linter
+  // before the run() watcher could pick it up.
+  const linterConfig = computed(() => {
+    const rules = enabledLintRules.value;
+    if (rules.length === 0) return {};
+
+    const requiredPlugins = getRequiredPlugins(rules);
+    const rulesConfig: Record<string, string> = {};
+    for (const rule of rules) {
+      rulesConfig[rule] = "error";
+    }
+
+    const config: Record<string, unknown> = {
+      categories: { correctness: "off" },
+      rules: rulesConfig,
+    };
+
+    if (requiredPlugins.length > 0) {
+      const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map((p) => p.id);
+      config.plugins = [...defaultPlugins, ...requiredPlugins];
+    }
+
+    return config;
+  });
+
   function run() {
     const errors: unknown[] = [];
     const originalError = console.error;
@@ -119,9 +147,16 @@ export const useOxc = createGlobalState(async () => {
     };
     try {
       const rawOptions = toRaw(options.value);
-      if (typeof rawOptions?.linter?.config === "object") {
-        rawOptions.linter.config = JSON.stringify(rawOptions.linter.config);
+
+      // Build linter config from enabledLintRules directly, ensuring it's
+      // always up-to-date when run() fires (no dependency on external watcher)
+      const config = linterConfig.value;
+      if (Object.keys(config).length === 0) {
+        rawOptions.linter = {};
+      } else {
+        rawOptions.linter = { config: JSON.stringify(config) };
       }
+
       oxc.run(editorValue.value, rawOptions);
       // Reset error if successful
       error.value = undefined;
@@ -132,7 +167,7 @@ export const useOxc = createGlobalState(async () => {
     console.error = originalError;
     triggerRef(state);
   }
-  watch([options, editorValue, activeTab], run, { deep: true });
+  watch([options, editorValue, activeTab, enabledLintRules], run, { deep: true });
 
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
