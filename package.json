@@ -53,7 +53,7 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3",
-    "vite-plus": "0.0.0-ab0b0858cb619f270f5e0a698fea3d6f5622a761",
+    "vite-plus": "0.0.0-ae9e260ac1617d0a3acea0ff37239f6ff1acf8c3",
     "vue-tsc": "~3.2.2"
   },
   "simple-git-hooks": {
@@ -66,5 +66,5 @@
   "engines": {
     "node": ">=20.14.0"
   },
-  "packageManager": "pnpm@10.28.0"
+  "packageManager": "pnpm@10.30.0"
 }
