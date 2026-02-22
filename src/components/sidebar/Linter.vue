@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { enabledLintRules } from "~/composables/state";
 import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
-import {
-  LINT_PLUGINS,
-  getFullRuleName,
-  getRequiredPlugins,
-} from "~/utils/linter-rules";
+import { LINT_PLUGINS, getFullRuleName } from "~/utils/linter-rules";
 
 const { options } = await useOxc();
 
@@ -82,48 +78,6 @@ function onSearchBlur() {
   }, 150);
 }
 
-// Build the linter config object from enabled rules
-const linterConfig = computed(() => {
-  if (enabledRules.value.length === 0) {
-    return {};
-  }
-
-  const requiredPlugins = getRequiredPlugins(enabledRules.value);
-  const rules: Record<string, string> = {};
-
-  for (const rule of enabledRules.value) {
-    rules[rule] = "error";
-  }
-
-  const config: Record<string, unknown> = {
-    // Disable default correctness rules so only explicitly enabled rules are active
-    categories: { correctness: "off" },
-    rules,
-  };
-
-  // Only add plugins if there are non-default plugins required
-  if (requiredPlugins.length > 0) {
-    // We need to include default plugins + required non-default plugins
-    const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map(
-      (p) => p.id
-    );
-    config.plugins = [...defaultPlugins, ...requiredPlugins];
-  }
-
-  return config;
-});
-
-function updateLinterConfig() {
-  const config = linterConfig.value;
-  if (Object.keys(config).length === 0) {
-    options.value.linter = {};
-  } else {
-    options.value.linter = { config: JSON.stringify(config) };
-  }
-}
-
-// Watch for changes to enabled rules and update linter config
-watch(enabledRules, updateLinterConfig, { immediate: true, deep: true });
 </script>
 
 <template>
