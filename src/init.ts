@@ -9,7 +9,7 @@ import {
   ModuleResolutionKind,
   JsxEmit,
 } from "monaco-editor/esm/vs/language/typescript/monaco.contribution";
-import oxfmtSchema from "../../oxc/npm/oxfmt/configuration_schema.json?url";
+import oxfmtSchema from "@oxc/npm/oxfmt/configuration_schema.json?url";
 
 jsonDefaults.setDiagnosticsOptions({
   allowComments: true,
