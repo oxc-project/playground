@@ -78,9 +78,6 @@ function onSearchBlur() {
   }, 150);
 }
 
-// Linter config is now computed and applied directly inside run() in oxc.ts,
-// so enabledLintRules changes are picked up immediately without a separate
-// watcher chain that could get out of sync.
 </script>
 
 <template>
