@@ -3,3 +3,4 @@ node_modules/
 .vite/
 tsconfig.tsbuildinfo
 .eslintcache
+.claude/
