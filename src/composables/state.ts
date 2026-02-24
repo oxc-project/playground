@@ -1,5 +1,5 @@
 import { useDark } from "@vueuse/core";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import type { Range } from "~/utils/range";
 
 export const dark = useDark();
@@ -13,7 +13,7 @@ export const outputHoverRange = ref<Range>();
 export const activeTab = ref("codegen");
 
 // Formatter panel checkbox states
-export const formatterPanels = ref({
+export const formatterPanels = reactive({
   output: true,
   ir: false,
   prettier: false,

@@ -10,6 +10,7 @@ import type { Oxc, OxcOptions } from "oxc-playground";
 const urlParams = useUrlSearchParams<{
   t?: string;
   formatterPanels?: string;
+  options?: string;
   code?: string;
   lintRules?: string;
 }>("history", { removeFalsyValues: true });
@@ -20,12 +21,12 @@ if (urlParams.t) {
 }
 if (urlParams.formatterPanels) {
   const enabledPanels = urlParams.formatterPanels.split(",");
-  formatterPanels.value = {
+  Object.assign(formatterPanels, {
     output: enabledPanels.includes("output"),
     ir: enabledPanels.includes("ir"),
     prettier: enabledPanels.includes("prettier"),
     prettierDoc: enabledPanels.includes("prettierDoc"),
-  };
+  });
 }
 if (urlParams.lintRules) {
   enabledLintRules.value = urlParams.lintRules.split(",").filter(Boolean);
@@ -58,55 +59,61 @@ export const defaultFormatterConfig = {
   experimentalSortImports: undefined,
 };
 
+export const defaultOptions: Required<OxcOptions> = {
+  run: {
+    lint: true,
+    formatter: false,
+    transform: false,
+    isolatedDeclarations: false,
+    whitespace: false,
+    mangle: false,
+    compress: false,
+    scope: true,
+    symbol: true,
+    cfg: true,
+  },
+  parser: {
+    extension: "tsx",
+    allowReturnOutsideFunction: true,
+    preserveParens: true,
+    allowV8Intrinsics: true,
+    semanticErrors: true,
+  },
+  linter: {},
+  formatter: { ...defaultFormatterConfig },
+  transformer: {
+    target: "es2015",
+    useDefineForClassFields: true,
+    experimentalDecorators: true,
+    emitDecoratorMetadata: true,
+  },
+  isolatedDeclarations: {
+    stripInternal: false,
+  },
+  codegen: {
+    normal: true,
+    jsdoc: true,
+    annotation: true,
+    legal: true,
+  },
+  compress: {},
+  mangle: {
+    topLevel: true,
+    keepNames: false,
+  },
+  controlFlow: {
+    verbose: false,
+  },
+  inject: { inject: {} },
+  define: { define: {} },
+};
+
+const defaultOptionsSerialized = JSON.stringify(defaultOptions);
+
 export const useOxc = createGlobalState(async () => {
-  const options = ref<Required<OxcOptions>>({
-    run: {
-      lint: true,
-      formatter: false,
-      transform: false,
-      isolatedDeclarations: false,
-      whitespace: false,
-      mangle: false,
-      compress: false,
-      scope: true,
-      symbol: true,
-      cfg: true,
-    },
-    parser: {
-      extension: "tsx",
-      allowReturnOutsideFunction: true,
-      preserveParens: true,
-      allowV8Intrinsics: true,
-      semanticErrors: true,
-    },
-    linter: {},
-    formatter: { ...defaultFormatterConfig },
-    transformer: {
-      target: "es2015",
-      useDefineForClassFields: true,
-      experimentalDecorators: true,
-      emitDecoratorMetadata: true,
-    },
-    isolatedDeclarations: {
-      stripInternal: false,
-    },
-    codegen: {
-      normal: true,
-      jsdoc: true,
-      annotation: true,
-      legal: true,
-    },
-    compress: {},
-    mangle: {
-      topLevel: true,
-      keepNames: false,
-    },
-    controlFlow: {
-      verbose: false,
-    },
-    inject: { inject: {} },
-    define: { define: {} },
-  });
+  const options = ref<Required<OxcOptions>>(
+    urlParams.options ? JSON.parse(urlParams.options) : structuredClone(defaultOptions),
+  );
   const oxc = await oxcPromise;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
@@ -172,7 +179,7 @@ export const useOxc = createGlobalState(async () => {
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
     urlParams.t = activeTab.value !== "codegen" ? activeTab.value : undefined;
-    const enabledPanels = Object.entries(formatterPanels.value)
+    const enabledPanels = Object.entries(formatterPanels)
       .filter(([, enabled]) => enabled)
       .map(([name]) => name);
     urlParams.formatterPanels =
@@ -186,6 +193,16 @@ export const useOxc = createGlobalState(async () => {
     urlParams.lintRules =
       enabledLintRules.value.length > 0 ? enabledLintRules.value.join(",") : undefined;
   });
+
+  // Sync options to URL (debounced since options can change frequently)
+  watchDebounced(
+    options,
+    (opts) => {
+      const serialized = JSON.stringify(toRaw(opts));
+      urlParams.options = serialized === defaultOptionsSerialized ? undefined : serialized;
+    },
+    { debounce: 1000, deep: true },
+  );
 
   // Sync code to URL (debounced to avoid excessive updates while typing)
   watchDebounced(

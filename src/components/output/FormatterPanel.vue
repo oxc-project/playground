@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, toRef, watchEffect } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
 import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
@@ -15,22 +15,10 @@ const { oxc, options } = await useOxc();
 const { prettierOutput, prettierDocOutput, prettierError, prettierVersion, format: formatPrettier } = await usePrettier();
 
 // Use shared state for URL persistence
-const showOutput = computed({
-  get: () => formatterPanels.value.output,
-  set: (v) => (formatterPanels.value.output = v),
-});
-const showIR = computed({
-  get: () => formatterPanels.value.ir,
-  set: (v) => (formatterPanels.value.ir = v),
-});
-const showPrettier = computed({
-  get: () => formatterPanels.value.prettier,
-  set: (v) => (formatterPanels.value.prettier = v),
-});
-const showPrettierDoc = computed({
-  get: () => formatterPanels.value.prettierDoc,
-  set: (v) => (formatterPanels.value.prettierDoc = v),
-});
+const showOutput = toRef(formatterPanels, "output");
+const showIR = toRef(formatterPanels, "ir");
+const showPrettier = toRef(formatterPanels, "prettier");
+const showPrettierDoc = toRef(formatterPanels, "prettierDoc");
 const configError = ref<string>("");
 // whether the details element is open
 const detailsOpen = ref(true);
