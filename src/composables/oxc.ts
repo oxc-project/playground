@@ -174,7 +174,7 @@ export const useOxc = createGlobalState(async () => {
     console.error = originalError;
     triggerRef(state);
   }
-  watch([options, editorValue, activeTab, enabledLintRules], run, { deep: true });
+  watch([options, editorValue, activeTab, enabledLintRules], run, { deep: true, immediate: true });
 
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
