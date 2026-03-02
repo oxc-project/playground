@@ -7,9 +7,7 @@ const { options } = await useOxc();
 
 <template>
   <section class="flex flex-col gap-3" aria-labelledby="codegen-heading">
-    <h2 id="codegen-heading" class="text-base font-medium">
-      Codegen
-    </h2>
+    <h2 id="codegen-heading" class="text-base font-medium">Codegen</h2>
 
     <div class="flex flex-col gap-2" role="group" aria-label="Codegen options">
       <Checkbox v-model="options.codegen.normal" label="comment" label-class="text-xs font-mono" />

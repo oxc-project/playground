@@ -15,9 +15,7 @@ function toggleOptions() {
 
 <template>
   <section class="flex flex-col gap-3" aria-labelledby="parser-heading">
-    <h2 id="parser-heading" class="text-base font-medium">
-      Parser
-    </h2>
+    <h2 id="parser-heading" class="text-base font-medium">Parser</h2>
 
     <label class="flex items-center gap-2 text-sm">
       <span class="text-secondary-foreground">Extension</span>

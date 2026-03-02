@@ -62,10 +62,8 @@ export default defineConfig({
     // Monaco (3.7MB), Viz (1.4MB), Shiki (557KB) are large but unavoidable
     chunkSizeWarningLimit: 4000,
     rolldownOptions: {
-      experimental: {
-        strictExecutionOrder: true,
-      },
       output: {
+        strictExecutionOrder: true,
         // Disable live bindings for smaller bundle (externals don't change)
         externalLiveBindings: false,
         codeSplitting: {
