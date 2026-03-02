@@ -43,7 +43,7 @@ const filteredRules = computed(() => {
         !enabledRules.value.includes(rule.fullName) &&
         (rule.fullName.toLowerCase().includes(query) ||
           rule.name.toLowerCase().includes(query) ||
-          rule.plugin.toLowerCase().includes(query))
+          rule.plugin.toLowerCase().includes(query)),
     )
     .slice(0, 20); // Limit to 20 results for performance
 });
@@ -77,7 +77,6 @@ function onSearchBlur() {
     showDropdown.value = false;
   }, 150);
 }
-
 </script>
 
 <template>
@@ -172,12 +171,7 @@ function onSearchBlur() {
       </div>
 
       <!-- Empty state -->
-      <p
-        v-else
-        class="text-xs text-muted-foreground"
-      >
-        Search and add rules above
-      </p>
+      <p v-else class="text-xs text-muted-foreground">Search and add rules above</p>
     </div>
   </section>
 </template>

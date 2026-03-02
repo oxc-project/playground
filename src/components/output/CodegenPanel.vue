@@ -34,7 +34,8 @@ const sourcemapLink = computed(() => {
     >
       <span
         class="text-[#3c3c43] font-medium dark:text-[#fffff5]/[.86] hover:text-[#3451b2] dark:hover:text-[#a8b1ff]"
-      >Visualize source map</span>
+        >Visualize source map</span
+      >
       <Icon
         icon="ri:arrow-right-up-line"
         class="ml-1 h-3 w-3 text-[#3c3c43]/[.56] dark:text-[#fffff5]/[.6]"

@@ -24,10 +24,7 @@ import {
             >
               Guide
             </span>
-            <Icon
-              icon="ri:arrow-right-up-line"
-              class="ml-1 h-3 w-3 text-[#827A89]"
-            />
+            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-[#827A89]" />
           </a>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -42,11 +39,9 @@ import {
           >
             <span
               class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
-            >Learn</span>
-            <Icon
-              icon="ri:arrow-right-up-line"
-              class="ml-1 h-3 w-3 text-[#827A89]"
-            />
+              >Learn</span
+            >
+            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-[#827A89]" />
           </a>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -61,9 +56,7 @@ import {
           >
             Contribute
           </span>
-          <div
-            class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#827A89]"
-          />
+          <div class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#827A89]" />
         </NavigationMenuLink>
       </NavigationMenuItem>
 

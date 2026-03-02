@@ -79,9 +79,7 @@ const raw = ref(false);
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
             {{ vizError }}
           </p>
-          <p class="mt-2 text-sm">
-            Please use the "Raw" view to see the graph data.
-          </p>
+          <p class="mt-2 text-sm">Please use the "Raw" view to see the graph data.</p>
         </div>
 
         <!-- Graph container -->

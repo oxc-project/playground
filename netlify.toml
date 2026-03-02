@@ -1,7 +1,7 @@
 [build]
-  command = "pnpm build"
-  publish = "dist"
+command = "pnpm build"
+publish = "dist"
 
 [dev]
-  command = "pnpm dev"
-  framework = "#custom"
+command = "pnpm dev"
+framework = "#custom"

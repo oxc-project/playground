@@ -108,7 +108,8 @@ defineExpose({ isHovering });
       v-if="openable"
       class="absolute left-[-3.5em] select-none font-semibold opacity-70"
       :class="open ? 'text-red-400' : 'text-green-400'"
-    >{{ open ? "-" : "+" }}</span>
+      >{{ open ? "-" : "+" }}</span
+    >
     <span v-if="key">
       <span :class="keyClass" :style="{ color: keyColor }" @click="toggleOpen" v-text="key" />
       <span class="opacity-70">:&nbsp;</span>
@@ -119,7 +120,8 @@ defineExpose({ isHovering });
         :style="{ color: titleColor }"
         @click="toggleOpen"
         v-text="title"
-      />&nbsp;</span>
+      />&nbsp;</span
+    >
     <span v-if="!openable || valueCreated" v-show="!openable || open">
       <AstValue :data="value" @update:hover="handleSubHoverChange" />
     </span>

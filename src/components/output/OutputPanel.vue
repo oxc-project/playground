@@ -35,27 +35,13 @@ onMounted(updateRunOptions);
       as="nav"
       class="relative h-auto flex flex-shrink-0 justify-start gap-2 overflow-auto rounded-none p-2"
     >
-      <TabsTrigger value="codegen">
-        Printed
-      </TabsTrigger>
-      <TabsTrigger value="ast">
-        ESTree AST
-      </TabsTrigger>
-      <TabsTrigger value="ir">
-        Rust AST
-      </TabsTrigger>
-      <TabsTrigger value="formatter">
-        Formatter
-      </TabsTrigger>
-      <TabsTrigger value="scope">
-        Scope
-      </TabsTrigger>
-      <TabsTrigger value="symbol">
-        Symbol
-      </TabsTrigger>
-      <TabsTrigger value="cfg">
-        Controlflow Graph
-      </TabsTrigger>
+      <TabsTrigger value="codegen"> Printed </TabsTrigger>
+      <TabsTrigger value="ast"> ESTree AST </TabsTrigger>
+      <TabsTrigger value="ir"> Rust AST </TabsTrigger>
+      <TabsTrigger value="formatter"> Formatter </TabsTrigger>
+      <TabsTrigger value="scope"> Scope </TabsTrigger>
+      <TabsTrigger value="symbol"> Symbol </TabsTrigger>
+      <TabsTrigger value="cfg"> Controlflow Graph </TabsTrigger>
     </TabsList>
 
     <div class="h-full min-h-0 min-w-0">

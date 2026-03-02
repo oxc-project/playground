@@ -12,7 +12,13 @@ import type { ShikiLang } from "~/utils/shiki";
 import OutputPreview from "./OutputPreview.vue";
 
 const { oxc, options } = await useOxc();
-const { prettierOutput, prettierDocOutput, prettierError, prettierVersion, format: formatPrettier } = await usePrettier();
+const {
+  prettierOutput,
+  prettierDocOutput,
+  prettierError,
+  prettierVersion,
+  format: formatPrettier,
+} = await usePrettier();
 
 // Use shared state for URL persistence
 const showOutput = toRef(formatterPanels, "output");
@@ -59,7 +65,12 @@ interface Panel {
 const visiblePanels = computed<Panel[]>(() => {
   const panels: Panel[] = [];
   if (showOutput.value) {
-    panels.push({ key: "output", label: "Output", code: oxc.value.formatterFormattedText, lang: "tsx" });
+    panels.push({
+      key: "output",
+      label: "Output",
+      code: oxc.value.formatterFormattedText,
+      lang: "tsx",
+    });
   }
   if (showPrettier.value) {
     panels.push({ key: "prettier", label: "Prettier", code: prettierOutput.value, lang: "tsx" });
@@ -68,7 +79,12 @@ const visiblePanels = computed<Panel[]>(() => {
     panels.push({ key: "ir", label: "IR", code: oxc.value.formatterIrText, lang: "typescript" });
   }
   if (showPrettierDoc.value) {
-    panels.push({ key: "prettier-doc", label: "Prettier Doc", code: prettierDocOutput.value, lang: "typescript" });
+    panels.push({
+      key: "prettier-doc",
+      label: "Prettier Doc",
+      code: prettierDocOutput.value,
+      lang: "typescript",
+    });
   }
   return panels;
 });
@@ -95,9 +111,15 @@ function openDiffReport() {
   url.searchParams.set("template", "formatter_diff_report.yaml");
   url.searchParams.set("input", "```tsx\n" + editorValue.value + "\n```");
   url.searchParams.set("config", "```jsonc\n" + config + "\n```");
-  url.searchParams.set("actual", "Oxfmt version: `latest`\n```tsx\n" + oxc.value.formatterFormattedText + "\n```");
+  url.searchParams.set(
+    "actual",
+    "Oxfmt version: `latest`\n```tsx\n" + oxc.value.formatterFormattedText + "\n```",
+  );
   url.searchParams.set("oxfmt_playground", playgroundUrl);
-  url.searchParams.set("expect", `Prettier version: \`${prettierVersion}\`\n\`\`\`tsx\n` + prettierOutput.value + "\n```");
+  url.searchParams.set(
+    "expect",
+    `Prettier version: \`${prettierVersion}\`\n\`\`\`tsx\n` + prettierOutput.value + "\n```",
+  );
 
   window.open(url.toString(), "_blank");
 }
@@ -149,11 +171,21 @@ const formatterConfig = computed({
       </label>
       <label class="flex cursor-pointer items-center gap-1.5 text-sm">
         <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
-        <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'">Prettier Doc</span>
+        <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'"
+          >Prettier Doc</span
+        >
       </label>
       <div class="ml-auto flex items-center gap-2">
-        <span v-if="hasDiff === true" class="text-xs font-medium text-yellow-600 dark:text-yellow-400">Diff</span>
-        <span v-else-if="hasDiff === false" class="text-xs font-medium text-green-600 dark:text-green-400">Match</span>
+        <span
+          v-if="hasDiff === true"
+          class="text-xs font-medium text-yellow-600 dark:text-yellow-400"
+          >Diff</span
+        >
+        <span
+          v-else-if="hasDiff === false"
+          class="text-xs font-medium text-green-600 dark:text-green-400"
+          >Match</span
+        >
         <Button variant="outline" size="xs" :disabled="hasDiff !== true" @click="openDiffReport">
           <Icon icon="octicon:issue-opened-16" />
           Report Diff
@@ -162,12 +194,18 @@ const formatterConfig = computed({
     </div>
 
     <!-- Error display -->
-    <div v-if="prettierError" class="shrink-0 border-b border-border bg-red-50 px-3 py-2 text-sm text-red-600 dark:bg-red-950 dark:text-red-400">
+    <div
+      v-if="prettierError"
+      class="shrink-0 border-b border-border bg-red-50 px-3 py-2 text-sm text-red-600 dark:bg-red-950 dark:text-red-400"
+    >
       Prettier error: {{ prettierError }}
     </div>
 
     <!-- Content area -->
-    <div v-if="visiblePanels.length === 0" class="flex flex-1 items-center justify-center text-muted-foreground">
+    <div
+      v-if="visiblePanels.length === 0"
+      class="flex flex-1 items-center justify-center text-muted-foreground"
+    >
       Select at least one output to display
     </div>
 
@@ -177,11 +215,22 @@ const formatterConfig = computed({
     </div>
 
     <!-- Multiple panels with splitter -->
-    <Splitter v-else :key="visiblePanels.map(p => p.key).join('-')" direction="horizontal" class="min-h-0 flex-1">
+    <Splitter
+      v-else
+      :key="visiblePanels.map((p) => p.key).join('-')"
+      direction="horizontal"
+      class="min-h-0 flex-1"
+    >
       <template v-for="(panel, index) in visiblePanels" :key="panel.key">
         <SplitterResizeHandle v-if="index > 0" with-handle />
-        <SplitterPanel :default-size="100 / visiblePanels.length" :min-size="15" class="flex flex-col overflow-hidden">
-          <div class="shrink-0 border-b border-border bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
+        <SplitterPanel
+          :default-size="100 / visiblePanels.length"
+          :min-size="15"
+          class="flex flex-col overflow-hidden"
+        >
+          <div
+            class="shrink-0 border-b border-border bg-muted px-2 py-1 text-xs font-medium text-muted-foreground"
+          >
             {{ panel.label }}
           </div>
           <div class="min-h-0 flex-1">
@@ -193,31 +242,46 @@ const formatterConfig = computed({
 
     <!-- Configure Options -->
     <details open class="shrink-0 border-t border-border" @toggle="onDetailsToggle($event)">
-      <summary :aria-expanded="detailsOpen"
-        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-muted px-4 py-2 text-sm font-medium">
+      <summary
+        :aria-expanded="detailsOpen"
+        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-muted px-4 py-2 text-sm font-medium"
+      >
         <div>
           Configure Options
           <span class="ml-2 text-xs text-muted-foreground">
             {{ detailsOpen ? "(Click to collapse)" : "(Click to expand)" }}
           </span>
         </div>
-        <svg class="chev h-4 w-4 text-muted-foreground transition-transform duration-150" viewBox="0 0 20 20"
-          fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-            stroke-linejoin="round" />
+        <svg
+          class="chev h-4 w-4 text-muted-foreground transition-transform duration-150"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M6 8L10 12L14 8"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </summary>
       <div class="overflow-hidden bg-background" style="height: 300px">
-        <MonacoEditor v-model="formatterConfig" language="json" filename="formatter.json" :options="{
-          minimap: { enabled: false },
-          fontSize: 14,
-          lineNumbers: 'on',
-          scrollBeyondLastLine: false,
-          wordWrap: 'on',
-        }" />
-        <div v-if="configError" class="px-4 py-2 text-sm text-red-500">
-          ⚠️ {{ configError }}
-        </div>
+        <MonacoEditor
+          v-model="formatterConfig"
+          language="json"
+          filename="formatter.json"
+          :options="{
+            minimap: { enabled: false },
+            fontSize: 14,
+            lineNumbers: 'on',
+            scrollBeyondLastLine: false,
+            wordWrap: 'on',
+          }"
+        />
+        <div v-if="configError" class="px-4 py-2 text-sm text-red-500">⚠️ {{ configError }}</div>
       </div>
     </details>
   </div>
