@@ -12,11 +12,11 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
-    "fmt": "vite fmt",
-    "lint": "vue-tsc && vite lint",
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
+    "fmt": "vp fmt",
+    "lint": "vue-tsc && vp lint",
     "generate:linter-rules": "node scripts/generate-linter-rules.js",
     "check:linter-rules": "node scripts/generate-linter-rules.js --check",
     "prepare": "simple-git-hooks"
@@ -53,15 +53,15 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3",
-    "vite-plus": "0.0.0-g52709db6.20260226-1136",
+    "vite-plus": "0.0.0-g61d318d2.20260227-0939",
     "vue-tsc": "~3.2.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "vite fmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vite lint --fix"
+    "*": "vp fmt --no-error-on-unmatched-pattern",
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vp lint --fix"
   },
   "engines": {
     "node": ">=20.14.0"
