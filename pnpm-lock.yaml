@@ -13,7 +13,7 @@ importers:
         version: 5.0.0(vue@3.5.29(typescript@5.9.3))
       '@viz-js/viz':
         specifier: ^3.24.0
-        version: 3.24.0
+        version: 3.25.0
       '@vueuse/core':
         specifier: ^14.1.0
         version: 14.2.1(vue@3.5.29(typescript@5.9.3))
@@ -902,8 +902,8 @@ packages:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
       vue: ^3.2.25
 
-  '@viz-js/viz@3.24.0':
-    resolution: {integrity: sha512-sTRz2cFN6PwICVC7GVlF2aYNAZ/LwF7Y1mp3B+8LXQ7otyHrzQYSzNBwJ4lctL/aS3x97ppw59z6zIW+wPs6bQ==}
+  '@viz-js/viz@3.25.0':
+    resolution: {integrity: sha512-dM7zAYMdf7mcRz5Kdb+YJb6+qv5Rjk0rPZ18gROdpMrP/3S7RFOp8uxybeiz5RypHrE1zo1vccA8Twh4mIcLZw==}
 
   '@voidzero-dev/vite-plus-core@0.0.2-gd8fe16bf.20260302-1535':
     resolution: {integrity: sha512-XLZAf81OgM/xMYsLlIS4Ws+og5uf8YRVqTG7fkFZ1unJNdBmhb0za4amCVtO6KNYbbsCC5VxgiEPFBcQRVuqSA==}
@@ -2789,7 +2789,7 @@ snapshots:
       vite: 8.0.0-beta.8(@types/node@25.0.10)(jiti@2.6.1)(yaml@2.8.2)
       vue: 3.5.29(typescript@5.9.3)
 
-  '@viz-js/viz@3.24.0': {}
+  '@viz-js/viz@3.25.0': {}
 
   '@voidzero-dev/vite-plus-core@0.0.2-gd8fe16bf.20260302-1535(@types/node@25.0.10)(jiti@2.6.1)(typescript@5.9.3)(yaml@2.8.2)':
     dependencies:
