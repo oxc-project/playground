@@ -1246,7 +1246,7 @@
     "value": "no-useless-constructor",
     "category": "suspicious",
     "type_aware": false,
-    "fix": "fixable_fix",
+    "fix": "fixable_suggestion",
     "default": false,
     "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-constructor.html"
   },
@@ -3601,6 +3601,15 @@
   },
   {
     "scope": "react",
+    "value": "no-clone-element",
+    "category": "restriction",
+    "type_aware": false,
+    "fix": "none",
+    "default": false,
+    "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/react/no-clone-element.html"
+  },
+  {
+    "scope": "react",
     "value": "no-danger",
     "category": "restriction",
     "type_aware": false,
@@ -3670,6 +3679,15 @@
     "fix": "none",
     "default": false,
     "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/react/no-namespace.html"
+  },
+  {
+    "scope": "react",
+    "value": "no-react-children",
+    "category": "restriction",
+    "type_aware": false,
+    "fix": "none",
+    "default": false,
+    "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/react/no-react-children.html"
   },
   {
     "scope": "react",
@@ -4381,6 +4399,15 @@
     "fix": "pending",
     "default": false,
     "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-constraint.html"
+  },
+  {
+    "scope": "typescript",
+    "value": "no-unnecessary-type-conversion",
+    "category": "nursery",
+    "type_aware": true,
+    "fix": "none",
+    "default": false,
+    "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-conversion.html"
   },
   {
     "scope": "typescript",
@@ -5809,7 +5836,7 @@
     "value": "prefer-string-slice",
     "category": "pedantic",
     "type_aware": false,
-    "fix": "fixable_fix",
+    "fix": "conditional_fix",
     "default": false,
     "docs_url": "https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-slice.html"
   },
