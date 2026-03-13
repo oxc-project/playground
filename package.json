@@ -19,7 +19,7 @@
     "lint": "vue-tsc && vp lint",
     "generate:linter-rules": "node scripts/generate-linter-rules.js",
     "check:linter-rules": "node scripts/generate-linter-rules.js --check",
-    "prepare": "simple-git-hooks"
+    "prepare": "vp config"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
@@ -54,13 +54,6 @@
     "typescript": "^5.9.3",
     "vite-plus": "0.1.9",
     "vue-tsc": "~3.2.2"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "vp fmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vp lint --fix"
   },
   "engines": {
     "node": ">=20.14.0"

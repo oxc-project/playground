@@ -48,6 +48,11 @@ if (existsSync(COMMIT_FILE)) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  staged: {
+    "*": "vp fmt --no-error-on-unmatched-pattern",
+    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vp lint --fix",
+  },
+  fmt: {},
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src"),
@@ -99,7 +104,6 @@ export default defineConfig({
   },
   experimental: {
     bundledDev: true,
-    enableNativePlugin: true,
   },
   server: {
     // These two cross origin headers are used to fix the following error:
