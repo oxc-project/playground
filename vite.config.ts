@@ -9,7 +9,7 @@ import { defineConfig } from "vite-plus";
 // but when running from a git worktree the relative path differs. Fall back to
 // locating the main worktree via `git worktree list` and resolving from there.
 function resolveOxcDir(): string {
-  const sibling = path.resolve(__dirname, "../oxc");
+  const sibling = path.resolve(import.meta.dirname, "../oxc");
   if (existsSync(sibling)) return sibling;
 
   try {
@@ -48,6 +48,31 @@ if (existsSync(COMMIT_FILE)) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  lint: {
+    plugins: ["typescript", "unicorn", "oxc", "import", "jsdoc", "promise", "node"],
+    jsPlugins: [
+      "./eslint-local-rules.js",
+      "eslint-plugin-unused-imports",
+      {
+        name: "@eslint-community/eslint-comments",
+        specifier: "@eslint-community/eslint-plugin-eslint-comments",
+      },
+      "eslint-plugin-regexp",
+      "eslint-plugin-de-morgan",
+      "eslint-plugin-perfectionist",
+      "eslint-plugin-command",
+      {
+        name: "vue-js",
+        specifier: "eslint-plugin-vue",
+      },
+    ],
+    rules: {
+      "import/default": "off", // No default export found in imported module "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+      "vue-js/no-ref-as-operand": "error",
+      "vue-js/no-dupe-keys": "error",
+      "vue-js/no-reserved-keys": "error",
+    },
+  },
   staged: {
     "*": "vp fmt --no-error-on-unmatched-pattern",
     "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vp lint --fix",
@@ -55,7 +80,7 @@ export default defineConfig({
   fmt: {},
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "./src"),
+      "~": path.resolve(import.meta.dirname, "./src"),
       "@oxc": oxcDir,
     },
   },
@@ -114,7 +139,7 @@ export default defineConfig({
       "Cross-Origin-Embedder-Policy": "require-corp",
     },
     fs: {
-      allow: [__dirname, oxcPlayground],
+      allow: [import.meta.dirname, oxcPlayground],
     },
   },
   plugins: [Vue(), tailwindcss()],
