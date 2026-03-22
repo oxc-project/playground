@@ -9,7 +9,7 @@ import OutputPreview from "./OutputPreview.vue";
 
 const raw = ref(false);
 
-const { loading, initialized, ast, astJson, errors, extension, init } = useGoAst();
+const { loading, initialized, ast, astJson, errors, extension, sourceFileInfo, init } = useGoAst();
 const { options } = await useOxc();
 
 // Sync extension from oxc parser options
@@ -31,6 +31,19 @@ onMounted(() => {
 
     <template v-else-if="initialized">
       <Checkbox v-model="raw" label="Raw" />
+
+      <div v-if="sourceFileInfo" class="mt-2 mb-2 rounded border border-border p-2 text-xs opacity-70">
+        <span v-if="sourceFileInfo.isDeclarationFile" class="mr-2 rounded bg-blue-500/20 px-1.5 py-0.5 text-blue-400">.d.ts</span>
+        <span v-if="sourceFileInfo.pragmas?.length" class="mr-2">
+          Pragmas: {{ sourceFileInfo.pragmas.join(", ") }}
+        </span>
+        <span v-if="sourceFileInfo.referencedFiles?.length" class="mr-2">
+          References: {{ sourceFileInfo.referencedFiles.length }}
+        </span>
+        <span v-if="sourceFileInfo.typeReferenceDirectives?.length">
+          Type refs: {{ sourceFileInfo.typeReferenceDirectives.length }}
+        </span>
+      </div>
 
       <div v-if="errors.length" class="mt-2 text-sm text-red-500">
         <div v-for="(error, i) in errors" :key="i">{{ error }}</div>

@@ -1,7 +1,7 @@
 import { createGlobalState } from "@vueuse/core";
 import { computed, ref, shallowRef, watch } from "vue";
 import { editorValue } from "~/composables/state";
-import { initGoAst, isInitialized, parseAST, type GoAstNode } from "tsgo-ast";
+import { initGoAst, isInitialized, parseAST, type GoAstNode, type SourceFileInfo } from "tsgo-ast";
 
 function extensionToLang(ext: string): "ts" | "tsx" | "js" | "jsx" {
   if (ext === "ts" || ext === "tsx" || ext === "js" || ext === "jsx") return ext;
@@ -16,6 +16,7 @@ export const useGoAst = createGlobalState(() => {
   const ast = shallowRef<GoAstNode | null>(null);
   const errors = ref<string[]>([]);
   const extension = ref("tsx");
+  const sourceFileInfo = ref<SourceFileInfo | null>(null);
 
   const astJson = computed(() => (ast.value ? JSON.stringify(ast.value, null, 2) : ""));
 
@@ -38,10 +39,12 @@ export const useGoAst = createGlobalState(() => {
       const result = parseAST(editorValue.value, extensionToLang(extension.value));
       ast.value = result.ast;
       errors.value = result.errors ?? [];
+      sourceFileInfo.value = result.sourceFileInfo ?? null;
     } catch (err) {
       console.error("tsgo-ast parse error:", err);
       ast.value = null;
       errors.value = [String(err)];
+      sourceFileInfo.value = null;
     }
   }
 
@@ -49,5 +52,5 @@ export const useGoAst = createGlobalState(() => {
     if (initialized.value) parse();
   });
 
-  return { loading, initialized, ast, astJson, errors, extension, init };
+  return { loading, initialized, ast, astJson, errors, extension, sourceFileInfo, init };
 });

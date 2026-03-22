@@ -36,8 +36,8 @@ importers:
         specifier: ^3.4.0
         version: 3.5.0
       tsgo-ast:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: link:../tsgo-ast/npm
+        version: link:../tsgo-ast/npm
       vue:
         specifier: ^3.5.27
         version: 3.5.30(typescript@5.9.3)
@@ -1894,9 +1894,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  tsgo-ast@0.1.0:
-    resolution: {integrity: sha512-t88afMGVHQj6lF/mwLa25gBCFfebNtpmKW+Kjjsj6feejAx/M1XwZBGaHeekBqHjeMGJSbSY7nevz4YAdXMtfQ==}
-
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -3689,8 +3686,6 @@ snapshots:
   ts-api-utils@2.4.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
-
-  tsgo-ast@0.1.0: {}
 
   tslib@2.8.1: {}
 
