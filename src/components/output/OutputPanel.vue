@@ -8,6 +8,7 @@ import CodegenPanel from "./CodegenPanel.vue";
 import ControlflowPanel from "./ControlflowPanel.vue";
 import EsTreePanel from "./EsTreePanel.vue";
 import FormatterPanel from "./FormatterPanel.vue";
+import GoAstPanel from "./GoAstPanel.vue";
 import RustAstPanel from "./RustAstPanel.vue";
 import ScopePanel from "./ScopePanel.vue";
 import SymbolPanel from "./SymbolPanel.vue";
@@ -38,6 +39,7 @@ onMounted(updateRunOptions);
       <TabsTrigger value="codegen"> Printed </TabsTrigger>
       <TabsTrigger value="ast"> ESTree AST </TabsTrigger>
       <TabsTrigger value="ir"> Rust AST </TabsTrigger>
+      <TabsTrigger value="go-ast"> Go AST </TabsTrigger>
       <TabsTrigger value="formatter"> Formatter </TabsTrigger>
       <TabsTrigger value="scope"> Scope </TabsTrigger>
       <TabsTrigger value="symbol"> Symbol </TabsTrigger>
@@ -53,6 +55,9 @@ onMounted(updateRunOptions);
       </TabsContent>
       <TabsContent value="ir">
         <RustAstPanel />
+      </TabsContent>
+      <TabsContent value="go-ast">
+        <GoAstPanel />
       </TabsContent>
       <TabsContent value="formatter">
         <FormatterPanel />
