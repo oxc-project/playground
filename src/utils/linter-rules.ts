@@ -27,8 +27,8 @@ import rules from "../generated/linter-rules.json" with { type: "json" };
 // array of rule entries like: { scope, value, category, type_aware, default }
 // We group by 'scope' to reconstruct the plugin structure the UI expects.
 function normalizePluginFromItems(scope: string, items: any[]): LintPlugin {
-  const id = scope || "unknown";
-  const name = scope === "eslint" ? "ESLint" : scope.charAt(0).toUpperCase() + scope.slice(1);
+  const id = (scope || "unknown").replaceAll("_", "-");
+  const name = scope === "eslint" ? "ESLint" : id.charAt(0).toUpperCase() + id.slice(1);
   const isDefault = (items || []).some((r) => r && r.default === true);
 
   const rules: LintRule[] = (items || [])
