@@ -6,9 +6,7 @@ import Switch from "./Switch.vue";
 </script>
 
 <template>
-  <header
-    class="h-16 w-full flex justify-between border-b border-[#E5E4E7] px-8 dark:border-[#3B3440]"
-  >
+  <header class="h-16 w-full flex items-center justify-between border-b border-border px-8">
     <Logo class="visible lg:invisible" />
     <div class="hidden md:flex">
       <Nav />

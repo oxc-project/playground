@@ -19,12 +19,8 @@ import {
             target="_blank"
             rel="noopener"
           >
-            <span
-              class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
-            >
-              Guide
-            </span>
-            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-[#827A89]" />
+            <span class="text-sm text-foreground font-medium hover:text-primary"> Guide </span>
+            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
           </a>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -37,11 +33,8 @@ import {
             target="_blank"
             rel="noopener"
           >
-            <span
-              class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
-              >Learn</span
-            >
-            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-[#827A89]" />
+            <span class="text-sm text-foreground font-medium hover:text-primary">Learn</span>
+            <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
           </a>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -51,18 +44,14 @@ import {
           class="flex items-center px-3"
           href="https://oxc.rs/docs/contribute/introduction.html"
         >
-          <span
-            class="text-sm text-[#16171d] font-medium dark:text-white hover:text-[#0d6a73] dark:hover:text-[#32F3E9]"
-          >
-            Contribute
-          </span>
-          <div class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-[#827A89]" />
+          <span class="text-sm text-foreground font-medium hover:text-primary"> Contribute </span>
+          <div class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-muted-foreground" />
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm text-[#0d6a73] font-medium dark:text-[#32F3E9]">Playground</span>
+          <span class="text-sm text-primary font-medium">Playground</span>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

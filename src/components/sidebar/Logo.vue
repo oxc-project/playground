@@ -3,9 +3,7 @@ const commit = import.meta.env.OXC_COMMIT || "unknown";
 </script>
 
 <template>
-  <header
-    class="h-16 flex items-center justify-between border-b border-[#E5E4E7] dark:border-[#3B3440]"
-  >
+  <header class="h-16 flex items-center justify-between border-b border-sidebar-border">
     <a
       class="h-full flex items-center transition-opacity hover:opacity-80"
       href="https://oxc.rs"

@@ -8,7 +8,7 @@ import { loadingOxc } from "~/composables/oxc";
 
 <template>
   <Suspense>
-    <div class="w-screen flex bg-white md:h-screen dark:bg-[#1b1b1f]">
+    <div class="w-screen flex bg-background md:h-screen">
       <Sidebar />
       <div class="min-w-0 flex flex-1 flex-col">
         <Header />
