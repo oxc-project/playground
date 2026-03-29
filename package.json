@@ -49,7 +49,7 @@
     "shiki": "^4.0.0",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.0",
     "vite-plus": "0.1.14",
     "vue-tsc": "~3.2.2"
   },
