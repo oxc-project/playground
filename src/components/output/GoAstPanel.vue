@@ -45,7 +45,7 @@ onMounted(() => {
         </span>
       </div>
 
-      <div v-if="errors.length" class="mt-2 text-sm text-red-500">
+      <div v-if="errors?.length" class="mt-2 text-sm text-red-500">
         <div v-for="(error, i) in errors" :key="i">{{ error }}</div>
       </div>
 

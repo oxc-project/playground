@@ -31,7 +31,7 @@
     "prettier": "^3.8.1",
     "radix-vue": "^1.9.17",
     "tailwind-merge": "^3.4.0",
-    "tsgo-ast": "link:../tsgo-ast/npm",
+    "tsgo-ast": "^0.2.0",
     "vue": "^3.5.27"
   },
   "devDependencies": {
