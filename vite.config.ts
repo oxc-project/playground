@@ -1,5 +1,5 @@
 import { execSync, spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import Vue from "@vitejs/plugin-vue";
@@ -44,6 +44,20 @@ if (existsSync(COMMIT_FILE)) {
     });
     oxcCommit = stdout.trim();
   }
+}
+
+// Copy tsgo-ast WASM binary to public/ so it's served at /tsgo-ast.wasm
+function copyTsgoWasm() {
+  const src = path.resolve(import.meta.dirname, "node_modules/tsgo-ast/tsgo-ast.wasm");
+  const dest = path.resolve(import.meta.dirname, "public/tsgo-ast.wasm");
+  return {
+    name: "copy-tsgo-wasm",
+    buildStart() {
+      if (existsSync(src)) {
+        copyFileSync(src, dest);
+      }
+    },
+  };
 }
 
 // https://vitejs.dev/config/
@@ -142,5 +156,5 @@ export default defineConfig({
       allow: [import.meta.dirname, oxcPlayground],
     },
   },
-  plugins: [Vue(), tailwindcss()],
+  plugins: [Vue(), tailwindcss(), copyTsgoWasm()],
 });
