@@ -75,7 +75,7 @@ export default defineConfig({
   },
   staged: {
     "*": "vp fmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,tsx,ts,mts,css,md,json,yml,vue}": "vp lint --fix",
+    "*.{js,jsx,tsx,ts,mts,vue}": "vp lint --fix",
   },
   fmt: {},
   resolve: {
