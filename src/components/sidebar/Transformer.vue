@@ -39,6 +39,18 @@ const { options } = await useOxc();
           label="emitDecoratorMetadata"
           label-class="text-xs font-mono"
         />
+
+        <Checkbox
+          v-model="options.transformer.optimizeEnums"
+          label="optimizeEnums"
+          label-class="text-xs font-mono"
+        />
+
+        <Checkbox
+          v-model="options.transformer.optimizeConstEnums"
+          label="optimizeConstEnums"
+          label-class="text-xs font-mono"
+        />
       </div>
     </div>
 

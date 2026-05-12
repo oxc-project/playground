@@ -86,6 +86,8 @@ export const defaultOptions: Required<OxcOptions> = {
     useDefineForClassFields: true,
     experimentalDecorators: true,
     emitDecoratorMetadata: true,
+    optimizeEnums: true,
+    optimizeConstEnums: true,
   },
   isolatedDeclarations: {
     stripInternal: false,
