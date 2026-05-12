@@ -30,5 +30,5 @@ pnpm fmt        # Run oxfmt formatter
 ## Project Info
 
 - Node requirement: >=20.14.0
-- Package manager: pnpm@10.15.1
+- Package manager: pnpm@11.0.4
 - Uses git hooks for pre-commit linting
