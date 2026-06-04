@@ -1,6 +1,8 @@
 dist/
 node_modules/
 .vite/
+.void/
+.wrangler/
 tsconfig.tsbuildinfo
 .eslintcache
 .claude/
