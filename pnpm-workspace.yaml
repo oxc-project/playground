@@ -19,4 +19,12 @@ minimumReleaseAgeExclude:
   - vite
   - vite-plus
   - vitest
+allowBuilds:
+  better-sqlite3: false
+  esbuild: false
+  sharp: false
+  vue-demi: false
+  workerd: false
+overrides:
+  esbuild: 0.28.0
 packages:

@@ -50,8 +50,12 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    # Use the `void` environment only on main (where the deploy happens), so PR/preview
+    # builds aren't gated by its protection rules. Mirrors the website's main-only deploy.
+    environment: ${{ github.ref_name == 'main' && 'void' || '' }}
     env:
       SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      VOID_TOKEN: ${{ secrets.VOID_TOKEN }}
     permissions:
       pull-requests: write
       contents: write
@@ -92,7 +96,6 @@ jobs:
         id: netlify_deploy
         if: env.SITE_ID
         run: |
-          mv _headers dist
           prod_flag=""
           if [ "${GITHUB_REF_NAME}" = "main" ]; then prod_flag="--prod"; fi
           echo $prod_flag
@@ -104,6 +107,13 @@ jobs:
             --json \
             > deploy_output.json
           cat deploy_output.json
+
+      - name: Deploy to Void
+        if: env.VOID_TOKEN && github.ref_name == 'main'
+        # `void deploy` runs `pnpm build` itself (dist/ incl. dist/_headers from public/).
+        run: pnpm exec void deploy
+        env:
+          VOID_PROJECT: oxc-playground
 
       - name: Generate URL Preview
         id: url_preview

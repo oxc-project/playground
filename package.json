@@ -19,7 +19,8 @@
     "lint": "vue-tsc && vp lint",
     "generate:linter-rules": "node scripts/generate-linter-rules.js",
     "check:linter-rules": "node scripts/generate-linter-rules.js --check",
-    "prepare": "vp config"
+    "prepare": "vp config",
+    "void": "void"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
@@ -51,6 +52,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^6.0.0",
     "vite-plus": "0.1.24",
+    "void": "^0.9.0",
     "vue-tsc": "~3.3.0"
   },
   "engines": {
