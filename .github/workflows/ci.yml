@@ -111,9 +111,7 @@ jobs:
 
       - name: Deploy to Void
         if: env.VOID_TOKEN && github.ref_name == 'main'
-        run: |
-          cp _headers dist/_headers
-          pnpm exec void deploy --skip-build
+        run: pnpm exec void deploy --skip-build
         env:
           VOID_PROJECT: oxc-playground
 
