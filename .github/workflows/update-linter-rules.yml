@@ -40,7 +40,6 @@ jobs:
           commit-message: "chore: regenerate linter rules"
           title: "chore: regenerate linter rules"
           branch: update-linter-rules
-          branch-suffix: timestamp
           base: main
           body: |
             Automated update of `src/generated/linter-rules.json` from the
