@@ -113,9 +113,16 @@ export const defaultOptions: Required<OxcOptions> = {
 const defaultOptionsSerialized = JSON.stringify(defaultOptions);
 
 export const useOxc = createGlobalState(async () => {
-  const options = ref<Required<OxcOptions>>(
-    urlParams.options ? JSON.parse(urlParams.options) : structuredClone(defaultOptions),
-  );
+  // Start from the defaults and overlay any saved options, so fields missing
+  // from an older URL (e.g. a transformer without `optimizeEnums`) keep their
+  // default instead of being dropped — the WASM binding rejects missing fields.
+  const options = ref<Required<OxcOptions>>(structuredClone(defaultOptions));
+  if (urlParams.options) {
+    const saved = JSON.parse(urlParams.options);
+    for (const [section, values] of Object.entries(options.value)) {
+      Object.assign(values, saved[section]);
+    }
+  }
   const oxc = await oxcPromise;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
