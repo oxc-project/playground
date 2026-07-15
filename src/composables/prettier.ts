@@ -14,10 +14,11 @@ const prettier = prettierStandalone as typeof prettierStandalone & {
 let plugins: Plugin[];
 
 const prettierReady = Promise.all([
+  import("prettier/plugins/babel"),
   import("prettier/plugins/typescript"),
   import("prettier/plugins/estree"),
-]).then(([ts, estree]) => {
-  plugins = [ts.default, estree.default];
+]).then(([babel, ts, estree]) => {
+  plugins = [babel.default, ts.default, estree.default];
 });
 
 // Format doc IR as readable string
@@ -61,11 +62,11 @@ export const usePrettier = createGlobalState(async () => {
   const prettierDocOutput = ref("");
   const prettierError = ref("");
 
-  async function format(code: string, options: Options) {
+  async function format(code: string, options: Options & { parser: "babel" | "typescript" }) {
     try {
       prettierError.value = "";
 
-      const formatOptions = { ...options, parser: "typescript" as const, plugins };
+      const formatOptions = { ...options, plugins };
 
       prettierOutput.value = await prettier.format(code, formatOptions);
 
