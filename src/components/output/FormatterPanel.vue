@@ -35,11 +35,17 @@ const hasDiff = computed(() => {
   return oxc.value.formatterFormattedText !== prettierOutput.value;
 });
 
+// JSDoc type casts are only handled by the babel parser, so match it to the input language
+const prettierParser = computed(() =>
+  ["ts", "mts", "cts", "tsx"].includes(options.value.parser.extension) ? "typescript" : "babel",
+);
+
 // Run Prettier when code, options, or checkboxes change
 watchEffect(async () => {
   if (!showPrettier.value && !showPrettierDoc.value) return;
   const opts = options.value.formatter;
   await formatPrettier(editorValue.value, {
+    parser: prettierParser.value,
     tabWidth: opts.tabWidth,
     useTabs: opts.useTabs,
     printWidth: opts.printWidth,
@@ -73,7 +79,12 @@ const visiblePanels = computed<Panel[]>(() => {
     });
   }
   if (showPrettier.value) {
-    panels.push({ key: "prettier", label: "Prettier", code: prettierOutput.value, lang: "tsx" });
+    panels.push({
+      key: "prettier",
+      label: `Prettier (${prettierParser.value})`,
+      code: prettierOutput.value,
+      lang: "tsx",
+    });
   }
   if (showIR.value) {
     panels.push({ key: "ir", label: "IR", code: oxc.value.formatterIrText, lang: "typescript" });
