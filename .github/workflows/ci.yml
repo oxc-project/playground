@@ -1,9 +1,9 @@
 name: CI
 
 on:
+  # Scheduled refreshes arrive as `workflow_dispatch` from scheduled-deploy.yml,
+  # because Void's OIDC deploy rejects the `schedule` event as a trigger.
   workflow_dispatch:
-  schedule:
-    - cron: "0 */3 * * *" # Build and deploy every 3 hours.
   pull_request:
     types:
       - opened
@@ -25,7 +25,7 @@ permissions: {}
 jobs:
   check:
     name: Check
-    if: github.event_name != 'schedule'
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
@@ -37,7 +37,7 @@ jobs:
 
   check-linter-rules:
     name: Check linter rules up-to-date
-    if: github.event_name != 'schedule'
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
