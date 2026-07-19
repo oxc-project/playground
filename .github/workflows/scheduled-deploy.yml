@@ -1,0 +1,23 @@
+name: Scheduled deploy
+
+# Rebuild and redeploy the playground against oxc `main` every 3 hours.
+# The cron cannot deploy directly: Void's OIDC executor rejects the `schedule`
+# event as a deploy trigger. So this workflow only dispatches CI, and the real
+# build+deploy runs there under `workflow_dispatch`, which OIDC accepts.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *"
+
+permissions: {}
+
+jobs:
+  dispatch:
+    name: Dispatch CI
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - run: gh workflow run ci.yml --repo "${GITHUB_REPOSITORY}" --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
