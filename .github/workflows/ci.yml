@@ -55,8 +55,8 @@ jobs:
     environment: ${{ github.ref_name == 'main' && 'void' || '' }}
     env:
       SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      VOID_TOKEN: ${{ secrets.VOID_TOKEN }}
     permissions:
+      id-token: write
       pull-requests: write
       contents: write
     steps:
@@ -110,7 +110,7 @@ jobs:
           cat deploy_output.json
 
       - name: Deploy to Void
-        if: env.VOID_TOKEN && github.ref_name == 'main'
+        if: github.ref_name == 'main'
         run: pnpm exec void deploy --skip-build
         env:
           VOID_PROJECT: oxc-playground
