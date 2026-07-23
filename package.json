@@ -51,7 +51,7 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^6.0.0",
-    "vite-plus": "0.2.5",
+    "vite-plus": "0.2.6",
     "void": "^0.10.10",
     "vue-tsc": "~3.3.0"
   },
