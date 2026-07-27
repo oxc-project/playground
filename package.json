@@ -28,7 +28,7 @@
     "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "monaco-editor": "0.55.1",
+    "monaco-editor": "0.56.0",
     "prettier": "^3.8.1",
     "radix-vue": "^1.9.17",
     "tailwind-merge": "^3.4.0",

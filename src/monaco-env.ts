@@ -1,6 +1,6 @@
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import editorWorker from "monaco-editor/editor/editor.worker?worker";
+import jsonWorker from "monaco-editor/language/json/json.worker?worker";
+import tsWorker from "monaco-editor/language/typescript/ts.worker?worker";
 
 // @ts-ignore
 globalThis.MonacoEnvironment = {

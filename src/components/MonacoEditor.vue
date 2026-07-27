@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDark } from "@vueuse/core";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor/editor/editor.api";
 import { onBeforeUnmount, onMounted, ref, shallowRef, watch, watchEffect } from "vue";
 import { editorCursor, outputHoverRange } from "~/composables/state";
 
