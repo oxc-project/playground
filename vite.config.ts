@@ -67,7 +67,7 @@ export default defineConfig({
       },
     ],
     rules: {
-      "import/default": "off", // No default export found in imported module "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+      "import/default": "off", // No default export found in imported module "monaco-editor/language/typescript/ts.worker?worker"
       "vue-js/no-ref-as-operand": "error",
       "vue-js/no-dupe-keys": "error",
       "vue-js/no-reserved-keys": "error",
