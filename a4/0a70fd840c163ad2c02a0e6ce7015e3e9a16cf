@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_035811f3dcd9c2::t_3aed73be6deae2 78-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a40a70fd840c163ad2c02a0e6ce7015e3e9a16cf",
+  "prompts": {},
+  "sessions": {
+    "s_035811f3dcd9c2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc706-c2ae-79a3-9fa0-9ef6e2dc26e9",
+        "model": "unknown"
+      },
+      "human_author": "Cameron <cclark@cloudflare.com>"
+    }
+  }
+}
