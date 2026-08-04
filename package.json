@@ -40,7 +40,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^25.0.10",
     "@vitejs/plugin-vue": "^6.0.3",
-    "eslint-plugin-command": "^3.4.0",
+    "eslint-plugin-command": "^4.0.0",
     "eslint-plugin-de-morgan": "^2.0.0",
     "eslint-plugin-perfectionist": "^5.4.0",
     "eslint-plugin-regexp": "^3.0.0",
@@ -50,7 +50,7 @@
     "shiki": "^4.0.0",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^6.0.0",
+    "typescript": "^7.0.0",
     "vite-plus": "0.2.7",
     "void": "^0.10.10",
     "vue-tsc": "~3.3.0"
