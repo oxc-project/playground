@@ -52,7 +52,6 @@ export default defineConfig({
     plugins: ["typescript", "unicorn", "oxc", "import", "jsdoc", "promise", "node"],
     jsPlugins: [
       "./eslint-local-rules.js",
-      "eslint-plugin-unused-imports",
       {
         name: "@eslint-community/eslint-comments",
         specifier: "@eslint-community/eslint-plugin-eslint-comments",
