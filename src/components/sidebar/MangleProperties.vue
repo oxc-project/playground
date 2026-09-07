@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
 import { Button } from "~/ui/button";
@@ -19,19 +19,54 @@ import { Switch } from "~/ui/switch";
 
 const { options } = await useOxc();
 
+// Keep editing text separate so normalization does not remove spaces or newlines
+// while the user is still typing.
+const excludeInput = ref(options.value.mangleProps.exclude ?? "");
+const reservedInput = ref((options.value.mangleProps.reserved ?? []).join("\n"));
+
+function normalizeExclude(value: string) {
+  return value.trim() ? value : undefined;
+}
+
+function normalizeReserved(value: string) {
+  return value
+    .split(/\r?\n/)
+    .map((name) => name.trim())
+    .filter(Boolean);
+}
+
 const excludedProperties = computed({
-  get: () => options.value.mangleProps.exclude ?? "",
+  get: () => excludeInput.value,
   set: (value: string | number) => {
-    options.value.mangleProps.exclude = String(value) || undefined;
+    excludeInput.value = String(value);
+    options.value.mangleProps.exclude = normalizeExclude(excludeInput.value);
   },
 });
 
 const reservedProperties = computed({
-  get: () => (options.value.mangleProps.reserved ?? []).join("\n"),
+  get: () => reservedInput.value,
   set: (value: string) => {
-    options.value.mangleProps.reserved = value ? value.split("\n") : [];
+    reservedInput.value = value;
+    options.value.mangleProps.reserved = normalizeReserved(value);
   },
 });
+
+// Reflect edits from the JSON options dialog without overwriting current drafts.
+watch(
+  () => options.value.mangleProps,
+  (properties) => {
+    if (normalizeExclude(excludeInput.value) !== properties.exclude) {
+      excludeInput.value = properties.exclude ?? "";
+    }
+    if (
+      JSON.stringify(normalizeReserved(reservedInput.value)) !==
+      JSON.stringify(properties.reserved ?? [])
+    ) {
+      reservedInput.value = (properties.reserved ?? []).join("\n");
+    }
+  },
+  { deep: true, flush: "sync" },
+);
 </script>
 
 <template>
