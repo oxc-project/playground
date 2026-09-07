@@ -1,4 +1,5 @@
 import "monaco-editor/editor/editor.api";
+import "monaco-editor/editor/contrib/hover/browser/hoverContribution";
 import "monaco-editor/languages/definitions/javascript/register";
 import "monaco-editor/languages/definitions/typescript/register";
 import { jsonDefaults } from "monaco-editor/language/json/monaco.contribution";
