@@ -135,9 +135,18 @@ export const useOxc = createGlobalState(async () => {
     }
   }
 
+  // Track configs created by the sidebar so clearing its selection restores
+  // default linting without discarding a config supplied in Advanced options.
+  let sidebarConfig: LinterConfig | undefined;
   const enabledLintRules = computed({
     get: () => Object.keys(options.value.linter.config?.rules ?? {}),
     set: (rules: string[]) => {
+      const ownsConfig = options.value.linter.config === sidebarConfig;
+      if (rules.length === 0 && ownsConfig) {
+        delete options.value.linter.config;
+        sidebarConfig = undefined;
+        return;
+      }
       const config = options.value.linter.config ?? { categories: { correctness: "off" } };
       const requiredPlugins = getRequiredPlugins(rules);
       const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map((p) => p.id);
@@ -148,6 +157,7 @@ export const useOxc = createGlobalState(async () => {
           plugins: [...new Set([...(config.plugins ?? defaultPlugins), ...requiredPlugins])],
         }),
       };
+      if (ownsConfig) sidebarConfig = options.value.linter.config;
     },
   });
 
