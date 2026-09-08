@@ -1,6 +1,6 @@
 import { createGlobalState, useUrlSearchParams, watchDebounced } from "@vueuse/core";
 import { computed, ref, shallowRef, toRaw, triggerRef, watch, watchEffect } from "vue";
-import { activeTab, editorValue, enabledLintRules, formatterPanels } from "~/composables/state";
+import { activeTab, editorValue, formatterPanels } from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
 import { LINT_PLUGINS, getRequiredPlugins } from "~/utils/linter-rules";
 import type { Oxc, OxcOptions } from "oxc-playground";
@@ -27,9 +27,6 @@ if (urlParams.formatterPanels) {
     prettier: enabledPanels.includes("prettier"),
     prettierDoc: enabledPanels.includes("prettierDoc"),
   });
-}
-if (urlParams.lintRules) {
-  enabledLintRules.value = urlParams.lintRules.split(",").filter(Boolean);
 }
 editorValue.value = urlParams.code || PLAYGROUND_DEMO_CODE;
 
@@ -59,7 +56,17 @@ export const defaultFormatterConfig = {
   experimentalSortImports: undefined,
 };
 
-export const defaultOptions: Required<OxcOptions> = {
+interface LinterConfig {
+  rules?: Record<string, string | number | unknown[]>;
+  categories?: Record<string, string>;
+  plugins?: string[];
+}
+
+type PlaygroundOptions = Omit<Required<OxcOptions>, "linter"> & {
+  linter: { config?: LinterConfig };
+};
+
+export const defaultOptions: PlaygroundOptions = {
   run: {
     lint: true,
     formatter: false,
@@ -116,43 +123,52 @@ export const useOxc = createGlobalState(async () => {
   // Start from the defaults and overlay any saved options, so fields missing
   // from an older URL (e.g. a transformer without `optimizeEnums`) keep their
   // default instead of being dropped — the WASM binding rejects missing fields.
-  const options = ref<Required<OxcOptions>>(structuredClone(defaultOptions));
+  const options = ref<PlaygroundOptions>(structuredClone(defaultOptions));
   if (urlParams.options) {
     const saved = JSON.parse(urlParams.options);
     for (const [section, values] of Object.entries(options.value)) {
       Object.assign(values, saved[section]);
     }
+    // Older links stored the config as the string expected by the WASM binding.
+    if (typeof options.value.linter.config === "string") {
+      options.value.linter.config = JSON.parse(options.value.linter.config);
+    }
   }
+
+  // Track configs created by the sidebar so clearing its selection restores
+  // default linting without discarding a config supplied in Advanced options.
+  let sidebarConfig: LinterConfig | undefined;
+  const enabledLintRules = computed({
+    get: () => Object.keys(options.value.linter.config?.rules ?? {}),
+    set: (rules: string[]) => {
+      const ownsConfig = options.value.linter.config === sidebarConfig;
+      if (rules.length === 0 && ownsConfig) {
+        delete options.value.linter.config;
+        sidebarConfig = undefined;
+        return;
+      }
+      const config = options.value.linter.config ?? { categories: { correctness: "off" } };
+      const requiredPlugins = getRequiredPlugins(rules);
+      const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map((p) => p.id);
+      options.value.linter.config = {
+        ...config,
+        rules: Object.fromEntries(rules.map((rule) => [rule, config.rules?.[rule] ?? "error"])),
+        ...(requiredPlugins.length > 0 && {
+          plugins: [...new Set([...(config.plugins ?? defaultPlugins), ...requiredPlugins])],
+        }),
+      };
+      if (ownsConfig) sidebarConfig = options.value.linter.config;
+    },
+  });
+
+  // Restore rule-only links; saved config takes precedence so its options survive.
+  if (!options.value.linter.config?.rules && urlParams.lintRules) {
+    enabledLintRules.value = urlParams.lintRules.split(",").filter(Boolean);
+  }
+
   const oxc = await oxcPromise;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
-
-  // Compute the linter config directly from enabledLintRules so it's always
-  // in sync when run() fires — this avoids a fragile two-watcher chain where
-  // a component-level watcher in Linter.vue had to update options.linter
-  // before the run() watcher could pick it up.
-  const linterConfig = computed(() => {
-    const rules = enabledLintRules.value;
-    if (rules.length === 0) return {};
-
-    const requiredPlugins = getRequiredPlugins(rules);
-    const rulesConfig: Record<string, string> = {};
-    for (const rule of rules) {
-      rulesConfig[rule] = "error";
-    }
-
-    const config: Record<string, unknown> = {
-      categories: { correctness: "off" },
-      rules: rulesConfig,
-    };
-
-    if (requiredPlugins.length > 0) {
-      const defaultPlugins = LINT_PLUGINS.filter((p) => p.isDefault).map((p) => p.id);
-      config.plugins = [...defaultPlugins, ...requiredPlugins];
-    }
-
-    return config;
-  });
 
   function run() {
     const errors: unknown[] = [];
@@ -164,16 +180,10 @@ export const useOxc = createGlobalState(async () => {
     try {
       const rawOptions = toRaw(options.value);
 
-      // Build linter config from enabledLintRules directly, ensuring it's
-      // always up-to-date when run() fires (no dependency on external watcher)
-      const config = linterConfig.value;
-      if (Object.keys(config).length === 0) {
-        rawOptions.linter = {};
-      } else {
-        rawOptions.linter = { config: JSON.stringify(config) };
-      }
-
-      oxc.run(editorValue.value, rawOptions);
+      oxc.run(editorValue.value, {
+        ...rawOptions,
+        linter: { config: JSON.stringify(rawOptions.linter.config) },
+      });
       // Reset error if successful
       error.value = undefined;
     } catch (caughtError) {
@@ -183,7 +193,7 @@ export const useOxc = createGlobalState(async () => {
     console.error = originalError;
     triggerRef(state);
   }
-  watch([options, editorValue, activeTab, enabledLintRules], run, { deep: true, immediate: true });
+  watch([options, editorValue, activeTab], run, { deep: true, immediate: true });
 
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
@@ -237,6 +247,7 @@ export const useOxc = createGlobalState(async () => {
     oxc: state,
     error,
     options,
+    enabledLintRules,
     monacoLanguage,
   };
 });
