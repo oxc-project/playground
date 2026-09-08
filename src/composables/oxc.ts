@@ -67,6 +67,7 @@ export const defaultOptions: Required<OxcOptions> = {
     isolatedDeclarations: false,
     whitespace: false,
     mangle: false,
+    mangleProps: false,
     compress: false,
     scope: true,
     symbol: true,
@@ -102,6 +103,13 @@ export const defaultOptions: Required<OxcOptions> = {
   mangle: {
     topLevel: true,
     keepNames: false,
+  },
+  mangleProps: {
+    include: "_$",
+    exclude: undefined,
+    reserved: [],
+    quoted: false,
+    debug: false,
   },
   controlFlow: {
     verbose: false,
