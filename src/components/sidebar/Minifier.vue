@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MangleProperties from "~/components/sidebar/MangleProperties.vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
 import { Switch } from "~/ui/switch";
@@ -44,5 +45,7 @@ const { options } = await useOxc();
         />
       </div>
     </div>
+
+    <MangleProperties />
   </section>
 </template>
