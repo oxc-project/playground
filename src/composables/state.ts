@@ -19,6 +19,3 @@ export const formatterPanels = reactive({
   prettier: false,
   prettierDoc: false,
 });
-
-// Enabled lint rules
-export const enabledLintRules = ref<string[]>([]);
