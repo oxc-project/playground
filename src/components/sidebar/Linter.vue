@@ -2,19 +2,15 @@
 import { Icon } from "@iconify/vue";
 import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
-import { enabledLintRules } from "~/composables/state";
 import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
 import { LINT_PLUGINS, getFullRuleName } from "~/utils/linter-rules";
 
-const { options } = await useOxc();
+const { options, enabledLintRules: enabledRules } = await useOxc();
 
 const showRules = ref(false);
 const searchQuery = ref("");
 const showDropdown = ref(false);
-
-// Use global state for enabled rules
-const enabledRules = enabledLintRules;
 
 // Build a flat list of all rules with their full names
 const allRules = computed(() => {
@@ -54,17 +50,14 @@ function toggleRules() {
 
 function addRule(fullName: string) {
   if (!enabledRules.value.includes(fullName)) {
-    enabledRules.value.push(fullName);
+    enabledRules.value = [...enabledRules.value, fullName];
   }
   searchQuery.value = "";
   // Keep dropdown open so user can continue adding rules
 }
 
 function removeRule(fullName: string) {
-  const index = enabledRules.value.indexOf(fullName);
-  if (index >= 0) {
-    enabledRules.value.splice(index, 1);
-  }
+  enabledRules.value = enabledRules.value.filter((rule) => rule !== fullName);
 }
 
 function onSearchFocus() {
