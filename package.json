@@ -28,7 +28,7 @@
     "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "monaco-editor": "0.56.0",
+    "monaco-editor": "0.57.0",
     "prettier": "^3.9.9",
     "radix-vue": "^1.9.17",
     "tailwind-merge": "^3.4.0",
@@ -51,7 +51,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^6.0.0",
     "vite-plus": "1.0.0",
-    "void": "^0.20.0",
+    "void": "^0.22.0",
     "vue-tsc": "~3.3.0"
   },
   "engines": {
