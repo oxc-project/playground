@@ -50,13 +50,13 @@ importers:
         version: 4.8.1(eslint@9.39.2(jiti@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.1.18
-        version: 4.3.3(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+        version: 4.3.3(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       '@types/node':
         specifier: ^25.0.10
         version: 25.0.10
       '@vitejs/plugin-vue':
         specifier: ^6.0.3
-        version: 6.0.10(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vue@3.5.44(typescript@6.0.3))
+        version: 6.0.10(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))
       eslint-plugin-command:
         specifier: ^3.4.0
         version: 3.5.3(@typescript-eslint/typescript-estree@8.70.1(typescript@6.0.3))(@typescript-eslint/utils@8.70.1(eslint@9.39.2(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.2(jiti@2.7.0))
@@ -89,10 +89,10 @@ importers:
         version: 6.0.3
       vite-plus:
         specifier: 1.3.0
-        version: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))
+        version: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)
       void:
-        specifier: ^0.28.0
-        version: 0.28.0(@types/node@25.0.10)(arktype@2.2.0)(kysely@0.29.5)(valibot@1.4.1(typescript@6.0.3))(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))(vue@3.5.44(typescript@6.0.3))(wrangler@4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10))(zod@4.6.5)
+        specifier: ^1.1.12
+        version: 1.1.12(@types/node@25.0.10)(arktype@2.2.0)(kysely@0.29.7)(valibot@1.4.1(typescript@6.0.3))(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))(vue@3.5.44(typescript@6.0.3))(wrangler@4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10))(zod@4.6.7)
       vue-tsc:
         specifier: ~3.3.0
         version: 3.3.13(typescript@6.0.3)
@@ -130,13 +130,13 @@ packages:
     resolution: {integrity: sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==}
     engines: {node: '>=6.9.0'}
 
-  '@better-auth/core@1.7.7':
-    resolution: {integrity: sha512-srgFzHEjB2WWlokFz1i4BfG41sNhsA105Pukgqu6RrEh5A+LSkzf1mCHydVipkjt9l5qswtBMi7IL6ouHbZL4Q==}
+  '@better-auth/core@1.7.11':
+    resolution: {integrity: sha512-HG08OUeiMIGbDE+qEiBGxEvZ3l0PNEKG2PZfC691UZjLpba/GMtWezP/jtHBP9W1YKZpDEjh5cav39+JGgDV8w==}
     peerDependencies:
-      '@better-auth/utils': 0.4.2
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       '@better-fetch/fetch': 1.3.2
       '@opentelemetry/api': ^1.9.0
-      better-call: 1.4.0
+      better-call: 1.4.2
       jose: ^6.1.0
       kysely: ^0.28.5 || ^0.29.0
       nanostores: ^1.0.1
@@ -144,47 +144,47 @@ packages:
       '@opentelemetry/api':
         optional: true
 
-  '@better-auth/drizzle-adapter@1.7.7':
-    resolution: {integrity: sha512-qon0U94PR5FQysuyGoAlGVQpIIiNg5dtDpwjE63sN/HjoRWZadZzHPcS9mn7JsJyQZK6iTNhd7LD0AaXt2f78w==}
+  '@better-auth/drizzle-adapter@1.7.11':
+    resolution: {integrity: sha512-CkTDxo4MDymXA4vfLKufkOdV+FgroTCqERE1CNp4XNghiIrBWNjM4Ph6J//AoL6aowWcbLdBqUtJM40/eLJFKg==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       drizzle-orm: ^0.45.2 || >=1.0.0-rc.1 <2.0.0
     peerDependenciesMeta:
       drizzle-orm:
         optional: true
 
-  '@better-auth/kysely-adapter@1.7.7':
-    resolution: {integrity: sha512-9FONOCgOcrQI9wJ5v1oDGIg9sT7pa9RjZZQ4fsCTudo8R87SrIGNUvUxDFTJhZvUblvFfGaIBR9Vb8LA+8bqLQ==}
+  '@better-auth/kysely-adapter@1.7.11':
+    resolution: {integrity: sha512-KC/XJGRG2Zi9cSzzKbAU6vmzEiP9t/gd41Ct0e0OhFAlF0aKzfv5SuL0LlEzXlw+sLRAvylaLSxjgctzrCeEzg==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       kysely: ^0.28.17 || ^0.29.0
     peerDependenciesMeta:
       kysely:
         optional: true
 
-  '@better-auth/memory-adapter@1.7.7':
-    resolution: {integrity: sha512-FqKFEe+b5tXXV0gRbyirca+qXgMpLOeJ8Wk19yykb/scQKy0WJ4k22WzEV3TTPctQV9DZhwCXPlDtQhnlOv5Gg==}
+  '@better-auth/memory-adapter@1.7.11':
+    resolution: {integrity: sha512-rLSPKqQpXDwSE013UmgnJ2oTwDrQD95LkPon/TvwPLkCqnoz7wruNKfMsLCmLxaMhH8QEeZvvS+cE4cl3wqSuw==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
 
-  '@better-auth/mongo-adapter@1.7.7':
-    resolution: {integrity: sha512-ZnVDuRrXqbf0oHphrEN27oTImNH5NTO26dtWatq5cXyYAsH7goof9QIoTOmxTbBxUQahKBw9T6+9h6n+RtOE+g==}
+  '@better-auth/mongo-adapter@1.7.11':
+    resolution: {integrity: sha512-7fEFV7L0FGjfJ3CNi6SL1kmUwfANPHf05znzbPhTozCJ3kZSAP1FWHq7+kyI7xh6dOgaBQ/UdlCUKELqkrkAXQ==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       mongodb: ^6.0.0 || ^7.0.0
     peerDependenciesMeta:
       mongodb:
         optional: true
 
-  '@better-auth/prisma-adapter@1.7.7':
-    resolution: {integrity: sha512-4YcnrcVdvWiAZw0sZl63tWUClPXg5r3QsLn7C2sG7kKEBY06zOng0ibecyxRBixKq1zE1ceHuEUqez5Rhi+nQA==}
+  '@better-auth/prisma-adapter@1.7.11':
+    resolution: {integrity: sha512-kjjiyr7H42z25vrTyAPc/Y19eMUZOByw6jrd5mDoAGZssj1Qm3KPCHZFFxFzTjapW8Saq288xPdt5dARf1rQCA==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       '@prisma/client': ^5.0.0 || ^6.0.0 || ^7.0.0
       prisma: ^5.0.0 || ^6.0.0 || ^7.0.0
     peerDependenciesMeta:
@@ -193,15 +193,12 @@ packages:
       prisma:
         optional: true
 
-  '@better-auth/telemetry@1.7.7':
-    resolution: {integrity: sha512-PaRA6i+kAioVYmza2gHPcdrxP0hAotph4KV9hft2GeNJq+AZXDiBu3FuLM9HxvcmiZeUT74Vufqd9ypmB8veTA==}
+  '@better-auth/telemetry@1.7.11':
+    resolution: {integrity: sha512-VJWa9s0f9EIP/zWmHHd9Gv/PO4nwlXq1Xa5nXq5nsl0BrAJPrx/FbYVIPVWaZR4vDt8f0CWtrN4Qxln8lhpSbA==}
     peerDependencies:
-      '@better-auth/core': ^1.7.7
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': ^1.7.11
+      '@better-auth/utils': ^0.4.2 || ^0.5.0
       '@better-fetch/fetch': 1.3.2
-
-  '@better-auth/utils@0.4.2':
-    resolution: {integrity: sha512-AUxrvu+HaaODsUyzDxFgwd/8RZ1yZaYo42LXKSrU2oGgR38pS1ij8nqQKNgtTWoYGpNevNXtCfgTy6loHveW9A==}
 
   '@better-auth/utils@0.5.0':
     resolution: {integrity: sha512-BL8W4EfIZFwlu0r54m3v1ztjDhu6dDe/amLTm0xybmbZaNgYUqhD3SjpAsnq0q8YD6/ki4iwIgxJNLP/N3TxiA==}
@@ -212,25 +209,28 @@ packages:
   '@blazediff/core@1.10.0':
     resolution: {integrity: sha512-AOQff0zgR7cGsZL+4E7hVkmujoPUpm0J9xzWGWZj5wCjd3gmxESXAPfKyuzs93VdpQNFhHlBhfOjrcZ+XTERtQ==}
 
-  '@cloudflare/build-output-utils@0.9.0':
-    resolution: {integrity: sha512-2FMA4XnVj5u7LYJE9j3uSJ+cU4Zn994WiyEOVhbMV7wh7pcwi1rIYafH6kiWaa+Y3Bjvf0ow7JgoDaO05qYVPg==}
+  '@cloudflare/build-output-utils@0.9.3':
+    resolution: {integrity: sha512-0MgvIq6UxbRWLwB2QJU7qjLqpPkfygOebN3UiENhdp+z6zpRKrNnwkms2ynadmxCOh3sL2v+SI0/pNXxgXdteA==}
 
-  '@cloudflare/codemods@0.4.2':
-    resolution: {integrity: sha512-oHvDlfhQEIkdf8Mvz4SMgk+6evVlu9rrntRv5KQfRK3H4RkXUmawzYQ7+zdBG0wiWdp/Ku/PqNMWVYAs8T4jrQ==}
+  '@cloudflare/codemods@0.5.0':
+    resolution: {integrity: sha512-POT7OGqwhYTno0cnITd/d3rZNicN1Yt7IgKSwutsZhfC4pIWANW6Xy7wAR02oCDXzP5UMZoRlYbW7T85yLO6og==}
     hasBin: true
 
-  '@cloudflare/config@0.24.1':
-    resolution: {integrity: sha512-tja1/oHB5sCgigiRrZrESYFUzNEgex1zW0GDWXNbpUVpB8zX7ZQKMYnZYX2zD2sy8dk9paDZDnPC1VSu7y8aZw==}
+  '@cloudflare/config@0.26.0':
+    resolution: {integrity: sha512-18i2llyc49mWX/CQ5edwBlXclfMWZ6QIvquRbHWuxRYzKVd/immaQyRNvwqIHMUowDeNRwVk+K68xsVavdXPSQ==}
+
+  '@cloudflare/config@0.27.0':
+    resolution: {integrity: sha512-wNnL0z4lj5Gm2fze5qXTOvRPbUOi4jlMmwPk7ArCUakI5oVxgjfl3Rhnfd/Mmzo3g86x/ofH75yPIhsa5msqdQ==}
 
   '@cloudflare/kv-asset-handler@0.5.0':
     resolution: {integrity: sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg==}
     engines: {node: '>=22.0.0'}
 
-  '@cloudflare/runtime-types@0.1.9':
-    resolution: {integrity: sha512-T3LcgIUw2VMWCw/50deozY/Iqu9j1NN3xbYGTmYbLvGk1a8aNZHplwf/JknYmqSVHZU4eHqsFpkn8IID2W4W/A==}
+  '@cloudflare/runtime-types@0.1.12':
+    resolution: {integrity: sha512-eYF5teHQ+Jss4sbSVINM5tNPHxo/kJ2gKcMs7omyy7gO9PEkgUbGPZCYl06SxbBWTcJFF2vrX4epB775QTE4BQ==}
 
-  '@cloudflare/sandbox@1.0.0':
-    resolution: {integrity: sha512-+TZVuCey6OBDTvPLWisq4Ie7/R5Zy3zFyYOFCNRpdEIyQsKq3xwzpctonE43DfZ+wYZvvu6QYpR138PayDjF+A==}
+  '@cloudflare/sandbox@1.0.1':
+    resolution: {integrity: sha512-8Qvv2SbMGfDW+zo0AkwaDna+b+IbXPgMKjelu6UZla1jyTwt1Ye0Z4LEahwoXtIMbpQvopr9NvXtLm+abA7+Tw==}
 
   '@cloudflare/unenv-preset@2.16.1':
     resolution: {integrity: sha512-ECxObrMfyTl5bhQf/lZCXwo5G6xX9IAUo+nDMKK4SZ8m4Jvvxp52vilxyySSWh2YTZz8+HQ07qGH/2rEom1vDw==}
@@ -250,12 +250,12 @@ packages:
       workerd:
         optional: true
 
-  '@cloudflare/vite-plugin@1.63.1':
-    resolution: {integrity: sha512-6EtAoRqWryl43bYiCl7yvCBHi3R+L/fM11zu8zRyvBMe0Yk63NseyrhA19nO5Y1yrrk6dD+Su7NBZhDuUbjh0g==}
+  '@cloudflare/vite-plugin@1.64.0':
+    resolution: {integrity: sha512-h7Tunx9Ou5fUoao8O9jYTH0ParfrtNZzZVPA0IS19O7AoWA1SpYjwzDA6pZC78qzuV8sQSEOpYCN/yTShmd+gg==}
     hasBin: true
     peerDependencies:
       vite: ^6.1.0 || ^7.0.0 || ^8.0.0
-      wrangler: ^4.149.0
+      wrangler: ^4.151.0
 
   '@cloudflare/workerd-darwin-64@1.20260910.1':
     resolution: {integrity: sha512-9K72iwX+RdKZLgvEqCgOI0tBgo10lN2lWjrtM8SRFjl7LOzk7NmrepBvAFiUz8H5PhxafQ17Dku2RLmzA/Hnew==}
@@ -263,8 +263,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-64@1.20261006.1':
-    resolution: {integrity: sha512-lCX6avJO2It9AyDEYitjmOtJRVp/xmaW0TziyoLAnfxlzozyyRbSFfIIMMCiDx/sTP1++E4VLbV+7BHSD33f0Q==}
+  '@cloudflare/workerd-darwin-64@1.20261012.1':
+    resolution: {integrity: sha512-dkTL9aY3V4D40b+jBpGPCistWUPFQ/M61wlWi6i1o8MvHFFgEw7EQkcaYEv6Yd3bkPDD/3TFT4hRsMb2xVZSwQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
@@ -275,8 +275,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-arm64@1.20261006.1':
-    resolution: {integrity: sha512-PyFGjOaldtppnLuKsdkoYWXfLVpDjuf8u+uoykX+1Xvxo2EPmCVViq0iDKm+U7c7PRno85ehS3/MPVXyk2HwHw==}
+  '@cloudflare/workerd-darwin-arm64@1.20261012.1':
+    resolution: {integrity: sha512-2/nVGcKXjNNI+DhxKSepTKvFng9H7aN2WXv6Zu67iqgI6JrxypNt5kTPv4ZHosxrcfyKMci/2RfN7GIrN0BitQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
@@ -287,8 +287,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-64@1.20261006.1':
-    resolution: {integrity: sha512-Ntf9S8eesmVufdjaT2kzWlz6Ng9XGYTc6cHQVRKAg59lFufwsIabGeMT6U4KkrpEeSIxgHq8aPtuLbZXE19tCA==}
+  '@cloudflare/workerd-linux-64@1.20261012.1':
+    resolution: {integrity: sha512-uMe7ONHnLxStD1Ye0YFHBO36uj4cStv5P53rW+5GVWXFT8BRjqVixlH0IqCAHe1Pmcwyd1+7fVoGde89MZSCJg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
@@ -299,8 +299,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-arm64@1.20261006.1':
-    resolution: {integrity: sha512-JyeDBymVWw5tVRebSsVE8ojDYxd6UlZrAseHU8G+NpIyd5wF61tXlF/axLeCUqu0pOhBFHb8I5QKi0jwrCK41Q==}
+  '@cloudflare/workerd-linux-arm64@1.20261012.1':
+    resolution: {integrity: sha512-I0VMdcXk7ygG5vYDce0ePTBFdnBXC0i9WiBY5mWiv0iTinbfea6/rHqSQ7B1UMpjgrYVs9E0m4bZ9ufsk5GCFA==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
@@ -311,14 +311,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workerd-windows-64@1.20261006.1':
-    resolution: {integrity: sha512-nWP0URNqOBN9fa/gZ7eh/w051DwjOXN8j4lDZDYVXyQPsux6sV3DfyYZT+CjR/rt9nKBSmJT9QE9/bWT18+84w==}
+  '@cloudflare/workerd-windows-64@1.20261012.1':
+    resolution: {integrity: sha512-c5hQvNx574UEoknaCFvMa/NdLrrYiALNbe6sx1okW8uOiRYWxrFuA8WpXFnBJ5XJypm0TEAHYaUTGv3rRLpY7Q==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-auth@0.13.1':
-    resolution: {integrity: sha512-jjZGiSKd3qLnvMlEYVlT4NE7m7fvCVm+ws2rAjDXZvqLrSTSbhknaxuvb68paVkeAxOFkd6wL8tXHlnR7F06zA==}
+  '@cloudflare/workers-auth@0.14.0':
+    resolution: {integrity: sha512-F8Awljq/f3oX7vgTSKadHDYmKVYU2Ea+x3Kvpi9mP/EH11mn4Oc5F89WgRvs8Z29p4S+BmQuJMf71IFmWXrrLA==}
     peerDependencies:
       msw: 2.14.6
       vitest: ^4.1.0
@@ -328,11 +328,11 @@ packages:
       vitest:
         optional: true
 
-  '@cloudflare/workers-types@5.20261010.1':
-    resolution: {integrity: sha512-Csvu2Wsd8JWnP8HNg/uAAEYzoGw+eKEvoftoHrbMWuFDoC0g6e5XSP8XO9vJsdjjVpPaURdFoL3g/xpZSdQr3Q==}
+  '@cloudflare/workers-types@5.20261019.1':
+    resolution: {integrity: sha512-llvvy7WBVhK+OfykyBkG9A7OgsGvgwHSNyU40XGVkiy/xVFy0t/xflyhEBHT+U59yQECZQbmcZsJtqCNnLpIRg==}
 
-  '@cloudflare/workers-utils@0.47.1':
-    resolution: {integrity: sha512-zEQPCOMKD5dhE8cSkd1IeO7jkGptWRTy09GSfAfw4k0OnPBYRDYPUlb7TTYObLBH7kdYsSpyB3KgrgN25Ihy8w==}
+  '@cloudflare/workers-utils@0.47.2':
+    resolution: {integrity: sha512-AVZwPqH2RnbO0MyzowvrCwjhrjaQnj6VA0HXJOgk5/hIf693APyYX7F6fW1IFD4YzS/0NAeK7dQ/Z7H7hirJVw==}
     peerDependencies:
       vitest: ^4.1.0
     peerDependenciesMeta:
@@ -952,85 +952,85 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@napi-rs/keyring-darwin-arm64@2.1.0':
-    resolution: {integrity: sha512-j6ATTOhmPW+N5EKwi8Yzn6P4Bz/uqnxzyYvqOL73/dgzDSYG5pS5eprqpVmOLse68WUTf79ZMqz97HnfvirJ9g==}
+  '@napi-rs/keyring-darwin-arm64@2.1.1':
+    resolution: {integrity: sha512-H6uxAztj6GSDwnh/1JDHCtAqWvBTr+0+FGwOOw+rY568z7vFOqrJTTboePFuAnJSO7kNvq+yuyXJ9B5Ueco4yA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@napi-rs/keyring-darwin-x64@2.1.0':
-    resolution: {integrity: sha512-54Q803nguiOaQzBG2h4uIkacI0eLGAlzzdpxPNi6IZtXbjqbPI4AQ86GrQy25tw3czBqRPBoGu0lHP2U+/f5iA==}
+  '@napi-rs/keyring-darwin-x64@2.1.1':
+    resolution: {integrity: sha512-RcHBNnOIzqliNU8Z0jc71bPs/PRn4IIO02XE6DV3HxVFAHo4CooNXDySCL+jbHhObLlSy9yynRn+wq5k+IAmRw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@napi-rs/keyring-freebsd-x64@2.1.0':
-    resolution: {integrity: sha512-BL7ngJAYQBrUp1PTF8enOXOIVfxN51RbwVOEQ+8eAjWypF/5Ipqs8oQoMqkuc0wAbk+vatnNVjdKCIFa/HPglg==}
+  '@napi-rs/keyring-freebsd-x64@2.1.1':
+    resolution: {integrity: sha512-IrM8IKBZKQzETI1BlvSpT6lRzC9eTIQ5TgUwcbQSiQTuXTEXAAHHvBYkoHicN2b2uqgAfO3dwN382CGRw0Ownw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
 
-  '@napi-rs/keyring-linux-arm-gnueabihf@2.1.0':
-    resolution: {integrity: sha512-JYgbCDk+giss7lKla8NTXhM/fLj+Hrfgr3xwKQ8jKn8qMD6vXLwYcfK8HJ9VoAcjIeYEUpCL6dRszJC5M4zFNg==}
+  '@napi-rs/keyring-linux-arm-gnueabihf@2.1.1':
+    resolution: {integrity: sha512-KMld1c9TRucQYV/qasA5jS/VZWCpxMOeHflrciOAsfhiVQ8VfA77grlhGD0kiWtz5e+2M6kYLH9iFmQhPROkGw==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@napi-rs/keyring-linux-arm64-gnu@2.1.0':
-    resolution: {integrity: sha512-+PMONFQ+2GkBXG7vRG2spgR73bNCMeVpNopHoSmhj2E+5Gu6zJooRBjoaIZKj6hCyrOU8pXAhoZ22EEFQ/4YeQ==}
+  '@napi-rs/keyring-linux-arm64-gnu@2.1.1':
+    resolution: {integrity: sha512-AcMk+ZDP8H20Ml5vaTuSh/Ibh5vU4lrAavS2tjoJ7EJJBLDYssONINWrvVgy43SfzntgQVDBcU5GlMI+z5IMFA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@napi-rs/keyring-linux-arm64-musl@2.1.0':
-    resolution: {integrity: sha512-dKjiXKTHQjAS57hL0HVzLpW9XYNGFpfYkr/51FzIIvbZR08PAnzIDYKwShoNYGvjQP6+rDFf1a5Utl0aWwcFrA==}
+  '@napi-rs/keyring-linux-arm64-musl@2.1.1':
+    resolution: {integrity: sha512-wUHecqT9SMUaQCsJO6vtFEsMcfskspXf6+J0AtKsnK8/GnAAb4hf2FHtwp2ZUOecOk1kTW3LPhU5LwTMJ1LLeA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@napi-rs/keyring-linux-riscv64-gnu@2.1.0':
-    resolution: {integrity: sha512-tqhb0ofhtEJ2+ZfmlKTDHbmIoNSz+SSTPWRgMfSVCgI4JVkqDdfcmIOcThZfRffJ3QI9C3Tng+rZL24acmD+GA==}
+  '@napi-rs/keyring-linux-riscv64-gnu@2.1.1':
+    resolution: {integrity: sha512-hrfvuY0zxrpJOa4k/LzWkrB/R/nXnniz/I2V39X5pWgxKJ1iZBQI03/wT8OI7BwSv9czSh5LLeX/o5D5ywRHBg==}
     engines: {node: '>= 10'}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
-  '@napi-rs/keyring-linux-x64-gnu@2.1.0':
-    resolution: {integrity: sha512-7ZA0ssxfpuGXV8S5Ct1ZJoEL3sKg/8u7mIL4SK9/PwKBhxIq7K+FVcjnggNsuFnEhHTX+HYl9hHDrlX0odZnHg==}
+  '@napi-rs/keyring-linux-x64-gnu@2.1.1':
+    resolution: {integrity: sha512-NHfMyYyu6laqRBzgfsB0zN12l+z5gz6xQqmLDT8ijevMMOc9ICcVo2GUJCPSX5WvRBgzui91D4R4QG0tahMurw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@napi-rs/keyring-linux-x64-musl@2.1.0':
-    resolution: {integrity: sha512-dI74Fzl03CrN2TEP7YVBtUBFgyRTRPyK1LMcIgAUfgW3o6f5SD1a8EsfT82+brpFOltjOhacIlFiYOkYtSI5Fg==}
+  '@napi-rs/keyring-linux-x64-musl@2.1.1':
+    resolution: {integrity: sha512-5E2pO2zqOv+HJr2YorAUYmqItv8ts2oa+BccxZ07/I7x3XvxqwZGtRbkp4wM8psv7phhIfgy+0kZ/ItBsGiDhg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@napi-rs/keyring-win32-arm64-msvc@2.1.0':
-    resolution: {integrity: sha512-SltrXXkEe9a+Jv8ConDkZW2Mdr0srpWurS7oYkYP1Mp07DNBpFyqawRnyo4p7ZvQU3e+R6irj/Fq0epCCvVUXA==}
+  '@napi-rs/keyring-win32-arm64-msvc@2.1.1':
+    resolution: {integrity: sha512-gn+Xg3oZmyC/pMIU0HTCyrIsncn2/u47H3JRQ8WKfPgS0KDCytcf2kuCCSShtNETSE5V8Zc18ymgIW5UrOQ5OA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@napi-rs/keyring-win32-ia32-msvc@2.1.0':
-    resolution: {integrity: sha512-l5wJQhqXkAfQ4FGxoRh0wMpL9VxVmfiYI5TTeOGNupuVsQvbHmysh8gfDQBBWVhyMENHJS2OqOSYIuqVjumAtA==}
+  '@napi-rs/keyring-win32-ia32-msvc@2.1.1':
+    resolution: {integrity: sha512-DeMQnalb+ueYjskBBUjwv0b9xuN9vhs/vi2H4q/crERfDWgmqu77rGZOW4Bi9kDc7Za3t29yeZctEBZzjAtXuA==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
 
-  '@napi-rs/keyring-win32-x64-msvc@2.1.0':
-    resolution: {integrity: sha512-3zYwO7dhJiUNyv2te81ujXm2vGxHwgx+z2eBm0dTYe3aWpvKQVzpfxCp/7cViJs8duVYE04wVOgXiRhRCMEq2w==}
+  '@napi-rs/keyring-win32-x64-msvc@2.1.1':
+    resolution: {integrity: sha512-DjRshMlsMdEyZTNpqfQYj60kDrCZLkl4y80U3w5WJQIj7ypToj02+A/hfJw/g68wzbSZ6uXhklyITQ1DABZAUg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@napi-rs/keyring@2.1.0':
-    resolution: {integrity: sha512-km9J3fomkGSLpImpelq0cMvLBrJ5eVlTzuWdG3Iy0laP6gU90MmHYjqhUhG32aYq0/0++r2TLuAA9xlnh4XU1g==}
+  '@napi-rs/keyring@2.1.1':
+    resolution: {integrity: sha512-7HUq8FHgW/O4s8ESvkxngTC9tOR/IyktdR0ral2VD0C8HDZk86FwPAH4qZyerKwS1DhJ6AhoebIsxcyw+Lbt1Q==}
     engines: {node: '>= 10'}
 
   '@napi-rs/wasm-runtime@1.2.5':
@@ -1047,10 +1047,6 @@ packages:
   '@noble/hashes@2.4.0':
     resolution: {integrity: sha512-X5XaVWZIBCT7HHZGm5I7ZQXDwLG+bGXuSrMQAW+7Zvl87h1kmc1ZB1VSRJcpUfoUrGQp4Fkoxm5kZ+Ms+aW+eA==}
     engines: {node: '>= 20.19.0'}
-
-  '@opentelemetry/semantic-conventions@1.43.0':
-    resolution: {integrity: sha512-eSYWTm620tTk45EKSedaUL8MFYI8hW164hIXsgIHyxu3VobUB3fFCu5t0hQby6OoWRPsG1KkKUG2M5UadiLiVg==}
-    engines: {node: '>=14'}
 
   '@oxc-project/runtime@0.108.0':
     resolution: {integrity: sha512-J1cESY4anMO4i9KtCPmCfQAzAR00Uw4SWsDPFP10CIwDMugkh34UrTKByuYKuPaHy0XAk8LlJiZJq2OLMfbuIQ==}
@@ -1766,20 +1762,20 @@ packages:
   '@viz-js/viz@3.31.0':
     resolution: {integrity: sha512-r7zlQdRvcwvIpjHGgs+KNWHeE/P5/Dq7k8ZAKaMCbZqomxCBJV78gVuQYaHzFVca+kB0mX0fMW9UFevCOBG50A==}
 
-  '@void/deploy-cloudflare@0.28.0':
-    resolution: {integrity: sha512-mu9mBpirqaTGJKl4tiHITNQDO5VMx3T+2FB2Mn1Em2Tgw99Qj8AGeXJo5BSjKXDaTzxLhULtjXZgI1Fi8DlCig==}
+  '@void/deploy-cloudflare@1.1.12':
+    resolution: {integrity: sha512-zUNDNFiAAxNRHJjwPSydVt122XJVQR16Ky2YVIYMVIhHKdHTFaBkgTbAiC/Wz3M/lj6P3hxJcBZwkFiJsQD1Qw==}
 
-  '@void/deploy-core@0.28.0':
-    resolution: {integrity: sha512-kxDZ7XGKz3zX4iGsovJk6hOLibrzjTMls2WRU7mOqo9xHIbgg1p9/c6W3KBsaenwh9p2cKjzLOMxb1TJRsZ9Wg==}
+  '@void/deploy-core@1.1.12':
+    resolution: {integrity: sha512-bZkTuD+/16GEAGHkbR4L2Zqp+/Cv8mbJRsXJuPUUwiS0wsTIuPHSmF7V+lGzxpXKvctuX+jDnq8zLOYa1LKKCw==}
 
-  '@void/edge@0.28.0':
-    resolution: {integrity: sha512-6n8EXcZ/0k9RKiXVmxMBnjHY77vPMNAVj3PJHwZHlzVVhtqftFtasS9/7SQXlPcPNhZ1r3OS/qzgWqsCzQiDkg==}
+  '@void/edge@1.1.12':
+    resolution: {integrity: sha512-HYW45JW6zh+QOQ7HZ/+b+UEykF+JPL58etKEkOngCgGm/dZx/4P7n5rAxncEWXDhmOT0TdWVMxWp1IFnKVoEOw==}
 
-  '@void/isr@0.28.0':
-    resolution: {integrity: sha512-x1Txh5KJze252+ujMXGqJVp4VH28TmIS+C0v/6yu4e9DxFxQM50bwVoEs7Y/emNX7AKEE7FBr7U6/nG1ULX8Vg==}
+  '@void/isr@1.1.12':
+    resolution: {integrity: sha512-IaDtCCBtJpWr0mXOT12PdP+9zc6GooPQ5rmmfjY/448ozRxfm6x896aO53fTmsNvV1eQZEr1HuHMnHzuCRYOxA==}
 
-  '@void/platform@0.28.0':
-    resolution: {integrity: sha512-3ktk47oWuFVwDU7znD0TkfdZs3FsLrN0vshdYkoD7Oppky9l3hG6H/9GNpGFFLtjHaPod+2jCEy3r+bFvWSZNg==}
+  '@void/platform@1.1.12':
+    resolution: {integrity: sha512-pX6OkTYL8yjhIAOb7FDHdydNfRhryDaBvnzxBtlzxNsKjvd6SYrrMyyyEslYWlTL8RidZ+G495k7rDp/CVBWZw==}
 
   '@voidzero-dev/vite-plus-core@1.3.0':
     resolution: {integrity: sha512-Bk/LBwNrxoB8XbGUtGJE3r+U9P4puvdZ6UH36ekygE1J+on/ytwM/yBgQwBnvmX6/MVax+2xxj8wk0N/KkyNeA==}
@@ -2098,12 +2094,12 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
 
-  better-auth@1.7.7:
-    resolution: {integrity: sha512-Zhgxi/c5ylmfB/sX+nwnBbsFf/j6k0L8DvL6CJXZSrXgxc5pPMC/e7j812zNd4L4B4ELmdURCPw3X8nAOUdcjw==}
+  better-auth@1.7.11:
+    resolution: {integrity: sha512-V4OMDdoFvOuAGbOb/mjNzX/iFJoC3hEF1rpL8vdI5eTR24dMJr7AWJuuhr6dE1ib/CBECzegt64ehS3/ngKYpQ==}
     peerDependencies:
       '@lynx-js/react': '*'
       '@prisma/client': ^5.0.0 || ^6.0.0 || ^7.0.0
-      '@sveltejs/kit': ^2.0.0
+      '@sveltejs/kit': ^2.0.0 || ^3.0.0
       '@tanstack/react-start': ^1.0.0
       '@tanstack/solid-start': ^1.0.0
       drizzle-kit: '>=0.31.4 || >=1.0.0-beta.1'
@@ -2157,8 +2153,8 @@ packages:
       vue:
         optional: true
 
-  better-call@1.4.0:
-    resolution: {integrity: sha512-bBKOT4vv1kZLDgxVePdilk/Jwkn+dtRRsmi3DzHcDP+WnswyVl6dR59l2HEeP/0cB+bDoopASAesWDPIdd/zZA==}
+  better-call@1.4.2:
+    resolution: {integrity: sha512-lOmFCTG1KcE60YWxoff2Wx0Fv7v7drP/fQTDYnhJUCdkA7V6QWXdLPUiMpOQCq7Fd0Ts3AkrRwD23xoiootlGA==}
     peerDependencies:
       zod: ^4.0.0
     peerDependenciesMeta:
@@ -2195,8 +2191,8 @@ packages:
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
 
-  cf@1.0.0-beta.14:
-    resolution: {integrity: sha512-CIDV5JAUIhJRTCPG3gR72BBzNbPH0NqpF/C3d6mPTXFd1LMbAgfAv6C0sg0MtLLb0blz1kFudDDd4azlKQ/p9A==}
+  cf@1.0.0-beta.18:
+    resolution: {integrity: sha512-SG9NqB6xEZf/WZm6+E2v0OIY5JA0b9DUgl1VOOlF0D5Y+Nk5PyhHonJOd6K2/g6f261h+Z0FwTEK69c9bfIq4g==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2311,8 +2307,8 @@ packages:
     resolution: {integrity: sha512-YCYqxTLIB2OCqf6w9/Vef13baBVbwQIPcbT4Y56AfO6B9ajZhDhD8Jkveg/hJvT/iuMloKD/IYYkyMMNhr7Kqg==}
     hasBin: true
 
-  drizzle-orm@0.45.3:
-    resolution: {integrity: sha512-CAloER21cDdcgZ1OmjrZX82EeRNsdP+y0onX/eyoYDaYzki/adrAa91lzM5jWh7zZPK4qUbw/6LGv9J+A+uizA==}
+  drizzle-orm@0.45.4:
+    resolution: {integrity: sha512-NiM1YZpJ2UxyeE67DpDDZ+Tsw4YLX3trSlkNT7Tm9eKoUNb1LvaAaQzXgYQsWs+AQ9TUmmwMmBOCXuqqxUWKKQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -2702,8 +2698,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  kysely@0.29.5:
-    resolution: {integrity: sha512-ooa+eSbBNPTo3MycPEuW5jdrxQdQwdtB3LC3h43FiXQbIry5tR0C5lDG7eealK0E4D7XjrnOP5DIUg/LyjRMYQ==}
+  kysely@0.29.7:
+    resolution: {integrity: sha512-fmIq+7kv4WbFm2tcfznRzikqB4cuNpgZ40PSU2fAJ2/OO5XhojqnTPrmgrCjYSRJVwBln03XcRXJGnw9H099IQ==}
     engines: {node: '>=22.0.0'}
 
   levn@0.4.1:
@@ -2905,8 +2901,8 @@ packages:
   micromark-util-types@2.0.3:
     resolution: {integrity: sha512-oxB2Ik03hI0gv+VNn9tnh1t1YEe9MDPptViAEgfdf3YQHsn0pzGTgCdlSCJXcwhqm8phaEuM7zeEu3QQzVBrPg==}
 
-  mime@4.1.0:
-    resolution: {integrity: sha512-X5ju04+cAzsojXKes0B/S4tcYtFAJ6tTMuSPBEn9CPGlrWr8Fiw7qYeLT0XyH80HSoAoqWCaz+MWKh22P7G1cw==}
+  mime@4.1.1:
+    resolution: {integrity: sha512-YAApRsTpM2+gnUFHhRNGfkX8NK0V5xj1nyQLufGlwEI+eX4xRsTcel2IXDuMEGSGjBvzykNW4VuoEACgwYe7BQ==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -2914,8 +2910,12 @@ packages:
     resolution: {integrity: sha512-V41TxLjX1Dq4pys8X5GAl/CrUY0//QcXCIdYwy01Cev+JdsWOWzzN0IP45lojgw+fEVY9QdepzVIziT2IxhbUQ==}
     engines: {node: '>=22.0.0'}
 
-  miniflare@5.20261006.1-alpha:
-    resolution: {integrity: sha512-6ylv8tamkrspDI2R/cAYfv+YWmfGNdXe76Pi9TauEUWsFVXn3LNF9Yk8oduzf1a+TYsSRYTqlOE7+nGGRsMHdw==}
+  miniflare@5.20261012.0-beta:
+    resolution: {integrity: sha512-Cjrs+vHHQ7krLO4HYELYpYBJBuMhcnNZD/Z5z/UcQSnFqWSQY3DhtTCFalXgI1/yO1iK+YrRKK8EYkumrEopxg==}
+    engines: {node: '>=22.0.0'}
+
+  miniflare@5.20261012.1-beta:
+    resolution: {integrity: sha512-8Canhy6g9+vAhqMc0o80YphqYIwpiA3aAp8aX+uDXU7J/qbUeoZzcII9c2V1P4uT/eHD4SB93qet1o1bRY3BuQ==}
     engines: {node: '>=22.0.0'}
 
   minimatch@10.2.6:
@@ -2924,9 +2924,6 @@ packages:
 
   minimatch@3.1.5:
     resolution: {integrity: sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==}
-
-  minisearch@7.2.0:
-    resolution: {integrity: sha512-dqT2XBYUOZOiC5t2HRnwADjhNS2cecp9u+TJRiJ1Qp/f5qjkeT5APcGPjHw+bz89Ms8Jp+cG4AlE+QZ/QnDglg==}
 
   monaco-editor@0.57.0:
     resolution: {integrity: sha512-5BkI9KGoqrNvBGUe15/QlZq3OooZ8WLg1AxTpaqHRCP3HNpzPPZKE2EDz8M7c+VRmCeUw1Brp4cx/PWm3kI/5A==}
@@ -2941,8 +2938,8 @@ packages:
   muggle-string@0.4.1:
     resolution: {integrity: sha512-VNTrAak/KhO2i8dqqnqnAHOa3cYBwXEZe9h+D5h/1ZqFSTEFHdM65lR7RoIqq3tBBYavsOXV84NoHXZ0AkPyqQ==}
 
-  mysql2@3.24.5:
-    resolution: {integrity: sha512-X6Ujsr2QSkkLpkQGjxzpKRAPn9nu4axpR63ntBzquFVEvPOArgbUQ1sJjFKI7hnaYtiVZxa17Z7q18KSubW0IQ==}
+  mysql2@3.24.6:
+    resolution: {integrity: sha512-enu73KhbAua2L3dIxjc6qg6ZJ7H3pt1BImZASWNWY5xSsmJ1ZuUPULTDGXgmJbI61vb+nJAG19IZclIq19UidQ==}
     engines: {node: '>= 8.0'}
     peerDependencies:
       '@types/node': '>= 8'
@@ -2961,8 +2958,8 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
-  nanostores@1.5.3:
-    resolution: {integrity: sha512-rQLB6eV4f2AW/n3L0JmwCROpaisYy9EDEADvEFSd1C/qG8hB6O5TPlh9A791JRbJr4CnMQBzptDcvD9OR1+6WA==}
+  nanostores@1.5.5:
+    resolution: {integrity: sha512-FixtE239Gl6Gz0ZGCK0WzvNwObNCIwVT+L7zQcf1QgcA6AzBxblzqe9OT88qiucNkhsjSOqiogSaF5jVbJiqSA==}
     engines: {node: ^20.0.0 || >=22.0.0}
 
   natural-compare@1.4.0:
@@ -3104,8 +3101,8 @@ packages:
     resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
     engines: {node: '>=14.19.0'}
 
-  postal-mime@4.0.5:
-    resolution: {integrity: sha512-fWu1Cmo2ef6LCwgHU1fVrqo55eyFP31F7hH0j/wMWkQYYdh+H8zz3nBf3EYRQelkmTfDrbDfTvPUQEBT8DS/jw==}
+  postal-mime@4.0.11:
+    resolution: {integrity: sha512-T0zAqYnuSB8s+zL9WdiGj/2DeWeObEjqrcw2LWq+hgwpCSbLt7xujsFXn6Kgr1wsLl8DJh+v+lG9GQSQfMcUyA==}
     engines: {node: '>=20'}
 
   postcss-selector-parser@7.1.6:
@@ -3114,6 +3111,10 @@ packages:
 
   postcss@8.5.30:
     resolution: {integrity: sha512-zkd+e9S1AQHhmaBKye9zlFHWjOwVgqXl1q3ECYy8561K7qxR2cREf/STLskulBFd78k6AOFeA+ff1TtEzk9bAA==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.31:
+    resolution: {integrity: sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg==}
     engines: {node: ^10 || ^12 || >=14}
 
   postgres-array@2.0.0:
@@ -3211,8 +3212,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  set-cookie-parser@3.1.2:
-    resolution: {integrity: sha512-5/r/lTwbJ3zQ+qwdUFZYeRNqda7P5HD8zQKqlSjdGt1/S0cjLAphHusj4Y58ahDtWn/g32xrIS58/ikOvwl0Lw==}
+  set-cookie-parser@3.1.4:
+    resolution: {integrity: sha512-iEmdEew+Tn1BwMGMP8LzGBEPC7Mf1sySjglCeEPb/Vchm9bnGezePvacYcId+fGprQzIng+TBkzqfJ/qS7AsBg==}
 
   sharp@0.35.4:
     resolution: {integrity: sha512-n++8XWcj+jCOr2IOl7h8LbKnGBDY4aPbmprMONBNFdn0ImXqpGVv5zliDs0V9HbmbCQLpbuo2ej9rAoOQTvMDA==}
@@ -3350,8 +3351,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tsx@4.23.13:
-    resolution: {integrity: sha512-BL5MGkRln6aDYhb0xbQlEAGw743BaZYWdbWtdJOBriYJboKgUUYCadFp2/FpBBZquBC/ezNBn7wMMPx7FDZUDw==}
+  tsx@4.23.15:
+    resolution: {integrity: sha512-Yiex1Ovn8z2xPpOWckIiysV1SSyRMY9BkLF++q0yKiDxCqRhosKfMg3janKkiLBwZ5c/YryloKwGZcrEmtwxKw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3513,12 +3514,12 @@ packages:
       jsdom:
         optional: true
 
-  void@0.28.0:
-    resolution: {integrity: sha512-NAu+1hnAka9uRUGJkoWtPoctGpGVxsY90AB9vw3KTSKJpATwHMLQIb5BDyTRmZ8RZMAJvHHgmISCJXslVZAYjA==}
+  void@1.1.12:
+    resolution: {integrity: sha512-EC8e57AAtQ/JhiDlDMF2RH1dE9NbbVpX54vpkPXpS45hAfSslY7CLnYpkX8Xs5vv+dbWWt7Z2xmLsNqH12fedA==}
     engines: {node: '>=24.21.0'}
     hasBin: true
     peerDependencies:
-      '@void/md': 0.28.0
+      '@void/md': 1.1.12
       arktype: '>=2.0.0'
       valibot: '>=1.0.0-beta.7'
       vite: ^8.0.0
@@ -3586,8 +3587,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  workerd@1.20261006.1:
-    resolution: {integrity: sha512-8MadBuffZ5NdpLwZjUmsqT5QlaKXq4gjgT6wzcKeynZTICNXyePhc+5QVoKiK7+MMhFTLNrRO2KXLlpk8Q6BkA==}
+  workerd@1.20261012.1:
+    resolution: {integrity: sha512-tEHoMPsMga0seVjxfsR8Pd3f8IRqYwkq++dTUKI5Gdgj6zuSDluYwisydq+dn90SsIACwBquJUQ1nBpcOqaWTA==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -3633,6 +3634,11 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
@@ -3651,11 +3657,11 @@ packages:
     resolution: {integrity: sha512-XrBh9ZiQK5mJVRxZBAvD6LwRyAYrK3MFtH3+onyuxFL5hFD44EC3QOmIC1FjTj6H2MMwq46/NAI+NZxLZPZgxg==}
     engines: {node: '>=14.18.0'}
 
-  zod@4.5.4:
-    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
-
   zod@4.6.5:
     resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+
+  zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -3689,56 +3695,51 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)':
+  '@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)':
     dependencies:
-      '@better-auth/utils': 0.4.2
+      '@better-auth/utils': 0.5.0
       '@better-fetch/fetch': 1.3.2
-      '@opentelemetry/semantic-conventions': 1.43.0
       '@standard-schema/spec': 1.1.0
-      better-call: 1.4.0(zod@4.6.5)
+      better-call: 1.4.2(zod@4.6.7)
       jose: 6.2.12
-      kysely: 0.29.5
-      nanostores: 1.5.3
-      zod: 4.6.5
+      kysely: 0.29.7
+      nanostores: 1.5.5
+      zod: 4.6.7
 
-  '@better-auth/drizzle-adapter@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))':
+  '@better-auth/drizzle-adapter@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
     optionalDependencies:
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
 
-  '@better-auth/kysely-adapter@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(kysely@0.29.5)':
+  '@better-auth/kysely-adapter@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(kysely@0.29.7)':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
     optionalDependencies:
-      kysely: 0.29.5
+      kysely: 0.29.7
 
-  '@better-auth/memory-adapter@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)':
+  '@better-auth/memory-adapter@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
 
-  '@better-auth/mongo-adapter@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)':
+  '@better-auth/mongo-adapter@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
 
-  '@better-auth/prisma-adapter@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)':
+  '@better-auth/prisma-adapter@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
 
-  '@better-auth/telemetry@1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)':
+  '@better-auth/telemetry@1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)':
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/utils': 0.5.0
       '@better-fetch/fetch': 1.3.2
-
-  '@better-auth/utils@0.4.2':
-    dependencies:
-      '@noble/hashes': 2.4.0
 
   '@better-auth/utils@0.5.0':
     dependencies:
@@ -3748,31 +3749,35 @@ snapshots:
 
   '@blazediff/core@1.10.0': {}
 
-  '@cloudflare/build-output-utils@0.9.0':
+  '@cloudflare/build-output-utils@0.9.3':
     dependencies:
-      '@cloudflare/config': 0.24.1
+      '@cloudflare/config': 0.27.0
 
-  '@cloudflare/codemods@0.4.2': {}
+  '@cloudflare/codemods@0.5.0': {}
 
-  '@cloudflare/config@0.24.1':
+  '@cloudflare/config@0.26.0':
+    dependencies:
+      zod: 4.6.5
+
+  '@cloudflare/config@0.27.0':
     dependencies:
       zod: 4.6.5
 
   '@cloudflare/kv-asset-handler@0.5.0': {}
 
-  '@cloudflare/runtime-types@0.1.9(@types/node@25.0.10)':
+  '@cloudflare/runtime-types@0.1.12(@types/node@25.0.10)':
     dependencies:
-      miniflare: 5.20261006.1-alpha(@types/node@25.0.10)
-      workerd: 1.20261006.1
+      miniflare: 5.20261012.1-beta(@types/node@25.0.10)
+      workerd: 1.20261012.1
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
       - utf-8-validate
 
-  '@cloudflare/sandbox@1.0.0':
+  '@cloudflare/sandbox@1.0.1':
     dependencies:
       aws4fetch: 1.0.20
-      zod: 4.5.4
+      zod: 4.6.5
 
   '@cloudflare/unenv-preset@2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260910.1)':
     dependencies:
@@ -3780,20 +3785,20 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260910.1
 
-  '@cloudflare/unenv-preset@2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261006.1)':
+  '@cloudflare/unenv-preset@2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261012.1)':
     dependencies:
       unenv: 2.0.0-rc.24
     optionalDependencies:
-      workerd: 1.20261006.1
+      workerd: 1.20261012.1
 
-  '@cloudflare/vite-plugin@1.63.1(@types/node@25.0.10)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(wrangler@4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10))':
+  '@cloudflare/vite-plugin@1.64.0(@types/node@25.0.10)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(wrangler@4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10))':
     dependencies:
-      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261006.1)
-      miniflare: 5.20261006.1-alpha(@types/node@25.0.10)
+      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261012.1)
+      miniflare: 5.20261012.0-beta(@types/node@25.0.10)
       unenv: 2.0.0-rc.24
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
-      workerd: 1.20261006.1
-      wrangler: 4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
+      workerd: 1.20261012.1
+      wrangler: 4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10)
       ws: 8.21.0
     transitivePeerDependencies:
       - '@types/node'
@@ -3803,49 +3808,49 @@ snapshots:
   '@cloudflare/workerd-darwin-64@1.20260910.1':
     optional: true
 
-  '@cloudflare/workerd-darwin-64@1.20261006.1':
+  '@cloudflare/workerd-darwin-64@1.20261012.1':
     optional: true
 
   '@cloudflare/workerd-darwin-arm64@1.20260910.1':
     optional: true
 
-  '@cloudflare/workerd-darwin-arm64@1.20261006.1':
+  '@cloudflare/workerd-darwin-arm64@1.20261012.1':
     optional: true
 
   '@cloudflare/workerd-linux-64@1.20260910.1':
     optional: true
 
-  '@cloudflare/workerd-linux-64@1.20261006.1':
+  '@cloudflare/workerd-linux-64@1.20261012.1':
     optional: true
 
   '@cloudflare/workerd-linux-arm64@1.20260910.1':
     optional: true
 
-  '@cloudflare/workerd-linux-arm64@1.20261006.1':
+  '@cloudflare/workerd-linux-arm64@1.20261012.1':
     optional: true
 
   '@cloudflare/workerd-windows-64@1.20260910.1':
     optional: true
 
-  '@cloudflare/workerd-windows-64@1.20261006.1':
+  '@cloudflare/workerd-windows-64@1.20261012.1':
     optional: true
 
-  '@cloudflare/workers-auth@0.13.1(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))':
+  '@cloudflare/workers-auth@0.14.0(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))':
     dependencies:
-      '@cloudflare/workers-utils': 0.47.1(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))
+      '@cloudflare/workers-utils': 0.47.2(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))
       undici: 7.29.1
     optionalDependencies:
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
 
-  '@cloudflare/workers-types@5.20261010.1': {}
+  '@cloudflare/workers-types@5.20261019.1': {}
 
-  '@cloudflare/workers-utils@0.47.1(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))':
+  '@cloudflare/workers-utils@0.47.2(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))':
     dependencies:
       chalk: 5.3.0
       dotenv: 16.3.1
       undici: 7.29.1
     optionalDependencies:
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -4300,56 +4305,56 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@napi-rs/keyring-darwin-arm64@2.1.0':
+  '@napi-rs/keyring-darwin-arm64@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-darwin-x64@2.1.0':
+  '@napi-rs/keyring-darwin-x64@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-freebsd-x64@2.1.0':
+  '@napi-rs/keyring-freebsd-x64@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-arm-gnueabihf@2.1.0':
+  '@napi-rs/keyring-linux-arm-gnueabihf@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-arm64-gnu@2.1.0':
+  '@napi-rs/keyring-linux-arm64-gnu@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-arm64-musl@2.1.0':
+  '@napi-rs/keyring-linux-arm64-musl@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-riscv64-gnu@2.1.0':
+  '@napi-rs/keyring-linux-riscv64-gnu@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-x64-gnu@2.1.0':
+  '@napi-rs/keyring-linux-x64-gnu@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-linux-x64-musl@2.1.0':
+  '@napi-rs/keyring-linux-x64-musl@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-win32-arm64-msvc@2.1.0':
+  '@napi-rs/keyring-win32-arm64-msvc@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-win32-ia32-msvc@2.1.0':
+  '@napi-rs/keyring-win32-ia32-msvc@2.1.1':
     optional: true
 
-  '@napi-rs/keyring-win32-x64-msvc@2.1.0':
+  '@napi-rs/keyring-win32-x64-msvc@2.1.1':
     optional: true
 
-  '@napi-rs/keyring@2.1.0':
+  '@napi-rs/keyring@2.1.1':
     optionalDependencies:
-      '@napi-rs/keyring-darwin-arm64': 2.1.0
-      '@napi-rs/keyring-darwin-x64': 2.1.0
-      '@napi-rs/keyring-freebsd-x64': 2.1.0
-      '@napi-rs/keyring-linux-arm-gnueabihf': 2.1.0
-      '@napi-rs/keyring-linux-arm64-gnu': 2.1.0
-      '@napi-rs/keyring-linux-arm64-musl': 2.1.0
-      '@napi-rs/keyring-linux-riscv64-gnu': 2.1.0
-      '@napi-rs/keyring-linux-x64-gnu': 2.1.0
-      '@napi-rs/keyring-linux-x64-musl': 2.1.0
-      '@napi-rs/keyring-win32-arm64-msvc': 2.1.0
-      '@napi-rs/keyring-win32-ia32-msvc': 2.1.0
-      '@napi-rs/keyring-win32-x64-msvc': 2.1.0
+      '@napi-rs/keyring-darwin-arm64': 2.1.1
+      '@napi-rs/keyring-darwin-x64': 2.1.1
+      '@napi-rs/keyring-freebsd-x64': 2.1.1
+      '@napi-rs/keyring-linux-arm-gnueabihf': 2.1.1
+      '@napi-rs/keyring-linux-arm64-gnu': 2.1.1
+      '@napi-rs/keyring-linux-arm64-musl': 2.1.1
+      '@napi-rs/keyring-linux-riscv64-gnu': 2.1.1
+      '@napi-rs/keyring-linux-x64-gnu': 2.1.1
+      '@napi-rs/keyring-linux-x64-musl': 2.1.1
+      '@napi-rs/keyring-win32-arm64-msvc': 2.1.1
+      '@napi-rs/keyring-win32-ia32-msvc': 2.1.1
+      '@napi-rs/keyring-win32-x64-msvc': 2.1.1
 
   '@napi-rs/wasm-runtime@1.2.5(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)':
     dependencies:
@@ -4361,8 +4366,6 @@ snapshots:
   '@noble/ciphers@2.4.0': {}
 
   '@noble/hashes@2.4.0': {}
-
-  '@opentelemetry/semantic-conventions@1.43.0': {}
 
   '@oxc-project/runtime@0.108.0': {}
 
@@ -4679,12 +4682,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.3
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.3
 
-  '@tailwindcss/vite@4.3.3(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))':
+  '@tailwindcss/vite@4.3.3(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
       tailwindcss: 4.3.3
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
 
   '@tanstack/virtual-core@3.13.18': {}
 
@@ -4766,8 +4769,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.56.1(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.70.1(typescript@6.0.3)
-      '@typescript-eslint/types': 8.70.1
+      '@typescript-eslint/tsconfig-utils': 8.56.1(typescript@6.0.3)
+      '@typescript-eslint/types': 8.56.1
       debug: 4.4.3
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -4863,35 +4866,35 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@vitejs/plugin-vue@6.0.10(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vue@3.5.44(typescript@6.0.3))':
+  '@vitejs/plugin-vue@6.0.10(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
       vue: 3.5.44(typescript@6.0.3)
 
-  '@vitest/browser-preview@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)':
+  '@vitest/browser-preview@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
     dependencies:
       '@testing-library/dom': 10.4.2
       '@testing-library/user-event': 14.6.7(@testing-library/dom@10.4.2)
-      '@vitest/browser': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      '@vitest/browser': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)':
+  '@vitest/browser@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)':
     dependencies:
       '@blazediff/core': 1.10.0
-      '@vitest/mocker': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      '@vitest/mocker': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       '@vitest/ui': 5.0.5(vitest@5.0.5)
       '@vitest/utils': 5.0.5
       magic-string: 1.4.3
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.2.0
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       ws: 8.22.0
     transitivePeerDependencies:
       - bufferutil
@@ -4899,23 +4902,23 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/mocker@5.0.5(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))':
+  '@vitest/mocker@5.0.5(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.5
       estree-walker: 3.0.3
       magic-string: 1.4.3
     optionalDependencies:
-      vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))'
+      vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)'
 
-  '@vitest/mocker@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))':
+  '@vitest/mocker@5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.5
       estree-walker: 3.0.3
       magic-string: 1.4.3
     optionalDependencies:
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
 
   '@vitest/pretty-format@5.0.5':
     dependencies:
@@ -4938,7 +4941,7 @@ snapshots:
       pathe: 2.0.3
       sirv: 3.0.2
       tinyrainbow: 3.2.0
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
 
   '@vitest/utils@5.0.5':
     dependencies:
@@ -4948,32 +4951,32 @@ snapshots:
 
   '@viz-js/viz@3.31.0': {}
 
-  '@void/deploy-cloudflare@0.28.0':
+  '@void/deploy-cloudflare@1.1.12':
     dependencies:
-      '@void/deploy-core': 0.28.0
+      '@void/deploy-core': 1.1.12
       jsonc-parser: 3.3.1
 
-  '@void/deploy-core@0.28.0': {}
+  '@void/deploy-core@1.1.12': {}
 
-  '@void/edge@0.28.0':
+  '@void/edge@1.1.12':
     dependencies:
-      '@void/deploy-core': 0.28.0
+      '@void/deploy-core': 1.1.12
 
-  '@void/isr@0.28.0':
+  '@void/isr@1.1.12':
     dependencies:
-      '@cloudflare/workers-types': 5.20261010.1
-      '@void/edge': 0.28.0
+      '@cloudflare/workers-types': 5.20261019.1
+      '@void/edge': 1.1.12
 
-  '@void/platform@0.28.0':
+  '@void/platform@1.1.12':
     dependencies:
       pathslash: 0.1.0
 
-  '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))':
+  '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)':
     dependencies:
       '@oxc-project/runtime': 0.154.0
       '@oxc-project/types': 0.154.0
       lightningcss: 1.33.0
-      postcss: 8.5.30
+      postcss: 8.5.31
       yuku-parser: 0.19.0
     optionalDependencies:
       '@types/node': 25.0.10
@@ -4990,9 +4993,10 @@ snapshots:
       esbuild: 0.28.0
       fsevents: 2.3.3
       jiti: 2.7.0
-      tsx: 4.23.13
+      tsx: 4.23.15
       typescript: 6.0.3
       vue-tsc: 3.3.13(typescript@6.0.3)
+      yaml: 2.9.1
 
   '@voidzero-dev/vite-plus-darwin-arm64@1.3.0':
     optional: true
@@ -5221,43 +5225,43 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  better-auth@1.7.7(drizzle-kit@0.31.11)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))(vue@3.5.44(typescript@6.0.3)):
+  better-auth@1.7.11(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))(vue@3.5.44(typescript@6.0.3)):
     dependencies:
-      '@better-auth/core': 1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3)
-      '@better-auth/drizzle-adapter': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))
-      '@better-auth/kysely-adapter': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(kysely@0.29.5)
-      '@better-auth/memory-adapter': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)
-      '@better-auth/mongo-adapter': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)
-      '@better-auth/prisma-adapter': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)
-      '@better-auth/telemetry': 1.7.7(@better-auth/core@1.7.7(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.5)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)
-      '@better-auth/utils': 0.4.2
+      '@better-auth/core': 1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5)
+      '@better-auth/drizzle-adapter': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))
+      '@better-auth/kysely-adapter': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(kysely@0.29.7)
+      '@better-auth/memory-adapter': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)
+      '@better-auth/mongo-adapter': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)
+      '@better-auth/prisma-adapter': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)
+      '@better-auth/telemetry': 1.7.11(@better-auth/core@1.7.11(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)(better-call@1.4.2(zod@4.6.7))(jose@6.2.12)(kysely@0.29.7)(nanostores@1.5.5))(@better-auth/utils@0.5.0)(@better-fetch/fetch@1.3.2)
+      '@better-auth/utils': 0.5.0
       '@better-fetch/fetch': 1.3.2
       '@noble/ciphers': 2.4.0
       '@noble/hashes': 2.4.0
-      better-call: 1.4.0(zod@4.6.5)
+      better-call: 1.4.2(zod@4.6.7)
       defu: 6.1.7
       jose: 6.2.12
-      kysely: 0.29.5
-      nanostores: 1.5.3
-      zod: 4.6.5
+      kysely: 0.29.7
+      nanostores: 1.5.5
+      zod: 4.6.7
     optionalDependencies:
       drizzle-kit: 0.31.11
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
-      mysql2: 3.24.5(@types/node@25.0.10)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
+      mysql2: 3.24.6(@types/node@25.0.10)
       pg: 8.23.1
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       vue: 3.5.44(typescript@6.0.3)
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
-  better-call@1.4.0(zod@4.6.5):
+  better-call@1.4.2(zod@4.6.7):
     dependencies:
       '@better-auth/utils': 0.5.0
       '@better-fetch/fetch': 1.3.2
       rou3: 0.9.2
-      set-cookie-parser: 3.1.2
+      set-cookie-parser: 3.1.4
     optionalDependencies:
-      zod: 4.6.5
+      zod: 4.6.7
 
   better-sqlite3@13.0.3:
     dependencies:
@@ -5284,15 +5288,13 @@ snapshots:
 
   ccount@2.0.1: {}
 
-  cf@1.0.0-beta.14(@types/node@25.0.10):
+  cf@1.0.0-beta.18(@types/node@25.0.10):
     dependencies:
-      '@cloudflare/build-output-utils': 0.9.0
-      '@cloudflare/codemods': 0.4.2
-      '@cloudflare/config': 0.24.1
-      '@cloudflare/runtime-types': 0.1.9(@types/node@25.0.10)
+      '@cloudflare/build-output-utils': 0.9.3
+      '@cloudflare/config': 0.27.0
+      '@cloudflare/runtime-types': 0.1.12(@types/node@25.0.10)
       blake3-wasm: 2.1.5
-      miniflare: 5.20261006.1-alpha(@types/node@25.0.10)
-      minisearch: 7.2.0
+      miniflare: 5.20261012.1-beta(@types/node@25.0.10)
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -5369,35 +5371,35 @@ snapshots:
 
   dotenv@16.3.1: {}
 
-  drizzle-arktype@0.1.3(arktype@2.2.0)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)):
+  drizzle-arktype@0.1.3(arktype@2.2.0)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)):
     dependencies:
       arktype: 2.2.0
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
 
   drizzle-kit@0.31.11:
     dependencies:
       '@drizzle-team/brocli': 0.10.2
       '@esbuild-kit/esm-loader': 2.6.5
       esbuild: 0.28.0
-      tsx: 4.23.13
+      tsx: 4.23.15
 
-  drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1):
+  drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1):
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20261010.1
+      '@cloudflare/workers-types': 5.20261019.1
       better-sqlite3: 13.0.3
-      kysely: 0.29.5
-      mysql2: 3.24.5(@types/node@25.0.10)
+      kysely: 0.29.7
+      mysql2: 3.24.6(@types/node@25.0.10)
       pg: 8.23.1
 
-  drizzle-valibot@0.4.2(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(valibot@1.4.1(typescript@6.0.3)):
+  drizzle-valibot@0.4.2(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(valibot@1.4.1(typescript@6.0.3)):
     dependencies:
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
       valibot: 1.4.1(typescript@6.0.3)
 
-  drizzle-zod@0.8.3(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(zod@4.6.5):
+  drizzle-zod@0.8.3(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(zod@4.6.7):
     dependencies:
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
-      zod: 4.6.5
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
+      zod: 4.6.7
 
   email-validator@2.0.4: {}
 
@@ -5698,7 +5700,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  kysely@0.29.5: {}
+  kysely@0.29.7: {}
 
   levn@0.4.1:
     dependencies:
@@ -5854,7 +5856,7 @@ snapshots:
 
   micromark-util-types@2.0.3: {}
 
-  mime@4.1.0: {}
+  mime@4.1.1: {}
 
   miniflare@5.20260910.0-alpha(@types/node@25.0.10):
     dependencies:
@@ -5869,12 +5871,25 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  miniflare@5.20261006.1-alpha(@types/node@25.0.10):
+  miniflare@5.20261012.0-beta(@types/node@25.0.10):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       sharp: 0.35.5(@types/node@25.0.10)
       undici: 7.29.1
-      workerd: 1.20261006.1
+      workerd: 1.20261012.1
+      ws: 8.21.0
+      youch: 4.1.0-beta.10
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - utf-8-validate
+
+  miniflare@5.20261012.1-beta(@types/node@25.0.10):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      sharp: 0.35.5(@types/node@25.0.10)
+      undici: 7.29.1
+      workerd: 1.20261012.1
       ws: 8.21.0
       youch: 4.1.0-beta.10
     transitivePeerDependencies:
@@ -5890,8 +5905,6 @@ snapshots:
     dependencies:
       brace-expansion: 1.1.21
 
-  minisearch@7.2.0: {}
-
   monaco-editor@0.57.0:
     dependencies:
       dompurify: 3.4.15
@@ -5903,7 +5916,7 @@ snapshots:
 
   muggle-string@0.4.1: {}
 
-  mysql2@3.24.5(@types/node@25.0.10):
+  mysql2@3.24.6(@types/node@25.0.10):
     dependencies:
       '@types/node': 25.0.10
       aws-ssl-profiles: 1.1.2
@@ -5922,7 +5935,7 @@ snapshots:
 
   nanoid@5.1.6: {}
 
-  nanostores@1.5.3: {}
+  nanostores@1.5.5: {}
 
   natural-compare@1.4.0: {}
 
@@ -5953,7 +5966,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  oxfmt@0.73.0(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))):
+  oxfmt@0.73.0(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)):
     dependencies:
       tinypool: 2.2.0
     optionalDependencies:
@@ -5976,7 +5989,7 @@ snapshots:
       '@oxfmt/binding-win32-arm64-msvc': 0.73.0
       '@oxfmt/binding-win32-ia32-msvc': 0.73.0
       '@oxfmt/binding-win32-x64-msvc': 0.73.0
-      vite-plus: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))
+      vite-plus: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)
 
   oxlint-tsgolint@7.0.2004:
     optionalDependencies:
@@ -5987,7 +6000,7 @@ snapshots:
       '@oxlint-tsgolint/win32-arm64': 7.0.2004
       '@oxlint-tsgolint/win32-x64': 7.0.2004
 
-  oxlint@1.88.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))):
+  oxlint@1.88.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.88.0
       '@oxlint/binding-android-arm64': 1.88.0
@@ -6009,7 +6022,7 @@ snapshots:
       '@oxlint/binding-win32-ia32-msvc': 1.88.0
       '@oxlint/binding-win32-x64-msvc': 1.88.0
       oxlint-tsgolint: 7.0.2004
-      vite-plus: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))
+      vite-plus: 1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)
 
   p-limit@3.1.0:
     dependencies:
@@ -6076,7 +6089,7 @@ snapshots:
 
   pngjs@7.0.0: {}
 
-  postal-mime@4.0.5: {}
+  postal-mime@4.0.11: {}
 
   postcss-selector-parser@7.1.6:
     dependencies:
@@ -6084,6 +6097,12 @@ snapshots:
       util-deprecate: 1.0.2
 
   postcss@8.5.30:
+    dependencies:
+      nanoid: 3.3.20
+      picocolors: 1.1.1
+      source-map-js: 1.2.2
+
+  postcss@8.5.31:
     dependencies:
       nanoid: 3.3.20
       picocolors: 1.1.1
@@ -6197,7 +6216,7 @@ snapshots:
 
   semver@7.8.5: {}
 
-  set-cookie-parser@3.1.2: {}
+  set-cookie-parser@3.1.4: {}
 
   sharp@0.35.4(@types/node@25.0.10):
     dependencies:
@@ -6363,7 +6382,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsx@4.23.13:
+  tsx@4.23.15:
     dependencies:
       esbuild: 0.28.0
     optionalDependencies:
@@ -6430,22 +6449,22 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)):
+  vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1):
     dependencies:
       '@oxc-project/types': 0.154.0
       '@oxlint/plugins': 1.88.0
-      '@vitest/browser': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)
-      '@vitest/browser-preview': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)
-      '@vitest/mocker': 5.0.5(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))
+      '@vitest/browser': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+      '@vitest/browser-preview': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
+      '@vitest/mocker': 5.0.5(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1))
       '@vitest/pretty-format': 5.0.5
       '@vitest/snapshot': 5.0.5
       '@vitest/spy': 5.0.5
       '@vitest/utils': 5.0.5
-      oxfmt: 0.73.0(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))
-      oxlint: 1.88.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))
+      oxfmt: 0.73.0(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1))
+      oxlint: 1.88.0(oxlint-tsgolint@7.0.2004)(vite-plus@1.3.0(@types/node@25.0.10)(@vitest/ui@5.0.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1))
       oxlint-tsgolint: 7.0.2004
-      vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))'
-      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)'
+      vitest: 5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
     optionalDependencies:
       '@voidzero-dev/vite-plus-darwin-arm64': 1.3.0
       '@voidzero-dev/vite-plus-darwin-x64': 1.3.0
@@ -6490,13 +6509,13 @@ snapshots:
       - vue-tsc
       - yaml
 
-  vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13):
+  vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1):
     dependencies:
       '@oxc-project/runtime': 0.108.0
       fdir: 6.5.0(picomatch@4.0.7)
       lightningcss: 1.33.0
       picomatch: 4.0.7
-      postcss: 8.5.30
+      postcss: 8.5.31
       rolldown: 1.0.0-beta.60(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -6504,15 +6523,16 @@ snapshots:
       esbuild: 0.28.0
       fsevents: 2.3.3
       jiti: 2.7.0
-      tsx: 4.23.13
+      tsx: 4.23.15
+      yaml: 2.9.1
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)):
+  vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))
+      '@vitest/mocker': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       chai: 6.3.0
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -6523,57 +6543,58 @@ snapshots:
       tinybench: 6.2.2
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@types/node': 25.0.10
-      '@vitest/browser-preview': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5)
+      '@vitest/browser-preview': 5.0.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5)
       '@vitest/ui': 5.0.5(vitest@5.0.5)
     transitivePeerDependencies:
       - msw
 
-  void@0.28.0(@types/node@25.0.10)(arktype@2.2.0)(kysely@0.29.5)(valibot@1.4.1(typescript@6.0.3))(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))(vue@3.5.44(typescript@6.0.3))(wrangler@4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10))(zod@4.6.5):
+  void@1.1.12(@types/node@25.0.10)(arktype@2.2.0)(kysely@0.29.7)(valibot@1.4.1(typescript@6.0.3))(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))(vue@3.5.44(typescript@6.0.3))(wrangler@4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10))(zod@4.6.7):
     dependencies:
-      '@cloudflare/build-output-utils': 0.9.0
-      '@cloudflare/codemods': 0.4.2
-      '@cloudflare/config': 0.24.1
-      '@cloudflare/sandbox': 1.0.0
-      '@cloudflare/vite-plugin': 1.63.1(@types/node@25.0.10)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13))(wrangler@4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10))
-      '@cloudflare/workers-auth': 0.13.1(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))
-      '@cloudflare/workers-types': 5.20261010.1
-      '@napi-rs/keyring': 2.1.0
-      '@void/deploy-cloudflare': 0.28.0
-      '@void/deploy-core': 0.28.0
-      '@void/edge': 0.28.0
-      '@void/isr': 0.28.0
-      '@void/platform': 0.28.0
-      better-auth: 1.7.7(drizzle-kit@0.31.11)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))))(vue@3.5.44(typescript@6.0.3))
+      '@cloudflare/build-output-utils': 0.9.3
+      '@cloudflare/codemods': 0.5.0
+      '@cloudflare/config': 0.26.0
+      '@cloudflare/sandbox': 1.0.1
+      '@cloudflare/vite-plugin': 1.64.0(@types/node@25.0.10)(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(wrangler@4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10))
+      '@cloudflare/workers-auth': 0.14.0(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))
+      '@cloudflare/workers-types': 5.20261019.1
+      '@napi-rs/keyring': 2.1.1
+      '@void/deploy-cloudflare': 1.1.12
+      '@void/deploy-core': 1.1.12
+      '@void/edge': 1.1.12
+      '@void/isr': 1.1.12
+      '@void/platform': 1.1.12
+      better-auth: 1.7.11(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)(vitest@5.0.5(@types/node@25.0.10)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5(vitest@5.0.5))(@voidzero-dev/vite-plus-core@1.3.0(@types/node@25.0.10)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3))(yaml@2.9.1)))(vue@3.5.44(typescript@6.0.3))
       better-sqlite3: 13.0.3
       blake3-jit: 1.1.0
-      cf: 1.0.0-beta.14(@types/node@25.0.10)
-      drizzle-arktype: 0.1.3(arktype@2.2.0)(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))
+      cf: 1.0.0-beta.18(@types/node@25.0.10)
+      drizzle-arktype: 0.1.3(arktype@2.2.0)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))
       drizzle-kit: 0.31.11
-      drizzle-orm: 0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1)
-      drizzle-valibot: 0.4.2(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(valibot@1.4.1(typescript@6.0.3))
-      drizzle-zod: 0.8.3(drizzle-orm@0.45.3(@cloudflare/workers-types@5.20261010.1)(better-sqlite3@13.0.3)(kysely@0.29.5)(mysql2@3.24.5(@types/node@25.0.10))(pg@8.23.1))(zod@4.6.5)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1)
+      drizzle-valibot: 0.4.2(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(valibot@1.4.1(typescript@6.0.3))
+      drizzle-zod: 0.8.3(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261019.1)(better-sqlite3@13.0.3)(kysely@0.29.7)(mysql2@3.24.6(@types/node@25.0.10))(pg@8.23.1))(zod@4.6.7)
       email-validator: 2.0.4
       hono: 4.13.13
       ignore: 7.0.12
       jiti: 2.7.0
       jsonc-parser: 3.3.1
-      mime: 4.1.0
-      miniflare: 5.20261006.1-alpha(@types/node@25.0.10)
+      mime: 4.1.1
+      miniflare: 5.20261012.0-beta(@types/node@25.0.10)
       minimatch: 10.2.6
-      mysql2: 3.24.5(@types/node@25.0.10)
+      mysql2: 3.24.6(@types/node@25.0.10)
       pg: 8.23.1
-      postal-mime: 4.0.5
+      postal-mime: 4.0.11
       proper-lockfile: 4.1.2
       terminal-link: 5.0.0
-      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.13)
+      vite: 8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
+      yaml: 2.9.1
     optionalDependencies:
       arktype: 2.2.0
       valibot: 1.4.1(typescript@6.0.3)
-      zod: 4.6.5
+      zod: 4.6.7
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@electric-sql/pglite'
@@ -6670,15 +6691,15 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260910.1
       '@cloudflare/workerd-windows-64': 1.20260910.1
 
-  workerd@1.20261006.1:
+  workerd@1.20261012.1:
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20261006.1
-      '@cloudflare/workerd-darwin-arm64': 1.20261006.1
-      '@cloudflare/workerd-linux-64': 1.20261006.1
-      '@cloudflare/workerd-linux-arm64': 1.20261006.1
-      '@cloudflare/workerd-windows-64': 1.20261006.1
+      '@cloudflare/workerd-darwin-64': 1.20261012.1
+      '@cloudflare/workerd-darwin-arm64': 1.20261012.1
+      '@cloudflare/workerd-linux-64': 1.20261012.1
+      '@cloudflare/workerd-linux-arm64': 1.20261012.1
+      '@cloudflare/workerd-windows-64': 1.20261012.1
 
-  wrangler@4.131.0(@cloudflare/workers-types@5.20261010.1)(@types/node@25.0.10):
+  wrangler@4.131.0(@cloudflare/workers-types@5.20261019.1)(@types/node@25.0.10):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260910.1)
@@ -6689,7 +6710,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260910.1
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20261010.1
+      '@cloudflare/workers-types': 5.20261019.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - '@types/node'
@@ -6703,6 +6724,8 @@ snapshots:
   xml-name-validator@5.0.0: {}
 
   xtend@4.0.2: {}
+
+  yaml@2.9.1: {}
 
   yocto-queue@0.1.0: {}
 
@@ -6741,8 +6764,8 @@ snapshots:
       '@yuku-toolchain/types': 0.19.0
       yuku-core: 0.19.0
 
-  zod@4.5.4: {}
-
   zod@4.6.5: {}
+
+  zod@4.6.7: {}
 
   zwitch@2.0.4: {}
