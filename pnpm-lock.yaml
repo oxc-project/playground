@@ -30,7 +30,7 @@ importers:
         specifier: 0.57.0
         version: 0.57.0
       prettier:
-        specifier: ^3.9.9
+        specifier: 3.9.10
         version: 3.9.10
       radix-vue:
         specifier: ^1.9.17
