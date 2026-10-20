@@ -6,5 +6,5 @@ const { oxc } = await useOxc();
 </script>
 
 <template>
-  <OutputPreview :code="oxc.ir" lang="tsx" />
+  <OutputPreview :code="oxc.ir" lang="rust" />
 </template>
