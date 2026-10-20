@@ -111,8 +111,11 @@ jobs:
 
       - name: Deploy to Void
         if: github.ref_name == 'main'
-        run: pnpm exec void deploy --skip-build
+        run: |
+          pnpm exec void connect "$VOID_API_URL" --no-login
+          pnpm exec void deploy --skip-build --platform void --project "$VOID_PROJECT"
         env:
+          VOID_API_URL: https://api.void.cloud
           VOID_PROJECT: oxc-playground
 
       - name: Generate URL Preview
