@@ -32,6 +32,7 @@ export async function createHighlighter(): Promise<HighlighterCore> {
       { createHighlighterCore },
       { createJavaScriptRegexEngine },
       langJson,
+      langRust,
       langTs,
       langTsx,
       vitesseLight,
@@ -40,6 +41,7 @@ export async function createHighlighter(): Promise<HighlighterCore> {
       import("shiki/core"),
       import("shiki/engine/javascript"),
       import("shiki/langs/json.mjs"),
+      import("shiki/langs/rust.mjs"),
       import("shiki/langs/typescript.mjs"),
       import("shiki/langs/tsx.mjs"),
       import("shiki/themes/vitesse-light.mjs"),
@@ -48,7 +50,7 @@ export async function createHighlighter(): Promise<HighlighterCore> {
 
     highlighterInstance = await createHighlighterCore({
       themes: [vitesseLight.default, vitesseDark.default],
-      langs: [langJson.default, langTs.default, langTsx.default],
+      langs: [langJson.default, langRust.default, langTs.default, langTsx.default],
       engine: createJavaScriptRegexEngine(),
     });
 
@@ -63,7 +65,7 @@ export async function createHighlighter(): Promise<HighlighterCore> {
 export const shikiLoading = computed(() => isLoading.value);
 export const shikiLoaded = computed(() => isLoaded.value);
 
-export type ShikiLang = "json" | "tsx" | "text" | "typescript";
+export type ShikiLang = "json" | "rust" | "tsx" | "text" | "typescript";
 
 export async function highlight(code: string, lang: ShikiLang): Promise<string> {
   try {
