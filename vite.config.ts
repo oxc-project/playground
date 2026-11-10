@@ -31,6 +31,9 @@ function resolveOxcDir(): string {
 
 const oxcDir = resolveOxcDir();
 const oxcPlayground = path.join(oxcDir, "napi/playground");
+const runtimePackage = JSON.parse(
+  readFileSync(path.join(oxcDir, "npm/runtime/package.json"), "utf8"),
+) as { version: string };
 
 let oxcCommit: string | undefined;
 
@@ -85,6 +88,7 @@ export default defineConfig({
   },
   define: {
     "import.meta.env.OXC_COMMIT": JSON.stringify(oxcCommit),
+    "import.meta.env.OXC_RUNTIME_VERSION": JSON.stringify(runtimePackage.version),
   },
   build: {
     target: "esnext",

@@ -2,9 +2,18 @@
 import { Icon } from "@iconify/vue";
 import { computed } from "vue";
 import { useOxc } from "~/composables/oxc";
+import ExecutionPanel from "./ExecutionPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
 
-const { oxc } = await useOxc();
+const { oxc, options, error } = await useOxc();
+const sourceType = computed(() => {
+  try {
+    const { node } = JSON.parse(oxc.value.astJson) as { node: { sourceType: string } };
+    return node.sourceType;
+  } catch {
+    return "script";
+  }
+});
 
 const sourcemapLink = computed(() => {
   let code = oxc.value.codegenText;
@@ -23,17 +32,25 @@ const sourcemapLink = computed(() => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col overflow-auto">
-    <OutputPreview :code="oxc.codegenText" lang="tsx" />
-    <a
-      v-if="sourcemapLink"
-      class="m-2 flex items-center self-start text-sm opacity-80"
-      :href="sourcemapLink"
-      target="_blank"
-      rel="noopener"
-    >
-      <span class="text-foreground/80 font-medium hover:text-primary">Visualize source map</span>
-      <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
-    </a>
+  <div class="h-full min-h-0 w-full flex flex-col">
+    <div class="min-h-0 flex-1 overflow-auto">
+      <OutputPreview :code="oxc.codegenText" lang="tsx" />
+      <a
+        v-if="sourcemapLink"
+        class="m-2 flex items-center self-start text-sm opacity-80"
+        :href="sourcemapLink"
+        target="_blank"
+        rel="noopener"
+      >
+        <span class="text-foreground/80 font-medium hover:text-primary">Visualize source map</span>
+        <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
+      </a>
+    </div>
+    <ExecutionPanel
+      :code="oxc.codegenText"
+      :source-type="sourceType"
+      :source-map="oxc.codegenSourcemapText"
+      :disabled="options.run.isolatedDeclarations || !!error"
+    />
   </div>
 </template>

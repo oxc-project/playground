@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import Checkbox from "~/components/ui/Checkbox.vue";
+import Select from "~/components/ui/Select.vue";
 import { useOxc } from "~/composables/oxc";
+import { helperRuntime } from "~/composables/state";
 import { Input } from "~/ui/input";
 import { Switch } from "~/ui/switch";
 
 const { options } = await useOxc();
+
+const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
+  { value: "npm", label: "@oxc-project/runtime" },
+  { value: "esm", label: "esm.sh (versioned URL)" },
+];
 </script>
 
 <template>
@@ -18,6 +25,11 @@ const { options } = await useOxc();
       <label class="flex items-center gap-2 text-sm">
         <span class="text-secondary-foreground">Target</span>
         <Input v-model="options.transformer.target" class="h-8 p-1" />
+      </label>
+
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="text-secondary-foreground">Runtime helpers</span>
+        <Select v-model="helperRuntime" :options="helperRuntimeOptions" />
       </label>
 
       <div class="flex flex-col gap-2">

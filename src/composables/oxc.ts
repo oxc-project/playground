@@ -1,6 +1,12 @@
 import { createGlobalState, useUrlSearchParams, watchDebounced } from "@vueuse/core";
 import { computed, ref, shallowRef, toRaw, triggerRef, watch, watchEffect } from "vue";
-import { activeTab, editorValue, enabledLintRules, formatterPanels } from "~/composables/state";
+import {
+  activeTab,
+  editorValue,
+  enabledLintRules,
+  formatterPanels,
+  helperRuntime,
+} from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
 import { LINT_PLUGINS, getRequiredPlugins } from "~/utils/linter-rules";
 import type { Oxc, OxcOptions } from "oxc-playground";
@@ -13,6 +19,7 @@ const urlParams = useUrlSearchParams<{
   options?: string;
   code?: string;
   lintRules?: string;
+  helpers?: string;
 }>("history", { removeFalsyValues: true });
 
 // Initialize state from URL (runs synchronously at module load)
@@ -30,6 +37,9 @@ if (urlParams.formatterPanels) {
 }
 if (urlParams.lintRules) {
   enabledLintRules.value = urlParams.lintRules.split(",").filter(Boolean);
+}
+if (urlParams.helpers === "esm") {
+  helperRuntime.value = "esm";
 }
 editorValue.value = urlParams.code || PLAYGROUND_DEMO_CODE;
 
@@ -170,7 +180,17 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
-      const rawOptions = toRaw(options.value);
+      const rawOptions = {
+        ...toRaw(options.value),
+        transformer: {
+          ...toRaw(options.value.transformer),
+          // The runtime version must match the Oxc build that produced the code.
+          helperModuleName:
+            helperRuntime.value === "esm"
+              ? `https://esm.sh/@oxc-project/runtime@${import.meta.env.OXC_RUNTIME_VERSION}`
+              : undefined,
+        },
+      };
 
       // Build linter config from enabledLintRules directly, ensuring it's
       // always up-to-date when run() fires (no dependency on external watcher)
@@ -191,7 +211,10 @@ export const useOxc = createGlobalState(async () => {
     console.error = originalError;
     triggerRef(state);
   }
-  watch([options, editorValue, activeTab, enabledLintRules], run, { deep: true, immediate: true });
+  watch([options, editorValue, activeTab, enabledLintRules, helperRuntime], run, {
+    deep: true,
+    immediate: true,
+  });
 
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
@@ -209,6 +232,11 @@ export const useOxc = createGlobalState(async () => {
   watchEffect(() => {
     urlParams.lintRules =
       enabledLintRules.value.length > 0 ? enabledLintRules.value.join(",") : undefined;
+  });
+
+  // Sync the helper runtime choice to URL (reactive, no debounce needed)
+  watchEffect(() => {
+    urlParams.helpers = helperRuntime.value === "esm" ? "esm" : undefined;
   });
 
   // Sync options to URL (debounced since options can change frequently)

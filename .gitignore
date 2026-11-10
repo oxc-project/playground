@@ -6,3 +6,5 @@ node_modules/
 tsconfig.tsbuildinfo
 .eslintcache
 .claude/
+playwright-report/
+test-results/
