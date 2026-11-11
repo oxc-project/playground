@@ -24,6 +24,8 @@ const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
 const consoleEl = useTemplateRef<HTMLDivElement>("consoleEl");
 const tipId = useId();
 const consoleId = useId();
+// Once there is a run to repeat, "Rerun" says so without changing the action.
+const runLabel = computed(() => (status.value === "idle" ? "Run output" : "Rerun"));
 const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
 const stoppable = computed(
   () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
@@ -126,7 +128,7 @@ watch(
         @click="run"
       >
         <Icon icon="ri:play-line" />
-        Run output
+        {{ runLabel }}
       </Button>
       <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
       <span
