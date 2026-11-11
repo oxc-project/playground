@@ -254,23 +254,18 @@ test("preserves the Window receiver and arguments for strict timeout callbacks",
   await expect(page.getByRole("status")).toHaveText("Finished");
 });
 
-test("tracks string timers and accepts clearTimeout for an interval", async ({ page }) => {
+test("accepts an interval id in clearTimeout", async ({ page }) => {
   await openOutput(
     page,
-    `
-    let message = "string timeout";
-    globalThis.stringInterval = setInterval('console.log("string tick")', 100);
-    setTimeout('console.log(message)', 0);
-  `,
+    'let tick = 0; globalThis.id = setInterval(() => console.log("tick", ++tick), 100);',
   );
   await page.getByRole("button", { name: "Run output", exact: true }).click();
   const consolePanel = page.getByRole("log", { name: "Execution console" });
-  await expect(consolePanel).toContainText("string timeout");
-  await expect(consolePanel).toContainText("string tick");
+  await expect(consolePanel).toContainText("tick 1");
   await expect(page.getByRole("status")).toHaveText("Running…");
   await expect(page.getByRole("button", { name: "Stop", exact: true })).toBeVisible();
   const sandbox = page.frames().find((frame) => frame.parentFrame() === page.mainFrame());
-  await sandbox!.evaluate("clearTimeout(globalThis.stringInterval)");
+  await sandbox!.evaluate("clearTimeout(globalThis.id)");
   await expect(page.getByRole("status")).toHaveText("Finished");
   await expect(page.getByRole("button", { name: "Stop", exact: true })).toHaveCount(0);
 });

@@ -80,9 +80,6 @@ function receive(event: MessageEvent) {
       topLevelComplete.value = data.topLevelComplete;
       syncStatus();
       break;
-    case "clear":
-      entries.value = [];
-      break;
   }
 }
 

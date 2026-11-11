@@ -1,25 +1,14 @@
 // This source is embedded in a sandboxed iframe, not executed in the playground.
 const payload = JSON.parse(document.getElementById("runner-payload").textContent);
 const send = parent.postMessage.bind(parent);
-const serialize = JSON.stringify.bind(JSON);
 const stringify = (value) => {
   if (typeof value === "string") return value;
   if (value instanceof Error) return value.stack || value.message;
-  if (typeof value === "function" || typeof value === "symbol") return String(value);
-  const seen = new WeakSet();
   try {
-    return (
-      serialize(value, (_key, entry) => {
-        if (typeof entry === "bigint") return `${entry}n`;
-        if (entry !== null && typeof entry === "object") {
-          if (seen.has(entry)) return "[Circular]";
-          seen.add(entry);
-        }
-        return entry;
-      }) ?? String(value)
-    );
+    return JSON.stringify(value) ?? String(value);
   } catch {
-    return "[Unserializable value]";
+    // Circular structures and BigInt values are not serializable.
+    return String(value);
   }
 };
 const report = (type, text = "", level = "log") => {
@@ -27,13 +16,9 @@ const report = (type, text = "", level = "log") => {
 };
 const reportError = (error) => report("error", stringify(error), "error");
 
-for (const level of ["log", "info", "warn", "error", "debug", "dir", "table"]) {
+for (const level of ["log", "info", "warn", "error"]) {
   console[level] = (...args) => report("console", args.map(stringify).join(" "), level);
 }
-console.assert = (condition, ...args) => {
-  if (!condition) report("console", `Assertion failed: ${args.map(stringify).join(" ")}`, "error");
-};
-console.clear = () => report("clear");
 addEventListener("error", (event) => {
   event.preventDefault();
   reportError(event.error || event.message);
@@ -49,27 +34,20 @@ let pendingTimers = 0;
 let topLevelComplete = false;
 const reportState = () =>
   send({ channel: "oxc-output-runner", type: "activity", pendingTimers, topLevelComplete }, "*");
+const activeTimers = new Set();
 const nativeSetTimeout = globalThis.setTimeout.bind(globalThis);
 const nativeSetInterval = globalThis.setInterval.bind(globalThis);
 const nativeClearTimeout = globalThis.clearTimeout.bind(globalThis);
 const nativeClearInterval = globalThis.clearInterval.bind(globalThis);
-const activeTimers = new Set();
-const timerGlobal = globalThis;
-const apply = Reflect.apply;
-// oxlint-disable-next-line no-eval -- Preserve native string timer semantics inside the sandbox.
-const indirectEval = globalThis.eval;
 
 function trackTimer(nativeSet, repeating) {
   return function (callback, delay, ...args) {
-    // Preserve the native error for a missing required handler. Convert string
-    // handlers at scheduling time, then evaluate them in the global scope.
+    // Let the native timer report the missing required handler.
     if (arguments.length === 0) return nativeSet();
-    const handler = typeof callback === "function" ? callback : `${callback}`;
     const id = nativeSet(() => {
       if (!repeating) activeTimers.delete(id);
       try {
-        if (typeof handler === "function") apply(handler, timerGlobal, args);
-        else indirectEval(handler);
+        Reflect.apply(callback, globalThis, args);
       } finally {
         pendingTimers = activeTimers.size;
         reportState();
@@ -82,14 +60,17 @@ function trackTimer(nativeSet, repeating) {
   };
 }
 
+function clearTimer(nativeClear) {
+  return (id) => {
+    nativeClear(id);
+    activeTimers.delete(id);
+    pendingTimers = activeTimers.size;
+    reportState();
+  };
+}
+
 globalThis.setTimeout = trackTimer(nativeSetTimeout, false);
 globalThis.setInterval = trackTimer(nativeSetInterval, true);
-const clearTimer = (nativeClear) => (id) => {
-  nativeClear(id);
-  activeTimers.delete(id);
-  pendingTimers = activeTimers.size;
-  reportState();
-};
 globalThis.clearTimeout = clearTimer(nativeClearTimeout);
 globalThis.clearInterval = clearTimer(nativeClearInterval);
 
