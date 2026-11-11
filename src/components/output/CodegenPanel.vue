@@ -5,7 +5,7 @@ import { useOxc } from "~/composables/oxc";
 import ExecutionPanel from "./ExecutionPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
 
-const { oxc, options, error } = await useOxc();
+const { oxc } = await useOxc();
 const sourceType = computed(() => {
   try {
     const { node } = JSON.parse(oxc.value.astJson) as { node: { sourceType: string } };
@@ -50,7 +50,6 @@ const sourcemapLink = computed(() => {
       :code="oxc.codegenText"
       :source-type="sourceType"
       :source-map="oxc.codegenSourcemapText"
-      :disabled="options.run.isolatedDeclarations || !!error"
     />
   </div>
 </template>

@@ -8,7 +8,6 @@ const props = defineProps<{
   code: string;
   sourceType: string;
   sourceMap?: string;
-  disabled?: boolean;
 }>();
 
 type Status = "idle" | "running" | "complete" | "error" | "stopped";
@@ -22,17 +21,11 @@ const topLevelComplete = ref(false);
 const pendingTimers = ref(0);
 const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
 const consoleEl = useTemplateRef<HTMLDivElement>("consoleEl");
-const tipId = useId();
 const consoleId = useId();
 // Once there is a run to repeat, "Rerun" says so without changing the action.
 const runLabel = computed(() => (status.value === "idle" ? "Run output" : "Rerun"));
 const stoppable = computed(
   () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
-);
-const tip = computed(() =>
-  props.disabled
-    ? "Run output is unavailable while Oxc reports an error or Isolated Declarations is enabled."
-    : undefined,
 );
 
 // "Finished" means the synchronous code and every timer it scheduled are done.
@@ -102,28 +95,19 @@ function receive(event: MessageEvent) {
 
 window.addEventListener("message", receive);
 onBeforeUnmount(() => window.removeEventListener("message", receive));
-watch(
-  [() => props.code, () => props.sourceType, () => props.sourceMap, () => props.disabled],
-  () => {
-    stop();
-    status.value = "idle";
-    entries.value = [];
-    topLevelComplete.value = false;
-    pendingTimers.value = 0;
-  },
-);
+watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
+  stop();
+  status.value = "idle";
+  entries.value = [];
+  topLevelComplete.value = false;
+  pendingTimers.value = 0;
+});
 </script>
 
 <template>
   <section class="shrink-0 border-t" aria-label="Output execution">
     <div class="flex items-center gap-2 px-2 py-1.5">
-      <Button
-        size="sm"
-        variant="outline"
-        :disabled="!code || !!tip"
-        :aria-describedby="tip ? tipId : undefined"
-        @click="run"
-      >
+      <Button size="sm" variant="outline" @click="run">
         <Icon icon="ri:play-line" />
         {{ runLabel }}
       </Button>
@@ -161,9 +145,6 @@ watch(
         </Button>
       </div>
     </div>
-    <p v-if="tip" :id="tipId" class="px-3 pb-2 text-xs text-muted-foreground">
-      {{ tip }}
-    </p>
     <div
       v-show="expanded"
       :id="consoleId"
