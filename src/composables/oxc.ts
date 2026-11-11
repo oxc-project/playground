@@ -180,14 +180,15 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
+      const runtimeVersion = import.meta.env.OXC_RUNTIME_VERSION;
       const rawOptions = {
         ...toRaw(options.value),
         transformer: {
           ...toRaw(options.value.transformer),
-          // The runtime version must match the Oxc build that produced the code.
+          // Only use a CDN URL when it can be pinned to the matching runtime.
           helperModuleName:
-            helperRuntime.value === "esm"
-              ? `https://esm.sh/@oxc-project/runtime@${import.meta.env.OXC_RUNTIME_VERSION}`
+            helperRuntime.value === "esm" && runtimeVersion
+              ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
               : undefined,
         },
       };
