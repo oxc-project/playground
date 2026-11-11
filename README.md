@@ -40,21 +40,6 @@ before running.
 
 Run the dependency-analysis regressions with `pnpm test`.
 
-Browser regressions use an installed Google Chrome and mock esm.sh responses.
-Start the dev server first:
-
-```bash
-pnpm dev --port 5199
-```
-
-Then run:
-
-```bash
-pnpm test:browser
-```
-
-Set `PLAYGROUND_URL` to test a server at a different origin.
-
 # [Sponsored By](https://oxc.rs/sponsor)
 
 <p align="center">
