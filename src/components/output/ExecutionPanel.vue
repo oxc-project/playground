@@ -32,7 +32,7 @@ function syncStatus() {
 }
 
 function append(text: string, level: string) {
-  entries.value.push({ text: text.slice(0, 10000), level });
+  entries.value.push({ text, level });
   if (entries.value.length > 500) entries.value.shift();
 }
 
@@ -67,10 +67,6 @@ function receive(event: MessageEvent) {
       if (typeof data.text !== "string" || typeof data.level !== "string") return;
       append(data.text, data.level);
       if (data.type === "error") status.value = "error";
-      break;
-    case "complete":
-      topLevelComplete.value = true;
-      syncStatus();
       break;
     case "activity":
       if (typeof data.pendingTimers !== "number" || typeof data.topLevelComplete !== "boolean") {

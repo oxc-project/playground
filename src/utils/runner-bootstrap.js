@@ -95,7 +95,6 @@ try {
   }
   topLevelComplete = true;
   reportState();
-  report("complete");
 } catch (error) {
   reportError(error);
 }

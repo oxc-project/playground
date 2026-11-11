@@ -13,28 +13,23 @@ Assuming the oxc repository is in `../oxc`:
 
 ## Running output
 
-In the Printed tab, click **Run output** to execute the generated JavaScript in a
-fresh sandboxed iframe. Console messages and runtime errors appear below the code.
-**Stop** removes the iframe, including its timers; editing the output also stops
-the previous run. The status stays **Running** while the code's timers are still
-pending, and shows **Finished** once the synchronous run and all timers are done.
-Promise-based work that is still pending is not tracked. Blocking synchronous code
-can freeze the tab; Stop cannot interrupt it.
+**Run output** in the Printed tab executes the generated JavaScript in a sandboxed
+iframe and shows its console output. **Stop** removes the iframe and its timers;
+editing the output stops the run. The status stays **Running** until synchronous
+code and every scheduled timer finish. Pending promises are not tracked, and a
+blocking loop cannot be interrupted.
 
-The executed copy of the output also carries an inline source map, so stack traces
-in devtools point back at the original source. The printed output is unchanged.
+The executed copy carries an inline source map, so devtools map back to the
+original source; the printed output is unchanged. Scripts run as scripts and ES
+modules as modules.
 
-Scripts keep their script semantics, and ES modules execute as modules. In
-Transformer, **Runtime helpers** selects the npm package path (the default) or
-versioned esm.sh URLs in the generated output. The esm.sh version matches the
-runtime in the sibling Oxc checkout, and the choice is saved in the share URL.
-
-To run code that needs runtime helpers, set **Extension** to **mjs** (or **mts**) and
-**Runtime helpers → esm.sh**. The browser loads the imports exactly as printed.
-**Run output** is disabled with a tip when the output uses `require()` or bare npm
-helper imports. Other package imports, relative imports, CommonJS files, and
-Node.js APIs are not supported. TypeScript and JSX need the Transformer enabled
-before running.
+**Runtime helpers** in Transformer selects npm package paths (the default) or
+versioned esm.sh URLs matching the sibling Oxc checkout, and the choice is saved
+in the share URL. To run helper-using output, set **Extension** to **mjs** (or
+**mts**) and **Runtime helpers → esm.sh**. Run is disabled with a tip when the
+output uses `require()` or bare npm helper imports; other packages, relative
+imports, CommonJS, and Node.js APIs are unsupported. Enable the Transformer
+first to run TypeScript or JSX.
 
 ## Tests
 
