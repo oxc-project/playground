@@ -14,6 +14,10 @@ export function getRunDisabledReason(code: string, sourceType: string): string |
       return "Browsers need a URL for runtime imports. Select Runtime helpers esm.sh in Transformer.";
     }
   } catch (error) {
+    // Parser messages are about the input syntax, not about how to enable Run.
+    if (error instanceof SyntaxError) {
+      return "The output is not JavaScript that a browser can parse. Enable the Transformer for TypeScript and JSX input.";
+    }
     return error instanceof Error ? error.message : String(error);
   }
 }

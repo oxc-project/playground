@@ -174,6 +174,12 @@ test("rejects nonliteral dynamic import sources clearly", () => {
   }
 });
 
+test("treats other uses of the global require as unrunnable", () => {
+  assert.equal(analyzeOutput('const r = require; r("x");', "script").hasRequire, true);
+  assert.equal(analyzeOutput("require;", "script").hasRequire, true);
+  assert.equal(analyzeOutput("typeof require;", "script").hasRequire, false);
+});
+
 test("detects global require calls regardless of the argument or source type", () => {
   for (const sourceType of ["script", "module"] as const) {
     for (const argument of ['"node:fs"', `"${helper}.js"`, "name", ""]) {

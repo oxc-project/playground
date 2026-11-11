@@ -44,7 +44,16 @@ export function analyzeOutput(
     helpers.add(source.value);
   }
 
-  function visit(node: AnyNode): void {
+  function isTypeofGuard(node: AnyNode | undefined): boolean {
+    return node?.type === "UnaryExpression" && node.operator === "typeof";
+  }
+
+  function visit(node: AnyNode, parent?: AnyNode): void {
+    // `typeof require` probes the global without calling it, but any other use of
+    // an unresolved global require, including an alias, cannot run in a browser.
+    if (node.type === "Identifier" && globalRequires.has(node) && !isTypeofGuard(parent)) {
+      hasRequire = true;
+    }
     switch (node.type) {
       case "ImportDeclaration":
       case "ExportAllDeclaration":
@@ -73,9 +82,9 @@ export function analyzeOutput(
     }
     for (const value of Object.values(node)) {
       if (Array.isArray(value)) {
-        for (const child of value) if (isNode(child)) visit(child);
+        for (const child of value) if (isNode(child)) visit(child, node);
       } else if (isNode(value)) {
-        visit(value);
+        visit(value, node);
       }
     }
   }

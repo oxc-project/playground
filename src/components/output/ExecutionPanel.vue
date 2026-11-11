@@ -16,13 +16,20 @@ type Entry = { text: string; level: string };
 const status = ref<Status>("idle");
 const entries = ref<Entry[]>([]);
 const expanded = ref(false);
-const document = ref("");
+const srcdoc = ref("");
 const runId = ref(0);
 const topLevelComplete = ref(false);
 const pendingTimers = ref(0);
 const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
 const tipId = useId();
 const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
+const tip = computed(
+  () =>
+    disabledReason.value ??
+    (props.disabled
+      ? "Run output is unavailable while Oxc reports an error or Isolated Declarations is enabled."
+      : undefined),
+);
 
 // "Finished" means the synchronous code and every timer it scheduled are done.
 // Pending timers keep the run in the running state.
@@ -37,7 +44,7 @@ function append(text: string, level: string) {
 }
 
 function stop() {
-  document.value = "";
+  srcdoc.value = "";
   if (status.value === "running" || status.value === "complete") status.value = "stopped";
 }
 
@@ -50,7 +57,7 @@ function run() {
   topLevelComplete.value = false;
   pendingTimers.value = 0;
   try {
-    document.value = createRunnerDocument(props.code, props.sourceType, props.sourceMap);
+    srcdoc.value = createRunnerDocument(props.code, props.sourceType, props.sourceMap);
   } catch (error) {
     append(error instanceof Error ? error.message : String(error), "error");
     status.value = "error";
@@ -104,14 +111,14 @@ function close() {
       <Button
         size="sm"
         variant="outline"
-        :disabled="disabled || !code || !!disabledReason"
-        :aria-describedby="disabledReason ? tipId : undefined"
+        :disabled="!code || !!tip"
+        :aria-describedby="tip ? tipId : undefined"
         @click="run"
       >
         <Icon icon="ri:play-line" />
         Run output
       </Button>
-      <Button v-if="document && status !== 'complete'" size="sm" variant="ghost" @click="stop">
+      <Button v-if="srcdoc && status !== 'complete'" size="sm" variant="ghost" @click="stop">
         Stop
       </Button>
       <span v-if="expanded" class="text-xs text-muted-foreground" role="status">
@@ -138,8 +145,8 @@ function close() {
         </Button>
       </div>
     </div>
-    <p v-if="disabledReason" :id="tipId" class="px-3 pb-2 text-xs text-muted-foreground">
-      {{ disabledReason }}
+    <p v-if="tip" :id="tipId" class="px-3 pb-2 text-xs text-muted-foreground">
+      {{ tip }}
     </p>
     <div
       v-if="expanded"
@@ -164,10 +171,10 @@ function close() {
       </p>
     </div>
     <iframe
-      v-if="document"
+      v-if="srcdoc"
       :key="runId"
       ref="sandbox"
-      :srcdoc="document"
+      :srcdoc="srcdoc"
       sandbox="allow-scripts"
       title="Output execution sandbox"
       class="hidden"
