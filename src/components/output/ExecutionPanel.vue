@@ -23,6 +23,7 @@ const pendingTimers = ref(0);
 const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
 const consoleEl = useTemplateRef<HTMLDivElement>("consoleEl");
 const tipId = useId();
+const consoleId = useId();
 const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
 const stoppable = computed(
   () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
@@ -50,7 +51,7 @@ function append(text: string, level: string) {
     consoleNode.scrollHeight - consoleNode.scrollTop - consoleNode.clientHeight < 24;
   entries.value.push({ text, level });
   if (entries.value.length > 500) entries.value.shift();
-  if (atBottom) {
+  if (expanded.value && atBottom) {
     void nextTick(() => {
       if (consoleEl.value) consoleEl.value.scrollTop = consoleEl.value.scrollHeight;
     });
@@ -112,11 +113,6 @@ watch(
     pendingTimers.value = 0;
   },
 );
-
-function close() {
-  stop();
-  expanded.value = false;
-}
 </script>
 
 <template>
@@ -133,7 +129,11 @@ function close() {
         Run output
       </Button>
       <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
-      <span v-if="expanded" class="text-xs text-muted-foreground" role="status">
+      <span
+        v-if="expanded || status !== 'idle'"
+        class="text-xs text-muted-foreground"
+        role="status"
+      >
         {{
           {
             idle: "Output changed — run again",
@@ -144,16 +144,21 @@ function close() {
           }[status]
         }}
       </span>
-      <div v-if="expanded" class="ml-auto flex items-center gap-1">
-        <Button size="sm" variant="ghost" @click="entries = []">Clear console</Button>
+      <div v-if="expanded || status !== 'idle'" class="ml-auto flex items-center gap-1">
+        <Button v-if="expanded" size="sm" variant="ghost" @click="entries = []"
+          >Clear console</Button
+        >
         <Button
           size="icon"
           variant="ghost"
           class="h-7 w-7"
-          aria-label="Close console"
-          @click="close"
+          :aria-label="expanded ? 'Collapse console' : 'Expand console'"
+          :title="expanded ? 'Collapse console' : 'Expand console'"
+          :aria-expanded="expanded"
+          :aria-controls="consoleId"
+          @click="expanded = !expanded"
         >
-          <Icon icon="ri:close-line" />
+          <Icon :icon="expanded ? 'ri:arrow-down-s-line' : 'ri:arrow-up-s-line'" />
         </Button>
       </div>
     </div>
@@ -161,7 +166,8 @@ function close() {
       {{ tip }}
     </p>
     <div
-      v-if="expanded"
+      v-show="expanded"
+      :id="consoleId"
       ref="consoleEl"
       class="max-h-[50vh] min-h-16 resize-y overflow-auto border-t px-3 py-2 text-xs font-mono"
       role="log"
