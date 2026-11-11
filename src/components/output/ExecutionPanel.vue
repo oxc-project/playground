@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { computed, nextTick, onBeforeUnmount, ref, useId, useTemplateRef, watch } from "vue";
 import { Button } from "~/ui/button";
-import { createRunnerDocument, getRunDisabledReason } from "~/utils/output-runner";
+import { createRunnerDocument } from "~/utils/output-runner";
 
 const props = defineProps<{
   code: string;
@@ -26,16 +26,13 @@ const tipId = useId();
 const consoleId = useId();
 // Once there is a run to repeat, "Rerun" says so without changing the action.
 const runLabel = computed(() => (status.value === "idle" ? "Run output" : "Rerun"));
-const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
 const stoppable = computed(
   () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
 );
-const tip = computed(
-  () =>
-    disabledReason.value ??
-    (props.disabled
-      ? "Run output is unavailable while Oxc reports an error or Isolated Declarations is enabled."
-      : undefined),
+const tip = computed(() =>
+  props.disabled
+    ? "Run output is unavailable while Oxc reports an error or Isolated Declarations is enabled."
+    : undefined,
 );
 
 // "Finished" means the synchronous code and every timer it scheduled are done.

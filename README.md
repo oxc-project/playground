@@ -26,14 +26,10 @@ modules as modules.
 **Runtime helpers** in Transformer selects npm package paths (the default) or
 versioned esm.sh URLs matching the sibling Oxc checkout, and the choice is saved
 in the share URL. To run helper-using output, set **Extension** to **mjs** (or
-**mts**) and **Runtime helpers → esm.sh**. Run is disabled with a tip when the
-output uses `require()` or bare npm helper imports; other packages, relative
-imports, CommonJS, and Node.js APIs are unsupported. Enable the Transformer
-first to run TypeScript or JSX.
-
-## Tests
-
-Run the dependency-analysis regressions with `pnpm test`.
+**mts**) and **Runtime helpers → esm.sh**. The sandbox uses the browser's native
+module loader; bare npm imports, `require()`, and Node.js APIs are unavailable.
+Execution errors appear in the console. Enable the Transformer first to run
+TypeScript or JSX.
 
 # [Sponsored By](https://oxc.rs/sponsor)
 
