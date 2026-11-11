@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, onBeforeUnmount, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, useId, useTemplateRef, watch } from "vue";
 import { Button } from "~/ui/button";
 import { createRunnerDocument, getRunDisabledReason } from "~/utils/output-runner";
 
@@ -21,6 +21,7 @@ const runId = ref(0);
 const topLevelComplete = ref(false);
 const pendingTimers = ref(0);
 const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
+const consoleEl = useTemplateRef<HTMLDivElement>("consoleEl");
 const tipId = useId();
 const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
 const stoppable = computed(
@@ -42,8 +43,18 @@ function syncStatus() {
 }
 
 function append(text: string, level: string) {
+  // Follow new output unless the user scrolled up to read earlier messages.
+  const consoleNode = consoleEl.value;
+  const atBottom =
+    !consoleNode ||
+    consoleNode.scrollHeight - consoleNode.scrollTop - consoleNode.clientHeight < 24;
   entries.value.push({ text, level });
   if (entries.value.length > 500) entries.value.shift();
+  if (atBottom) {
+    void nextTick(() => {
+      if (consoleEl.value) consoleEl.value.scrollTop = consoleEl.value.scrollHeight;
+    });
+  }
 }
 
 function stop() {
@@ -151,7 +162,8 @@ function close() {
     </p>
     <div
       v-if="expanded"
-      class="max-h-56 min-h-16 overflow-auto border-t px-3 py-2 text-xs font-mono"
+      ref="consoleEl"
+      class="max-h-[50vh] min-h-16 resize-y overflow-auto border-t px-3 py-2 text-xs font-mono"
       role="log"
       aria-label="Execution console"
       aria-live="polite"
