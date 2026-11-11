@@ -16,7 +16,7 @@ export function getRunDisabledReason(code: string, sourceType: string): string |
   } catch (error) {
     // Parser messages are about the input syntax, not about how to enable Run.
     if (error instanceof SyntaxError) {
-      return "The output is not JavaScript that a browser can parse. Enable the Transformer for TypeScript and JSX input.";
+      return "The output is not valid JavaScript. Fix the source error, or enable the Transformer for TypeScript and JSX input.";
     }
     return error instanceof Error ? error.message : String(error);
   }
