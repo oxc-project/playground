@@ -86,9 +86,7 @@ try {
     try {
       await import(url);
     } catch (error) {
-      throw new Error(
-        `Module execution failed (only Oxc runtime imports are supported): ${stringify(error)}`,
-      );
+      throw new Error(`Module execution failed: ${stringify(error)}`);
     } finally {
       URL.revokeObjectURL(url);
     }

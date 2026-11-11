@@ -23,6 +23,9 @@ const pendingTimers = ref(0);
 const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
 const tipId = useId();
 const disabledReason = computed(() => getRunDisabledReason(props.code, props.sourceType));
+const stoppable = computed(
+  () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
+);
 const tip = computed(
   () =>
     disabledReason.value ??
@@ -118,9 +121,7 @@ function close() {
         <Icon icon="ri:play-line" />
         Run output
       </Button>
-      <Button v-if="srcdoc && status !== 'complete'" size="sm" variant="ghost" @click="stop">
-        Stop
-      </Button>
+      <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
       <span v-if="expanded" class="text-xs text-muted-foreground" role="status">
         {{
           {
