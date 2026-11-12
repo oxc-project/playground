@@ -33,10 +33,11 @@ TypeScript or JSX.
 
 **Compare** runs the same input through an esnext baseline with TypeScript/JSX
 lowering enabled and minification, define/inject replacements, and optional
-transforms disabled. Enabling **Compare** immediately executes the baseline and
-current output in separate sandboxes with their own console and status. **Rerun**
-executes both again. Stop, Clear console, and collapse/expand apply to both.
-Compare mode is saved in the share URL.
+transforms disabled. It executes the baseline and current output in separate
+sandboxes with their own console and status, and clicking it again recompares.
+**Run output** executes the output alone and returns to the single console. Stop,
+Clear console, and collapse/expand apply to what is shown. The selected mode is
+saved in the share URL.
 
 # [Sponsored By](https://oxc.rs/sponsor)
 

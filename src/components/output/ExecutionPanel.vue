@@ -42,7 +42,14 @@ const statuses: Record<SandboxStatus, string> = {
 const statusText = computed(() =>
   status.value === "idle" ? "Output changed — run again" : statuses[status.value],
 );
-const runLabel = computed(() => (status.value === "idle" ? "Run output" : "Rerun"));
+// The output action leaves Compare mode and reruns the output alone.
+const runLabel = computed(() =>
+  compareEnabled.value || output.status.value === "idle" ? "Run output" : "Rerun",
+);
+// The comparison action runs both sides and stays active.
+const compareLabel = computed(() =>
+  compareEnabled.value && baseline.status.value !== "idle" ? "Recompare" : "Compare",
+);
 const stoppable = computed(
   () => output.stoppable.value || (compareEnabled.value && baseline.stoppable.value),
 );
@@ -64,14 +71,20 @@ function run() {
   }
 }
 
-async function toggleCompare() {
-  compareEnabled.value = !compareEnabled.value;
+async function runComparison() {
+  compareEnabled.value = true;
+  // Wait for baseline compilation and the updated props before running.
+  await nextTick();
+  // The output action may have been chosen before this flush.
+  if (compareEnabled.value) run();
+}
+
+function runOutput() {
   if (compareEnabled.value) {
-    // Wait for baseline compilation and the updated props before running.
-    await nextTick();
-    // Compare may have been switched off again before this flush.
-    if (compareEnabled.value) run();
+    compareEnabled.value = false;
+    baseline.reset();
   }
+  run();
 }
 
 function stop() {
@@ -84,27 +97,21 @@ function clear() {
   baseline.entries.value = [];
 }
 
-watch(
-  [
-    () => props.code,
-    () => props.sourceType,
-    () => props.sourceMap,
-    () => props.baselineCode,
-    () => props.baselineSourceMap,
-    () => props.baselineError,
-    compareEnabled,
-  ],
-  () => {
-    output.reset();
-    baseline.reset();
-  },
+watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
+  output.reset();
+  baseline.reset();
+});
+// The baseline changes on its own when the source or parser changes, and when
+// Compare is enabled; only the baseline run is stale then.
+watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.baselineError], () =>
+  baseline.reset(),
 );
 </script>
 
 <template>
   <section class="shrink-0 border-t" aria-label="Output execution">
     <div class="flex flex-wrap items-center gap-2 px-2 py-1.5">
-      <Button size="sm" variant="outline" @click="run">
+      <Button size="sm" variant="outline" @click="runOutput">
         <Icon icon="ri:play-line" />
         {{ runLabel }}
       </Button>
@@ -112,9 +119,10 @@ watch(
         size="sm"
         :variant="compareEnabled ? 'secondary' : 'ghost'"
         :aria-pressed="compareEnabled"
-        @click="toggleCompare"
+        @click="runComparison"
       >
-        Compare
+        <Icon icon="ri:split-cells-horizontal" />
+        {{ compareLabel }}
       </Button>
       <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
       <span
@@ -125,7 +133,17 @@ watch(
         {{ statusText }}
       </span>
       <div v-if="expanded || status !== 'idle'" class="ml-auto flex items-center gap-1">
-        <Button v-if="expanded" size="sm" variant="ghost" @click="clear">Clear console</Button>
+        <Button
+          v-if="expanded"
+          size="icon"
+          variant="ghost"
+          class="h-7 w-7"
+          aria-label="Clear console"
+          title="Clear console"
+          @click="clear"
+        >
+          <Icon icon="ri:delete-bin-line" />
+        </Button>
         <Button
           size="icon"
           variant="ghost"
