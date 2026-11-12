@@ -2,6 +2,7 @@ import { createGlobalState, useUrlSearchParams, watchDebounced } from "@vueuse/c
 import { computed, ref, shallowRef, toRaw, triggerRef, watch, watchEffect } from "vue";
 import {
   activeTab,
+  compareEnabled,
   editorValue,
   enabledLintRules,
   formatterPanels,
@@ -20,6 +21,7 @@ const urlParams = useUrlSearchParams<{
   code?: string;
   lintRules?: string;
   helpers?: string;
+  compare?: string;
 }>("history", { removeFalsyValues: true });
 
 // Initialize state from URL (runs synchronously at module load)
@@ -41,15 +43,14 @@ if (urlParams.lintRules) {
 if (urlParams.helpers === "esm") {
   helperRuntime.value = "esm";
 }
+compareEnabled.value = urlParams.compare === "1";
 editorValue.value = urlParams.code || PLAYGROUND_DEMO_CODE;
 
-async function initialize(): Promise<Oxc> {
-  const { Oxc } = await import("oxc-playground");
-  return new Oxc();
-}
-
+const oxcModule = import("oxc-playground");
 export const loadingOxc = ref(true);
-export const oxcPromise = initialize().finally(() => (loadingOxc.value = false));
+export const oxcPromise = oxcModule
+  .then(({ Oxc }) => new Oxc())
+  .finally(() => (loadingOxc.value = false));
 
 export const defaultFormatterConfig = {
   useTabs: false,
@@ -142,8 +143,19 @@ export const useOxc = createGlobalState(async () => {
     }
   }
   const oxc = await oxcPromise;
+  const { Oxc: OxcConstructor } = await oxcModule;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
+  const baselineCode = ref("");
+  const baselineSourcemap = ref("");
+  const baselineError = ref<string>();
+  let baselineOxc: Oxc | undefined;
+  const helperModuleName = computed(() => {
+    const runtimeVersion = import.meta.env.OXC_RUNTIME_VERSION;
+    return helperRuntime.value === "esm" && runtimeVersion
+      ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
+      : undefined;
+  });
 
   // Compute the linter config directly from enabledLintRules so it's always
   // in sync when run() fires — this avoids a fragile two-watcher chain where
@@ -180,16 +192,11 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
-      const runtimeVersion = import.meta.env.OXC_RUNTIME_VERSION;
       const rawOptions = {
         ...toRaw(options.value),
         transformer: {
           ...toRaw(options.value.transformer),
-          // Only use a CDN URL when it can be pinned to the matching runtime.
-          helperModuleName:
-            helperRuntime.value === "esm" && runtimeVersion
-              ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
-              : undefined,
+          helperModuleName: helperModuleName.value,
         },
       };
 
@@ -217,6 +224,51 @@ export const useOxc = createGlobalState(async () => {
     immediate: true,
   });
 
+  // The baseline depends on the source and parser, not the output's transform options.
+  watch(
+    [editorValue, () => options.value.parser, compareEnabled, helperRuntime],
+    () => {
+      baselineCode.value = "";
+      baselineSourcemap.value = "";
+      baselineError.value = undefined;
+      if (!compareEnabled.value) return;
+      baselineOxc ??= new OxcConstructor();
+      const baselineOptions = structuredClone(defaultOptions);
+      baselineOptions.run = {
+        lint: false,
+        formatter: false,
+        transform: true,
+        isolatedDeclarations: false,
+        whitespace: false,
+        mangle: false,
+        mangleProps: false,
+        compress: false,
+        scope: false,
+        symbol: false,
+        cfg: false,
+      };
+      baselineOptions.parser = { ...toRaw(options.value.parser) };
+      baselineOptions.transformer = {
+        target: "esnext",
+        helperModuleName: helperModuleName.value,
+        useDefineForClassFields: true,
+        experimentalDecorators: false,
+        emitDecoratorMetadata: false,
+        optimizeEnums: false,
+        optimizeConstEnums: false,
+      };
+      try {
+        baselineOxc.run(editorValue.value, baselineOptions);
+        baselineCode.value = baselineOxc.codegenText;
+        baselineSourcemap.value = baselineOxc.codegenSourcemapText ?? "";
+      } catch (caughtError) {
+        baselineError.value =
+          caughtError instanceof Error ? caughtError.message : String(caughtError);
+      }
+    },
+    { deep: true, immediate: true },
+  );
+
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
     urlParams.t = activeTab.value !== "codegen" ? activeTab.value : undefined;
@@ -235,9 +287,10 @@ export const useOxc = createGlobalState(async () => {
       enabledLintRules.value.length > 0 ? enabledLintRules.value.join(",") : undefined;
   });
 
-  // Sync the helper runtime choice to URL (reactive, no debounce needed)
+  // Sync execution choices to URL (reactive, no debounce needed)
   watchEffect(() => {
     urlParams.helpers = helperRuntime.value === "esm" ? "esm" : undefined;
+    urlParams.compare = compareEnabled.value ? "1" : undefined;
   });
 
   // Sync options to URL (debounced since options can change frequently)
@@ -275,5 +328,8 @@ export const useOxc = createGlobalState(async () => {
     error,
     options,
     monacoLanguage,
+    baselineCode,
+    baselineSourcemap,
+    baselineError,
   };
 });

@@ -1,115 +1,110 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, nextTick, onBeforeUnmount, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, ref, useId, useTemplateRef, watch } from "vue";
+import { useSandboxRun, type SandboxStatus } from "~/composables/sandbox-run";
+import { compareEnabled } from "~/composables/state";
 import { Button } from "~/ui/button";
-import { createRunnerDocument } from "~/utils/output-runner";
+import SandboxConsole from "./SandboxConsole.vue";
 
 const props = defineProps<{
   code: string;
   sourceType: string;
   sourceMap?: string;
+  baselineCode?: string;
+  baselineSourceMap?: string;
+  baselineError?: string;
 }>();
 
-type Status = "idle" | "running" | "complete" | "error" | "stopped";
-type Entry = { text: string; level: string };
-const status = ref<Status>("idle");
-const entries = ref<Entry[]>([]);
 const expanded = ref(false);
-const srcdoc = ref("");
-const runId = ref(0);
-const topLevelComplete = ref(false);
-const pendingTimers = ref(0);
-const sandbox = useTemplateRef<HTMLIFrameElement>("sandbox");
-const consoleEl = useTemplateRef<HTMLDivElement>("consoleEl");
 const consoleId = useId();
-// Once there is a run to repeat, "Rerun" says so without changing the action.
+const outputFrame = useTemplateRef<HTMLIFrameElement>("outputFrame");
+const baselineFrame = useTemplateRef<HTMLIFrameElement>("baselineFrame");
+const output = useSandboxRun(outputFrame);
+const baseline = useSandboxRun(baselineFrame);
+
+const status = computed<SandboxStatus>(() => {
+  if (!compareEnabled.value) return output.status.value;
+  const statuses = [output.status.value, baseline.status.value];
+  if (statuses.includes("running")) return "running";
+  if (statuses.includes("error")) return "error";
+  if (statuses.includes("stopped")) return "stopped";
+  return statuses.every((value) => value === "complete") ? "complete" : "idle";
+});
+
+const statuses: Record<SandboxStatus, string> = {
+  idle: "Not run",
+  running: "Running…",
+  complete: "Finished",
+  error: "Failed",
+  stopped: "Stopped",
+};
+
+const statusText = computed(() =>
+  status.value === "idle" ? "Output changed — run again" : statuses[status.value],
+);
 const runLabel = computed(() => (status.value === "idle" ? "Run output" : "Rerun"));
 const stoppable = computed(
-  () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
+  () => output.stoppable.value || (compareEnabled.value && baseline.stoppable.value),
 );
 
-// "Finished" means the synchronous code and every timer it scheduled are done.
-// Pending timers keep the run in the running state.
-function syncStatus() {
-  if (status.value === "error" || status.value === "stopped" || status.value === "idle") return;
-  status.value = topLevelComplete.value && pendingTimers.value === 0 ? "complete" : "running";
+function emptyText(status: SandboxStatus): string {
+  return status === "running" ? "Waiting for output…" : "No console output.";
 }
 
-function append(text: string, level: string) {
-  // Follow new output unless the user scrolled up to read earlier messages.
-  const consoleNode = consoleEl.value;
-  const atBottom =
-    !consoleNode ||
-    consoleNode.scrollHeight - consoleNode.scrollTop - consoleNode.clientHeight < 24;
-  entries.value.push({ text, level });
-  if (entries.value.length > 500) entries.value.shift();
-  if (expanded.value && atBottom) {
-    void nextTick(() => {
-      if (consoleEl.value) consoleEl.value.scrollTop = consoleEl.value.scrollHeight;
-    });
+function run() {
+  expanded.value = true;
+  output.run(props.code, props.sourceType, props.sourceMap);
+  if (compareEnabled.value) {
+    if (props.baselineError) {
+      baseline.reset();
+      baseline.fail(`Baseline compilation failed: ${props.baselineError}`);
+    } else {
+      baseline.run(props.baselineCode ?? "", props.sourceType, props.baselineSourceMap);
+    }
   }
 }
 
 function stop() {
-  srcdoc.value = "";
-  if (status.value === "running" || status.value === "complete") status.value = "stopped";
+  output.stop();
+  baseline.stop();
 }
 
-function run() {
-  stop();
-  expanded.value = true;
-  entries.value = [];
-  status.value = "running";
-  runId.value++;
-  topLevelComplete.value = false;
-  pendingTimers.value = 0;
-  try {
-    srcdoc.value = createRunnerDocument(props.code, props.sourceType, props.sourceMap);
-  } catch (error) {
-    append(error instanceof Error ? error.message : String(error), "error");
-    status.value = "error";
-  }
+function clear() {
+  output.entries.value = [];
+  baseline.entries.value = [];
 }
 
-function receive(event: MessageEvent) {
-  if (!sandbox.value || event.source !== sandbox.value.contentWindow) return;
-  const data = event.data;
-  if (!data || data.channel !== "oxc-output-runner") return;
-  switch (data.type) {
-    case "console":
-    case "error":
-      if (typeof data.text !== "string" || typeof data.level !== "string") return;
-      append(data.text, data.level);
-      if (data.type === "error") status.value = "error";
-      break;
-    case "activity":
-      if (typeof data.pendingTimers !== "number" || typeof data.topLevelComplete !== "boolean") {
-        return;
-      }
-      pendingTimers.value = Math.max(0, data.pendingTimers);
-      topLevelComplete.value = data.topLevelComplete;
-      syncStatus();
-      break;
-  }
-}
-
-window.addEventListener("message", receive);
-onBeforeUnmount(() => window.removeEventListener("message", receive));
-watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
-  stop();
-  status.value = "idle";
-  entries.value = [];
-  topLevelComplete.value = false;
-  pendingTimers.value = 0;
-});
+watch(
+  [
+    () => props.code,
+    () => props.sourceType,
+    () => props.sourceMap,
+    () => props.baselineCode,
+    () => props.baselineSourceMap,
+    () => props.baselineError,
+    compareEnabled,
+  ],
+  () => {
+    output.reset();
+    baseline.reset();
+  },
+);
 </script>
 
 <template>
   <section class="shrink-0 border-t" aria-label="Output execution">
-    <div class="flex items-center gap-2 px-2 py-1.5">
+    <div class="flex flex-wrap items-center gap-2 px-2 py-1.5">
       <Button size="sm" variant="outline" @click="run">
         <Icon icon="ri:play-line" />
         {{ runLabel }}
+      </Button>
+      <Button
+        size="sm"
+        :variant="compareEnabled ? 'secondary' : 'ghost'"
+        :aria-pressed="compareEnabled"
+        @click="compareEnabled = !compareEnabled"
+      >
+        Compare
       </Button>
       <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
       <span
@@ -117,20 +112,10 @@ watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
         class="text-xs text-muted-foreground"
         role="status"
       >
-        {{
-          {
-            idle: "Output changed — run again",
-            running: "Running…",
-            complete: "Finished",
-            error: "Failed",
-            stopped: "Stopped",
-          }[status]
-        }}
+        {{ statusText }}
       </span>
       <div v-if="expanded || status !== 'idle'" class="ml-auto flex items-center gap-1">
-        <Button v-if="expanded" size="sm" variant="ghost" @click="entries = []"
-          >Clear console</Button
-        >
+        <Button v-if="expanded" size="sm" variant="ghost" @click="clear">Clear console</Button>
         <Button
           size="icon"
           variant="ghost"
@@ -145,37 +130,56 @@ watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
         </Button>
       </div>
     </div>
-    <div
-      v-show="expanded"
-      :id="consoleId"
-      ref="consoleEl"
-      class="max-h-[50vh] min-h-16 resize-y overflow-auto border-t px-3 py-2 text-xs font-mono"
-      role="log"
-      aria-label="Execution console"
-      aria-live="polite"
-    >
-      <div
-        v-for="(entry, index) in entries"
-        :key="index"
-        class="whitespace-pre-wrap break-words py-0.5"
-        :class="{
-          'text-destructive': entry.level === 'error',
-          'text-amber-600 dark:text-amber-400': entry.level === 'warn',
-        }"
-      >
-        {{ entry.text }}
+    <div v-show="expanded" :id="consoleId" class="border-t">
+      <div v-if="compareEnabled" class="grid grid-cols-1 md:grid-cols-2 md:divide-x">
+        <section aria-label="Baseline execution">
+          <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+            <span class="font-medium">Baseline</span>
+            <span class="text-muted-foreground">{{ statuses[baseline.status.value] }}</span>
+            <span class="col-span-2 text-muted-foreground">esnext, no minification</span>
+          </p>
+          <SandboxConsole
+            :entries="baseline.entries.value"
+            label="Baseline console"
+            :empty="emptyText(baseline.status.value)"
+          />
+        </section>
+        <section aria-label="Current options execution">
+          <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+            <span class="font-medium">Output</span>
+            <span class="text-muted-foreground">{{ statuses[output.status.value] }}</span>
+            <span class="col-span-2 text-muted-foreground">current options</span>
+          </p>
+          <SandboxConsole
+            :entries="output.entries.value"
+            label="Execution console"
+            :empty="emptyText(output.status.value)"
+          />
+        </section>
       </div>
-      <p v-if="!entries.length" class="text-muted-foreground">
-        {{ status === "running" ? "Waiting for output…" : "No console output." }}
-      </p>
+      <SandboxConsole
+        v-else
+        :entries="output.entries.value"
+        label="Execution console"
+        :empty="emptyText(output.status.value)"
+      />
     </div>
     <iframe
-      v-if="srcdoc"
-      :key="runId"
-      ref="sandbox"
-      :srcdoc="srcdoc"
+      v-if="output.srcdoc.value"
+      :key="`output-${output.runId.value}`"
+      ref="outputFrame"
+      :srcdoc="output.srcdoc.value"
       sandbox="allow-scripts"
       title="Output execution sandbox"
+      class="hidden"
+    />
+    <iframe
+      v-if="compareEnabled && baseline.srcdoc.value"
+      :key="`baseline-${baseline.runId.value}`"
+      ref="baselineFrame"
+      :srcdoc="baseline.srcdoc.value"
+      sandbox="allow-scripts"
+      title="Baseline execution sandbox"
       class="hidden"
     />
   </section>

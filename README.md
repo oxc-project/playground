@@ -31,6 +31,12 @@ module loader; bare npm imports, `require()`, and Node.js APIs are unavailable.
 Execution errors appear in the console. Enable the Transformer first to run
 TypeScript or JSX.
 
+**Compare** runs the same input through an esnext baseline with TypeScript/JSX
+lowering enabled and minification, define/inject replacements, and optional
+transforms disabled. **Run output** then executes the baseline and current output
+in separate sandboxes with their own console and status. Stop, Clear console, and
+collapse/expand apply to both. Compare mode is saved in the share URL.
+
 # [Sponsored By](https://oxc.rs/sponsor)
 
 <p align="center">
