@@ -1,5 +1,9 @@
 /// <reference types="vite-plus/client" />
 
+interface ImportMetaEnv {
+  readonly OXC_RUNTIME_VERSION: string;
+}
+
 declare module "monaco-editor/editor/editor.api" {
   export * from "monaco-editor";
 }

@@ -32,6 +32,22 @@ function resolveOxcDir(): string {
 const oxcDir = resolveOxcDir();
 const oxcPlayground = path.join(oxcDir, "napi/playground");
 
+// CI's Check job loads this config without a sibling Oxc checkout, and an
+// incomplete checkout can leave the runtime package unreadable.
+function readRuntimeVersion(): string {
+  try {
+    return (
+      JSON.parse(readFileSync(path.join(oxcDir, "npm/runtime/package.json"), "utf8")) as {
+        version: string;
+      }
+    ).version;
+  } catch {
+    return "";
+  }
+}
+
+const runtimeVersion = readRuntimeVersion();
+
 let oxcCommit: string | undefined;
 
 const COMMIT_FILE = path.join(oxcPlayground, "git-commit");
@@ -85,6 +101,7 @@ export default defineConfig({
   },
   define: {
     "import.meta.env.OXC_COMMIT": JSON.stringify(oxcCommit),
+    "import.meta.env.OXC_RUNTIME_VERSION": JSON.stringify(runtimeVersion),
   },
   build: {
     target: "esnext",
