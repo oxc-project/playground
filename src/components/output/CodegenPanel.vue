@@ -34,7 +34,7 @@ const sourcemapLink = computed(() => {
 <template>
   <div class="h-full min-h-0 w-full flex flex-col">
     <div class="min-h-0 flex-1 overflow-auto">
-      <OutputPreview :code="oxc.codegenText" lang="tsx" />
+      <OutputPreview class="!h-auto" :code="oxc.codegenText" lang="tsx" />
       <a
         v-if="sourcemapLink"
         class="m-2 flex items-center self-start text-sm opacity-80"
