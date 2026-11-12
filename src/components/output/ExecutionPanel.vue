@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 import { useSandboxRun, type SandboxStatus } from "~/composables/sandbox-run";
 import { compareEnabled } from "~/composables/state";
 import { Button } from "~/ui/button";
@@ -64,6 +64,16 @@ function run() {
   }
 }
 
+async function toggleCompare() {
+  compareEnabled.value = !compareEnabled.value;
+  if (compareEnabled.value) {
+    // Wait for baseline compilation and the updated props before running.
+    await nextTick();
+    // Compare may have been switched off again before this flush.
+    if (compareEnabled.value) run();
+  }
+}
+
 function stop() {
   output.stop();
   baseline.stop();
@@ -102,7 +112,7 @@ watch(
         size="sm"
         :variant="compareEnabled ? 'secondary' : 'ghost'"
         :aria-pressed="compareEnabled"
-        @click="compareEnabled = !compareEnabled"
+        @click="toggleCompare"
       >
         Compare
       </Button>
