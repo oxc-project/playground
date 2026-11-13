@@ -24,8 +24,8 @@ const sourcemapLink = computedAsync(
     const sourceMapJson = oxc.value.codegenSourcemapText;
     if (!generatedCode || !sourceMapJson) return "";
 
-    // Keep the generated code and source map in the URL without creating a stored share.
-    // Match the viewer's UTF-8 JSON -> deflate -> base64url format:
+    // Keep generated code and the map in the fragment to avoid HTTP URL limits.
+    // No stored share is created. Encoding: UTF-8 JSON -> deflate -> base64url.
     // https://github.com/Dunqing/source-map-viewer/blob/main/src/composables/useShareableUrl.ts
     const payload = JSON.stringify({ generatedCode, sourceMapJson });
     const stream = new Blob([payload]).stream().pipeThrough(new CompressionStream("deflate"));
@@ -34,7 +34,7 @@ const sourcemapLink = computedAsync(
       .replaceAll("+", "-")
       .replaceAll("/", "_")
       .replace(/=+$/, "");
-    return `https://source-map-viewer.void.app/${slug}`;
+    return `https://source-map-viewer.void.app/#data=${slug}`;
   },
   "",
   creatingSourcemapLink,
