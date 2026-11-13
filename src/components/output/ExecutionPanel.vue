@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import { refDebounced } from "@vueuse/core";
 import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 import { useSandboxRun, type SandboxStatus } from "~/composables/sandbox-run";
 import { compareEnabled } from "~/composables/state";
@@ -33,14 +34,18 @@ const status = computed<SandboxStatus>(() => {
 
 const statuses: Record<SandboxStatus, string> = {
   idle: "Not run",
-  running: "Running…",
+  running: "",
   complete: "Finished",
   error: "Failed",
   stopped: "Stopped",
 };
 
+// Skip transient states during quick runs and reruns.
+const visibleStatus = refDebounced(status, 150);
+const visibleOutputStatus = refDebounced(output.status, 150);
+const visibleBaselineStatus = refDebounced(baseline.status, 150);
 const statusText = computed(() =>
-  status.value === "idle" ? "Output changed — run again" : statuses[status.value],
+  visibleStatus.value === "idle" ? "Output changed — run again" : statuses[visibleStatus.value],
 );
 // The output action leaves Compare mode and reruns the output alone.
 const runLabel = computed(() =>
@@ -54,9 +59,7 @@ const stoppable = computed(
   () => output.stoppable.value || (compareEnabled.value && baseline.stoppable.value),
 );
 
-function emptyText(status: SandboxStatus): string {
-  return status === "running" ? "Waiting for output…" : "No console output.";
-}
+const delayedRunId = refDebounced(output.runId, 150);
 
 function run() {
   expanded.value = true;
@@ -93,8 +96,8 @@ function stop() {
 }
 
 function clear() {
-  output.entries.value = [];
-  baseline.entries.value = [];
+  output.clear();
+  baseline.clear();
 }
 
 watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
@@ -124,7 +127,14 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
         <Icon icon="ri:split-cells-horizontal" />
         {{ compareLabel }}
       </Button>
-      <Button v-if="stoppable" size="sm" variant="ghost" @click="stop"> Stop </Button>
+      <Button
+        v-if="stoppable && output.runId.value === delayedRunId"
+        size="sm"
+        variant="ghost"
+        @click="stop"
+      >
+        Stop
+      </Button>
       <span
         v-if="expanded || status !== 'idle'"
         class="text-xs text-muted-foreground"
@@ -167,26 +177,18 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       <section v-if="compareEnabled" aria-label="Baseline execution">
         <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
           <span class="font-medium">Baseline</span>
-          <span class="text-muted-foreground">{{ statuses[baseline.status.value] }}</span>
+          <span class="text-muted-foreground">{{ statuses[visibleBaselineStatus] }}</span>
           <span class="col-span-2 text-muted-foreground">esnext, no minification</span>
         </p>
-        <SandboxConsole
-          :entries="baseline.entries.value"
-          label="Baseline console"
-          :empty="emptyText(baseline.status.value)"
-        />
+        <SandboxConsole :entries="baseline.entries.value" label="Baseline console" />
       </section>
       <section :aria-label="compareEnabled ? 'Current options execution' : undefined">
         <p v-if="compareEnabled" class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
           <span class="font-medium">Output</span>
-          <span class="text-muted-foreground">{{ statuses[output.status.value] }}</span>
+          <span class="text-muted-foreground">{{ statuses[visibleOutputStatus] }}</span>
           <span class="col-span-2 text-muted-foreground">current options</span>
         </p>
-        <SandboxConsole
-          :entries="output.entries.value"
-          label="Execution console"
-          :empty="emptyText(output.status.value)"
-        />
+        <SandboxConsole :entries="output.entries.value" label="Execution console" />
       </section>
     </div>
     <iframe

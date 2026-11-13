@@ -15,9 +15,10 @@ Assuming the oxc repository is in `../oxc`:
 
 **Run output** in the Printed tab executes the generated JavaScript in a sandboxed
 iframe and shows its console output. **Stop** removes the iframe and its timers;
-editing the output stops the run. The status stays **Running** until synchronous
-code and every scheduled timer finish. Pending promises are not tracked, and a
-blocking loop cannot be interrupted.
+editing the output stops the run. The previous result stays visible during a new
+run and is replaced when that run finishes, fails, or is stopped, with up to 500
+entries per console. Pending promises are not tracked, and a blocking loop cannot
+be interrupted.
 
 The executed copy carries an inline source map, so devtools map back to the
 original source; the printed output is unchanged. Scripts run as scripts and ES

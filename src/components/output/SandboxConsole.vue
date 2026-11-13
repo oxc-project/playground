@@ -5,7 +5,6 @@ import type { SandboxEntry } from "~/composables/sandbox-run";
 const props = defineProps<{
   entries: SandboxEntry[];
   label: string;
-  empty: string;
 }>();
 
 const log = useTemplateRef<HTMLDivElement>("log");
@@ -42,6 +41,6 @@ watch(
     >
       {{ entry.text }}
     </div>
-    <p v-if="!entries.length" class="text-muted-foreground">{{ empty }}</p>
+    <p v-if="!entries.length" class="text-muted-foreground">No console output.</p>
   </div>
 </template>

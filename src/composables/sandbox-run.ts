@@ -8,6 +8,8 @@ export type SandboxEntry = { text: string; level: string };
 export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null | undefined>) {
   const status = ref<SandboxStatus>("idle");
   const entries = ref<SandboxEntry[]>([]);
+  // Buffer the current run while the previous result remains visible.
+  const runEntries = ref<SandboxEntry[]>([]);
   const srcdoc = ref("");
   const runId = ref(0);
   const pendingTimers = ref(0);
@@ -16,25 +18,32 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
   );
 
   function append(text: string, level: string) {
-    entries.value.push({ text, level });
-    if (entries.value.length > 500) entries.value.shift();
+    runEntries.value.push({ text, level });
+    if (runEntries.value.length > 500) runEntries.value.shift();
   }
 
   function fail(error: unknown) {
     append(error instanceof Error ? error.message : String(error), "error");
+    entries.value = runEntries.value;
     status.value = "error";
   }
 
   function stop() {
+    if (srcdoc.value) entries.value = runEntries.value;
     srcdoc.value = "";
     if (status.value === "running" || status.value === "complete") status.value = "stopped";
   }
 
   function reset() {
-    stop();
+    srcdoc.value = "";
     status.value = "idle";
-    entries.value = [];
     pendingTimers.value = 0;
+    runEntries.value = [];
+  }
+
+  function clear() {
+    entries.value.length = 0;
+    runEntries.value.length = 0;
   }
 
   function run(code: string, sourceType: string, sourceMap?: string) {
@@ -58,7 +67,10 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
       case "error":
         if (typeof data.text !== "string" || typeof data.level !== "string") return;
         append(data.text, data.level);
-        if (data.type === "error") status.value = "error";
+        if (data.type === "error") {
+          entries.value = runEntries.value;
+          status.value = "error";
+        }
         break;
       case "activity":
         if (typeof data.pendingTimers !== "number" || typeof data.topLevelComplete !== "boolean") {
@@ -68,10 +80,11 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
         if (status.value === "running" || status.value === "complete") {
           status.value =
             data.topLevelComplete && pendingTimers.value === 0 ? "complete" : "running";
+          if (status.value === "complete") entries.value = runEntries.value;
         }
         break;
     }
   });
 
-  return { status, entries, srcdoc, runId, stoppable, run, stop, reset, fail };
+  return { status, entries, srcdoc, runId, stoppable, run, stop, reset, clear, fail };
 }
