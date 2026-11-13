@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed } from "vue";
+import { computedAsync } from "@vueuse/core";
+import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
 import ExecutionPanel from "./ExecutionPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
@@ -15,20 +16,26 @@ const sourceType = computed(() => {
   }
 });
 
-const sourcemapLink = computed(() => {
-  let code = oxc.value.codegenText;
-  let map = oxc.value.codegenSourcemapText;
-  if (code && map) {
-    // encoding url hash for
-    // https://github.com/evanw/source-map-visualization/blob/f3e9dfec20e7bfd9625d03dd0d427affa74a9c43/code.js#L2004-L2023
-    const utf16ToUTF8 = (x: string) => unescape(encodeURIComponent(x));
-    code = utf16ToUTF8(code);
-    map = utf16ToUTF8(map);
-    const hash = btoa(`${code.length}\0${code}${map.length}\0${map}`);
-    return `https://evanw.github.io/source-map-visualization/#${hash}`;
-  }
-  return "";
-});
+const creatingSourcemapLink = ref(false);
+const sourcemapLink = computedAsync(
+  async () => {
+    const generatedCode = oxc.value.codegenText;
+    const sourceMapJson = oxc.value.codegenSourcemapText;
+    if (!generatedCode || !sourceMapJson) return "";
+
+    // The viewer accepts a deflated JSON payload as a base64url path.
+    const payload = JSON.stringify({ generatedCode, sourceMapJson });
+    const stream = new Blob([payload]).stream().pipeThrough(new CompressionStream("deflate"));
+    const bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+    const slug = btoa(Array.from(bytes, (byte) => String.fromCharCode(byte)).join(""))
+      .replaceAll("+", "-")
+      .replaceAll("/", "_")
+      .replace(/=+$/, "");
+    return `https://source-map-viewer.void.app/${slug}`;
+  },
+  "",
+  creatingSourcemapLink,
+);
 </script>
 
 <template>
@@ -36,7 +43,7 @@ const sourcemapLink = computed(() => {
     <div class="min-h-0 flex-1 overflow-auto">
       <OutputPreview class="!h-auto" :code="oxc.codegenText" lang="tsx" />
       <a
-        v-if="sourcemapLink"
+        v-if="sourcemapLink && !creatingSourcemapLink"
         class="m-2 flex items-center self-start text-sm opacity-80"
         :href="sourcemapLink"
         target="_blank"
