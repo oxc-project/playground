@@ -10,7 +10,6 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
   const entries = ref<SandboxEntry[]>([]);
   const srcdoc = ref("");
   const runId = ref(0);
-  const topLevelComplete = ref(false);
   const pendingTimers = ref(0);
   const stoppable = computed(
     () => !!srcdoc.value && (status.value === "running" || pendingTimers.value > 0),
@@ -35,7 +34,6 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
     stop();
     status.value = "idle";
     entries.value = [];
-    topLevelComplete.value = false;
     pendingTimers.value = 0;
   }
 
@@ -67,10 +65,9 @@ export function useSandboxRun(frame: MaybeRefOrGetter<HTMLIFrameElement | null |
           return;
         }
         pendingTimers.value = Math.max(0, data.pendingTimers);
-        topLevelComplete.value = data.topLevelComplete;
         if (status.value === "running" || status.value === "complete") {
           status.value =
-            topLevelComplete.value && pendingTimers.value === 0 ? "complete" : "running";
+            data.topLevelComplete && pendingTimers.value === 0 ? "complete" : "running";
         }
         break;
     }

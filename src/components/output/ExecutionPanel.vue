@@ -158,39 +158,36 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
         </Button>
       </div>
     </div>
-    <div v-show="expanded" :id="consoleId" class="border-t">
-      <div v-if="compareEnabled" class="grid grid-cols-1 md:grid-cols-2 md:divide-x">
-        <section aria-label="Baseline execution">
-          <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
-            <span class="font-medium">Baseline</span>
-            <span class="text-muted-foreground">{{ statuses[baseline.status.value] }}</span>
-            <span class="col-span-2 text-muted-foreground">esnext, no minification</span>
-          </p>
-          <SandboxConsole
-            :entries="baseline.entries.value"
-            label="Baseline console"
-            :empty="emptyText(baseline.status.value)"
-          />
-        </section>
-        <section aria-label="Current options execution">
-          <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
-            <span class="font-medium">Output</span>
-            <span class="text-muted-foreground">{{ statuses[output.status.value] }}</span>
-            <span class="col-span-2 text-muted-foreground">current options</span>
-          </p>
-          <SandboxConsole
-            :entries="output.entries.value"
-            label="Execution console"
-            :empty="emptyText(output.status.value)"
-          />
-        </section>
-      </div>
-      <SandboxConsole
-        v-else
-        :entries="output.entries.value"
-        label="Execution console"
-        :empty="emptyText(output.status.value)"
-      />
+    <div
+      v-show="expanded"
+      :id="consoleId"
+      class="border-t"
+      :class="{ 'grid grid-cols-1 md:grid-cols-2 md:divide-x': compareEnabled }"
+    >
+      <section v-if="compareEnabled" aria-label="Baseline execution">
+        <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+          <span class="font-medium">Baseline</span>
+          <span class="text-muted-foreground">{{ statuses[baseline.status.value] }}</span>
+          <span class="col-span-2 text-muted-foreground">esnext, no minification</span>
+        </p>
+        <SandboxConsole
+          :entries="baseline.entries.value"
+          label="Baseline console"
+          :empty="emptyText(baseline.status.value)"
+        />
+      </section>
+      <section :aria-label="compareEnabled ? 'Current options execution' : undefined">
+        <p v-if="compareEnabled" class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+          <span class="font-medium">Output</span>
+          <span class="text-muted-foreground">{{ statuses[output.status.value] }}</span>
+          <span class="col-span-2 text-muted-foreground">current options</span>
+        </p>
+        <SandboxConsole
+          :entries="output.entries.value"
+          label="Execution console"
+          :empty="emptyText(output.status.value)"
+        />
+      </section>
     </div>
     <iframe
       v-if="output.srcdoc.value"

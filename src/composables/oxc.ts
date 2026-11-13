@@ -233,29 +233,31 @@ export const useOxc = createGlobalState(async () => {
       baselineError.value = undefined;
       if (!compareEnabled.value) return;
       baselineOxc ??= new OxcConstructor();
-      const baselineOptions = structuredClone(defaultOptions);
-      baselineOptions.run = {
-        lint: false,
-        formatter: false,
-        transform: true,
-        isolatedDeclarations: false,
-        whitespace: false,
-        mangle: false,
-        mangleProps: false,
-        compress: false,
-        scope: false,
-        symbol: false,
-        cfg: false,
-      };
-      baselineOptions.parser = { ...toRaw(options.value.parser) };
-      baselineOptions.transformer = {
-        target: "esnext",
-        helperModuleName: helperModuleName.value,
-        useDefineForClassFields: true,
-        experimentalDecorators: false,
-        emitDecoratorMetadata: false,
-        optimizeEnums: false,
-        optimizeConstEnums: false,
+      const baselineOptions = {
+        ...defaultOptions,
+        run: {
+          lint: false,
+          formatter: false,
+          transform: true,
+          isolatedDeclarations: false,
+          whitespace: false,
+          mangle: false,
+          mangleProps: false,
+          compress: false,
+          scope: false,
+          symbol: false,
+          cfg: false,
+        },
+        parser: { ...toRaw(options.value.parser) },
+        transformer: {
+          target: "esnext",
+          helperModuleName: helperModuleName.value,
+          useDefineForClassFields: true,
+          experimentalDecorators: false,
+          emitDecoratorMetadata: false,
+          optimizeEnums: false,
+          optimizeConstEnums: false,
+        },
       };
       try {
         baselineOxc.run(editorValue.value, baselineOptions);
