@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computedAsync } from "@vueuse/core";
+import { computedAsync, useClipboard } from "@vueuse/core";
 import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { Button } from "~/ui/button";
 import ExecutionPanel from "./ExecutionPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
 
@@ -23,7 +24,9 @@ const sourcemapLink = computedAsync(
     const sourceMapJson = oxc.value.codegenSourcemapText;
     if (!generatedCode || !sourceMapJson) return "";
 
-    // The viewer accepts a deflated JSON payload as a base64url path.
+    // Keep the generated code and source map in the URL without creating a stored share.
+    // Match the viewer's UTF-8 JSON -> deflate -> base64url format:
+    // https://github.com/Dunqing/source-map-viewer/blob/main/src/composables/useShareableUrl.ts
     const payload = JSON.stringify({ generatedCode, sourceMapJson });
     const stream = new Blob([payload]).stream().pipeThrough(new CompressionStream("deflate"));
     const bytes = new Uint8Array(await new Response(stream).arrayBuffer());
@@ -36,30 +39,52 @@ const sourcemapLink = computedAsync(
   "",
   creatingSourcemapLink,
 );
+const sourceMapReady = computed(() => !!sourcemapLink.value && !creatingSourcemapLink.value);
+const { copied, copy } = useClipboard();
 </script>
 
 <template>
-  <div class="h-full min-h-0 w-full flex flex-col">
-    <div class="min-h-0 flex-1 overflow-auto">
-      <OutputPreview class="!h-auto" :code="oxc.codegenText" lang="tsx" />
-      <a
-        v-if="sourcemapLink && !creatingSourcemapLink"
-        class="m-2 flex items-center self-start text-sm opacity-80"
-        :href="sourcemapLink"
+  <ExecutionPanel
+    :code="oxc.codegenText"
+    :source-type="sourceType"
+    :source-map="oxc.codegenSourcemapText"
+    :baseline-code="baselineCode"
+    :baseline-source-map="baselineSourcemap"
+    :baseline-error="baselineError"
+  >
+    <template #actions>
+      <Button
+        as="a"
+        role="link"
+        variant="ghost"
+        size="sm"
+        class="aria-disabled:pointer-events-none aria-disabled:opacity-50"
+        :href="sourceMapReady ? sourcemapLink : undefined"
+        :aria-disabled="!sourceMapReady"
+        :tabindex="sourceMapReady ? 0 : -1"
+        aria-label="Visualize source map (opens in a new tab)"
+        title="Visualize source map (opens in a new tab)"
         target="_blank"
         rel="noopener"
       >
-        <span class="text-foreground/80 font-medium hover:text-primary">Visualize source map</span>
-        <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
-      </a>
-    </div>
-    <ExecutionPanel
-      :code="oxc.codegenText"
-      :source-type="sourceType"
-      :source-map="oxc.codegenSourcemapText"
-      :baseline-code="baselineCode"
-      :baseline-source-map="baselineSourcemap"
-      :baseline-error="baselineError"
-    />
-  </div>
+        <Icon icon="ri:arrow-right-up-line" />
+        <span class="hidden xl:inline">Source map</span>
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        class="h-7 w-7"
+        :disabled="!oxc.codegenText"
+        :aria-label="copied ? 'Copied output' : 'Copy output'"
+        :title="copied ? 'Copied output' : 'Copy output'"
+        @click="copy(oxc.codegenText)"
+      >
+        <Icon
+          :icon="copied ? 'ri:check-line' : 'ri:file-copy-line'"
+          :class="{ 'text-green-500': copied }"
+        />
+      </Button>
+    </template>
+    <OutputPreview class="!h-auto" :code="oxc.codegenText" lang="tsx" hide-copy />
+  </ExecutionPanel>
 </template>

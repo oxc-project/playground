@@ -7,6 +7,7 @@ import type { HTMLAttributes } from "vue";
 
 const props = defineProps<{
   value: string;
+  hideCopy?: boolean;
   class?: HTMLAttributes["class"];
 }>();
 const { copied, copy } = useClipboard();
@@ -20,6 +21,7 @@ function handleCopy() {
   <div :class="cn('group relative h-full', props.class)">
     <slot />
     <Button
+      v-if="!hideCopy"
       variant="ghost"
       size="sm"
       class="absolute right-4 top-4 opacity-0 transition-opacity group-hover:opacity-100"

@@ -116,8 +116,12 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
 </script>
 
 <template>
-  <section class="shrink-0 border-t" aria-label="Output execution">
-    <div class="flex flex-wrap items-center gap-2 px-2 py-1.5">
+  <section class="h-full min-h-0 flex flex-col" aria-label="Output execution">
+    <div
+      class="flex shrink-0 flex-wrap items-center gap-2 border-b px-2 py-1.5"
+      role="group"
+      aria-label="Output actions"
+    >
       <Button
         size="sm"
         variant="outline"
@@ -153,14 +157,20 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       >
         Stop
       </Button>
-      <span
-        v-if="expanded || status !== 'idle'"
-        class="text-xs text-muted-foreground"
-        role="status"
-      >
-        {{ statusText }}
-      </span>
-      <div v-if="expanded || status !== 'idle'" class="ml-auto flex items-center gap-1">
+      <div class="ml-auto flex items-center gap-1">
+        <slot name="actions" />
+      </div>
+    </div>
+    <div class="min-h-0 flex-1 overflow-auto" aria-label="Printed output">
+      <slot />
+    </div>
+    <div
+      v-if="expanded || status !== 'idle'"
+      class="flex shrink-0 items-center gap-2 border-t px-2 py-1.5"
+    >
+      <span class="text-xs font-medium">Console</span>
+      <span class="text-xs text-muted-foreground" role="status">{{ statusText }}</span>
+      <div class="ml-auto flex items-center gap-1">
         <Button
           v-if="expanded"
           size="icon"
@@ -189,7 +199,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
     <div
       v-show="expanded"
       :id="consoleId"
-      class="border-t"
+      class="shrink-0 border-t"
       :class="{ 'grid grid-cols-1 md:grid-cols-2 md:divide-x': compareEnabled }"
     >
       <section v-if="compareEnabled" aria-label="Baseline execution">
