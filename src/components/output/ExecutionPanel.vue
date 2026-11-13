@@ -47,19 +47,23 @@ const visibleBaselineStatus = refDebounced(baseline.status, 150);
 const statusText = computed(() =>
   visibleStatus.value === "idle" ? "Output changed — run again" : statuses[visibleStatus.value],
 );
+const delayedRunId = refDebounced(output.runId, 150);
+const running = computed(
+  () => status.value === "running" && output.runId.value === delayedRunId.value,
+);
 // The output action leaves Compare mode and reruns the output alone.
-const runLabel = computed(() =>
-  compareEnabled.value || output.status.value === "idle" ? "Run output" : "Rerun",
-);
+const runLabel = computed(() => {
+  if (running.value && !compareEnabled.value) return "Running…";
+  return compareEnabled.value || output.status.value === "idle" ? "Run output" : "Rerun";
+});
 // The comparison action runs both sides and stays active.
-const compareLabel = computed(() =>
-  compareEnabled.value && baseline.status.value !== "idle" ? "Recompare" : "Compare",
-);
+const compareLabel = computed(() => {
+  if (running.value && compareEnabled.value) return "Comparing…";
+  return compareEnabled.value && baseline.status.value !== "idle" ? "Recompare" : "Compare";
+});
 const stoppable = computed(
   () => output.stoppable.value || (compareEnabled.value && baseline.stoppable.value),
 );
-
-const delayedRunId = refDebounced(output.runId, 150);
 
 function run() {
   expanded.value = true;
@@ -114,17 +118,31 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
 <template>
   <section class="shrink-0 border-t" aria-label="Output execution">
     <div class="flex flex-wrap items-center gap-2 px-2 py-1.5">
-      <Button size="sm" variant="outline" @click="runOutput">
-        <Icon icon="ri:play-line" />
+      <Button
+        size="sm"
+        variant="outline"
+        class="active:translate-y-px"
+        :aria-busy="!compareEnabled && status === 'running'"
+        @click="runOutput"
+      >
+        <Icon
+          :icon="running && !compareEnabled ? 'ri:loader-2-line' : 'ri:play-line'"
+          :class="{ 'animate-spin': running && !compareEnabled }"
+        />
         {{ runLabel }}
       </Button>
       <Button
         size="sm"
         :variant="compareEnabled ? 'secondary' : 'ghost'"
+        class="active:translate-y-px"
         :aria-pressed="compareEnabled"
+        :aria-busy="compareEnabled && status === 'running'"
         @click="runComparison"
       >
-        <Icon icon="ri:split-cells-horizontal" />
+        <Icon
+          :icon="running && compareEnabled ? 'ri:loader-2-line' : 'ri:split-cells-horizontal'"
+          :class="{ 'animate-spin': running && compareEnabled }"
+        />
         {{ compareLabel }}
       </Button>
       <Button
