@@ -15,9 +15,10 @@ Assuming the oxc repository is in `../oxc`:
 
 **Run output** in the Printed tab executes the generated JavaScript in a sandboxed
 iframe and shows its console output. **Stop** removes the iframe and its timers;
-editing the output stops the run. The status stays **Running** until synchronous
-code and every scheduled timer finish. Pending promises are not tracked, and a
-blocking loop cannot be interrupted.
+editing the output stops the run. The previous result stays visible during a new
+run and is replaced when that run finishes, fails, or is stopped, with up to 500
+entries per console. Pending promises are not tracked, and a blocking loop cannot
+be interrupted.
 
 The executed copy carries an inline source map, so devtools map back to the
 original source; the printed output is unchanged. Scripts run as scripts and ES
@@ -30,6 +31,14 @@ in the share URL. To run helper-using output, set **Extension** to **mjs** (or
 module loader; bare npm imports, `require()`, and Node.js APIs are unavailable.
 Execution errors appear in the console. Enable the Transformer first to run
 TypeScript or JSX.
+
+**Compare** runs the same input through an esnext baseline with TypeScript/JSX
+lowering enabled and minification, define/inject replacements, and optional
+transforms disabled. It executes the baseline and current output in separate
+sandboxes with their own console and status, and clicking it again recompares.
+**Run output** executes the output alone and returns to the single console. Stop,
+Clear console, and collapse/expand apply to what is shown. The selected mode is
+saved in the share URL.
 
 # [Sponsored By](https://oxc.rs/sponsor)
 
