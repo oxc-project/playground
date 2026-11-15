@@ -48,7 +48,8 @@ onMounted(updateRunOptions);
       <TabsContent value="ast">
         <EsTreePanel />
       </TabsContent>
-      <TabsContent value="codegen">
+      <!-- Keep runner iframes mounted so switching tabs does not stop execution. -->
+      <TabsContent value="codegen" force-mount>
         <CodegenPanel />
       </TabsContent>
       <TabsContent value="ir">
