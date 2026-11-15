@@ -6,6 +6,7 @@ import { highlight, shikiLoaded, shikiLoading, type ShikiLang } from "~/utils/sh
 const props = defineProps<{
   code?: string;
   lang: ShikiLang;
+  hideCopy?: boolean;
 }>();
 
 const highlightedCode = ref("");
@@ -44,7 +45,7 @@ function escapeHtml(text: string): string {
 </script>
 
 <template>
-  <CopyContainer :value="code || ''" class="min-w-0 w-full flex">
+  <CopyContainer :value="code || ''" :hide-copy="hideCopy" class="min-w-0 w-full flex">
     <div class="flex-1 overflow-auto text-sm leading-relaxed">
       <!-- Loading skeleton -->
       <div v-if="showLoading && !highlightedCode" class="animate-pulse">
