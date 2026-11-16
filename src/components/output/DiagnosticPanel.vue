@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { computed, ref, useId, watch } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { editorValue } from "~/composables/state";
 import DiagnosticCodeframe from "./DiagnosticCodeframe.vue";
 
 const props = defineProps<{
@@ -144,6 +145,7 @@ function toggleDetails(index: number) {
           <DiagnosticCodeframe
             v-if="expanded.has(i) && diagnostic.codeframe"
             :codeframe="diagnostic.codeframe"
+            :source="editorValue"
             :severity-color="diagnostic.color"
             :aria-label="`Full diagnostic: ${diagnostic.message}`"
           />

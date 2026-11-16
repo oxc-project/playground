@@ -1,3 +1,32 @@
+// Map into line/column coordinates, which survive Monaco's newline
+// normalization. Monaco also keeps a leading BOM outside its editable text.
+export function createDiagnosticPositionMapper(source: string) {
+  const toUtf16 = createDiagnosticOffsetMapper(source);
+  const starts = [source.charCodeAt(0) === 0xfeff ? 1 : 0];
+  const ends: number[] = [];
+  for (const match of source.matchAll(/\r\n|\r|\n/g)) {
+    ends.push(match.index);
+    starts.push(match.index + match[0].length);
+  }
+  ends.push(source.length);
+
+  return (byteOffset: number) => {
+    const offset = toUtf16(byteOffset);
+    let low = 0;
+    let high = starts.length;
+    while (low < high) {
+      const middle = (low + high) >>> 1;
+      if (starts[middle]! <= offset) low = middle + 1;
+      else high = middle;
+    }
+    const line = Math.max(0, low - 1);
+    return {
+      lineNumber: line + 1,
+      column: Math.max(1, Math.min(offset, ends[line]!) - starts[line]! + 1),
+    };
+  };
+}
+
 // Diagnostic labels use UTF-8 byte offsets; Monaco models use UTF-16 offsets.
 // Store only multibyte characters so ASCII input needs no lookup table.
 export function createDiagnosticOffsetMapper(source: string) {

@@ -3,7 +3,7 @@ import * as monaco from "monaco-editor/editor/editor.api";
 import { computed, ref, useTemplateRef, watchEffect } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { editorValue } from "~/composables/state";
-import { createDiagnosticOffsetMapper } from "~/utils/diagnostic-offsets";
+import { createDiagnosticPositionMapper } from "~/utils/diagnostic-offsets";
 import MonacoEditor from "../MonacoEditor.vue";
 
 defineProps<{
@@ -15,22 +15,16 @@ defineProps<{
 const { oxc } = await useOxc();
 
 const monacoRef = useTemplateRef("monacoRef");
-const toUtf16Offset = computed(() => createDiagnosticOffsetMapper(editorValue.value));
-const getPositionAt = computed(() => {
-  const getPosition = monacoRef.value?.getPositionAt;
-  const toUtf16 = toUtf16Offset.value;
-  return getPosition && ((byteOffset: number) => getPosition(toUtf16(byteOffset)));
-});
+const toPosition = computed(() => createDiagnosticPositionMapper(editorValue.value));
+// Resolve the lazy map only when a diagnostic label actually needs a position.
+const getPositionAt = (byteOffset: number) => toPosition.value(byteOffset);
 const markers = ref<monaco.editor.IMarkerData[]>([]);
 
 watchEffect(() => {
-  const getPos = getPositionAt.value;
-  if (!getPos) return;
-
   const diagnostics = oxc.value.getDiagnostics();
   markers.value = diagnostics.map((d) => {
-    const startPos = getPos(d.labels[0]?.start ?? 0);
-    const endPos = getPos(d.labels[0]?.end ?? 0);
+    const startPos = getPositionAt(d.labels[0]?.start ?? 0);
+    const endPos = getPositionAt(d.labels[0]?.end ?? 0);
     return {
       severity:
         d.severity === "Warning" ? monaco.MarkerSeverity.Warning : monaco.MarkerSeverity.Error,
@@ -44,9 +38,9 @@ watchEffect(() => {
 });
 
 defineExpose({
-  getPositionAt: (offset: number) => getPositionAt.value?.(offset),
+  getPositionAt,
   revealRange: (start: number, end: number) =>
-    monacoRef.value?.revealRange(toUtf16Offset.value(start), toUtf16Offset.value(end)),
+    monacoRef.value?.revealRange(getPositionAt(start), getPositionAt(end)),
 });
 </script>
 
