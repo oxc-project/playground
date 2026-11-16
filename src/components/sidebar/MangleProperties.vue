@@ -93,7 +93,10 @@ watch(
 
         <div class="flex flex-col gap-1">
           <Checkbox v-model="options.mangleProps.quoted" label="Mangle quoted properties" />
-          <p class="settings-help">Otherwise, quoted names are preserved.</p>
+          <p class="settings-help">
+            When off, quoted keys and accesses stay unchanged. Unquoted uses can still be renamed.
+            Enable this option or reserve names used both ways.
+          </p>
         </div>
 
         <div class="flex flex-col gap-1">
