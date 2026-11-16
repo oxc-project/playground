@@ -1,3 +1,6 @@
+// Register the outline service before language contributions initialize Monaco services.
+// Monaco's diff breadcrumbs require it even when unchanged regions are visible.
+import "monaco-editor/editor/contrib/documentSymbols/browser/outlineModel";
 import "monaco-editor/editor/editor.api";
 import "monaco-editor/editor/contrib/hover/browser/hoverContribution";
 import "monaco-editor/languages/definitions/javascript/register";
