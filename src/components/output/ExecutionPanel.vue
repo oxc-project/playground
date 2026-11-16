@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { refDebounced } from "@vueuse/core";
+import {
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+} from "radix-vue";
 import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 import { useSandboxRun, type SandboxStatus } from "~/composables/sandbox-run";
 import { compareEnabled } from "~/composables/state";
@@ -23,6 +30,7 @@ const expanded = ref(false);
 const expectedComparisonActive = ref(false);
 const comparing = computed(() => compareEnabled.value || expectedComparisonActive.value);
 const consoleId = useId();
+const helperTipOpen = ref(false);
 const outputFrame = useTemplateRef<HTMLIFrameElement>("outputFrame");
 const baselineFrame = useTemplateRef<HTMLIFrameElement>("baselineFrame");
 const expectedFrame = useTemplateRef<HTMLIFrameElement>("expectedFrame");
@@ -236,7 +244,35 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       v-if="expanded || status !== 'idle'"
       class="flex shrink-0 items-center gap-2 border-t px-2 py-1.5"
     >
-      <span class="text-xs font-medium">Console</span>
+      <div class="flex items-center gap-1">
+        <span class="text-xs font-medium">Console</span>
+        <TooltipProvider :delay-duration="200">
+          <TooltipRoot v-model:open="helperTipOpen" disable-closing-trigger>
+            <TooltipTrigger
+              type="button"
+              class="inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="Console runtime help"
+              @click="helperTipOpen = !helperTipOpen"
+            >
+              <Icon icon="ri:information-line" class="h-3.5 w-3.5" aria-hidden="true" />
+            </TooltipTrigger>
+            <TooltipPortal>
+              <TooltipContent
+                side="top"
+                align="start"
+                :side-offset="6"
+                :collision-padding="8"
+                class="z-50 w-72 max-w-[calc(100vw-1rem)] rounded-md border bg-popover px-3 py-2 text-xs leading-relaxed text-popover-foreground shadow-md"
+              >
+                To run output that imports runtime helpers, select
+                <strong>Parser → Source type → Module</strong> and
+                <strong>Transformer → Runtime helpers → esm.sh</strong> in configuration. The
+                browser cannot resolve npm package imports or <code>require()</code>.
+              </TooltipContent>
+            </TooltipPortal>
+          </TooltipRoot>
+        </TooltipProvider>
+      </div>
       <span class="text-xs text-muted-foreground" role="status">{{ statusText }}</span>
       <div class="ml-auto flex items-center gap-1">
         <Button
