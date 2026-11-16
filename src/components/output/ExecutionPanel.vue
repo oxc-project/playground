@@ -16,7 +16,7 @@ const props = defineProps<{
   baselineError?: string;
   expectedCode?: string;
   expectedComparison?: boolean;
-  compilationError?: string;
+  compilationFailed?: boolean;
 }>();
 
 const expanded = ref(false);
@@ -84,6 +84,7 @@ const stoppable = computed(
 );
 
 function run() {
+  if (props.compilationFailed) return;
   expanded.value = true;
   output.run(props.code, props.sourceType, props.sourceMap);
   if (compareEnabled.value) {
@@ -97,6 +98,7 @@ function run() {
 }
 
 async function runComparison() {
+  if (props.compilationFailed) return;
   expected.reset();
   expectedComparisonActive.value = false;
   compareEnabled.value = true;
@@ -108,7 +110,7 @@ async function runComparison() {
 
 function runExpectedComparison() {
   // Undefined is unset; an empty expectation is valid executable JavaScript.
-  if (props.expectedCode === undefined || props.compilationError) return;
+  if (props.expectedCode === undefined || props.compilationFailed) return;
   if (compareEnabled.value) {
     compareEnabled.value = false;
     baseline.reset();
@@ -120,6 +122,7 @@ function runExpectedComparison() {
 }
 
 function runOutput() {
+  if (props.compilationFailed) return;
   if (compareEnabled.value) {
     compareEnabled.value = false;
     baseline.reset();
@@ -141,17 +144,23 @@ function clear() {
   expected.clear();
 }
 
-watch([() => props.code, () => props.sourceType, () => props.sourceMap], () => {
-  output.reset();
-  baseline.reset();
-  expected.reset();
-});
+watch(
+  [() => props.code, () => props.sourceType, () => props.sourceMap, () => props.compilationFailed],
+  () => {
+    output.reset();
+    baseline.reset();
+    expected.reset();
+  },
+);
 // Expected edits invalidate only the Expected-versus-Current run.
-watch([() => props.expectedCode, () => props.compilationError], () => {
-  if (!expectedComparisonActive.value) return;
-  output.reset();
-  expected.reset();
-});
+watch(
+  () => props.expectedCode,
+  () => {
+    if (!expectedComparisonActive.value) return;
+    output.reset();
+    expected.reset();
+  },
+);
 // The baseline changes on its own when the source or parser changes, and when
 // Compare is enabled; only the baseline run is stale then.
 watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.baselineError], () =>
@@ -171,6 +180,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
         variant="outline"
         class="active:translate-y-px"
         :aria-busy="!comparing && status === 'running'"
+        :disabled="compilationFailed"
         @click="runOutput"
       >
         <Icon
@@ -185,7 +195,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
         class="active:translate-y-px"
         :aria-pressed="comparisonActive"
         :aria-busy="comparisonRunning"
-        :disabled="expectedComparison && (expectedCode === undefined || !!compilationError)"
+        :disabled="compilationFailed || (expectedComparison && expectedCode === undefined)"
         :title="
           expectedComparison
             ? 'Run Expected and Current JavaScript in separate sandboxes'

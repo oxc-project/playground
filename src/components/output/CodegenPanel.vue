@@ -16,8 +16,12 @@ import ExecutionPanel from "./ExecutionPanel.vue";
 import ExpectedDiffPanel from "./ExpectedDiffPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
 
-const { oxc, baselineCode, baselineSourcemap, baselineError, compilationErrors } = await useOxc();
+const { oxc, error, baselineCode, baselineSourcemap, baselineError, compilationErrors } =
+  await useOxc();
 const expectedDiffVisited = ref(expectedDiffEnabled.value);
+const compilationFailed = computed(
+  () => !!error.value || (expectedDiffVisited.value && compilationErrors.value.length > 0),
+);
 const expectedDiffId = useId();
 function showExpectedDiff() {
   expectedDiffVisited.value = true;
@@ -68,7 +72,7 @@ const { copied, copy } = useClipboard();
     :baseline-error="baselineError"
     :expected-code="expectedOutput"
     :expected-comparison="expectedDiffEnabled"
-    :compilation-error="expectedDiffVisited ? compilationErrors.join('\n') : undefined"
+    :compilation-failed="compilationFailed"
   >
     <template #actions>
       <Button

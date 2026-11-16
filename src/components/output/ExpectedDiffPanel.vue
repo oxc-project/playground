@@ -38,77 +38,131 @@ const disposables: monaco.IDisposable[] = [];
 let disposed = false;
 let syncingExpected = false;
 let pastedText: string | undefined;
-const pastedRanges = new Set<string>();
+const pastedSelections = new Map<string, string>();
 const rangeKey = (range: monaco.IRange) =>
   `${range.startLineNumber}:${range.startColumn}:${range.endLineNumber}:${range.endColumn}`;
-// Monaco normalizes line endings internally. Keep the pasted text exact, and retain
-// its line endings through edits and undo/redo rather than reporting a false match.
-const lineEndingsByVersion = new Map<number, string[]>();
 const normalizeEol = (value: string) => value.replace(/\r\n?/g, "\n");
+const getLineEndings = (value: string) => value.match(/\r\n|\r|\n/g) ?? [];
+// Store only changes to line endings, not a document-sized snapshot per keystroke.
+// Alternative version IDs let a single undo/redo traverse a whole typing group.
+type LineEndingEdit = { start: number; removed: string[]; inserted: string[] };
+const lineEndingHistory: { version: number; edits: LineEndingEdit[] }[] = [];
+let lineEndings: string[] = [];
+let historyIndex = 0;
 
-function rememberLineEndings() {
-  const value = expectedOutput.value ?? "";
-  if (value.includes("\r")) {
-    lineEndingsByVersion.set(
-      expectedModel!.getAlternativeVersionId(),
-      value.match(/\r\n|\r|\n/g) ?? [],
-    );
-  }
+function replaceLineEndings(start: number, count: number, inserted: string[]) {
+  lineEndings = lineEndings.slice(0, start).concat(inserted, lineEndings.slice(start + count));
 }
 
 function updateExpected(event: monaco.editor.IModelContentChangedEvent) {
   if (syncingExpected) return;
   changedBlocks.value = undefined;
+  const version = expectedModel!.getAlternativeVersionId();
   let value = expectedOutput.value ?? "";
   if (event.isUndoing || event.isRedoing) {
-    const endings = lineEndingsByVersion.get(expectedModel!.getAlternativeVersionId());
+    while (historyIndex > 0 && lineEndingHistory[historyIndex - 1]!.version > version) {
+      for (const edit of lineEndingHistory[--historyIndex]!.edits.toReversed()) {
+        replaceLineEndings(edit.start, edit.inserted.length, edit.removed);
+      }
+    }
+    while (
+      historyIndex < lineEndingHistory.length &&
+      lineEndingHistory[historyIndex]!.version <= version
+    ) {
+      for (const edit of lineEndingHistory[historyIndex++]!.edits) {
+        replaceLineEndings(edit.start, edit.removed.length, edit.inserted);
+      }
+    }
     let index = 0;
     value = expectedModel!
       .getValue(monaco.editor.EndOfLinePreference.LF)
-      .replace(/\n/g, () => endings?.[index++] ?? "\n");
+      .replace(/\n/g, () => lineEndings[index++] ?? "\n");
   } else {
+    // A new edit after undo discards the corresponding redo metadata too.
+    lineEndingHistory.splice(historyIndex);
+    const edits: LineEndingEdit[] = [];
     const starts = [0];
     for (const match of value.matchAll(/\r\n|\r|\n/g)) starts.push(match.index + match[0].length);
     for (const { range, text } of event.changes.toSorted((a, b) => b.rangeOffset - a.rangeOffset)) {
       const start = starts[range.startLineNumber - 1]! + range.startColumn - 1;
       const end = starts[range.endLineNumber - 1]! + range.endColumn - 1;
-      const inserted = pastedRanges.has(rangeKey(range)) ? pastedText! : text;
+      const rawText = pastedSelections.get(rangeKey(range)) ?? pastedText;
+      const inserted =
+        rawText !== undefined && normalizeEol(rawText) === normalizeEol(text) ? rawText : text;
+      const endingStart = range.startLineNumber - 1;
+      const removed = lineEndings.slice(endingStart, range.endLineNumber - 1);
+      const insertedEndings = getLineEndings(inserted);
+      if (
+        removed.length !== insertedEndings.length ||
+        removed.some((ending, index) => ending !== insertedEndings[index])
+      ) {
+        edits.push({ start: endingStart, removed, inserted: insertedEndings });
+        replaceLineEndings(endingStart, removed.length, insertedEndings);
+      }
       value = value.slice(0, start) + inserted + value.slice(end);
+    }
+    if (edits.length) {
+      lineEndingHistory.push({ version, edits });
+      historyIndex++;
     }
   }
   expectedOutput.value = value;
-  rememberLineEndings();
 }
 
 function pasteExpected(event: ClipboardEvent) {
   const expected = editor?.getModifiedEditor();
   if (!expected?.hasTextFocus() || !event.clipboardData?.types.includes("text/plain")) return;
+  const text = event.clipboardData.getData("text/plain");
+  if (!text) return;
+  // Use this editor's paste command so Monaco handles whole-line/multicursor paste,
+  // cursor placement and undo grouping without routing through another focused editor.
   event.preventDefault();
   event.stopImmediatePropagation();
-  pastedText = event.clipboardData.getData("text/plain");
-  const selections = expected.getSelections() ?? [];
-  for (const range of selections) pastedRanges.add(rangeKey(range));
+  pastedText = text;
+  let metadata;
   try {
-    expected.pushUndoStop();
-    expected.executeEdits(
-      "paste",
-      selections.map((range) => ({
-        range,
-        text: pastedText!,
-        forceMoveMarkers: true,
-      })),
+    const data = JSON.parse(event.clipboardData.getData("vscode-editor-data") || "null");
+    if (data?.version === 1) metadata = data;
+  } catch {
+    // Invalid clipboard metadata must not interfere with Monaco's normal paste.
+  }
+  const selections = (expected.getSelections() ?? []).toSorted(
+    monaco.Range.compareRangesUsingStarts,
+  );
+  const multicursorText =
+    Array.isArray(metadata?.multicursorText) &&
+    metadata.multicursorText.every((text: unknown) => typeof text === "string")
+      ? (metadata.multicursorText as string[])
+      : null;
+  if (multicursorText?.length === selections.length) {
+    selections.forEach((range, index) =>
+      pastedSelections.set(rangeKey(range), multicursorText[index]!),
     );
-    expected.pushUndoStop();
+  }
+  try {
+    expected.trigger("keyboard", "paste", {
+      text: pastedText,
+      pasteOnNewLine:
+        expected.getOption(monaco.editor.EditorOption.emptySelectionClipboard) &&
+        !!metadata?.isFromEmptySelection,
+      multicursorText,
+      mode: metadata?.mode ?? null,
+    });
   } finally {
     pastedText = undefined;
-    pastedRanges.clear();
+    pastedSelections.clear();
   }
 }
 
-watch(currentOutput, (value) => {
-  changedBlocks.value = undefined;
-  currentModel?.setValue(value);
-});
+const visible = computed(() => activeTab.value === "codegen" && expectedDiffEnabled.value);
+watch(
+  () => (visible.value ? currentOutput.value : undefined),
+  (value) => {
+    if (value === undefined || !currentModel || currentModel.getValue() === value) return;
+    changedBlocks.value = undefined;
+    currentModel.setValue(value);
+  },
+);
 watch(expectedOutput, (value) => {
   if (
     expectedModel &&
@@ -117,7 +171,9 @@ watch(expectedOutput, (value) => {
     syncingExpected = true;
     try {
       expectedModel.setValue(value ?? "");
-      rememberLineEndings();
+      lineEndings = getLineEndings(value ?? "");
+      lineEndingHistory.length = 0;
+      historyIndex = 0;
     } finally {
       syncingExpected = false;
     }
@@ -173,7 +229,7 @@ onMounted(async () => {
       changedBlocks.value = changes ? changes.length : undefined;
     }),
   );
-  rememberLineEndings();
+  lineEndings = getLineEndings(expectedOutput.value ?? "");
   editor.setModel({ original: currentModel, modified: expectedModel });
   expectedModel.updateOptions({ trimAutoWhitespace: false });
   container.value!.addEventListener("paste", pasteExpected, true);
