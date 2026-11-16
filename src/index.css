@@ -336,9 +336,6 @@
 }
 
 .workspace {
-  margin: 12px;
-  border: 1px solid hsl(var(--border));
-  border-radius: 10px;
   background: hsl(var(--background));
   overflow: hidden;
 }
@@ -394,9 +391,6 @@
 }
 
 @media (max-width: 767px) {
-  .workspace {
-    margin: 8px;
-  }
   .output-tabs [role="tab"] {
     padding-inline: 10px;
   }
