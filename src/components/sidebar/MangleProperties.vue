@@ -1,19 +1,8 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
 import { computed, ref, watch } from "vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
-import { Button } from "~/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/ui/dialog";
+import OptionsDisclosure from "~/components/sidebar/OptionsDisclosure.vue";
 import { Input } from "~/ui/input";
 import { Checkbox as CheckboxControl } from "~/ui/checkbox";
 
@@ -72,80 +61,46 @@ watch(
 <template>
   <div class="settings-section">
     <div class="settings-toggle-row">
-      <h3 id="mangle-properties-heading">Mangle properties</h3>
-      <CheckboxControl
-        v-model:checked="options.run.mangleProps"
-        aria-labelledby="mangle-properties-heading"
-      />
+      <h3><label for="mangle-properties">Mangle properties</label></h3>
+      <CheckboxControl id="mangle-properties" v-model:checked="options.run.mangleProps" />
     </div>
 
-    <Dialog>
-      <DialogTrigger v-if="options.run.mangleProps" as-child>
-        <Button
-          variant="ghost"
-          size="xs"
-          class="w-full justify-start text-xs text-muted-foreground"
-        >
-          <Icon icon="ri:settings-line" aria-hidden="true" />
-          Configure properties
-        </Button>
-      </DialogTrigger>
+    <OptionsDisclosure v-show="options.run.mangleProps" label="Property options">
+      <div class="flex flex-col gap-3">
+        <p class="settings-help">Rename only properties you control.</p>
+        <label class="settings-field-stacked">
+          <span>Include pattern</span>
+          <Input v-model="options.mangleProps.include" class="font-mono" />
+          <span class="settings-help">
+            Rust regex. <code>_$</code> matches names ending in an underscore.
+          </span>
+        </label>
 
-      <DialogContent class="max-h-[85vh] w-[calc(100%-2rem)] overflow-y-auto sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Property mangling</DialogTitle>
-          <DialogDescription>
-            Choose which property names to rename. Changes apply immediately.
-          </DialogDescription>
-        </DialogHeader>
+        <label class="settings-field-stacked">
+          <span>Exclude pattern</span>
+          <Input v-model="excludedProperties" class="font-mono" placeholder="Optional Rust regex" />
+        </label>
 
-        <div class="flex flex-col gap-5">
-          <label class="flex flex-col gap-2 text-sm">
-            <span class="font-medium">Include pattern</span>
-            <Input v-model="options.mangleProps.include" class="font-mono" />
-            <span class="text-xs text-muted-foreground">
-              Rust regex. The default _$ matches names ending in an underscore.
-            </span>
-          </label>
+        <label class="settings-field-stacked">
+          <span>Reserved names</span>
+          <textarea
+            v-model="reservedProperties"
+            rows="3"
+            class="w-full rounded border border-input bg-background px-2 py-1.5 font-mono text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            placeholder="One property name per line"
+          />
+        </label>
 
-          <label class="flex flex-col gap-2 text-sm">
-            <span class="font-medium">Exclude pattern</span>
-            <Input
-              v-model="excludedProperties"
-              class="font-mono"
-              placeholder="Optional regex pattern"
-            />
-          </label>
-
-          <label class="flex flex-col gap-2 text-sm">
-            <span class="font-medium">Reserved names</span>
-            <textarea
-              v-model="reservedProperties"
-              rows="3"
-              class="w-full rounded-md border border-input bg-transparent px-3 py-2 font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              placeholder="One property name per line"
-            />
-          </label>
-
-          <div class="flex flex-col gap-2">
-            <Checkbox v-model="options.mangleProps.quoted" label="Mangle quoted properties" />
-            <p class="text-xs text-muted-foreground">
-              Also rename quoted properties. Otherwise, quoted names are preserved.
-            </p>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <Checkbox v-model="options.mangleProps.debug" label="Readable debug names" />
-            <p class="text-xs text-muted-foreground">Use names such as _$name$_.</p>
-          </div>
+        <div class="flex flex-col gap-1">
+          <Checkbox v-model="options.mangleProps.quoted" label="Mangle quoted properties" />
+          <p class="settings-help">Otherwise, quoted names are preserved.</p>
         </div>
 
-        <DialogFooter>
-          <DialogClose as-child>
-            <Button>Done</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        <div class="flex flex-col gap-1">
+          <Checkbox v-model="options.mangleProps.debug" label="Readable debug names" />
+          <p class="settings-help">Use names such as <code>_$name$_</code>.</p>
+        </div>
+      </div>
+    </OptionsDisclosure>
   </div>
 </template>
