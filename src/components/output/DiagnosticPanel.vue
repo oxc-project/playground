@@ -64,7 +64,7 @@ function toggleDetails(index: number) {
       />
       <span class="font-medium">Diagnostics</span>
       <span role="status" class="ml-auto flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
-        <span class="flex items-center gap-1">
+        <span v-if="errors" class="flex items-center gap-1">
           <Icon
             icon="ri:close-circle-line"
             class="h-3.5 w-3.5 text-destructive"
@@ -72,7 +72,7 @@ function toggleDetails(index: number) {
           />
           {{ errors }} {{ errors === 1 ? "error" : "errors" }}
         </span>
-        <span class="flex items-center gap-1">
+        <span v-if="warnings" class="flex items-center gap-1">
           <Icon
             icon="ri:error-warning-line"
             class="h-3.5 w-3.5 text-amber-700 dark:text-amber-400"
@@ -90,10 +90,10 @@ function toggleDetails(index: number) {
         :key="i"
         class="diagnostic-item border-b last:border-b-0"
       >
-        <div class="flex items-start gap-1 px-2 py-1">
+        <div class="flex flex-wrap items-start gap-1 px-2 py-1">
           <button
             type="button"
-            class="diagnostic-location min-w-0 flex flex-1 items-start gap-2 rounded px-1 py-1.5 text-left text-xs hover:bg-muted focus-visible:-outline-offset-2 disabled:cursor-default"
+            class="diagnostic-location min-w-0 flex flex-1 basis-80 items-start gap-2 rounded px-1 py-1.5 text-left text-xs hover:bg-muted focus-visible:-outline-offset-2 disabled:cursor-default"
             :disabled="!diagnostic.position"
             :title="
               diagnostic.position ? 'Go to source: ' + diagnostic.message : diagnostic.message
@@ -121,12 +121,18 @@ function toggleDetails(index: number) {
           <button
             v-if="diagnostic.codeframe || diagnostic.helpMessage"
             type="button"
-            class="diagnostic-details shrink-0 rounded px-2 py-1.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:-outline-offset-2"
+            class="diagnostic-details ml-auto flex shrink-0 items-center gap-1 rounded px-2 py-1.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:-outline-offset-2"
             :aria-expanded="expanded.has(i)"
             :aria-controls="`${listId}-${i}`"
             @click="toggleDetails(i)"
           >
-            <span>Details</span><span class="sr-only"> for {{ diagnostic.message }}</span>
+            <Icon
+              :icon="expanded.has(i) ? 'ri:arrow-down-s-line' : 'ri:arrow-right-s-line'"
+              class="h-3.5 w-3.5"
+              aria-hidden="true"
+            />
+            <span>{{ expanded.has(i) ? "Hide details" : "Show details" }}</span>
+            <span class="sr-only"> for {{ diagnostic.message }}</span>
           </button>
         </div>
         <div

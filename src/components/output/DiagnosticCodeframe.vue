@@ -14,7 +14,17 @@ const lines = computed(() =>
     // Keep the compiler's gutter, annotations, and spacing intact. Only the
     // numbered source lines are JavaScript; the rest is diagnostic prose.
     const source = /^(\s*\d+\s*[|│] )(.*)$/u.exec(text);
-    return { text, prefix: source?.[1], source: source?.[2] };
+    const gutter = source ? undefined : /^(\s*\|\s?)(.*)$/u.exec(text);
+    const decoration = /^\s*(?:,-\[|`-+)/u.test(text);
+    return {
+      text,
+      prefix: source?.[1],
+      source: source?.[2],
+      gutter: gutter?.[1],
+      prose: gutter?.[2] ?? text,
+      decoration,
+      annotation: text.includes("^") || /^\s*[!x×]/u.test(text),
+    };
   }),
 );
 const sourceLines = computed(() => lines.value.filter((line) => line.source !== undefined));
@@ -47,12 +57,17 @@ watchEffect(async (onCleanup) => {
 
 <template>
   <pre
-    class="diagnostic-codeframe overflow-x-auto rounded bg-muted px-3 py-2 text-xs leading-relaxed text-muted-foreground"
+    class="diagnostic-codeframe overflow-x-auto px-3 py-2 text-xs leading-relaxed"
+    :class="severityColor"
     tabindex="0"
-  ><template v-for="(line, i) in highlightedLines" :key="i"><template v-if="line.source !== undefined">{{ line.prefix }}<template v-if="line.tokens"><span v-for="(token, j) in line.tokens" :key="j" class="diagnostic-token" :style="{ '--token-light': token.htmlStyle?.color, '--token-dark': token.htmlStyle?.['--shiki-dark'] }">{{ token.content }}</span></template><span v-else class="text-foreground">{{ line.source }}</span></template><span v-else :class="line.text.includes('^') || /^\s*[!x×]/u.test(line.text) ? severityColor : undefined">{{ line.text }}</span>{{ i < highlightedLines.length - 1 ? "\n" : "" }}</template></pre>
+  ><template v-for="(line, i) in highlightedLines" :key="i"><template v-if="line.source !== undefined"><span class="text-muted-foreground">{{ line.prefix }}</span><template v-if="line.tokens"><span v-for="(token, j) in line.tokens" :key="j" class="diagnostic-token" :style="{ '--token-light': token.htmlStyle?.color, '--token-dark': token.htmlStyle?.['--shiki-dark'] }">{{ token.content }}</span></template><span v-else class="text-foreground">{{ line.source }}</span></template><template v-else><span v-if="line.gutter" class="text-muted-foreground">{{ line.gutter }}</span><span :class="line.annotation ? severityColor : line.decoration ? 'text-muted-foreground' : 'text-foreground'">{{ line.prose }}</span></template>{{ i < highlightedLines.length - 1 ? "\n" : "" }}</template></pre>
 </template>
 
 <style scoped>
+.diagnostic-codeframe {
+  border-left: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+
 .diagnostic-token {
   color: var(--token-light);
 }
