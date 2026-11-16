@@ -30,7 +30,7 @@ export async function createHighlighterInstance(): Promise<HighlighterCore> {
     langs: [langJson.default, langRust.default, langTsx.default],
     // Keep Monaco's JS/TS language services while highlighting JSX and TSX
     // with the same grammar used by the generated-code preview.
-    langAlias: { javascript: "tsx", typescript: "tsx" },
+    langAlias: { javascript: "tsx", typescript: "tsx", "printed-typescript": "tsx" },
     engine: createJavaScriptRegexEngine(),
   });
 }

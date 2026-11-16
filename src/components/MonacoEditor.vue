@@ -14,6 +14,7 @@ const props = defineProps<{
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
   readonly?: boolean;
   filename: string;
+  modelUri?: monaco.Uri;
   markers?: monaco.editor.IMarkerData[];
   main?: boolean;
 }>();
@@ -29,14 +30,14 @@ watchEffect((onCleanup) => {
     const value = model.value.getValue();
     emit("update:modelValue", value);
   });
-  onCleanup(() => dispose);
+  onCleanup(() => dispose.dispose());
 });
 
 function initModel() {
   const model = monaco.editor.createModel(
     props.modelValue,
     props.language,
-    monaco.Uri.file(props.filename),
+    props.modelUri ?? monaco.Uri.file(props.filename),
   );
   model.updateOptions({
     bracketColorizationOptions: { enabled: false, independentColorPoolPerBracketType: false },
@@ -50,6 +51,13 @@ const isDark = useDark({
     monaco.editor.setTheme(props.theme || getEditorTheme(isDark));
   },
 });
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (model.value.getValue() !== value) model.value.setValue(value);
+  },
+);
 
 watch(
   () => props.language,

@@ -3,13 +3,13 @@ import { Icon } from "@iconify/vue";
 import { computedAsync, useClipboard } from "@vueuse/core";
 import { computed, ref, useId } from "vue";
 import { useOxc } from "~/composables/oxc";
-import { expectedDiffEnabled, expectedOutput } from "~/composables/state";
+import { editorValue, expectedDiffEnabled, expectedOutput } from "~/composables/state";
 import { Button } from "~/ui/button";
 import ExecutionPanel from "./ExecutionPanel.vue";
 import ExpectedDiffPanel from "./ExpectedDiffPanel.vue";
-import OutputPreview from "./OutputPreview.vue";
+import PrintedEditor from "./PrintedEditor.vue";
 
-const { oxc, error, baselineCode, baselineSourcemap, baselineError, compilationErrors } =
+const { oxc, options, error, baselineCode, baselineSourcemap, baselineError, compilationErrors } =
   await useOxc();
 const expectedDiffVisited = ref(expectedDiffEnabled.value);
 const compilationFailed = computed(
@@ -112,12 +112,13 @@ const { copied, copy } = useClipboard();
         />
       </Button>
     </template>
-    <OutputPreview
+    <PrintedEditor
       v-show="!expectedDiffEnabled"
-      class="!h-auto"
+      :key="options.parser.extension"
+      :extension="options.parser.extension"
       :code="oxc.codegenText"
-      lang="tsx"
-      hide-copy
+      :source-map="oxc.codegenSourcemapText ?? ''"
+      :source="editorValue"
     />
     <ExpectedDiffPanel
       v-if="expectedDiffVisited"

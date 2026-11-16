@@ -41,6 +41,11 @@ defineExpose({
   getPositionAt,
   revealRange: (start: number, end: number) =>
     monacoRef.value?.revealRange(getPositionAt(start), getPositionAt(end)),
+  revealPositionRange: (range: monaco.IRange) =>
+    monacoRef.value?.revealRange(
+      { lineNumber: range.startLineNumber, column: range.startColumn },
+      { lineNumber: range.endLineNumber, column: range.endColumn },
+    ),
 });
 </script>
 

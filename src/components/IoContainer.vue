@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { useMediaQuery } from "@vueuse/core";
-import { computed, useTemplateRef } from "vue";
+import { computed, provide, useTemplateRef } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { sourceNavigationKey } from "~/composables/source-navigation";
 import { activeTab, expectedDiffEnabled } from "~/composables/state";
 import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import CopyContainer from "./CopyContainer.vue";
@@ -15,6 +16,7 @@ const { oxc, error, monacoLanguage, options } = await useOxc();
 const isMdAndUp = useMediaQuery("(min-width: 768px)");
 const splitterDirection = computed(() => (isMdAndUp.value ? "horizontal" : "vertical"));
 const inputRef = useTemplateRef("inputRef");
+provide(sourceNavigationKey, (range) => inputRef.value?.revealPositionRange(range));
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
