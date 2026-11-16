@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { computedAsync, useClipboard } from "@vueuse/core";
-import {
-  DropdownMenuRoot,
-  DropdownMenuTrigger,
-  DropdownMenuPortal,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "radix-vue";
 import { computed, ref, useId } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { expectedDiffEnabled, expectedOutput } from "~/composables/state";
@@ -23,9 +16,9 @@ const compilationFailed = computed(
   () => !!error.value || (expectedDiffVisited.value && compilationErrors.value.length > 0),
 );
 const expectedDiffId = useId();
-function showExpectedDiff() {
+function toggleExpectedDiff() {
   expectedDiffVisited.value = true;
-  expectedDiffEnabled.value = true;
+  expectedDiffEnabled.value = !expectedDiffEnabled.value;
 }
 const sourceType = computed(() => {
   try {
@@ -76,6 +69,18 @@ const { copied, copy } = useClipboard();
   >
     <template #actions>
       <Button
+        :variant="expectedDiffEnabled ? 'secondary' : 'ghost'"
+        size="sm"
+        :aria-pressed="expectedDiffEnabled"
+        :aria-controls="expectedDiffId"
+        aria-label="Compare expected output"
+        :title="expectedDiffEnabled ? 'Show printed output' : 'Compare expected output'"
+        @click="toggleExpectedDiff"
+      >
+        <Icon icon="ri:file-search-line" />
+        <span class="output-expected-label">Expected output</span>
+      </Button>
+      <Button
         as="a"
         role="link"
         variant="ghost"
@@ -106,44 +111,6 @@ const { copied, copy } = useClipboard();
           :class="{ 'text-green-500': copied }"
         />
       </Button>
-      <DropdownMenuRoot>
-        <DropdownMenuTrigger as-child>
-          <Button
-            variant="ghost"
-            size="icon"
-            class="h-7 w-7"
-            aria-label="More output actions"
-            title="More output actions"
-          >
-            <Icon icon="ri:more-2-fill" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuPortal>
-          <DropdownMenuContent
-            align="end"
-            :side-offset="6"
-            class="z-50 min-w-52 rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
-          >
-            <DropdownMenuItem
-              v-if="!expectedDiffEnabled"
-              class="flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground"
-              :aria-controls="expectedDiffId"
-              @select="showExpectedDiff"
-            >
-              <Icon icon="ri:file-search-line" />
-              Compare expected output…
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              v-else
-              class="flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground"
-              @select="expectedDiffEnabled = false"
-            >
-              <Icon icon="ri:code-s-slash-line" />
-              Show printed output
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenuPortal>
-      </DropdownMenuRoot>
     </template>
     <OutputPreview
       v-show="!expectedDiffEnabled"
