@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { useMediaQuery } from "@vueuse/core";
 import { computed } from "vue";
 import { useOxc } from "~/composables/oxc";
@@ -27,11 +28,18 @@ function stringifyError(error: unknown) {
 </script>
 
 <template>
-  <main class="min-h-0 flex flex-1">
-    <Splitter :direction="splitterDirection" class="flex-1">
+  <main class="workspace min-h-0 min-w-0 flex flex-1" aria-label="Code workspace">
+    <Splitter :direction="splitterDirection" class="min-w-0 flex-1">
       <SplitterPanel :default-size="50" :min-size="20" class="flex flex-col">
-        <div class="h-full min-w-0 flex flex-1 flex-col pt-2">
-          <div class="min-h-50vh flex-grow-2 flex-basis-none">
+        <div class="source-heading flex shrink-0 items-center justify-between gap-3 px-4">
+          <div class="flex min-w-0 items-center gap-2 text-xs font-medium">
+            <Icon icon="ri:code-s-slash-line" class="h-4 w-4 shrink-0 text-primary" />
+            <span class="truncate">test.{{ options.parser.extension }}</span>
+          </div>
+          <span class="text-xs text-muted-foreground">Source</span>
+        </div>
+        <div class="h-full min-h-0 min-w-0 flex flex-1 flex-col">
+          <div class="min-h-0 flex-1">
             <InputEditor
               :language="monacoLanguage"
               :filename="`/test.${options.parser.extension}`"

@@ -2,50 +2,36 @@
 import MangleProperties from "~/components/sidebar/MangleProperties.vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
-import { Switch } from "~/ui/switch";
+import { Checkbox as CheckboxControl } from "~/ui/checkbox";
 
 const { options } = await useOxc();
 </script>
 
 <template>
-  <section class="flex flex-col gap-4" aria-labelledby="minifier-heading">
-    <div class="flex flex-col gap-2">
-      <label class="flex items-center gap-2">
-        <Switch v-model:checked="options.run.compress" />
-        <h2 id="minifier-heading" class="text-base font-medium">Minify Syntax</h2>
-      </label>
+  <section class="settings-section" aria-labelledby="minifier-heading">
+    <div class="settings-toggle-row">
+      <h2 id="minifier-heading">Minify syntax</h2>
+      <CheckboxControl v-model:checked="options.run.compress" aria-labelledby="minifier-heading" />
     </div>
-
-    <div class="flex flex-col gap-2">
-      <label class="flex items-center gap-2">
-        <Switch v-model:checked="options.run.whitespace" />
-        <h3 class="text-base font-medium">Minify Whitespace</h3>
-      </label>
+    <div class="settings-toggle-row">
+      <h3 id="whitespace-heading">Minify whitespace</h3>
+      <CheckboxControl
+        v-model:checked="options.run.whitespace"
+        aria-labelledby="whitespace-heading"
+      />
     </div>
-
-    <div class="flex flex-col gap-3">
-      <label class="flex items-center gap-2">
-        <Switch v-model:checked="options.run.mangle" />
-        <h3 class="text-base font-medium">Mangle Names</h3>
-      </label>
-
-      <div class="ml-2 flex flex-col gap-2">
-        <Checkbox
-          v-model="options.mangle.topLevel"
-          default-checked
-          label="topLevel"
-          label-class="text-xs font-mono"
-        />
-
-        <Checkbox
-          v-model="options.mangle.keepNames"
-          default-checked
-          label="keepNames"
-          label-class="text-xs font-mono"
-        />
-      </div>
+    <div class="settings-toggle-row">
+      <h3 id="mangle-heading">Mangle names</h3>
+      <CheckboxControl v-model:checked="options.run.mangle" aria-labelledby="mangle-heading" />
     </div>
-
+    <div v-if="options.run.mangle" class="settings-children">
+      <Checkbox v-model="options.mangle.topLevel" label="Mangle top-level names" title="topLevel" />
+      <Checkbox
+        v-model="options.mangle.keepNames"
+        label="Keep function & class names"
+        title="keepNames"
+      />
+    </div>
     <MangleProperties />
   </section>
 </template>

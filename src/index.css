@@ -4,6 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
@@ -27,7 +29,6 @@
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-divider: hsl(var(--divider));
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -35,59 +36,371 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 225 12% 8%;
-  --card: 0 0% 100%;
-  --card-foreground: 225 12% 8%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 225 12% 8%;
-  --primary: 180 72% 28%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 225 8% 95%;
-  --secondary-foreground: 225 10% 15%;
-  --muted: 225 8% 95%;
-  --muted-foreground: 225 6% 44%;
-  --accent: 225 8% 95%;
-  --accent-foreground: 225 10% 15%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 225 8% 88%;
-  --input: 225 8% 88%;
-  --ring: 180 72% 28%;
+  /* Base fill in public/oxc-light.svg and public/oxc-dark.svg: #00F7F1. */
+  --brand-cyan-hue: 178.54;
+  --brand-cyan: var(--brand-cyan-hue) 100% 48.43%;
+  --background: 60 14% 99%;
+  --foreground: 160 8% 16%;
+  --card: 60 14% 99%;
+  --card-foreground: 160 8% 16%;
+  --popover: 60 14% 99%;
+  --popover-foreground: 160 8% 16%;
+  /* Darken the logo's cyan hue for readable controls on light surfaces. */
+  --primary: var(--brand-cyan-hue) 100% 24%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 90 7% 93%;
+  --secondary-foreground: 150 5% 28%;
+  --muted: 90 7% 94%;
+  --muted-foreground: 150 4% 44%;
+  --accent: 180 16% 92%;
+  --accent-foreground: var(--brand-cyan-hue) 100% 22%;
+  --destructive: 0 65% 48%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 100 6% 87%;
+  --input: 100 6% 82%;
+  --ring: var(--primary);
   --radius: 0.5rem;
-  --sidebar: 225 8% 96%;
-  --sidebar-foreground: 225 12% 8%;
-  --sidebar-border: 225 8% 90%;
-  --divider: 225 8% 90%;
+  --sidebar: 90 9% 96%;
+  --sidebar-foreground: 160 8% 16%;
+  --sidebar-border: 100 6% 87%;
+  --divider: 100 6% 88%;
+  --switch-off: 100 5% 77%;
+  color-scheme: light;
 }
 
 .dark {
-  --background: 225 12% 7%;
-  --foreground: 0 0% 95%;
-  --card: 225 12% 7%;
-  --card-foreground: 0 0% 95%;
-  --popover: 225 12% 9%;
-  --popover-foreground: 0 0% 95%;
-  --primary: 178 68% 48%;
-  --primary-foreground: 225 12% 7%;
-  --secondary: 225 8% 14%;
-  --secondary-foreground: 0 0% 95%;
-  --muted: 225 8% 14%;
-  --muted-foreground: 225 6% 58%;
-  --accent: 225 8% 14%;
-  --accent-foreground: 0 0% 95%;
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 225 8% 16%;
-  --input: 225 8% 16%;
-  --ring: 178 68% 48%;
-  --sidebar: 225 12% 5%;
-  --sidebar-foreground: 0 0% 95%;
-  --sidebar-border: 225 8% 14%;
-  --divider: 225 8% 16%;
+  --background: 150 6% 10%;
+  --foreground: 90 8% 88%;
+  --card: 150 6% 10%;
+  --card-foreground: 90 8% 88%;
+  --popover: 150 5% 13%;
+  --popover-foreground: 90 8% 88%;
+  --primary: var(--brand-cyan);
+  --primary-foreground: 180 45% 8%;
+  --secondary: 150 5% 17%;
+  --secondary-foreground: 90 6% 80%;
+  --muted: 150 5% 16%;
+  --muted-foreground: 120 3% 59%;
+  --accent: 180 15% 17%;
+  --accent-foreground: var(--brand-cyan);
+  --destructive: 0 65% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 150 4% 21%;
+  --input: 150 4% 28%;
+  --ring: var(--primary);
+  --sidebar: 150 5% 12%;
+  --sidebar-foreground: 90 8% 88%;
+  --sidebar-border: 150 4% 21%;
+  --divider: 150 4% 21%;
+  --switch-off: 150 4% 31%;
   color-scheme: dark;
 }
 
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--input)) transparent;
+  }
+
+  body {
+    margin: 0;
+    background: hsl(var(--sidebar));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role="switch"],
+  [role="checkbox"],
+  [role="combobox"] {
+    cursor: pointer;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+}
+
+.app-header {
+  background: hsl(var(--sidebar));
+}
+
+.configuration-options > hr {
+  margin: 14px 0;
+  border-color: hsl(var(--divider));
+}
+
+.settings-category,
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-category {
+  gap: 12px;
+}
+
+.settings-category-label {
+  margin-bottom: -4px;
+  color: hsl(var(--muted-foreground));
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.configuration-options h2,
+.configuration-options h3 {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 20px;
+}
+
+.settings-toggle-row,
+.settings-field {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.settings-field,
+.settings-field-stacked {
+  color: hsl(var(--muted-foreground));
+  font-size: 12px;
+}
+
+.settings-field-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.configuration-options input,
+.configuration-options [role="combobox"] {
+  height: 28px;
+  padding: 0 8px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: none;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.configuration-options input:hover,
+.configuration-options [role="combobox"]:hover {
+  border-color: hsl(var(--input));
+}
+
+.configuration-options input:focus-visible,
+.configuration-options [role="combobox"]:focus-visible {
+  border-color: hsl(var(--primary) / 0.7);
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+}
+
+.settings-value {
+  width: 72px;
+  text-align: right;
+}
+
+.settings-children,
+.settings-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-left: 1px solid hsl(var(--border));
+  padding-left: 12px;
+}
+
+.settings-detail-content {
+  gap: 4px;
+}
+
+.configuration-options label:has([role="checkbox"]) {
+  min-height: 24px;
+  cursor: pointer;
+}
+
+.configuration-options label:has([role="checkbox"]) > span {
+  font-size: 12px;
+  transition: color 150ms;
+}
+
+.configuration-options label:has([role="checkbox"]):hover > span {
+  color: hsl(var(--primary));
+}
+
+.configuration-options [role="checkbox"] {
+  position: relative;
+  height: 14px;
+  width: 14px;
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+/* Keep a comfortable pointer target around the compact checkbox. */
+.configuration-options [role="checkbox"]::before {
+  position: absolute;
+  inset: -6px;
+  content: "";
+}
+
+.configuration-options [role="checkbox"] svg {
+  height: 12px;
+  width: 12px;
+}
+
+.configuration-options .settings-toggle-row > [role="checkbox"] {
+  margin-right: 6px;
+}
+
+.settings-disclosure > summary {
+  display: flex;
+  min-height: 26px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 5px;
+  color: hsl(var(--muted-foreground));
+  font-size: 12px;
+  list-style: none;
+  cursor: pointer;
+  transition: color 150ms;
+}
+
+.settings-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-disclosure > summary:hover,
+.settings-disclosure[open] > summary {
+  color: hsl(var(--foreground));
+}
+
+.settings-disclosure > summary:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+}
+
+.settings-chevron {
+  transition: transform 150ms;
+}
+
+.settings-disclosure[open] > summary .settings-chevron {
+  transform: rotate(90deg);
+}
+
+.settings-disclosure[open] > .settings-detail-content {
+  margin-top: 8px;
+  animation: settings-reveal 150ms ease-out;
+}
+
+@media (pointer: coarse) {
+  .settings-toggle-row,
+  .settings-disclosure > summary,
+  .configuration-options label:has([role="checkbox"]) {
+    min-height: 32px;
+  }
+
+  .configuration-options input,
+  .configuration-options [role="combobox"],
+  .configuration-footer button {
+    height: 32px;
+  }
+
+  .configuration-options [role="checkbox"]::before {
+    inset: -9px;
+  }
+}
+
+@keyframes settings-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.workspace {
+  margin: 12px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 10px;
+  background: hsl(var(--background));
+  overflow: hidden;
+}
+
+.source-heading,
+.output-tabs {
+  min-height: 45px;
+  border-bottom: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+}
+
+.output-tabs [role="tab"] {
+  align-self: stretch;
+  padding-inline: 12px;
+  font-size: 12px;
+}
+
+.output-tabs [role="tab"][data-state="active"] {
+  color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.055);
+}
+
+.output-preview pre {
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.theme-toggle svg {
+  animation: theme-in 160ms ease-out;
+}
+
 .ast-highlight {
-  @apply bg-blue-400/30 dark:bg-blue-400/20;
+  background: hsl(var(--primary) / 0.18);
+}
+
+@keyframes theme-in {
+  from {
+    opacity: 0;
+    transform: rotate(-30deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .workspace {
+    margin: 8px;
+  }
+  .output-tabs [role="tab"] {
+    padding-inline: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -23,7 +23,11 @@ const optionsString = computed({
   <section aria-label="Advanced options">
     <Dialog>
       <DialogTrigger as-child>
-        <Button variant="outline" class="w-full gap-2">
+        <Button
+          variant="ghost"
+          size="xs"
+          class="w-full justify-start text-xs text-muted-foreground"
+        >
           <Icon icon="ri:settings-line" aria-hidden="true" />
           <span>Edit as JSON</span>
         </Button>

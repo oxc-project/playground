@@ -3,9 +3,7 @@ import { Icon } from "@iconify/vue";
 </script>
 
 <template>
-  <div
-    class="hidden items-center before:ml-4 before:mr-2 before:h-6 before:w-px xl:flex before:bg-border before:content-['']"
-  >
+  <div class="header-media hidden items-center border-l border-border pl-3 xl:flex">
     <ul class="flex items-center">
       <li>
         <a
@@ -17,7 +15,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:twitter-x-fill"
-            class="h-5 w-5 text-foreground hover:text-primary transition-colors"
+            class="h-4 w-4 text-muted-foreground transition-colors hover:text-foreground"
           />
         </a>
       </li>
@@ -31,7 +29,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:bluesky-fill"
-            class="h-5 w-5 text-foreground hover:text-primary transition-colors"
+            class="h-4 w-4 text-muted-foreground transition-colors hover:text-foreground"
           />
         </a>
       </li>
@@ -45,7 +43,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:discord-fill"
-            class="h-5 w-5 text-foreground hover:text-primary transition-colors"
+            class="h-4 w-4 text-muted-foreground transition-colors hover:text-foreground"
           />
         </a>
       </li>
@@ -59,7 +57,7 @@ import { Icon } from "@iconify/vue";
         >
           <Icon
             icon="ri:github-fill"
-            class="h-5 w-5 text-foreground hover:text-primary transition-colors"
+            class="h-4 w-4 text-muted-foreground transition-colors hover:text-foreground"
           />
         </a>
       </li>

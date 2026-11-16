@@ -21,17 +21,27 @@ watch([leftValue, rightValue], () => {
 </script>
 
 <template>
-  <section class="flex flex-col gap-3" aria-labelledby="define-heading">
-    <h2 id="define-heading" class="text-base font-medium">Define Plugin</h2>
-
-    <div class="flex gap-2" role="group" aria-label="Define key-value pair">
-      <Input v-model="leftValue" class="h-8 flex-1 p-1" placeholder="Key" aria-label="Define key" />
-      <Input
-        v-model="rightValue"
-        class="h-8 flex-1 p-1"
-        placeholder="Value"
-        aria-label="Define value"
-      />
+  <section class="settings-section" aria-labelledby="define-heading">
+    <h3 id="define-heading">Define Plugin</h3>
+    <div class="grid min-w-0 grid-cols-2 gap-2" role="group" aria-label="Define key-value pair">
+      <label class="settings-field-stacked min-w-0">
+        <span>Identifier</span>
+        <Input
+          v-model="leftValue"
+          class="min-w-0 font-mono"
+          placeholder="DEBUG"
+          aria-label="Define key"
+        />
+      </label>
+      <label class="settings-field-stacked min-w-0">
+        <span>Replacement</span>
+        <Input
+          v-model="rightValue"
+          class="min-w-0 font-mono"
+          placeholder="false"
+          aria-label="Define value"
+        />
+      </label>
     </div>
   </section>
 </template>

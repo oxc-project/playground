@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "~/ui/dialog";
 import { Input } from "~/ui/input";
-import { Switch } from "~/ui/switch";
+import { Checkbox as CheckboxControl } from "~/ui/checkbox";
 
 const { options } = await useOxc();
 
@@ -70,15 +70,22 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label class="flex items-center gap-2">
-      <Switch v-model:checked="options.run.mangleProps" />
-      <h3 class="text-base font-medium">Mangle Properties</h3>
-    </label>
+  <div class="settings-section">
+    <div class="settings-toggle-row">
+      <h3 id="mangle-properties-heading">Mangle properties</h3>
+      <CheckboxControl
+        v-model:checked="options.run.mangleProps"
+        aria-labelledby="mangle-properties-heading"
+      />
+    </div>
 
     <Dialog>
-      <DialogTrigger as-child>
-        <Button variant="outline" size="sm" class="self-start">
+      <DialogTrigger v-if="options.run.mangleProps" as-child>
+        <Button
+          variant="ghost"
+          size="xs"
+          class="w-full justify-start text-xs text-muted-foreground"
+        >
           <Icon icon="ri:settings-line" aria-hidden="true" />
           Configure properties
         </Button>

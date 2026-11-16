@@ -19,7 +19,11 @@ import {
             target="_blank"
             rel="noopener"
           >
-            <span class="text-sm text-foreground font-medium hover:text-primary"> Guide </span>
+            <span
+              class="text-xs text-muted-foreground font-medium transition-colors hover:text-foreground"
+            >
+              Guide
+            </span>
             <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
           </a>
         </NavigationMenuLink>
@@ -33,7 +37,10 @@ import {
             target="_blank"
             rel="noopener"
           >
-            <span class="text-sm text-foreground font-medium hover:text-primary">Learn</span>
+            <span
+              class="text-xs text-muted-foreground font-medium transition-colors hover:text-foreground"
+              >Learn</span
+            >
             <Icon icon="ri:arrow-right-up-line" class="ml-1 h-3 w-3 text-muted-foreground" />
           </a>
         </NavigationMenuLink>
@@ -44,14 +51,12 @@ import {
           class="flex items-center px-3"
           href="https://oxc.rs/docs/contribute/introduction.html"
         >
-          <span class="text-sm text-foreground font-medium hover:text-primary"> Contribute </span>
+          <span
+            class="text-xs text-muted-foreground font-medium transition-colors hover:text-foreground"
+          >
+            Contribute
+          </span>
           <div class="i-ri:arrow-right-up-line ml-1 h-3 w-3 text-muted-foreground" />
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-
-      <NavigationMenuItem>
-        <NavigationMenuLink class="flex items-center px-3" href="#" active>
-          <span class="text-sm text-primary font-medium">Playground</span>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

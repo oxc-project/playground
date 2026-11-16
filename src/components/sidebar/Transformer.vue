@@ -4,7 +4,9 @@ import Select from "~/components/ui/Select.vue";
 import { useOxc } from "~/composables/oxc";
 import { helperRuntime } from "~/composables/state";
 import { Input } from "~/ui/input";
-import { Switch } from "~/ui/switch";
+import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import Define from "./Define.vue";
+import OptionsDisclosure from "./OptionsDisclosure.vue";
 
 const { options } = await useOxc();
 
@@ -15,68 +17,66 @@ const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
 </script>
 
 <template>
-  <section class="flex flex-col gap-6" aria-labelledby="transformer-heading">
-    <div class="flex flex-col gap-3">
-      <label class="flex items-center gap-2">
-        <Switch v-model:checked="options.run.transform" />
-        <h2 id="transformer-heading" class="text-base font-medium">Transformer</h2>
-      </label>
-
-      <label class="flex items-center gap-2 text-sm">
-        <span class="text-secondary-foreground">Target</span>
-        <Input v-model="options.transformer.target" class="h-8 p-1" />
-      </label>
-
-      <label class="flex flex-col gap-2 text-sm">
-        <span class="text-secondary-foreground">Runtime helpers</span>
-        <Select v-model="helperRuntime" :options="helperRuntimeOptions" />
-      </label>
-
-      <div class="flex flex-col gap-2">
-        <Checkbox
-          v-model="options.transformer.useDefineForClassFields"
-          default-checked
-          label="useDefineForClassFields"
-          label-class="text-xs font-mono"
-        />
-
-        <Checkbox
-          v-model="options.transformer.experimentalDecorators"
-          label="experimentalDecorators"
-          label-class="text-xs font-mono"
-        />
-
-        <Checkbox
-          v-model="options.transformer.emitDecoratorMetadata"
-          label="emitDecoratorMetadata"
-          label-class="text-xs font-mono"
-        />
-
-        <Checkbox
-          v-model="options.transformer.optimizeEnums"
-          label="optimizeEnums"
-          label-class="text-xs font-mono"
-        />
-
-        <Checkbox
-          v-model="options.transformer.optimizeConstEnums"
-          label="optimizeConstEnums"
-          label-class="text-xs font-mono"
-        />
-      </div>
+  <section class="settings-section" aria-labelledby="transformer-heading">
+    <div class="settings-toggle-row">
+      <h2 id="transformer-heading">Transformer</h2>
+      <CheckboxControl
+        v-model:checked="options.run.transform"
+        aria-labelledby="transformer-heading"
+      />
     </div>
 
-    <div class="flex flex-col gap-3">
-      <label class="flex items-center gap-2">
-        <Switch v-model:checked="options.run.isolatedDeclarations" />
-        <h3 class="text-base font-medium">Isolated Declarations</h3>
+    <div v-show="options.run.transform" class="settings-children">
+      <label class="settings-field">
+        <span>Target</span>
+        <Input v-model="options.transformer.target" class="settings-value w-24 font-mono" />
       </label>
+      <label class="settings-field-stacked">
+        <span>Runtime helpers</span>
+        <Select v-model="helperRuntime" :options="helperRuntimeOptions" />
+      </label>
+      <OptionsDisclosure label="Transform options">
+        <Checkbox
+          v-model="options.transformer.useDefineForClassFields"
+          label="Define class fields"
+          title="useDefineForClassFields"
+        />
+        <Checkbox
+          v-model="options.transformer.experimentalDecorators"
+          label="Legacy decorators"
+          title="experimentalDecorators"
+        />
+        <Checkbox
+          v-model="options.transformer.emitDecoratorMetadata"
+          label="Decorator metadata"
+          title="emitDecoratorMetadata"
+        />
+        <Checkbox
+          v-model="options.transformer.optimizeEnums"
+          label="Optimize enums"
+          title="optimizeEnums"
+        />
+        <Checkbox
+          v-model="options.transformer.optimizeConstEnums"
+          label="Optimize const enums"
+          title="optimizeConstEnums"
+        />
+      </OptionsDisclosure>
+      <Define />
+    </div>
 
+    <div class="settings-toggle-row">
+      <h3 id="declarations-heading">Isolated declarations</h3>
+      <CheckboxControl
+        v-model:checked="options.run.isolatedDeclarations"
+        aria-labelledby="declarations-heading"
+      />
+    </div>
+    <div v-if="options.run.isolatedDeclarations" class="settings-children">
       <Checkbox
         v-model="options.isolatedDeclarations.stripInternal"
-        default-checked
-        label="stripInternal"
-        label-class="text-xs font-mono"
+        label="Strip internal declarations"
+        title="stripInternal"
       />
     </div>
   </section>
