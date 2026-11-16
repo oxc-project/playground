@@ -83,6 +83,7 @@ jobs:
 
       - run: pnpm run build
       - run: pnpm lint
+      - run: node --test tests/*.test.ts
 
       - name: Install Netlify
         if: env.SITE_ID

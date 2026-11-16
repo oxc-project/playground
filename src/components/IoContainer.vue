@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { useMediaQuery } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import CopyContainer from "./CopyContainer.vue";
@@ -13,6 +13,7 @@ const { oxc, error, monacoLanguage, options } = await useOxc();
 
 const isMdAndUp = useMediaQuery("(min-width: 768px)");
 const splitterDirection = computed(() => (isMdAndUp.value ? "horizontal" : "vertical"));
+const inputRef = useTemplateRef("inputRef");
 
 const errorStr = computed(() => {
   return Array.isArray(error.value)
@@ -41,18 +42,19 @@ function stringifyError(error: unknown) {
         <div class="h-full min-h-0 min-w-0 flex flex-1 flex-col">
           <div class="min-h-0 flex-1">
             <InputEditor
+              ref="inputRef"
               :language="monacoLanguage"
               :filename="`/test.${options.parser.extension}`"
               main
             />
           </div>
 
-          <div
+          <DiagnosticPanel
             v-if="oxc.getDiagnostics().length"
-            class="min-h-0 flex flex-1 flex-col gap-2 overflow-auto border-t px-3 py-2 text-sm font-mono opacity-80"
-          >
-            <DiagnosticPanel />
-          </div>
+            :filename="`test.${options.parser.extension}`"
+            :get-position-at="inputRef?.getPositionAt"
+            @navigate="(start, end) => inputRef?.revealRange(start, end)"
+          />
         </div>
       </SplitterPanel>
 

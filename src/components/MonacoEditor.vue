@@ -22,6 +22,7 @@ const emit = defineEmits(["editorWillMount", "editorDidMount", "change", "update
 const container = ref<HTMLElement>();
 const instance = shallowRef<monaco.editor.IStandaloneCodeEditor>();
 const model = shallowRef<monaco.editor.ITextModel>(initModel());
+let pendingSelection: [monaco.IPosition, monaco.IPosition] | undefined;
 
 watchEffect((onCleanup) => {
   const dispose = model.value.onDidChangeContent(() => {
@@ -127,7 +128,13 @@ onMounted(async () => {
   } catch (error) {
     console.warn("Failed to load editor highlighting; using the built-in theme:", error);
   }
-  if (!model.value.isDisposed()) initMonaco();
+  if (!model.value.isDisposed()) {
+    initMonaco();
+    if (pendingSelection) {
+      revealRange(...pendingSelection);
+      pendingSelection = undefined;
+    }
+  }
 });
 
 onBeforeUnmount(() => {
@@ -137,8 +144,22 @@ onBeforeUnmount(() => {
 });
 
 const getPositionAt = (offset: number) => model.value.getPositionAt(offset);
+
+function revealRange(start: monaco.IPosition, end: monaco.IPosition) {
+  const editor = instance.value;
+  if (!editor) {
+    pendingSelection = [start, end];
+    return;
+  }
+  const range = monaco.Range.fromPositions(start, end);
+  editor.setSelection(range);
+  editor.revealRangeInCenterIfOutsideViewport(range);
+  editor.focus();
+}
+
 defineExpose({
   getPositionAt,
+  revealRange,
 });
 </script>
 
