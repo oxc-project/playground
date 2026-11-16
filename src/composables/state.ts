@@ -28,3 +28,7 @@ export const enabledLintRules = ref<string[]>([]);
 export const helperRuntime = ref<"npm" | "esm">("npm");
 
 export const compareEnabled = ref(false);
+
+// Undefined means no expectation yet; an empty string is a valid expectation.
+export const expectedOutput = ref<string>();
+export const expectedDiffEnabled = ref(false);

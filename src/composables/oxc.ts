@@ -205,6 +205,47 @@ export const useOxc = createGlobalState(async () => {
     return config;
   });
 
+  function getRunOptions() {
+    return {
+      ...toRaw(options.value),
+      transformer: {
+        ...toRaw(options.value.transformer),
+        helperModuleName: helperModuleName.value,
+      },
+    };
+  }
+
+  // OxcError does not expose whether an error came from the compiler or linter.
+  // Only when errors and enabled lint rules overlap, lazily check without linting.
+  let diagnosticOxc: Oxc | undefined;
+  const compilationErrors = computed(() => {
+    if (error.value) {
+      const errors = Array.isArray(error.value) ? error.value : [error.value];
+      return errors.map((value) => (value instanceof Error ? value.message : String(value)));
+    }
+    const diagnostics = state.value
+      .getDiagnostics()
+      .filter((diagnostic) => diagnostic.severity === "Error");
+    if (!diagnostics.length || !options.value.run.lint || !enabledLintRules.value.length) {
+      return diagnostics.map((diagnostic) => diagnostic.message);
+    }
+    diagnosticOxc ??= new OxcConstructor();
+    const rawOptions = getRunOptions();
+    try {
+      diagnosticOxc.run(editorValue.value, {
+        ...rawOptions,
+        run: { ...rawOptions.run, lint: false },
+        linter: {},
+      });
+      return diagnosticOxc
+        .getDiagnostics()
+        .filter((diagnostic) => diagnostic.severity === "Error")
+        .map((diagnostic) => diagnostic.message);
+    } catch (caughtError) {
+      return [caughtError instanceof Error ? caughtError.message : String(caughtError)];
+    }
+  });
+
   function run() {
     const errors: unknown[] = [];
     const originalError = console.error;
@@ -213,13 +254,7 @@ export const useOxc = createGlobalState(async () => {
       return originalError.apply(this, msgs);
     };
     try {
-      const rawOptions = {
-        ...toRaw(options.value),
-        transformer: {
-          ...toRaw(options.value.transformer),
-          helperModuleName: helperModuleName.value,
-        },
-      };
+      const rawOptions = getRunOptions();
 
       // Build linter config from enabledLintRules directly, ensuring it's
       // always up-to-date when run() fires (no dependency on external watcher)
@@ -351,6 +386,7 @@ export const useOxc = createGlobalState(async () => {
     error,
     options,
     monacoLanguage,
+    compilationErrors,
     baselineCode,
     baselineSourcemap,
     baselineError,

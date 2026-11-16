@@ -4,6 +4,7 @@ import { useMediaQuery } from "@vueuse/core";
 import { computed, provide, useTemplateRef } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { sourceNavigationKey } from "~/composables/source-navigation";
+import { activeTab, expectedDiffEnabled } from "~/composables/state";
 import { Splitter, SplitterPanel, SplitterResizeHandle } from "~/ui/splitter";
 import CopyContainer from "./CopyContainer.vue";
 import InputEditor from "./input/InputEditor.vue";
@@ -64,8 +65,16 @@ function stringifyError(error: unknown) {
 
       <SplitterPanel :default-size="50" :min-size="20" class="overflow-hidden">
         <div class="h-full min-w-0 overflow-hidden">
-          <Output v-if="!error" class="h-full overflow-auto" />
-          <CopyContainer v-else :value="errorStr || ''" class="min-w-0 w-full flex">
+          <!-- Retain editor/runner state through compilation failures. -->
+          <Output
+            v-show="!error || (activeTab === 'codegen' && expectedDiffEnabled)"
+            class="h-full overflow-auto"
+          />
+          <CopyContainer
+            v-if="error && !(activeTab === 'codegen' && expectedDiffEnabled)"
+            :value="errorStr || ''"
+            class="min-w-0 w-full flex"
+          >
             <pre class="h-full overflow-auto p-2 text-sm text-red-400" v-text="errorStr" />
           </CopyContainer>
         </div>
