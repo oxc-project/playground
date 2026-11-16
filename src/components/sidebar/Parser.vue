@@ -1,18 +1,43 @@
 <script setup lang="ts">
 import Checkbox from "~/components/ui/Checkbox.vue";
+import Select from "~/components/ui/Select.vue";
+import type { OxcParserOptions } from "oxc-playground";
 import { useOxc } from "~/composables/oxc";
-import { Input } from "~/ui/input";
 import OptionsDisclosure from "./OptionsDisclosure.vue";
 
 const { options } = await useOxc();
+const extensionOptions = [
+  "js",
+  "jsx",
+  "ts",
+  "tsx",
+  "mjs",
+  "cjs",
+  "mts",
+  "cts",
+  "d.ts",
+  "d.mts",
+  "d.cts",
+].map((extension) => ({ value: extension, label: `.${extension}` }));
+type SourceTypeSelection = NonNullable<OxcParserOptions["sourceType"]>;
+const sourceTypeOptions: { value: SourceTypeSelection; label: string }[] = [
+  { value: "module", label: "Module" },
+  { value: "script", label: "Script" },
+  { value: "commonjs", label: "CommonJS" },
+  { value: "unambiguous", label: "Unambiguous" },
+];
 </script>
 
 <template>
   <section class="settings-section" aria-labelledby="parser-heading">
     <h2 id="parser-heading">Parser</h2>
-    <label class="settings-field">
+    <label class="settings-field-stacked">
       <span>File extension</span>
-      <Input v-model="options.parser.extension" class="settings-value w-24 font-mono" />
+      <Select v-model="options.parser.extension" :options="extensionOptions" />
+    </label>
+    <label class="settings-field-stacked">
+      <span>Source type</span>
+      <Select v-model="options.parser.sourceType" :options="sourceTypeOptions" />
     </label>
     <OptionsDisclosure label="Parser settings">
       <Checkbox
