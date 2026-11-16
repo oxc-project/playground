@@ -216,7 +216,11 @@
 }
 
 .configuration-options .settings-toggle-row label {
-  display: block;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 4px 0;
   cursor: pointer;
 }
@@ -273,7 +277,7 @@
   width: 12px;
 }
 
-.configuration-options .settings-toggle-row > [role="checkbox"] {
+.configuration-options .settings-toggle-row [role="checkbox"] {
   margin-right: 6px;
 }
 

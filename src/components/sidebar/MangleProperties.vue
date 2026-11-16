@@ -4,7 +4,7 @@ import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
 import OptionsDisclosure from "~/components/sidebar/OptionsDisclosure.vue";
 import { Input } from "~/ui/input";
-import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import SectionToggle from "./SectionToggle.vue";
 
 const { options } = await useOxc();
 
@@ -60,10 +60,7 @@ watch(
 
 <template>
   <div class="settings-section">
-    <div class="settings-toggle-row">
-      <h3><label for="mangle-properties">Mangle properties</label></h3>
-      <CheckboxControl id="mangle-properties" v-model:checked="options.run.mangleProps" />
-    </div>
+    <SectionToggle v-model="options.run.mangleProps" label="Mangle properties" />
 
     <OptionsDisclosure v-show="options.run.mangleProps" label="Property options">
       <div class="flex flex-col gap-3">
