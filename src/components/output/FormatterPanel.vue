@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, toRef, watchEffect } from "vue";
+import { useElementSize } from "@vueuse/core";
+import { computed, ref, toRef, useTemplateRef, watchEffect } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
 import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
@@ -26,8 +27,10 @@ const showIR = toRef(formatterPanels, "ir");
 const showPrettier = toRef(formatterPanels, "prettier");
 const showPrettierDoc = toRef(formatterPanels, "prettierDoc");
 const configError = ref<string>("");
-// whether the details element is open
-const detailsOpen = ref(true);
+const configEditorMounted = ref(false);
+const formatterPanel = useTemplateRef("formatterPanel");
+const { width: panelWidth } = useElementSize(formatterPanel);
+const splitterDirection = computed(() => (panelWidth.value < 560 ? "vertical" : "horizontal"));
 
 // Compare Oxfmt output with Prettier output (null = comparison not available)
 const hasDiff = computed(() => {
@@ -83,7 +86,7 @@ const visiblePanels = computed<Panel[]>(() => {
   if (showPrettier.value) {
     panels.push({
       key: "prettier",
-      label: `Prettier (${prettierParser.value})`,
+      label: `Prettier v${prettierVersion} · ${prettierParser.value}`,
       code: prettierOutput.value,
       lang: "tsx",
     });
@@ -102,9 +105,11 @@ const visiblePanels = computed<Panel[]>(() => {
   return panels;
 });
 
-function onDetailsToggle(e: Event) {
-  const t = e.target as HTMLDetailsElement | null;
-  detailsOpen.value = !!t?.open;
+function onDetailsToggle(event: Event) {
+  // Mount on first use, then preserve JSON drafts while the disclosure is closed.
+  if (event.target instanceof HTMLDetailsElement && event.target.open) {
+    configEditorMounted.value = true;
+  }
 }
 
 function openDiffReport() {
@@ -166,42 +171,45 @@ const formatterConfig = computed({
 </script>
 
 <template>
-  <div class="flex h-full flex-col overflow-hidden">
-    <!-- Checkbox toolbar -->
-    <div class="flex shrink-0 flex-wrap items-center gap-3 border-b border-border px-3 py-2">
-      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
-        <Checkbox id="show-output" v-model:checked="showOutput" />
-        <span :class="showOutput ? 'text-foreground' : 'text-muted-foreground'">Output</span>
-      </label>
-      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
-        <Checkbox id="show-prettier" v-model:checked="showPrettier" />
-        <span :class="showPrettier ? 'text-foreground' : 'text-muted-foreground'">Prettier</span>
-        <span class="text-xs text-muted-foreground">v{{ prettierVersion }}</span>
-      </label>
-      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
-        <Checkbox id="show-ir" v-model:checked="showIR" />
-        <span :class="showIR ? 'text-foreground' : 'text-muted-foreground'">IR</span>
-      </label>
-      <label class="flex cursor-pointer items-center gap-1.5 text-sm">
-        <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
-        <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'"
-          >Prettier Doc</span
-        >
-      </label>
-      <div class="ml-auto flex items-center gap-2">
+  <div ref="formatterPanel" class="formatter-panel flex h-full min-h-0 flex-col overflow-hidden">
+    <div
+      class="formatter-toolbar flex shrink-0 flex-wrap items-center gap-x-3 border-b px-3 py-1.5"
+    >
+      <div class="flex flex-wrap items-center gap-x-3" role="group" aria-label="Formatter outputs">
+        <label class="formatter-output-toggle">
+          <Checkbox id="show-output" v-model:checked="showOutput" />
+          <span :class="showOutput ? 'text-foreground' : 'text-muted-foreground'">Output</span>
+        </label>
+        <label class="formatter-output-toggle" :title="`Prettier v${prettierVersion}`">
+          <Checkbox id="show-prettier" v-model:checked="showPrettier" />
+          <span :class="showPrettier ? 'text-foreground' : 'text-muted-foreground'">Prettier</span>
+        </label>
+        <label class="formatter-output-toggle" title="Oxfmt intermediate representation">
+          <Checkbox id="show-ir" v-model:checked="showIR" />
+          <span :class="showIR ? 'text-foreground' : 'text-muted-foreground'">IR</span>
+        </label>
+        <label class="formatter-output-toggle">
+          <Checkbox id="show-prettier-doc" v-model:checked="showPrettierDoc" />
+          <span :class="showPrettierDoc ? 'text-foreground' : 'text-muted-foreground'"
+            >Prettier Doc</span
+          >
+        </label>
+      </div>
+      <div v-if="hasDiff !== null" class="ml-auto flex min-h-7 items-center gap-2">
         <span
-          v-if="hasDiff === true"
-          class="text-xs font-medium text-yellow-600 dark:text-yellow-400"
-          >Diff</span
+          class="text-xs font-medium"
+          :class="
+            hasDiff ? 'text-yellow-600 dark:text-yellow-400' : 'text-green-600 dark:text-green-400'
+          "
+          role="status"
+          :title="
+            hasDiff ? 'Oxfmt and Prettier outputs differ' : 'Oxfmt and Prettier outputs match'
+          "
+          >{{ hasDiff ? "Diff" : "Match" }}</span
         >
-        <span
-          v-else-if="hasDiff === false"
-          class="text-xs font-medium text-green-600 dark:text-green-400"
-          >Match</span
-        >
-        <Button variant="outline" size="xs" :disabled="hasDiff !== true" @click="openDiffReport">
+        <Button v-if="hasDiff" variant="ghost" size="xs" class="text-xs" @click="openDiffReport">
           <Icon icon="octicon:issue-opened-16" />
-          Report Diff
+          Report diff
         </Button>
       </div>
     </div>
@@ -214,102 +222,138 @@ const formatterConfig = computed({
       Prettier error: {{ prettierError }}
     </div>
 
-    <!-- Content area -->
     <div
       v-if="visiblePanels.length === 0"
-      class="flex flex-1 items-center justify-center text-muted-foreground"
+      class="flex min-h-0 flex-1 items-center justify-center px-4 text-center text-xs text-muted-foreground"
     >
-      Select at least one output to display
+      Select an output to display
     </div>
 
-    <!-- Single panel -->
     <div v-else-if="visiblePanels.length === 1" class="min-h-0 flex-1 overflow-auto">
       <OutputPreview :code="visiblePanels[0].code" :lang="visiblePanels[0].lang" />
     </div>
 
-    <!-- Multiple panels with splitter -->
-    <Splitter
-      v-else
-      :key="visiblePanels.map((p) => p.key).join('-')"
-      direction="horizontal"
-      class="min-h-0 flex-1"
-    >
-      <template v-for="(panel, index) in visiblePanels" :key="panel.key">
-        <SplitterResizeHandle v-if="index > 0" with-handle />
-        <SplitterPanel
-          :default-size="100 / visiblePanels.length"
-          :min-size="15"
-          class="flex flex-col overflow-hidden"
-        >
-          <div
-            class="shrink-0 border-b border-border bg-muted px-2 py-1 text-xs font-medium text-muted-foreground"
-          >
-            {{ panel.label }}
-          </div>
-          <div class="min-h-0 flex-1">
-            <OutputPreview :code="panel.code" :lang="panel.lang" />
-          </div>
-        </SplitterPanel>
-      </template>
-    </Splitter>
-
-    <!-- Configure Options -->
-    <details open class="shrink-0 border-t border-border" @toggle="onDetailsToggle($event)">
-      <summary
-        :aria-expanded="detailsOpen"
-        class="flex cursor-pointer select-none items-center justify-between gap-3 bg-muted px-4 py-2 text-sm font-medium"
+    <div v-else class="min-h-0 flex-1 overflow-auto" aria-label="Formatter comparisons">
+      <Splitter
+        :key="`${splitterDirection}-${visiblePanels.map((p) => p.key).join('-')}`"
+        :direction="splitterDirection"
+        class="h-full min-w-0"
+        :style="
+          splitterDirection === 'vertical'
+            ? { minHeight: `${visiblePanels.length * 160}px` }
+            : undefined
+        "
       >
-        <div>
-          Configure Options
-          <span class="ml-2 text-xs text-muted-foreground">
-            {{ detailsOpen ? "(Click to collapse)" : "(Click to expand)" }}
-          </span>
-        </div>
-        <svg
-          class="chev h-4 w-4 text-muted-foreground transition-transform duration-150"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            d="M6 8L10 12L14 8"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </summary>
-      <div class="overflow-hidden bg-background" style="height: 300px">
-        <MonacoEditor
-          v-model="formatterConfig"
-          language="json"
-          filename="formatter.json"
-          :options="{
-            minimap: { enabled: false },
-            fontSize: 14,
-            lineNumbers: 'on',
-            scrollBeyondLastLine: false,
-            wordWrap: 'on',
-          }"
+        <template v-for="(panel, index) in visiblePanels" :key="panel.key">
+          <SplitterResizeHandle v-if="index > 0" with-handle />
+          <SplitterPanel
+            :default-size="100 / visiblePanels.length"
+            :min-size="15"
+            class="flex min-w-0 flex-col overflow-hidden"
+          >
+            <div
+              class="shrink-0 truncate border-b bg-muted/40 px-3 py-1.5 text-xs font-medium text-muted-foreground"
+              :title="panel.label"
+            >
+              {{ panel.label }}
+            </div>
+            <div class="min-h-0 flex-1">
+              <OutputPreview :code="panel.code" :lang="panel.lang" />
+            </div>
+          </SplitterPanel>
+        </template>
+      </Splitter>
+    </div>
+
+    <details class="formatter-options shrink-0 border-t" @toggle="onDetailsToggle">
+      <summary
+        class="flex min-h-9 cursor-pointer select-none items-center gap-2 px-3 text-xs font-medium hover:bg-muted/40"
+      >
+        <Icon icon="ri:settings-3-line" class="h-3.5 w-3.5 text-muted-foreground" />
+        <span>Formatter options</span>
+        <span v-if="configError" class="ml-auto text-destructive">Invalid JSON</span>
+        <span v-else class="ml-auto font-normal text-muted-foreground">JSON</span>
+        <Icon
+          icon="ri:arrow-right-s-line"
+          class="formatter-options-chevron h-4 w-4 text-muted-foreground"
         />
-        <div v-if="configError" class="px-4 py-2 text-sm text-red-500">⚠️ {{ configError }}</div>
+      </summary>
+      <div class="formatter-config-content flex flex-col overflow-hidden border-t bg-background">
+        <div class="min-h-0 flex-1">
+          <MonacoEditor
+            v-if="configEditorMounted"
+            v-model="formatterConfig"
+            language="json"
+            filename="formatter.json"
+            :options="{ wordWrap: 'on' }"
+          />
+        </div>
+        <p
+          v-if="configError"
+          role="alert"
+          class="shrink-0 border-t px-3 py-2 text-xs text-destructive"
+        >
+          {{ configError }}
+        </p>
       </div>
     </details>
   </div>
 </template>
 
 <style scoped>
-details summary {
+.formatter-panel {
+  container-type: size;
+}
+
+.formatter-output-toggle {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.formatter-output-toggle :deep([role="checkbox"]) {
+  height: 14px;
+  width: 14px;
+  border-radius: 3px;
+}
+
+.formatter-output-toggle :deep([role="checkbox"] svg) {
+  height: 12px;
+  width: 12px;
+}
+
+.formatter-options summary {
   list-style: none;
 }
 
-.chev {
-  transform: rotate(-90deg);
+.formatter-options summary::-webkit-details-marker {
+  display: none;
 }
 
-details[open] .chev {
-  transform: rotate(0deg);
+.formatter-config-content {
+  height: min(240px, 40cqh);
+}
+
+.formatter-options-chevron {
+  transition: transform 150ms;
+}
+
+.formatter-options[open] .formatter-options-chevron {
+  transform: rotate(90deg);
+}
+
+@media (pointer: coarse) {
+  .formatter-output-toggle {
+    min-height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formatter-options-chevron {
+    transition: none;
+  }
 }
 </style>

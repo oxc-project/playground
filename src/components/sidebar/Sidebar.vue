@@ -3,6 +3,7 @@ import { FocusScope } from "radix-vue";
 import { nextTick, ref, watch } from "vue";
 import Codegen from "./Codegen.vue";
 import Linter from "./Linter.vue";
+import Mangler from "./Mangler.vue";
 import Minifier from "./Minifier.vue";
 import OptionsDialog from "./OptionsDialog.vue";
 import Parser from "./Parser.vue";
@@ -69,6 +70,8 @@ function onEscape(event: KeyboardEvent) {
         <div class="settings-category">
           <p class="settings-category-label">Minification</p>
           <Minifier />
+          <p class="settings-category-label">Mangling</p>
+          <Mangler />
         </div>
         <hr />
         <Codegen />

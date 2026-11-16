@@ -209,6 +209,18 @@
   box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
 }
 
+.settings-help {
+  color: hsl(var(--muted-foreground));
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.configuration-options .settings-toggle-row label {
+  display: block;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
 .settings-value {
   width: 72px;
   text-align: right;
@@ -336,29 +348,67 @@
 }
 
 .workspace {
-  margin: 12px;
-  border: 1px solid hsl(var(--border));
-  border-radius: 10px;
   background: hsl(var(--background));
   overflow: hidden;
 }
 
 .source-heading,
-.output-tabs {
+.output-navigation {
   min-height: 45px;
   border-bottom: 1px solid hsl(var(--border));
   background: hsl(var(--background));
 }
 
+.output-tab-viewport {
+  scrollbar-width: none;
+}
+
+.output-tab-viewport::-webkit-scrollbar {
+  display: none;
+}
+
 .output-tabs [role="tab"] {
+  flex-shrink: 0;
   align-self: stretch;
   padding-inline: 12px;
   font-size: 12px;
 }
 
+.output-tabs [role="tab"]:focus-visible,
+.output-tab-scroll:focus-visible {
+  outline-offset: -3px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-inset: inset;
+}
+
 .output-tabs [role="tab"][data-state="active"] {
   color: hsl(var(--primary));
   background: hsl(var(--primary) / 0.055);
+}
+
+.output-execution {
+  container-type: inline-size;
+}
+
+.output-run-label-compact {
+  display: none;
+}
+
+@container (max-width: 420px) {
+  .output-actions button,
+  .output-actions a {
+    gap: 6px;
+    padding-inline: 8px;
+  }
+
+  .output-run-label,
+  .output-source-map-label {
+    display: none;
+  }
+
+  .output-run-label-compact {
+    display: inline;
+  }
 }
 
 .output-preview pre {
@@ -394,9 +444,6 @@
 }
 
 @media (max-width: 767px) {
-  .workspace {
-    margin: 8px;
-  }
   .output-tabs [role="tab"] {
     padding-inline: 10px;
   }

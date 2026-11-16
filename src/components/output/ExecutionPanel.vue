@@ -169,55 +169,63 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
 </script>
 
 <template>
-  <section class="h-full min-h-0 flex flex-col" aria-label="Output execution">
+  <section class="output-execution h-full min-h-0 flex flex-col" aria-label="Output execution">
     <div
-      class="flex min-h-11 shrink-0 flex-wrap items-center gap-1 border-b border-border px-3 py-1.5"
+      class="output-actions flex min-h-11 shrink-0 flex-wrap items-center gap-1 border-b border-border px-2 py-1.5"
       role="group"
       aria-label="Output actions"
     >
-      <Button
-        size="sm"
-        variant="outline"
-        class="active:translate-y-px"
-        :aria-busy="!comparing && status === 'running'"
-        :disabled="compilationFailed"
-        @click="runOutput"
-      >
-        <Icon
-          :icon="running && !comparing ? 'ri:loader-2-line' : 'ri:play-line'"
-          :class="{ 'animate-spin': running && !comparing }"
-        />
-        {{ runLabel }}
-      </Button>
-      <Button
-        size="sm"
-        :variant="comparisonActive ? 'secondary' : 'ghost'"
-        class="active:translate-y-px"
-        :aria-pressed="comparisonActive"
-        :aria-busy="comparisonRunning"
-        :disabled="compilationFailed || (expectedComparison && expectedCode === undefined)"
-        :title="
-          expectedComparison
-            ? 'Run Expected and Current JavaScript in separate sandboxes'
-            : 'Run the esnext baseline (no minification) and Current output'
-        "
-        @click="expectedComparison ? runExpectedComparison() : runComparison()"
-      >
-        <Icon
-          :icon="comparisonRunning ? 'ri:loader-2-line' : 'ri:split-cells-horizontal'"
-          :class="{ 'animate-spin': comparisonRunning }"
-        />
-        {{ compareLabel }}
-      </Button>
-      <Button
-        v-if="stoppable && output.runId.value === delayedRunId"
-        size="sm"
-        variant="ghost"
-        @click="stop"
-      >
-        Stop
-      </Button>
-      <div class="ml-auto flex items-center gap-1">
+      <div class="flex min-w-0 max-w-full flex-wrap items-center gap-1">
+        <Button
+          size="sm"
+          variant="outline"
+          class="active:translate-y-px"
+          :aria-busy="!comparing && status === 'running'"
+          :aria-label="runLabel"
+          :title="runLabel"
+          :disabled="compilationFailed"
+          @click="runOutput"
+        >
+          <Icon
+            :icon="running && !comparing ? 'ri:loader-2-line' : 'ri:play-line'"
+            :class="{ 'animate-spin': running && !comparing }"
+          />
+          <span class="output-run-label">{{ runLabel }}</span>
+          <span class="output-run-label-compact" aria-hidden="true">Run</span>
+        </Button>
+        <Button
+          size="sm"
+          :variant="comparisonActive ? 'secondary' : 'ghost'"
+          class="active:translate-y-px"
+          :aria-pressed="comparisonActive"
+          :aria-busy="comparisonRunning"
+          :disabled="compilationFailed || (expectedComparison && expectedCode === undefined)"
+          :title="
+            expectedComparison
+              ? 'Run Expected and Current JavaScript in separate sandboxes'
+              : 'Run the esnext baseline (no minification) and Current output'
+          "
+          @click="expectedComparison ? runExpectedComparison() : runComparison()"
+        >
+          <Icon
+            :icon="comparisonRunning ? 'ri:loader-2-line' : 'ri:split-cells-horizontal'"
+            :class="{ 'animate-spin': comparisonRunning }"
+          />
+          {{ compareLabel }}
+        </Button>
+        <Button
+          v-if="stoppable && output.runId.value === delayedRunId"
+          size="icon"
+          variant="ghost"
+          class="h-8 w-8"
+          aria-label="Stop execution"
+          title="Stop execution"
+          @click="stop"
+        >
+          <Icon icon="ri:stop-line" />
+        </Button>
+      </div>
+      <div class="ml-auto flex shrink-0 items-center gap-1">
         <slot name="actions" />
       </div>
     </div>
