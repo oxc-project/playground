@@ -78,7 +78,7 @@ const { copied, copy } = useClipboard();
         @click="toggleExpectedDiff"
       >
         <Icon icon="ri:file-search-line" />
-        <span class="output-expected-label">Expected output</span>
+        <span class="output-expected-label">Expected</span>
       </Button>
       <Button
         as="a"

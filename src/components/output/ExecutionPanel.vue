@@ -82,11 +82,8 @@ const comparisonActive = computed(() =>
 );
 const comparisonRunning = computed(() => comparisonActive.value && running.value);
 const compareLabel = computed(() => {
-  const target = props.expectedComparison ? "expected" : "baseline";
-  if (comparisonRunning.value) return `Comparing ${target}…`;
-  return comparisonActive.value && status.value !== "idle"
-    ? `Recompare ${target}`
-    : `Compare ${target}`;
+  if (comparisonRunning.value) return "Comparing…";
+  return comparisonActive.value && status.value !== "idle" ? "Recompare" : "Compare";
 });
 const stoppable = computed(() => runs.value.some((run) => run.stoppable.value));
 
