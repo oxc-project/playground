@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { autoFocus, outputHoverRange } from "~/composables/state";
+import SourceRangeButton from "~/components/SourceRangeButton.vue";
+import { astSource } from "~/composables/oxc";
+import { useSourceRange } from "~/composables/source-navigation";
+import { autoFocus, editorValue, outputHoverRange } from "~/composables/state";
 import { checkRange, getRange } from "~/utils/range";
 import { useHighlightColor } from "~/utils/shiki";
 import AstSummaryValue from "./SummaryValue.vue";
@@ -20,6 +23,13 @@ const title = computed(() => {
   return;
 });
 const titleColor = useHighlightColor(() => `${title.value}()`);
+const sourceRange = useSourceRange(
+  () =>
+    astSource.value === editorValue.value && typeof props.value?.type === "string"
+      ? props.value
+      : undefined,
+  "utf16",
+);
 
 const openable = computed(
   () =>
@@ -122,6 +132,7 @@ defineExpose({ isHovering });
         v-text="title"
       />&nbsp;</span
     >
+    <SourceRangeButton :range="sourceRange?.positions" :label="title || key || 'AST entry'" />
     <span v-if="!openable || valueCreated" v-show="!openable || open">
       <AstValue :data="value" @update:hover="handleSubHoverChange" />
     </span>

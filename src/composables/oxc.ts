@@ -48,6 +48,9 @@ editorValue.value = urlParams.code || PLAYGROUND_DEMO_CODE;
 
 const oxcModule = import("oxc-playground");
 export const loadingOxc = ref(true);
+// Isolated declaration runs retain the previous ESTree. Only navigate its spans
+// while the editor still contains the source that produced that tree.
+export const astSource = ref<string>();
 export const oxcPromise = oxcModule
   .then(({ Oxc }) => new Oxc())
   .finally(() => (loadingOxc.value = false));
@@ -266,9 +269,11 @@ export const useOxc = createGlobalState(async () => {
       }
 
       oxc.run(editorValue.value, rawOptions);
+      if (!rawOptions.run.isolatedDeclarations) astSource.value = editorValue.value;
       // Reset error if successful
       error.value = undefined;
     } catch (caughtError) {
+      astSource.value = undefined;
       console.error(caughtError);
       error.value = errors.length ? errors : caughtError;
     }
