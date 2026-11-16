@@ -58,7 +58,7 @@ const { copied, copy } = useClipboard();
         role="link"
         variant="ghost"
         size="sm"
-        class="aria-disabled:pointer-events-none aria-disabled:opacity-50"
+        class="output-source-map aria-disabled:pointer-events-none aria-disabled:opacity-50"
         :href="sourceMapReady ? sourcemapLink : undefined"
         :aria-disabled="!sourceMapReady"
         :tabindex="sourceMapReady ? 0 : -1"
@@ -68,7 +68,7 @@ const { copied, copy } = useClipboard();
         rel="noopener"
       >
         <Icon icon="ri:arrow-right-up-line" />
-        <span class="hidden xl:inline">Source map</span>
+        <span class="output-source-map-label">Source map</span>
       </Button>
       <Button
         variant="ghost"
