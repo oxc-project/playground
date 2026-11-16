@@ -86,6 +86,7 @@ export const defaultOptions: Required<OxcOptions> = {
   },
   parser: {
     extension: "tsx",
+    sourceType: "module",
     allowReturnOutsideFunction: true,
     preserveParens: true,
     allowV8Intrinsics: true,
@@ -140,6 +141,16 @@ export const useOxc = createGlobalState(async () => {
     const saved = JSON.parse(urlParams.options);
     for (const [section, values] of Object.entries(options.value)) {
       Object.assign(values, saved[section]);
+    }
+    // Preserve extension/content detection for old shared URLs using explicit modes.
+    if (saved.parser?.sourceType == null) {
+      const extension = options.value.parser.extension.split(".").pop();
+      options.value.parser.sourceType =
+        extension === "mjs" || extension === "mts"
+          ? "module"
+          : extension === "cjs" || extension === "cts"
+            ? "commonjs"
+            : "unambiguous";
     }
   }
   const oxc = await oxcPromise;

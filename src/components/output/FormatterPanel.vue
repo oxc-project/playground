@@ -37,7 +37,9 @@ const hasDiff = computed(() => {
 
 // JSDoc type casts are only handled by the babel parser, so match it to the input language
 const prettierParser = computed(() =>
-  ["ts", "mts", "cts", "tsx"].includes(options.value.parser.extension) ? "typescript" : "babel",
+  ["ts", "mts", "cts", "tsx"].includes(options.value.parser.extension.split(".").pop()!)
+    ? "typescript"
+    : "babel",
 );
 
 // Run Prettier when code, options, or checkboxes change
