@@ -8,6 +8,9 @@ import { activeTab, dark, expectedDiffEnabled, expectedOutput } from "~/composab
 import { Button } from "~/ui/button";
 import { getEditorTheme, registerEditorThemes } from "~/utils/editor-theme";
 
+defineProps<{ running: boolean }>();
+const emit = defineEmits<{ run: [] }>();
+
 const { oxc, compilationErrors } = await useOxc();
 const container = ref<HTMLElement>();
 const { width } = useElementSize(container);
@@ -228,6 +231,20 @@ onBeforeUnmount(() => {
         @click="editor?.goToDiff('next')"
       >
         <Icon icon="ri:arrow-down-line" />
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        :disabled="!hasExpectation || !!compilationErrors.length"
+        :aria-busy="running"
+        title="Run Expected and Current JavaScript in separate sandboxes"
+        @click="emit('run')"
+      >
+        <Icon
+          :icon="running ? 'ri:loader-2-line' : 'ri:play-line'"
+          :class="{ 'animate-spin': running }"
+        />
+        {{ running ? "Running both…" : "Run both" }}
       </Button>
       <div class="ml-auto flex items-center gap-1" role="group" aria-label="Diff view">
         <Button

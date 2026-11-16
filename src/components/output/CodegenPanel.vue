@@ -10,13 +10,13 @@ import {
 } from "radix-vue";
 import { computed, ref, useId } from "vue";
 import { useOxc } from "~/composables/oxc";
-import { expectedDiffEnabled } from "~/composables/state";
+import { expectedDiffEnabled, expectedOutput } from "~/composables/state";
 import { Button } from "~/ui/button";
 import ExecutionPanel from "./ExecutionPanel.vue";
 import ExpectedDiffPanel from "./ExpectedDiffPanel.vue";
 import OutputPreview from "./OutputPreview.vue";
 
-const { oxc, baselineCode, baselineSourcemap, baselineError } = await useOxc();
+const { oxc, baselineCode, baselineSourcemap, baselineError, compilationErrors } = await useOxc();
 const expectedDiffVisited = ref(expectedDiffEnabled.value);
 const expectedDiffId = useId();
 function showExpectedDiff() {
@@ -66,6 +66,8 @@ const { copied, copy } = useClipboard();
     :baseline-code="baselineCode"
     :baseline-source-map="baselineSourcemap"
     :baseline-error="baselineError"
+    :expected-code="expectedOutput"
+    :compilation-error="expectedDiffVisited ? compilationErrors.join('\n') : undefined"
   >
     <template #actions>
       <Button
@@ -138,17 +140,21 @@ const { copied, copy } = useClipboard();
         </DropdownMenuPortal>
       </DropdownMenuRoot>
     </template>
-    <OutputPreview
-      v-show="!expectedDiffEnabled"
-      class="!h-auto"
-      :code="oxc.codegenText"
-      lang="tsx"
-      hide-copy
-    />
-    <ExpectedDiffPanel
-      v-if="expectedDiffVisited"
-      v-show="expectedDiffEnabled"
-      :id="expectedDiffId"
-    />
+    <template #default="{ runExpected, expectedRunning }">
+      <OutputPreview
+        v-show="!expectedDiffEnabled"
+        class="!h-auto"
+        :code="oxc.codegenText"
+        lang="tsx"
+        hide-copy
+      />
+      <ExpectedDiffPanel
+        v-if="expectedDiffVisited"
+        v-show="expectedDiffEnabled"
+        :id="expectedDiffId"
+        :running="expectedRunning"
+        @run="runExpected"
+      />
+    </template>
   </ExecutionPanel>
 </template>
