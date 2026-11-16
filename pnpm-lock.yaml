@@ -48,6 +48,9 @@ importers:
       '@eslint-community/eslint-plugin-eslint-comments':
         specifier: ^4.6.0
         version: 4.8.1(eslint@9.39.2(jiti@2.7.0))
+      '@shikijs/monaco':
+        specifier: ^4.6.0
+        version: 4.6.0
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.3.5(vite@8.0.0-beta.8(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@25.0.10)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
@@ -1289,6 +1292,10 @@ packages:
 
   '@shikijs/langs@4.6.0':
     resolution: {integrity: sha512-1yMEX3oCVV54LUq/ovfpRkDQoYDkcvjSWFFa/YLUDMiSoRzMi2uxLJYbv41ahT8Lu9lFMaa7hecd3Q39trqUyg==}
+    engines: {node: '>=20'}
+
+  '@shikijs/monaco@4.6.0':
+    resolution: {integrity: sha512-EtnqmFtpKL6IunBuAS8VHDzR+bTYxOJhG3xMZIaiGLSCIQ4DSSyksBx+OwQjD78ijXgmDXFVlMK4uZP8ohl0hA==}
     engines: {node: '>=20'}
 
   '@shikijs/primitive@4.6.0':
@@ -4299,6 +4306,12 @@ snapshots:
   '@shikijs/langs@4.6.0':
     dependencies:
       '@shikijs/types': 4.6.0
+
+  '@shikijs/monaco@4.6.0':
+    dependencies:
+      '@shikijs/core': 4.6.0
+      '@shikijs/types': 4.6.0
+      '@shikijs/vscode-textmate': 10.1.0
 
   '@shikijs/primitive@4.6.0':
     dependencies:

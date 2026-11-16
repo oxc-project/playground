@@ -3,62 +3,55 @@ import { computed, ref, toValue, watchEffect, type MaybeRefOrGetter } from "vue"
 import { dark } from "~/composables/state";
 import type { HighlighterCore } from "shiki/core";
 
-// Global highlighter instance - loaded lazily
-let highlighterInstance: HighlighterCore | null = null;
+// Global HTML highlighter instance - loaded lazily.
+let highlighterPromise: Promise<HighlighterCore> | undefined;
 const isLoading = ref(false);
 const isLoaded = ref(false);
 
-export async function createHighlighter(): Promise<HighlighterCore> {
-  if (highlighterInstance) return highlighterInstance;
+export async function createHighlighterInstance(): Promise<HighlighterCore> {
+  const [
+    { createHighlighterCore },
+    { createJavaScriptRegexEngine },
+    { highlightThemes },
+    langJson,
+    langRust,
+    langTsx,
+  ] = await Promise.all([
+    import("shiki/core"),
+    import("shiki/engine/javascript"),
+    import("./highlight-themes"),
+    import("shiki/langs/json.mjs"),
+    import("shiki/langs/rust.mjs"),
+    import("shiki/langs/tsx.mjs"),
+  ]);
 
-  if (isLoading.value) {
-    // Wait for existing load to complete
-    return new Promise((resolve) => {
-      const checkLoaded = () => {
-        if (highlighterInstance) {
-          resolve(highlighterInstance);
-        } else {
-          setTimeout(checkLoaded, 10);
-        }
-      };
-      checkLoaded();
-    });
+  return createHighlighterCore({
+    themes: highlightThemes,
+    langs: [langJson.default, langRust.default, langTsx.default],
+    // Keep Monaco's JS/TS language services while highlighting JSX and TSX
+    // with the same grammar used by the generated-code preview.
+    langAlias: { javascript: "tsx", typescript: "tsx" },
+    engine: createJavaScriptRegexEngine(),
+  });
+}
+
+export function createHighlighter(): Promise<HighlighterCore> {
+  if (!highlighterPromise) {
+    isLoading.value = true;
+    highlighterPromise = createHighlighterInstance()
+      .then((highlighter) => {
+        isLoaded.value = true;
+        return highlighter;
+      })
+      .catch((error) => {
+        highlighterPromise = undefined;
+        throw error;
+      })
+      .finally(() => {
+        isLoading.value = false;
+      });
   }
-
-  isLoading.value = true;
-
-  try {
-    const [
-      { createHighlighterCore },
-      { createJavaScriptRegexEngine },
-      langJson,
-      langRust,
-      langTs,
-      langTsx,
-      vitesseLight,
-      vitesseDark,
-    ] = await Promise.all([
-      import("shiki/core"),
-      import("shiki/engine/javascript"),
-      import("shiki/langs/json.mjs"),
-      import("shiki/langs/rust.mjs"),
-      import("shiki/langs/typescript.mjs"),
-      import("shiki/langs/tsx.mjs"),
-      import("shiki/themes/vitesse-light.mjs"),
-      import("shiki/themes/vitesse-dark.mjs"),
-    ]);
-
-    highlighterInstance = await createHighlighterCore({
-      themes: [vitesseLight.default, vitesseDark.default],
-      langs: [langJson.default, langRust.default, langTs.default, langTsx.default],
-      engine: createJavaScriptRegexEngine(),
-    });
-
-    isLoaded.value = true;
-    return highlighterInstance;
-  } finally {
-    isLoading.value = false;
-  }
+  return highlighterPromise;
 }
 
 // Export reactive state for components to check loading status
@@ -72,7 +65,7 @@ export async function highlight(code: string, lang: ShikiLang): Promise<string> 
     const highlighter = await createHighlighter();
     return highlighter.codeToHtml(code, {
       lang,
-      theme: dark.value ? "vitesse-dark" : "vitesse-light",
+      themes: { light: "oxc-light", dark: "oxc-dark" },
       transformers: [
         {
           name: "add-style",
@@ -119,7 +112,7 @@ export function useHighlightColor(content: MaybeRefOrGetter<string | undefined>)
     }
 
     try {
-      const theme = `vitesse-${dark.value ? "dark" : "light"}`;
+      const theme = `oxc-${dark.value ? "dark" : "light"}`;
       // process the highlight after main rendering completes to prevent laggy
       await new Promise((res) => requestIdleCallback(res, { timeout: 500 }));
       const result = await highlightToken(code, theme);
