@@ -86,6 +86,7 @@ export const defaultOptions: Required<OxcOptions> = {
   },
   parser: {
     extension: "tsx",
+    sourceType: "module",
     allowReturnOutsideFunction: true,
     preserveParens: true,
     allowV8Intrinsics: true,
@@ -140,16 +141,28 @@ const defaultOptionsSerialized = JSON.stringify(defaultOptions);
 
 // Use the same defaults for older URLs and partial JSON edits. New optional
 // binding fields must behave consistently in the compiler and the controls.
-export function resolveOptions(saved: Partial<OxcOptions> = {}): Required<OxcOptions> {
+export function resolveOptions(saved?: Partial<OxcOptions>): Required<OxcOptions> {
   const options = structuredClone(defaultOptions);
   for (const [section, values] of Object.entries(options)) {
-    Object.assign(values, saved[section as keyof OxcOptions]);
+    Object.assign(values, saved?.[section as keyof OxcOptions]);
+  }
+  // Preserve extension/content detection for old saved options using explicit modes.
+  if (saved && saved.parser?.sourceType == null) {
+    const extension = options.parser.extension.split(".").pop();
+    options.parser.sourceType =
+      extension === "mjs" || extension === "mts"
+        ? "module"
+        : extension === "cjs" || extension === "cts"
+          ? "commonjs"
+          : "unambiguous";
   }
   return options;
 }
 
 export const useOxc = createGlobalState(async () => {
-  const options = ref(resolveOptions(urlParams.options ? JSON.parse(urlParams.options) : {}));
+  const options = ref(
+    resolveOptions(urlParams.options ? JSON.parse(urlParams.options) : undefined),
+  );
   const oxc = await oxcPromise;
   const { Oxc: OxcConstructor } = await oxcModule;
   const state = shallowRef(oxc);

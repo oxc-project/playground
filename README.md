@@ -24,13 +24,24 @@ The executed copy carries an inline source map, so devtools map back to the
 original source; the printed output is unchanged. Scripts run as scripts and ES
 modules as modules.
 
+**Source type** in Parser defaults to **Module**, so runtime helpers use ESM
+imports even when the input has no import/export declarations. The binding uses
+the same `sourceType` values as `oxc-parser`: `module`, `script`, `commonjs`, and
+`unambiguous`. **Script** and **CommonJS** use `require()` for helpers;
+**CommonJS** also permits constructs such as top-level `return`. **Unambiguous**
+detects module syntax regardless of the extension. Source type overrides the
+module kind implied by the extension while preserving its language and JSX
+syntax. The choice is saved in the share URL. Older URLs with saved options but
+no source-type setting are mapped to an equivalent explicit mode: `mjs`/`mts`
+use Module, `cjs`/`cts` use CommonJS, and other supported extensions use
+Unambiguous.
+
 **Runtime helpers** in Transformer selects npm package paths (the default) or
 versioned esm.sh URLs matching the sibling Oxc checkout, and the choice is saved
-in the share URL. To run helper-using output, set **Extension** to **mjs** (or
-**mts**) and **Runtime helpers → esm.sh**. The sandbox uses the browser's native
-module loader; bare npm imports, `require()`, and Node.js APIs are unavailable.
-Execution errors appear in the console. Enable the Transformer first to run
-TypeScript or JSX.
+in the share URL. To run helper-using output, use **Source type → Module** and
+**Runtime helpers → esm.sh**. The sandbox uses the browser's native module loader;
+bare npm imports, `require()`, and Node.js APIs are unavailable. Execution errors
+appear in the console. Enable the Transformer first to run TypeScript or JSX.
 
 **Compare** runs the same input through an esnext baseline with TypeScript/JSX
 lowering enabled and minification, define/inject replacements, and optional
