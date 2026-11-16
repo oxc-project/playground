@@ -15,34 +15,44 @@ const emit = defineEmits<{
 
 const { oxc } = await useOxc();
 const collapsed = ref(false);
-const expanded = ref(new Set<number>());
+const expanded = ref(new Set<string>());
 const listId = useId();
 const severityStyles = {
   Error: { icon: "ri:close-circle-line", color: "text-destructive" },
   Warning: { icon: "ri:error-warning-line", color: "text-amber-700 dark:text-amber-400" },
   Advice: { icon: "ri:information-line", color: "text-primary" },
 };
-const diagnostics = computed(() =>
-  oxc.value.getDiagnostics().map((diagnostic) => {
+const diagnostics = computed(() => {
+  const occurrences = new Map<string, number>();
+  return oxc.value.getDiagnostics().map((diagnostic) => {
+    const identity = JSON.stringify(diagnostic);
+    const occurrence = occurrences.get(identity) ?? 0;
+    occurrences.set(identity, occurrence + 1);
     const label = diagnostic.labels[0];
     return {
       ...diagnostic,
+      key: `${identity}:${occurrence}`,
       label,
       position: label && props.getPositionAt?.(label.start),
       ...severityStyles[diagnostic.severity],
     };
-  }),
-);
+  });
+});
 const errors = computed(() => diagnostics.value.filter((d) => d.severity === "Error").length);
 const warnings = computed(() => diagnostics.value.filter((d) => d.severity === "Warning").length);
 const advice = computed(() => diagnostics.value.filter((d) => d.severity === "Advice").length);
 
-// A new compiler result may reorder diagnostics; don't expand an unrelated item.
-watch(diagnostics, () => expanded.value.clear());
+// Keep unchanged diagnostics open across compiler runs, even if their order changes.
+watch(diagnostics, (items) => {
+  const keys = new Set(items.map((diagnostic) => diagnostic.key));
+  for (const key of expanded.value) {
+    if (!keys.has(key)) expanded.value.delete(key);
+  }
+});
 
-function toggleDetails(index: number) {
-  if (expanded.value.has(index)) expanded.value.delete(index);
-  else expanded.value.add(index);
+function toggleDetails(key: string) {
+  if (expanded.value.has(key)) expanded.value.delete(key);
+  else expanded.value.add(key);
 }
 </script>
 
@@ -88,7 +98,7 @@ function toggleDetails(index: number) {
     <ul :id="listId" v-show="!collapsed" class="min-h-0 overflow-auto border-t">
       <li
         v-for="(diagnostic, i) in diagnostics"
-        :key="i"
+        :key="diagnostic.key"
         class="diagnostic-item border-b last:border-b-0"
       >
         <div class="flex flex-wrap items-start gap-1 px-2 py-1">
@@ -123,27 +133,29 @@ function toggleDetails(index: number) {
             v-if="diagnostic.codeframe || diagnostic.helpMessage"
             type="button"
             class="diagnostic-details ml-auto flex shrink-0 items-center gap-1 rounded px-2 py-1.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:-outline-offset-2"
-            :aria-expanded="expanded.has(i)"
+            :aria-expanded="expanded.has(diagnostic.key)"
             :aria-controls="`${listId}-${i}`"
-            @click="toggleDetails(i)"
+            @click="toggleDetails(diagnostic.key)"
           >
             <Icon
-              :icon="expanded.has(i) ? 'ri:arrow-down-s-line' : 'ri:arrow-right-s-line'"
+              :icon="
+                expanded.has(diagnostic.key) ? 'ri:arrow-down-s-line' : 'ri:arrow-right-s-line'
+              "
               class="h-3.5 w-3.5"
               aria-hidden="true"
             />
-            <span>{{ expanded.has(i) ? "Hide details" : "Show details" }}</span>
+            <span>{{ expanded.has(diagnostic.key) ? "Hide details" : "Show details" }}</span>
             <span class="sr-only"> for {{ diagnostic.message }}</span>
           </button>
         </div>
         <div
           v-if="diagnostic.codeframe || diagnostic.helpMessage"
           :id="`${listId}-${i}`"
-          v-show="expanded.has(i)"
+          v-show="expanded.has(diagnostic.key)"
           class="mx-3 mb-2"
         >
           <DiagnosticCodeframe
-            v-if="expanded.has(i) && diagnostic.codeframe"
+            v-if="expanded.has(diagnostic.key) && diagnostic.codeframe"
             :codeframe="diagnostic.codeframe"
             :source="editorValue"
             :severity-color="diagnostic.color"
