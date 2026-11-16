@@ -28,7 +28,6 @@ const props = defineProps<{
 
 const expanded = ref(false);
 const expectedComparisonActive = ref(false);
-const comparing = computed(() => compareEnabled.value || expectedComparisonActive.value);
 const consoleId = useId();
 const helperTipOpen = ref(false);
 const outputFrame = useTemplateRef<HTMLIFrameElement>("outputFrame");
@@ -37,11 +36,13 @@ const expectedFrame = useTemplateRef<HTMLIFrameElement>("expectedFrame");
 const output = useSandboxRun(outputFrame);
 const baseline = useSandboxRun(baselineFrame);
 const expected = useSandboxRun(expectedFrame);
-const comparison = computed(() => (expectedComparisonActive.value ? expected : baseline));
+const runs = computed(() => {
+  if (!compareEnabled.value) return [output];
+  return expectedComparisonActive.value ? [baseline, expected, output] : [baseline, output];
+});
 
 const status = computed<SandboxStatus>(() => {
-  if (!comparing.value) return output.status.value;
-  const statuses = [output.status.value, comparison.value.status.value];
+  const statuses = runs.value.map((run) => run.status.value);
   if (statuses.includes("running")) return "running";
   if (statuses.includes("error")) return "error";
   if (statuses.includes("stopped")) return "stopped";
@@ -59,10 +60,8 @@ const statuses: Record<SandboxStatus, string> = {
 // Skip transient states during quick runs and reruns.
 const visibleStatus = refDebounced(status, 150);
 const visibleOutputStatus = refDebounced(output.status, 150);
-const visibleComparisonStatus = refDebounced(
-  computed(() => comparison.value.status.value),
-  150,
-);
+const visibleBaselineStatus = refDebounced(baseline.status, 150);
+const visibleExpectedStatus = refDebounced(expected.status, 150);
 const statusText = computed(() =>
   visibleStatus.value === "idle" ? "Output changed — run again" : statuses[visibleStatus.value],
 );
@@ -72,24 +71,24 @@ const running = computed(
 );
 // The output action leaves either comparison mode and reruns the output alone.
 const runLabel = computed(() => {
-  if (running.value && !comparing.value) return "Running…";
-  return comparing.value || output.status.value === "idle" ? "Run output" : "Rerun";
+  if (running.value && !compareEnabled.value) return "Running…";
+  return compareEnabled.value || output.status.value === "idle" ? "Run output" : "Rerun";
 });
 // One comparison action follows the visible output view.
 const comparisonActive = computed(() =>
-  props.expectedComparison ? expectedComparisonActive.value : compareEnabled.value,
+  props.expectedComparison
+    ? expectedComparisonActive.value
+    : compareEnabled.value && !expectedComparisonActive.value,
 );
 const comparisonRunning = computed(() => comparisonActive.value && running.value);
 const compareLabel = computed(() => {
   const target = props.expectedComparison ? "expected" : "baseline";
   if (comparisonRunning.value) return `Comparing ${target}…`;
-  return comparisonActive.value && comparison.value.status.value !== "idle"
+  return comparisonActive.value && status.value !== "idle"
     ? `Recompare ${target}`
     : `Compare ${target}`;
 });
-const stoppable = computed(
-  () => output.stoppable.value || (comparing.value && comparison.value.stoppable.value),
-);
+const stoppable = computed(() => runs.value.some((run) => run.stoppable.value));
 
 function run() {
   if (props.compilationFailed) return;
@@ -98,10 +97,15 @@ function run() {
   if (compareEnabled.value) {
     if (props.baselineError) {
       baseline.reset();
-      baseline.fail(`Baseline compilation failed: ${props.baselineError}`);
+      baseline.fail(
+        `${expectedComparisonActive.value ? "Input" : "Baseline"} compilation failed: ${props.baselineError}`,
+      );
     } else {
       baseline.run(props.baselineCode ?? "", props.sourceType, props.baselineSourceMap);
     }
+  }
+  if (expectedComparisonActive.value && props.expectedCode !== undefined) {
+    expected.run(props.expectedCode, props.sourceType);
   }
 }
 
@@ -113,20 +117,19 @@ async function runComparison() {
   // Wait for baseline compilation and the updated props before running.
   await nextTick();
   // Another execution action may have been chosen before this flush.
-  if (compareEnabled.value) run();
+  if (compareEnabled.value && !expectedComparisonActive.value) run();
 }
 
-function runExpectedComparison() {
+async function runExpectedComparison() {
   // Undefined is unset; an empty expectation is valid executable JavaScript.
   if (props.expectedCode === undefined || props.compilationFailed) return;
-  if (compareEnabled.value) {
-    compareEnabled.value = false;
-    baseline.reset();
-  }
   expectedComparisonActive.value = true;
-  expanded.value = true;
-  output.run(props.code, props.sourceType, props.sourceMap);
-  expected.run(props.expectedCode, props.sourceType);
+  // Expected comparison also needs the input's esnext, unminified baseline.
+  compareEnabled.value = true;
+  await nextTick();
+  if (compareEnabled.value && expectedComparisonActive.value && props.expectedCode !== undefined) {
+    run();
+  }
 }
 
 function runOutput() {
@@ -160,20 +163,25 @@ watch(
     expected.reset();
   },
 );
-// Expected edits invalidate only the Expected-versus-Current run.
+// Keep all three results from the same comparison run when Expected changes.
 watch(
   () => props.expectedCode,
   () => {
     if (!expectedComparisonActive.value) return;
     output.reset();
+    baseline.reset();
     expected.reset();
   },
 );
-// The baseline changes on its own when the source or parser changes, and when
-// Compare is enabled; only the baseline run is stale then.
-watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.baselineError], () =>
-  baseline.reset(),
-);
+// Input changes invalidate the whole Expected comparison, even when Current's
+// generated text happens to stay the same.
+watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.baselineError], () => {
+  baseline.reset();
+  if (expectedComparisonActive.value) {
+    output.reset();
+    expected.reset();
+  }
+});
 </script>
 
 <template>
@@ -188,15 +196,15 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
           size="sm"
           variant="outline"
           class="active:translate-y-px"
-          :aria-busy="!comparing && status === 'running'"
+          :aria-busy="!compareEnabled && status === 'running'"
           :aria-label="runLabel"
           :title="runLabel"
           :disabled="compilationFailed"
           @click="runOutput"
         >
           <Icon
-            :icon="running && !comparing ? 'ri:loader-2-line' : 'ri:play-line'"
-            :class="{ 'animate-spin': running && !comparing }"
+            :icon="running && !compareEnabled ? 'ri:loader-2-line' : 'ri:play-line'"
+            :class="{ 'animate-spin': running && !compareEnabled }"
           />
           <span class="output-run-label">{{ runLabel }}</span>
           <span class="output-run-label-compact" aria-hidden="true">Run</span>
@@ -210,7 +218,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
           :disabled="compilationFailed || (expectedComparison && expectedCode === undefined)"
           :title="
             expectedComparison
-              ? 'Run Expected and Current JavaScript in separate sandboxes'
+              ? 'Run the input baseline, Expected, and Current JavaScript in separate sandboxes'
               : 'Run the esnext baseline (no minification) and Current output'
           "
           @click="expectedComparison ? runExpectedComparison() : runComparison()"
@@ -304,26 +312,38 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       v-show="expanded"
       :id="consoleId"
       class="shrink-0 border-t"
-      :class="{ 'grid grid-cols-1 md:grid-cols-2 md:divide-x': comparing }"
+      :class="
+        compareEnabled
+          ? expectedComparisonActive
+            ? 'grid grid-cols-1 divide-y @min-[720px]:grid-cols-3 @min-[720px]:divide-x @min-[720px]:divide-y-0'
+            : 'grid grid-cols-1 md:grid-cols-2 md:divide-x'
+          : undefined
+      "
     >
       <section
-        v-if="comparing"
-        :aria-label="expectedComparisonActive ? 'Expected execution' : 'Baseline execution'"
+        v-if="compareEnabled"
+        :aria-label="expectedComparisonActive ? 'Input execution' : 'Baseline execution'"
       >
         <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
-          <span class="font-medium">{{ expectedComparisonActive ? "Expected" : "Baseline" }}</span>
-          <span class="text-muted-foreground">{{ statuses[visibleComparisonStatus] }}</span>
-          <span class="col-span-2 text-muted-foreground">{{
-            expectedComparisonActive ? "pasted JavaScript" : "esnext, no minification"
-          }}</span>
+          <span class="font-medium">{{ expectedComparisonActive ? "Input" : "Baseline" }}</span>
+          <span class="text-muted-foreground">{{ statuses[visibleBaselineStatus] }}</span>
+          <span class="col-span-2 text-muted-foreground">esnext, no minification</span>
         </p>
         <SandboxConsole
-          :entries="comparison.entries.value"
-          :label="expectedComparisonActive ? 'Expected console' : 'Baseline console'"
+          :entries="baseline.entries.value"
+          :label="expectedComparisonActive ? 'Input console' : 'Baseline console'"
         />
       </section>
-      <section :aria-label="comparing ? 'Current options execution' : undefined">
-        <p v-if="comparing" class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+      <section v-if="expectedComparisonActive" aria-label="Expected execution">
+        <p class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
+          <span class="font-medium">Expected</span>
+          <span class="text-muted-foreground">{{ statuses[visibleExpectedStatus] }}</span>
+          <span class="col-span-2 text-muted-foreground">pasted JavaScript</span>
+        </p>
+        <SandboxConsole :entries="expected.entries.value" label="Expected console" />
+      </section>
+      <section :aria-label="compareEnabled ? 'Current options execution' : undefined">
+        <p v-if="compareEnabled" class="grid grid-cols-[1fr_auto] gap-x-2 px-3 pt-2 text-xs">
           <span class="font-medium">{{ expectedComparisonActive ? "Current" : "Output" }}</span>
           <span class="text-muted-foreground">{{ statuses[visibleOutputStatus] }}</span>
           <span class="col-span-2 text-muted-foreground">current options</span>
@@ -346,7 +366,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       ref="baselineFrame"
       :srcdoc="baseline.srcdoc.value"
       sandbox="allow-scripts"
-      title="Baseline execution sandbox"
+      :title="expectedComparisonActive ? 'Input execution sandbox' : 'Baseline execution sandbox'"
       class="hidden"
     />
     <iframe

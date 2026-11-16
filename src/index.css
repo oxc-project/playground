@@ -402,6 +402,7 @@
   }
 
   .output-run-label,
+  .output-expected-label,
   .output-source-map-label {
     display: none;
   }
