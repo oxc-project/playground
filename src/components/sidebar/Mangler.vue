@@ -20,7 +20,10 @@ const { options } = await useOxc();
         label="Keep function & class names"
         title="Keep names during identifier mangling"
       />
-      <p v-if="options.run.compress && options.mangle.keepNames" class="settings-help">
+      <p
+        v-if="options.run.compress && options.mangle.keepNames && !options.compress.keepNames"
+        class="settings-help"
+      >
         Compression can still change function and class names.
       </p>
     </div>
