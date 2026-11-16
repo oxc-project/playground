@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { computed } from "vue";
-import { useOxc } from "~/composables/oxc";
+import { resolveOptions, useOxc } from "~/composables/oxc";
 import { Button } from "~/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/ui/dialog";
 import MonacoEditor from "../MonacoEditor.vue";
@@ -11,7 +11,7 @@ const optionsString = computed({
   get: () => JSON.stringify(options.value, null, 2),
   set: (value: string) => {
     try {
-      options.value = JSON.parse(value);
+      options.value = resolveOptions(JSON.parse(value));
     } catch (error) {
       console.error("Failed to parse JSON options:", error);
     }

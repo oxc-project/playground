@@ -209,6 +209,18 @@
   box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
 }
 
+.settings-help {
+  color: hsl(var(--muted-foreground));
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.configuration-options .settings-toggle-row label {
+  display: block;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
 .settings-value {
   width: 72px;
   text-align: right;
