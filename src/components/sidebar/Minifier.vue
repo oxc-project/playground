@@ -3,7 +3,7 @@ import { computed } from "vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import Select from "~/components/ui/Select.vue";
 import { useOxc } from "~/composables/oxc";
-import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import SectionToggle from "./SectionToggle.vue";
 import OptionsDisclosure from "./OptionsDisclosure.vue";
 
 const { options } = await useOxc();
@@ -25,10 +25,12 @@ const unused = computed({
 
 <template>
   <section class="settings-section" aria-labelledby="minifier-heading">
-    <div class="settings-toggle-row">
-      <h2 id="minifier-heading"><label for="compress">Compress</label></h2>
-      <CheckboxControl id="compress" v-model:checked="options.run.compress" />
-    </div>
+    <SectionToggle
+      v-model="options.run.compress"
+      as="h2"
+      heading-id="minifier-heading"
+      label="Compress"
+    />
     <OptionsDisclosure v-show="options.run.compress" label="Compression options">
       <Checkbox v-model="options.compress.dropDebugger" label="Remove debugger statements" />
       <Checkbox v-model="options.compress.dropConsole" label="Remove console calls" />
@@ -43,9 +45,6 @@ const unused = computed({
         <Select v-model="unused" :options="unusedOptions" />
       </label>
     </OptionsDisclosure>
-    <div class="settings-toggle-row">
-      <h3><label for="minify-whitespace">Minify whitespace</label></h3>
-      <CheckboxControl id="minify-whitespace" v-model:checked="options.run.whitespace" />
-    </div>
+    <SectionToggle v-model="options.run.whitespace" label="Minify whitespace" />
   </section>
 </template>

@@ -2,17 +2,19 @@
 import MangleProperties from "~/components/sidebar/MangleProperties.vue";
 import Checkbox from "~/components/ui/Checkbox.vue";
 import { useOxc } from "~/composables/oxc";
-import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import SectionToggle from "./SectionToggle.vue";
 
 const { options } = await useOxc();
 </script>
 
 <template>
   <section class="settings-section" aria-labelledby="mangler-heading">
-    <div class="settings-toggle-row">
-      <h2 id="mangler-heading"><label for="mangle-identifiers">Mangle identifiers</label></h2>
-      <CheckboxControl id="mangle-identifiers" v-model:checked="options.run.mangle" />
-    </div>
+    <SectionToggle
+      v-model="options.run.mangle"
+      as="h2"
+      heading-id="mangler-heading"
+      label="Mangle identifiers"
+    />
     <div v-show="options.run.mangle" class="settings-children">
       <Checkbox v-model="options.mangle.topLevel" label="Mangle top-level names" title="topLevel" />
       <Checkbox

@@ -6,7 +6,7 @@ import { enabledLintRules } from "~/composables/state";
 import { Button } from "~/ui/button";
 import OptionsDisclosure from "./OptionsDisclosure.vue";
 import { Input } from "~/ui/input";
-import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import SectionToggle from "./SectionToggle.vue";
 import { LINT_PLUGINS, getFullRuleName } from "~/utils/linter-rules";
 
 const { options } = await useOxc();
@@ -49,10 +49,7 @@ function removeRule(fullName: string) {
 
 <template>
   <section class="settings-section" aria-labelledby="linter-heading">
-    <div class="settings-toggle-row">
-      <h2 id="linter-heading">Linter</h2>
-      <CheckboxControl v-model:checked="options.run.lint" aria-labelledby="linter-heading" />
-    </div>
+    <SectionToggle v-model="options.run.lint" as="h2" heading-id="linter-heading" label="Linter" />
     <OptionsDisclosure :label="enabledRules.length ? `Rules (${enabledRules.length})` : 'Rules'">
       <div class="flex min-w-0 flex-col gap-3">
         <Input

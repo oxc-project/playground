@@ -4,7 +4,7 @@ import Select from "~/components/ui/Select.vue";
 import { useOxc } from "~/composables/oxc";
 import { helperRuntime } from "~/composables/state";
 import { Input } from "~/ui/input";
-import { Checkbox as CheckboxControl } from "~/ui/checkbox";
+import SectionToggle from "./SectionToggle.vue";
 import Define from "./Define.vue";
 import OptionsDisclosure from "./OptionsDisclosure.vue";
 
@@ -18,13 +18,12 @@ const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
 
 <template>
   <section class="settings-section" aria-labelledby="transformer-heading">
-    <div class="settings-toggle-row">
-      <h2 id="transformer-heading">Transformer</h2>
-      <CheckboxControl
-        v-model:checked="options.run.transform"
-        aria-labelledby="transformer-heading"
-      />
-    </div>
+    <SectionToggle
+      v-model="options.run.transform"
+      as="h2"
+      heading-id="transformer-heading"
+      label="Transformer"
+    />
 
     <div v-show="options.run.transform" class="settings-children">
       <label class="settings-field">
@@ -65,13 +64,11 @@ const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
       <Define />
     </div>
 
-    <div class="settings-toggle-row">
-      <h3 id="declarations-heading">Isolated declarations</h3>
-      <CheckboxControl
-        v-model:checked="options.run.isolatedDeclarations"
-        aria-labelledby="declarations-heading"
-      />
-    </div>
+    <SectionToggle
+      v-model="options.run.isolatedDeclarations"
+      heading-id="declarations-heading"
+      label="Isolated declarations"
+    />
     <div v-if="options.run.isolatedDeclarations" class="settings-children">
       <Checkbox
         v-model="options.isolatedDeclarations.stripInternal"
