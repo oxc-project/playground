@@ -37,6 +37,7 @@
   "devDependencies": {
     "@emnapi/core": "^1.8.1",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.6.0",
+    "@shikijs/monaco": "^4.6.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^25.0.10",
     "@vitejs/plugin-vue": "^6.0.3",

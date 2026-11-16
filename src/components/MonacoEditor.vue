@@ -3,6 +3,7 @@ import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor/editor/editor.api";
 import { onBeforeUnmount, onMounted, ref, shallowRef, watch, watchEffect } from "vue";
 import { editorCursor, outputHoverRange } from "~/composables/state";
+import { getEditorTheme, registerEditorThemes } from "~/utils/editor-theme";
 
 defineOptions({ name: "MonacoEditor" });
 
@@ -18,8 +19,8 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["editorWillMount", "editorDidMount", "change", "update:modelValue"]);
 
-const container: any = ref(null);
-let instance: monaco.editor.IStandaloneCodeEditor | undefined;
+const container = ref<HTMLElement>();
+const instance = shallowRef<monaco.editor.IStandaloneCodeEditor>();
 const model = shallowRef<monaco.editor.ITextModel>(initModel());
 
 watchEffect((onCleanup) => {
@@ -31,17 +32,21 @@ watchEffect((onCleanup) => {
 });
 
 function initModel() {
-  return monaco.editor.createModel(
+  const model = monaco.editor.createModel(
     props.modelValue,
     props.language,
     monaco.Uri.file(props.filename),
   );
+  model.updateOptions({
+    bracketColorizationOptions: { enabled: false, independentColorPoolPerBracketType: false },
+  });
+  return model;
 }
 
 const isDark = useDark({
   onChanged(isDark) {
-    if (!instance) return;
-    monaco.editor.setTheme(isDark ? "vs-dark" : "vs");
+    if (!instance.value) return;
+    monaco.editor.setTheme(props.theme || getEditorTheme(isDark));
   },
 });
 
@@ -55,23 +60,37 @@ watch(
 watch(
   () => props.filename,
   () => {
-    if (instance) {
-      model.value.dispose();
-      model.value = initModel();
-      instance.setModel(model.value);
-    }
+    const previous = model.value;
+    model.value = initModel();
+    instance.value?.setModel(model.value);
+    previous.dispose();
   },
 );
 
-watch(
-  () => props.markers,
-  () => {
-    if (!instance) return;
-    if (props.markers) {
-      monaco.editor.setModelMarkers(model.value, "oxc", props.markers);
-    }
-  },
-);
+watchEffect(() => {
+  monaco.editor.setModelMarkers(model.value, "oxc", props.markers ?? []);
+});
+
+// Register effects during setup so Vue stops them even though editor creation
+// waits for the lazy highlighter to load.
+watchEffect((onCleanup) => {
+  const editor = instance.value;
+  const range = outputHoverRange.value;
+  if (!props.main || !editor || !range) return;
+
+  const start = model.value.getPositionAt(range[0]);
+  const end = model.value.getPositionAt(range[1]);
+  const decorations = editor.createDecorationsCollection([
+    {
+      range: monaco.Range.fromPositions(start, end),
+      options: {
+        isWholeLine: false,
+        className: "ast-highlight",
+      },
+    },
+  ]);
+  onCleanup(() => decorations.clear());
+});
 
 function initMonaco() {
   const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
@@ -85,51 +104,36 @@ function initMonaco() {
     fixedOverflowWidgets: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,
-    theme: props.theme || (isDark.value ? "vs-dark" : "vs"),
+    model: model.value,
+    theme: props.theme || getEditorTheme(isDark.value),
     automaticLayout: true,
     readOnly: props.readonly,
   };
 
-  instance = monaco.editor.create(container.value, editorOptions);
-  instance.setModel(model.value);
-
-  emit("editorDidMount", instance);
+  const editor = monaco.editor.create(container.value!, editorOptions);
+  instance.value = editor;
+  emit("editorDidMount", editor);
 
   if (props.main) {
-    instance.onDidChangeCursorPosition((e) => {
+    editor.onDidChangeCursorPosition((e) => {
       editorCursor.value = model.value.getOffsetAt(e.position);
-    });
-
-    let decorationsCollection: monaco.editor.IEditorDecorationsCollection | undefined;
-
-    watchEffect(() => {
-      if (outputHoverRange.value) {
-        decorationsCollection?.clear();
-        const start = model.value.getPositionAt(outputHoverRange.value[0]);
-        const end = model.value.getPositionAt(outputHoverRange.value[1]);
-        decorationsCollection = instance!.createDecorationsCollection([
-          {
-            range: monaco.Range.fromPositions(start, end),
-            options: {
-              isWholeLine: false,
-              className: "ast-highlight",
-            },
-          },
-        ]);
-      } else {
-        decorationsCollection?.clear();
-      }
     });
   }
 }
 
-onMounted(() => {
-  initMonaco();
+onMounted(async () => {
+  try {
+    await registerEditorThemes();
+  } catch (error) {
+    console.warn("Failed to load editor highlighting; using the built-in theme:", error);
+  }
+  if (!model.value.isDisposed()) initMonaco();
 });
 
 onBeforeUnmount(() => {
+  instance.value?.dispose();
+  instance.value = undefined;
   model.value.dispose();
-  instance?.dispose();
 });
 
 const getPositionAt = (offset: number) => model.value.getPositionAt(offset);

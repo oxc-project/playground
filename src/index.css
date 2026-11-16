@@ -368,6 +368,12 @@
   line-height: 1.75;
 }
 
+/* Shiki emits both palettes so output follows theme changes immediately. */
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
 .theme-toggle svg {
   animation: theme-in 160ms ease-out;
 }
