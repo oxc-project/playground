@@ -3,6 +3,7 @@ import * as monaco from "monaco-editor/editor/editor.api";
 import { computed, ref, useTemplateRef, watchEffect } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { editorValue } from "~/composables/state";
+import { createDiagnosticOffsetMapper } from "~/utils/diagnostic-offsets";
 import MonacoEditor from "../MonacoEditor.vue";
 
 defineProps<{
@@ -14,7 +15,12 @@ defineProps<{
 const { oxc } = await useOxc();
 
 const monacoRef = useTemplateRef("monacoRef");
-const getPositionAt = computed(() => monacoRef.value?.getPositionAt);
+const toUtf16Offset = computed(() => createDiagnosticOffsetMapper(editorValue.value));
+const getPositionAt = computed(() => {
+  const getPosition = monacoRef.value?.getPositionAt;
+  const toUtf16 = toUtf16Offset.value;
+  return getPosition && ((byteOffset: number) => getPosition(toUtf16(byteOffset)));
+});
 const markers = ref<monaco.editor.IMarkerData[]>([]);
 
 watchEffect(() => {
@@ -35,6 +41,12 @@ watchEffect(() => {
       message: `Oxc ${d.severity}: ${d.message}`,
     };
   });
+});
+
+defineExpose({
+  getPositionAt: (offset: number) => getPositionAt.value?.(offset),
+  revealRange: (start: number, end: number) =>
+    monacoRef.value?.revealRange(toUtf16Offset.value(start), toUtf16Offset.value(end)),
 });
 </script>
 

@@ -137,8 +137,17 @@ onBeforeUnmount(() => {
 });
 
 const getPositionAt = (offset: number) => model.value.getPositionAt(offset);
+
+function revealRange(start: number, end: number) {
+  const range = monaco.Range.fromPositions(getPositionAt(start), getPositionAt(end));
+  instance.value?.setSelection(range);
+  instance.value?.revealRangeInCenterIfOutsideViewport(range);
+  instance.value?.focus();
+}
+
 defineExpose({
   getPositionAt,
+  revealRange,
 });
 </script>
 
