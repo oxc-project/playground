@@ -33,7 +33,7 @@ onMounted(updateRunOptions);
   >
     <TabsList
       as="nav"
-      class="relative h-auto flex flex-shrink-0 justify-start gap-0 overflow-auto rounded-none px-2"
+      class="output-tabs relative flex h-[45px] shrink-0 items-stretch justify-start gap-0 overflow-x-auto rounded-none p-0"
     >
       <TabsTrigger value="codegen"> Printed </TabsTrigger>
       <TabsTrigger value="ast"> ESTree AST </TabsTrigger>

@@ -118,7 +118,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
 <template>
   <section class="h-full min-h-0 flex flex-col" aria-label="Output execution">
     <div
-      class="flex shrink-0 flex-wrap items-center gap-2 border-b px-2 py-1.5"
+      class="flex min-h-11 shrink-0 flex-wrap items-center gap-1 border-b border-border px-3 py-1.5"
       role="group"
       aria-label="Output actions"
     >

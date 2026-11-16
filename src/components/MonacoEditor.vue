@@ -76,8 +76,12 @@ watch(
 function initMonaco() {
   const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
     minimap: { enabled: false },
-    fontSize: 14,
-    scrollBeyondLastLine: true,
+    fontSize: 13,
+    lineHeight: 23,
+    padding: { top: 16, bottom: 16 },
+    lineNumbersMinChars: 3,
+    scrollBeyondLastLine: false,
+    smoothScrolling: true,
     fixedOverflowWidgets: true,
     fontFamily: `ui-monospace, Menlo, Monaco, "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro","Fira Mono", "Droid Sans Mono", "Courier New", monospace`,
     ...props.options,

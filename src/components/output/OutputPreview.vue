@@ -45,7 +45,11 @@ function escapeHtml(text: string): string {
 </script>
 
 <template>
-  <CopyContainer :value="code || ''" :hide-copy="hideCopy" class="min-w-0 w-full flex">
+  <CopyContainer
+    :value="code || ''"
+    :hide-copy="hideCopy"
+    class="output-preview min-w-0 w-full flex"
+  >
     <div class="flex-1 overflow-auto text-sm leading-relaxed">
       <!-- Loading skeleton -->
       <div v-if="showLoading && !highlightedCode" class="animate-pulse">
