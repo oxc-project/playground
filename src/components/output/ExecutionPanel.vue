@@ -15,6 +15,7 @@ const props = defineProps<{
   baselineSourceMap?: string;
   baselineError?: string;
   expectedCode?: string;
+  expectedComparison?: boolean;
   compilationError?: string;
 }>();
 
@@ -66,10 +67,17 @@ const runLabel = computed(() => {
   if (running.value && !comparing.value) return "Running…";
   return comparing.value || output.status.value === "idle" ? "Run output" : "Rerun";
 });
-// The baseline comparison action runs both sides and stays active.
+// One comparison action follows the visible output view.
+const comparisonActive = computed(() =>
+  props.expectedComparison ? expectedComparisonActive.value : compareEnabled.value,
+);
+const comparisonRunning = computed(() => comparisonActive.value && running.value);
 const compareLabel = computed(() => {
-  if (running.value && compareEnabled.value) return "Comparing…";
-  return compareEnabled.value && baseline.status.value !== "idle" ? "Recompare" : "Compare";
+  const target = props.expectedComparison ? "expected" : "baseline";
+  if (comparisonRunning.value) return `Comparing ${target}…`;
+  return comparisonActive.value && comparison.value.status.value !== "idle"
+    ? `Recompare ${target}`
+    : `Compare ${target}`;
 });
 const stoppable = computed(
   () => output.stoppable.value || (comparing.value && comparison.value.stoppable.value),
@@ -173,15 +181,21 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       </Button>
       <Button
         size="sm"
-        :variant="compareEnabled ? 'secondary' : 'ghost'"
+        :variant="comparisonActive ? 'secondary' : 'ghost'"
         class="active:translate-y-px"
-        :aria-pressed="compareEnabled"
-        :aria-busy="compareEnabled && status === 'running'"
-        @click="runComparison"
+        :aria-pressed="comparisonActive"
+        :aria-busy="comparisonRunning"
+        :disabled="expectedComparison && (expectedCode === undefined || !!compilationError)"
+        :title="
+          expectedComparison
+            ? 'Run Expected and Current JavaScript in separate sandboxes'
+            : 'Run the esnext baseline (no minification) and Current output'
+        "
+        @click="expectedComparison ? runExpectedComparison() : runComparison()"
       >
         <Icon
-          :icon="running && compareEnabled ? 'ri:loader-2-line' : 'ri:split-cells-horizontal'"
-          :class="{ 'animate-spin': running && compareEnabled }"
+          :icon="comparisonRunning ? 'ri:loader-2-line' : 'ri:split-cells-horizontal'"
+          :class="{ 'animate-spin': comparisonRunning }"
         />
         {{ compareLabel }}
       </Button>
@@ -198,10 +212,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
       </div>
     </div>
     <div class="min-h-0 flex-1 overflow-auto" aria-label="Printed output">
-      <slot
-        :run-expected="runExpectedComparison"
-        :expected-running="expectedComparisonActive && running"
-      />
+      <slot />
     </div>
     <div
       v-if="expanded || status !== 'idle'"

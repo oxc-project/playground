@@ -67,6 +67,7 @@ const { copied, copy } = useClipboard();
     :baseline-source-map="baselineSourcemap"
     :baseline-error="baselineError"
     :expected-code="expectedOutput"
+    :expected-comparison="expectedDiffEnabled"
     :compilation-error="expectedDiffVisited ? compilationErrors.join('\n') : undefined"
   >
     <template #actions>
@@ -140,21 +141,17 @@ const { copied, copy } = useClipboard();
         </DropdownMenuPortal>
       </DropdownMenuRoot>
     </template>
-    <template #default="{ runExpected, expectedRunning }">
-      <OutputPreview
-        v-show="!expectedDiffEnabled"
-        class="!h-auto"
-        :code="oxc.codegenText"
-        lang="tsx"
-        hide-copy
-      />
-      <ExpectedDiffPanel
-        v-if="expectedDiffVisited"
-        v-show="expectedDiffEnabled"
-        :id="expectedDiffId"
-        :running="expectedRunning"
-        @run="runExpected"
-      />
-    </template>
+    <OutputPreview
+      v-show="!expectedDiffEnabled"
+      class="!h-auto"
+      :code="oxc.codegenText"
+      lang="tsx"
+      hide-copy
+    />
+    <ExpectedDiffPanel
+      v-if="expectedDiffVisited"
+      v-show="expectedDiffEnabled"
+      :id="expectedDiffId"
+    />
   </ExecutionPanel>
 </template>
