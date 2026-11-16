@@ -3,11 +3,12 @@ import { Icon } from "@iconify/vue";
 import { computedAsync, useClipboard } from "@vueuse/core";
 import { computed, ref } from "vue";
 import { useOxc } from "~/composables/oxc";
+import { editorValue } from "~/composables/state";
 import { Button } from "~/ui/button";
 import ExecutionPanel from "./ExecutionPanel.vue";
-import OutputPreview from "./OutputPreview.vue";
+import PrintedEditor from "./PrintedEditor.vue";
 
-const { oxc, baselineCode, baselineSourcemap, baselineError } = await useOxc();
+const { oxc, options, baselineCode, baselineSourcemap, baselineError } = await useOxc();
 const sourceType = computed(() => {
   try {
     const { node } = JSON.parse(oxc.value.astJson) as { node: { sourceType: string } };
@@ -85,6 +86,12 @@ const { copied, copy } = useClipboard();
         />
       </Button>
     </template>
-    <OutputPreview class="!h-auto" :code="oxc.codegenText" lang="tsx" hide-copy />
+    <PrintedEditor
+      :key="options.parser.extension"
+      :extension="options.parser.extension"
+      :code="oxc.codegenText"
+      :source-map="oxc.codegenSourcemapText ?? ''"
+      :source="editorValue"
+    />
   </ExecutionPanel>
 </template>
