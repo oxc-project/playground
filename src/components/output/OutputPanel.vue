@@ -12,8 +12,7 @@ import ControlflowPanel from "./ControlflowPanel.vue";
 import EsTreePanel from "./EsTreePanel.vue";
 import FormatterPanel from "./FormatterPanel.vue";
 import RustAstPanel from "./RustAstPanel.vue";
-import ScopePanel from "./ScopePanel.vue";
-import SymbolPanel from "./SymbolPanel.vue";
+import SemanticExplorer from "~/components/semantic/SemanticExplorer.vue";
 
 const { options } = await useOxc();
 const navigation = useTemplateRef("navigation");
@@ -106,8 +105,7 @@ onMounted(updateRunOptions);
           <TabsTrigger value="ast"> ESTree AST </TabsTrigger>
           <TabsTrigger value="ir"> Rust AST </TabsTrigger>
           <TabsTrigger value="formatter"> Formatter </TabsTrigger>
-          <TabsTrigger value="scope"> Scope </TabsTrigger>
-          <TabsTrigger value="symbol"> Symbol </TabsTrigger>
+          <TabsTrigger value="scoping"> Scoping </TabsTrigger>
           <TabsTrigger value="cfg"> Controlflow Graph </TabsTrigger>
         </TabsList>
       </div>
@@ -139,11 +137,8 @@ onMounted(updateRunOptions);
       <TabsContent value="formatter">
         <FormatterPanel />
       </TabsContent>
-      <TabsContent value="scope">
-        <ScopePanel />
-      </TabsContent>
-      <TabsContent value="symbol">
-        <SymbolPanel />
+      <TabsContent value="scoping">
+        <SemanticExplorer />
       </TabsContent>
       <TabsContent value="cfg">
         <ControlflowPanel />

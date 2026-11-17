@@ -2,7 +2,7 @@
 import { useDark } from "@vueuse/core";
 import * as monaco from "monaco-editor/editor/editor.api";
 import { onBeforeUnmount, onMounted, ref, shallowRef, watch, watchEffect } from "vue";
-import { editorCursor, outputHoverRange } from "~/composables/state";
+import { editorCursor, outputBindingHighlights, outputHoverRange } from "~/composables/state";
 import { getEditorTheme, registerEditorThemes } from "~/utils/editor-theme";
 
 defineOptions({ name: "MonacoEditor" });
@@ -87,11 +87,15 @@ watchEffect((onCleanup) => {
   const range = outputHoverRange.value;
   if (!props.main || !editor || !range) return;
 
-  const start = model.value.getPositionAt(range[0]);
-  const end = model.value.getPositionAt(range[1]);
+  const highlight = Array.isArray(range)
+    ? monaco.Range.fromPositions(
+        model.value.getPositionAt(range[0]),
+        model.value.getPositionAt(range[1]),
+      )
+    : monaco.Range.lift(range);
   const decorations = editor.createDecorationsCollection([
     {
-      range: monaco.Range.fromPositions(start, end),
+      range: highlight,
       options: {
         isWholeLine: false,
         className: "ast-highlight",
@@ -99,6 +103,29 @@ watchEffect((onCleanup) => {
     },
   ]);
   onCleanup(() => decorations.clear());
+});
+
+watchEffect((onCleanup) => {
+  const editor = instance.value;
+  const highlights = outputBindingHighlights.value;
+  if (!props.main || !editor || !highlights || highlights.source !== props.modelValue) return;
+
+  const decorations = editor.createDecorationsCollection(
+    highlights.ranges.map((range) => ({
+      range: monaco.Range.lift(range),
+      options: {
+        isWholeLine: false,
+        className: "semantic-binding-highlight",
+        stickiness: monaco.editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges,
+      },
+    })),
+  );
+  // Clear immediately on edits, before a new semantic snapshot is available.
+  const contentListener = model.value.onDidChangeContent(() => decorations.clear());
+  onCleanup(() => {
+    contentListener.dispose();
+    decorations.clear();
+  });
 });
 
 function initMonaco() {

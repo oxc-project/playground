@@ -1,16 +1,21 @@
 import { useDark } from "@vueuse/core";
 import { reactive, ref } from "vue";
 import type { Range } from "~/utils/range";
+import type { IRange } from "monaco-editor";
 
 export const dark = useDark();
 export const editorValue = ref("");
 
 export const editorCursor = ref(0);
 export const autoFocus = ref(true);
-export const outputHoverRange = ref<Range>();
+// Semantic byte spans are mapped to positions so highlights also survive
+// Monaco's BOM and line-ending handling. Existing AST offset ranges still work.
+export const outputHoverRange = ref<Range | IRange>();
+export const outputBindingHighlights = ref<{ source: string; ranges: IRange[] }>();
 
 // Active tab state for output panel
 export const activeTab = ref("codegen");
+export const scopingView = ref<"scopes" | "bindings">("scopes");
 
 // Formatter panel checkbox states
 export const formatterPanels = reactive({

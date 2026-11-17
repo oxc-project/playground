@@ -7,6 +7,7 @@ import {
   enabledLintRules,
   formatterPanels,
   helperRuntime,
+  scopingView,
 } from "~/composables/state";
 import { PLAYGROUND_DEMO_CODE } from "~/utils/constants";
 import { LINT_PLUGINS, getRequiredPlugins } from "~/utils/linter-rules";
@@ -16,6 +17,7 @@ import type { Oxc, OxcOptions } from "oxc-playground";
 // All state is stored in query params: ?t=tab&formatterPanels=...&code=...&lintRules=...
 const urlParams = useUrlSearchParams<{
   t?: string;
+  scopingView?: string;
   formatterPanels?: string;
   options?: string;
   code?: string;
@@ -26,7 +28,11 @@ const urlParams = useUrlSearchParams<{
 
 // Initialize state from URL (runs synchronously at module load)
 if (urlParams.t) {
-  activeTab.value = urlParams.t;
+  // Keep existing shared Scope/Symbol links working in the unified explorer.
+  activeTab.value = ["scope", "symbol"].includes(urlParams.t) ? "scoping" : urlParams.t;
+}
+if (urlParams.t === "symbol" || urlParams.scopingView === "bindings") {
+  scopingView.value = "bindings";
 }
 if (urlParams.formatterPanels) {
   const enabledPanels = urlParams.formatterPanels.split(",");
@@ -170,6 +176,7 @@ export const useOxc = createGlobalState(async () => {
   const { Oxc: OxcConstructor } = await oxcModule;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
+  const semanticSource = ref<string>();
   const baselineCode = ref("");
   const baselineSourcemap = ref("");
   const baselineError = ref<string>();
@@ -272,10 +279,12 @@ export const useOxc = createGlobalState(async () => {
       }
 
       oxc.run(editorValue.value, rawOptions);
+      semanticSource.value = editorValue.value;
       if (!rawOptions.run.isolatedDeclarations) astSource.value = editorValue.value;
       // Reset error if successful
       error.value = undefined;
     } catch (caughtError) {
+      semanticSource.value = undefined;
       astSource.value = undefined;
       console.error(caughtError);
       error.value = errors.length ? errors : caughtError;
@@ -338,6 +347,8 @@ export const useOxc = createGlobalState(async () => {
   // Sync tab and formatter panels to URL (reactive, no debounce needed)
   watchEffect(() => {
     urlParams.t = activeTab.value !== "codegen" ? activeTab.value : undefined;
+    urlParams.scopingView =
+      activeTab.value === "scoping" && scopingView.value === "bindings" ? "bindings" : undefined;
     const enabledPanels = Object.entries(formatterPanels)
       .filter(([, enabled]) => enabled)
       .map(([name]) => name);
@@ -395,6 +406,7 @@ export const useOxc = createGlobalState(async () => {
     options,
     monacoLanguage,
     compilationErrors,
+    semanticSource,
     baselineCode,
     baselineSourcemap,
     baselineError,
