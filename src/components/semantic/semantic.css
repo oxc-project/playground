@@ -218,17 +218,38 @@
   border-bottom: 1px solid hsl(var(--border) / 0.5);
   padding: 2px 8px;
 }
+.semantic-index-item:has(.semantic-index-button:focus-visible) {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: -2px;
+}
 .semantic-index-button {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 2px 8px;
   min-width: 0;
   flex: 1;
   padding: 6px 4px;
   text-align: left;
 }
+.semantic-index-button:focus-visible {
+  outline: none;
+}
+.semantic-index-button > .semantic-meta {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  white-space: nowrap;
+}
+.semantic-index-item > .semantic-source {
+  align-self: stretch;
+  justify-content: center;
+}
+.semantic-index-item > .semantic-source:focus-visible {
+  outline-offset: -2px;
+}
 .semantic-index-context {
-  grid-column: 1 / -1;
+  grid-column: 1;
+  grid-row: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
