@@ -24,7 +24,7 @@ watch(
     if (open) {
       previousFocus = document.activeElement as HTMLElement;
       await nextTick();
-      if (!cancelled) sidebar.value?.querySelector<HTMLElement>("input")?.focus();
+      if (!cancelled) sidebar.value?.focus();
     } else if (wasOpen) {
       previousFocus?.focus();
       previousFocus = undefined;
@@ -52,6 +52,7 @@ function onEscape(event: KeyboardEvent) {
     <aside
       id="configuration-sidebar"
       ref="sidebar"
+      tabindex="-1"
       class="configuration-sidebar absolute inset-y-0 left-0 z-30 w-[264px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:static"
       :class="open ? 'flex' : 'hidden'"
       aria-label="Configuration"

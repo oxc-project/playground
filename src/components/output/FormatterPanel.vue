@@ -5,6 +5,7 @@ import { computed, ref, toRef, useTemplateRef, watchEffect } from "vue";
 import MonacoEditor from "~/components/MonacoEditor.vue";
 import { defaultFormatterConfig, useOxc } from "~/composables/oxc";
 import { usePrettier } from "~/composables/prettier";
+import { useTextDraft } from "~/composables/text-draft";
 import { editorValue, formatterPanels } from "~/composables/state";
 import { Button } from "~/ui/button";
 import { Checkbox } from "~/ui/checkbox";
@@ -142,8 +143,8 @@ function openDiffReport() {
   window.open(url.toString(), "_blank");
 }
 
-const formatterConfig = computed({
-  get: () => {
+const formatterConfig = useTextDraft(
+  () => {
     try {
       const config = options.value.formatter || {};
       // Filter out undefined values for cleaner JSON
@@ -155,7 +156,7 @@ const formatterConfig = computed({
       return "{}";
     }
   },
-  set: (value: string) => {
+  (value: string) => {
     try {
       configError.value = "";
       const parsed = JSON.parse(value);
@@ -167,7 +168,7 @@ const formatterConfig = computed({
       configError.value = error instanceof Error ? error.message : "Invalid JSON";
     }
   },
-});
+);
 </script>
 
 <template>

@@ -308,7 +308,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
     <div
       v-show="expanded"
       :id="consoleId"
-      class="shrink-0 border-t"
+      class="min-h-0 max-h-[50%] shrink-0 overflow-auto border-t"
       :class="
         compareEnabled
           ? expectedComparisonActive

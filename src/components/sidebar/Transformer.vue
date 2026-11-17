@@ -34,6 +34,10 @@ const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
         <span>Runtime helpers</span>
         <Select v-model="helperRuntime" :options="helperRuntimeOptions" />
       </label>
+      <p v-if="options.transformer.helperModuleName != null" class="settings-help break-all">
+        Custom helper module: <code>{{ options.transformer.helperModuleName }}</code
+        >. Edit as JSON to change or remove this override.
+      </p>
       <OptionsDisclosure label="Transform options">
         <Checkbox
           v-model="options.transformer.useDefineForClassFields"
@@ -61,8 +65,9 @@ const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
           title="optimizeConstEnums"
         />
       </OptionsDisclosure>
-      <Define />
     </div>
+
+    <Define />
 
     <SectionToggle
       v-model="options.run.isolatedDeclarations"

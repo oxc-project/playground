@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed, ref, useId, watch } from "vue";
+import { computed, ref, shallowRef, useId, watch, watchEffect } from "vue";
 import { useOxc } from "~/composables/oxc";
 import { editorValue } from "~/composables/state";
+import type { DiagnosticToken } from "~/utils/diagnostic-codeframe";
+import { createHighlighter } from "~/utils/shiki";
 import DiagnosticCodeframe from "./DiagnosticCodeframe.vue";
 
 const props = defineProps<{
@@ -47,6 +49,37 @@ watch(diagnostics, (items) => {
   const keys = new Set(items.map((diagnostic) => diagnostic.key));
   for (const key of expanded.value) {
     if (!keys.has(key)) expanded.value.delete(key);
+  }
+});
+
+const tokens = shallowRef<DiagnosticToken[][]>([]);
+const hasExpandedCodeframe = computed(
+  () =>
+    !collapsed.value &&
+    diagnostics.value.some(
+      (diagnostic) => expanded.value.has(diagnostic.key) && diagnostic.codeframe,
+    ),
+);
+
+watchEffect(async (onCleanup) => {
+  tokens.value = [];
+  if (!hasExpandedCodeframe.value) return;
+  const source = editorValue.value;
+  if (!source) return;
+  let stale = false;
+  onCleanup(() => (stale = true));
+  try {
+    const highlighter = await createHighlighter();
+    if (stale) return;
+    // Share full-file tokens so excerpts inside comments or templates retain
+    // their lexical context; diagnostic arrows never enter the tokenizer.
+    const result = highlighter.codeToTokens(source, {
+      lang: "tsx",
+      themes: { light: "oxc-light", dark: "oxc-dark" },
+    });
+    if (!stale) tokens.value = result.tokens;
+  } catch {
+    // The complete plain code frames remain available if highlighting fails.
   }
 });
 
@@ -157,7 +190,7 @@ function toggleDetails(key: string) {
           <DiagnosticCodeframe
             v-if="expanded.has(diagnostic.key) && diagnostic.codeframe"
             :codeframe="diagnostic.codeframe"
-            :source="editorValue"
+            :tokens="tokens"
             :severity-color="diagnostic.color"
             :aria-label="`Full diagnostic: ${diagnostic.message}`"
           />
