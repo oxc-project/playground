@@ -44,6 +44,8 @@ function analyze(code, extension = "tsx") {
 }
 
 try {
+  assert.equal("scopeText" in oxc, false, "Legacy scope text is no longer exposed.");
+  assert.equal("symbolsJson" in oxc, false, "Legacy symbol JSON is no longer exposed.");
   let { data, index } = analyze(
     "// 😀\r\nconst café=1; function outer(x) { let value=x; { let value=2; value++; } return () => value + café; }",
   );
