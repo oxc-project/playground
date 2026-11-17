@@ -41,6 +41,26 @@ test("semantic source rejects partial UTF-8 characters and invalid spans", () =>
   assert.equal(mapper.locate({ start: 0, end: 4 })?.text, "😀");
 });
 
+test("semantic spans preserve every UTF-8 boundary across mixed line endings", () => {
+  const source = "﻿aé\r\n😀b\rc𐐀\nd";
+  const mapper = createSemanticSource(source);
+  const bytes = new TextEncoder();
+  let offset = 0;
+  for (const character of source) {
+    const start = bytes.encode(source.slice(0, offset)).length;
+    const end = start + bytes.encode(character).length;
+    const location = mapper.locate({ start, end });
+    assert.equal(location?.text, character);
+    assert.equal(location?.start.offset, offset);
+    assert.equal(location?.end.offset, offset + character.length);
+    for (let middle = start + 1; middle < end; middle++) {
+      assert.equal(mapper.locate({ start: middle, end }), undefined);
+      assert.equal(mapper.locate({ start, end: middle }), undefined);
+    }
+    offset += character.length;
+  }
+});
+
 test("legacy and unknown semantic formats cannot be misread as the new snapshot", () => {
   assert.equal(parseScoping(undefined), undefined);
   assert.throws(() => parseScoping("[]"), /Unsupported scoping data/);

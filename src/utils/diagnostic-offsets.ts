@@ -1,7 +1,9 @@
 // Map into line/column coordinates, which survive Monaco's newline
 // normalization. Monaco also keeps a leading BOM outside its editable text.
-export function createDiagnosticPositionMapper(source: string) {
-  const toUtf16 = createDiagnosticOffsetMapper(source);
+export function createDiagnosticPositionMapper(
+  source: string,
+  toUtf16 = createDiagnosticOffsetMapper(source),
+) {
   const starts = [source.charCodeAt(0) === 0xfeff ? 1 : 0];
   const ends: number[] = [];
   for (const match of source.matchAll(/\r\n|\r|\n/g)) {
@@ -48,8 +50,7 @@ export function createDiagnosticOffsetMapper(source: string) {
     utf16 += character.length;
   }
 
-  return (byteOffset: number) => {
-    const offset = Math.max(0, Math.min(byteOffset, bytes));
+  function findAdjustment(offset: number) {
     let low = 0;
     let high = adjustments.length;
     while (low < high) {
@@ -57,9 +58,22 @@ export function createDiagnosticOffsetMapper(source: string) {
       if (adjustments[middle]!.end <= offset) low = middle + 1;
       else high = middle;
     }
-    const next = adjustments[low];
+    return low;
+  }
+
+  const toUtf16 = (byteOffset: number) => {
+    const offset = Math.max(0, Math.min(byteOffset, bytes));
+    const index = findAdjustment(offset);
+    const next = adjustments[index];
     // A byte inside a multibyte character belongs to that character's start.
     if (next && offset >= next.start) return next.utf16Start;
-    return offset - (adjustments[low - 1]?.difference ?? 0);
+    return offset - (adjustments[index - 1]?.difference ?? 0);
   };
+  return Object.assign(toUtf16, {
+    isBoundary(byteOffset: number) {
+      if (!Number.isInteger(byteOffset) || byteOffset < 0 || byteOffset > bytes) return false;
+      const next = adjustments[findAdjustment(byteOffset)];
+      return !next || byteOffset <= next.start;
+    },
+  });
 }

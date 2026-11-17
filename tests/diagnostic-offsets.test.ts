@@ -22,6 +22,24 @@ test("diagnostic offsets preserve ASCII, Unicode, CRLF, and EOF positions", () =
   }
 });
 
+test("strict byte boundaries reject partial characters while diagnostics still clamp", () => {
+  const source = "a😀é𐐀z";
+  const mapper = createDiagnosticOffsetMapper(source);
+  const boundaries = [0, 1, 5, 7, 11, 12];
+  for (let byte = 0; byte <= 12; byte++) {
+    assert.equal(mapper.isBoundary(byte), boundaries.includes(byte));
+  }
+  for (const invalid of [-1, 13, 1.5, Infinity, NaN]) {
+    assert.equal(mapper.isBoundary(invalid), false);
+  }
+  assert.equal(mapper(2), 1);
+  assert.equal(mapper(6), 3);
+  assert.equal(mapper(8), 4);
+  const empty = createDiagnosticOffsetMapper("");
+  assert.equal(empty.isBoundary(0), true);
+  assert.equal(empty.isBoundary(1), false);
+});
+
 test("a diagnostic after an emoji selects the complete Unicode identifier", () => {
   const source = 'console.log("😀");\nconst café = 1;';
   const toUtf16 = createDiagnosticOffsetMapper(source);

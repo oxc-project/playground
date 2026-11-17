@@ -64,7 +64,9 @@ async function backToBrowser() {
   const browser = layout.value?.querySelector<HTMLElement>(".semantic-browser");
   const target =
     browser?.querySelector<HTMLElement>('[aria-pressed="true"]') ??
-    browser?.querySelector<HTMLElement>(".semantic-search input");
+    (view.value === "scopes"
+      ? browser?.querySelector<HTMLElement>(".semantic-disclosure")
+      : browser?.querySelector<HTMLElement>(".semantic-search input"));
   target?.focus({ preventScroll: true });
 }
 const code = computed(() => {

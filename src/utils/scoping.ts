@@ -1,3 +1,8 @@
+import {
+  createDiagnosticOffsetMapper,
+  createDiagnosticPositionMapper,
+} from "./diagnostic-offsets.ts";
+
 export interface ByteSpan {
   start: number;
   end: number;
@@ -137,41 +142,20 @@ export function indexScoping(data: ScopingData) {
 // partial code point; AST and source-map offsets must never enter this mapper.
 export function createSemanticSource(source: string) {
   const lines = source.split(/\r\n|\r|\n/);
-  const positions = new Map<number, { offset: number; lineNumber: number; column: number }>();
-  let byte = 0;
-  let offset = 0;
-  let lineNumber = 1;
-  let column = 1;
-  let previousCR = false;
-  for (const character of source) {
-    positions.set(byte, { offset, lineNumber, column });
-    const codePoint = character.codePointAt(0)!;
-    byte += codePoint <= 0x7f ? 1 : codePoint <= 0x7ff ? 2 : codePoint <= 0xffff ? 3 : 4;
-    offset += character.length;
-    if (character === "\r") {
-      lineNumber++;
-      column = 1;
-    } else if (character === "\n") {
-      if (!previousCR) lineNumber++;
-      column = 1;
-    } else if (!(offset === 1 && character === "﻿")) {
-      column += character.length;
-    }
-    previousCR = character === "\r";
-  }
-  positions.set(byte, { offset, lineNumber, column });
+  const toUtf16 = createDiagnosticOffsetMapper(source);
+  const toPosition = createDiagnosticPositionMapper(source, toUtf16);
 
   function locate(span: ByteSpan) {
     if (
       !Number.isInteger(span.start) ||
       !Number.isInteger(span.end) ||
-      span.start < 0 ||
-      span.end <= span.start
+      span.end <= span.start ||
+      !toUtf16.isBoundary(span.start) ||
+      !toUtf16.isBoundary(span.end)
     )
       return;
-    const start = positions.get(span.start);
-    const end = positions.get(span.end);
-    if (!start || !end) return;
+    const start = { offset: toUtf16(span.start), ...toPosition(span.start) };
+    const end = { offset: toUtf16(span.end), ...toPosition(span.end) };
     return {
       start,
       end,
