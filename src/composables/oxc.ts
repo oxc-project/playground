@@ -176,9 +176,12 @@ export const useOxc = createGlobalState(async () => {
   let baselineOxc: Oxc | undefined;
   const helperModuleName = computed(() => {
     const runtimeVersion = import.meta.env.OXC_RUNTIME_VERSION;
-    return helperRuntime.value === "esm" && runtimeVersion
-      ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
-      : undefined;
+    return (
+      options.value.transformer.helperModuleName ??
+      (helperRuntime.value === "esm" && runtimeVersion
+        ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
+        : undefined)
+    );
   });
 
   // Compute the linter config directly from enabledLintRules so it's always
@@ -287,7 +290,7 @@ export const useOxc = createGlobalState(async () => {
 
   // The baseline depends on the source and parser, not the output's transform options.
   watch(
-    [editorValue, () => options.value.parser, compareEnabled, helperRuntime],
+    [editorValue, () => options.value.parser, compareEnabled, helperModuleName],
     () => {
       baselineCode.value = "";
       baselineSourcemap.value = "";

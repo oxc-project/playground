@@ -44,10 +44,17 @@ function trackTimer(nativeSet, repeating) {
   return function (callback, delay, ...args) {
     // Let the native timer report the missing required handler.
     if (arguments.length === 0) return nativeSet();
+    // Browser timers coerce non-callable handlers once, when scheduled, then
+    // evaluate their source in global scope rather than the bootstrap's scope.
+    const handler = typeof callback === "function" ? callback : `${callback}`;
     const id = nativeSet(() => {
       if (!repeating) activeTimers.delete(id);
       try {
-        Reflect.apply(callback, globalThis, args);
+        if (typeof handler === "function") Reflect.apply(handler, globalThis, args);
+        else {
+          // eslint-disable-next-line no-eval -- Match native string timers inside the sandbox.
+          (0, eval)(handler);
+        }
       } finally {
         pendingTimers = activeTimers.size;
         reportState();
@@ -62,8 +69,11 @@ function trackTimer(nativeSet, repeating) {
 
 function clearTimer(nativeClear) {
   return (id) => {
-    nativeClear(id);
-    activeTimers.delete(id);
+    // Match the native Web IDL long conversion, including a single coercion
+    // for objects and rejection of BigInt/Symbol IDs.
+    const timerId = +id | 0;
+    nativeClear(timerId);
+    activeTimers.delete(timerId);
     pendingTimers = activeTimers.size;
     reportState();
   };

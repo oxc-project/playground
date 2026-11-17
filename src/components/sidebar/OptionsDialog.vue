@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { computed } from "vue";
+import { useTextDraft } from "~/composables/text-draft";
 import { resolveOptions, useOxc } from "~/composables/oxc";
 import { Button } from "~/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/ui/dialog";
 import MonacoEditor from "../MonacoEditor.vue";
 
 const { options } = await useOxc();
-const optionsString = computed({
-  get: () => JSON.stringify(options.value, null, 2),
-  set: (value: string) => {
+const optionsString = useTextDraft(
+  () => JSON.stringify(options.value, null, 2),
+  (value: string) => {
     try {
       options.value = resolveOptions(JSON.parse(value));
     } catch (error) {
       console.error("Failed to parse JSON options:", error);
     }
   },
-});
+);
 </script>
 
 <template>
