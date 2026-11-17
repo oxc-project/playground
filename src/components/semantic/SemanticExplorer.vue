@@ -9,7 +9,7 @@ import ScopeBranch from "./ScopeBranch.vue";
 import SemanticSource from "./SemanticSource.vue";
 import "./semantic.css";
 
-const { oxc, error } = await useOxc();
+const { error } = await useOxc();
 const {
   json,
   data,
@@ -30,7 +30,6 @@ const layout = useTemplateRef<HTMLDivElement>("layout");
 const inspector = useTemplateRef<InstanceType<typeof BindingInspector>>("inspector");
 const detailOpen = ref(false);
 const raw = ref(false);
-const rawFormat = ref("scoping");
 const searchId = useId();
 
 watch([json, source], () => {
@@ -70,8 +69,6 @@ async function backToBrowser() {
   target?.focus({ preventScroll: true });
 }
 const code = computed(() => {
-  if (rawFormat.value === "scope") return oxc.value.scopeText;
-  if (rawFormat.value === "symbol") return oxc.value.symbolsJson;
   try {
     return json.value ? JSON.stringify(JSON.parse(json.value), null, 2) : "";
   } catch {
@@ -104,26 +101,16 @@ const code = computed(() => {
       <label class="semantic-raw-toggle"
         ><input v-model="raw" type="checkbox" class="accent-primary" /> Raw</label
       >
-      <select
-        v-if="raw"
-        v-model="rawFormat"
-        aria-label="Raw output format"
-        class="semantic-input semantic-raw-format"
-      >
-        <option value="scoping">Scoping JSON</option>
-        <option value="scope">Scope text</option>
-        <option value="symbol">Symbol JSON</option>
-      </select>
     </div>
     <div v-if="raw" class="semantic-raw-output">
-      <OutputPreview :code :lang="rawFormat === 'scope' ? 'tsx' : 'json'" />
+      <OutputPreview :code lang="json" />
     </div>
     <p v-else-if="error" role="status" class="p-3 text-sm text-muted-foreground">
       Semantic analysis did not complete. Edit the source or options to try again.
     </p>
     <p v-else-if="parseError" role="status" class="p-3 text-sm">{{ parseError }}</p>
     <p v-else-if="!data || !index" role="status" class="p-3 text-sm text-muted-foreground">
-      Scoping data is unavailable. Existing scope and symbol output is available in Raw.
+      Scoping data is unavailable. Edit the source or options to try again.
     </p>
     <template v-else>
       <p v-if="!fresh" role="status" class="shrink-0 border-b p-2 text-xs text-muted-foreground">

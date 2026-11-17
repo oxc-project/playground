@@ -44,9 +44,6 @@
   color: hsl(var(--muted-foreground));
   cursor: pointer;
 }
-.semantic-raw-format {
-  max-width: 140px;
-}
 .semantic-raw-output {
   flex: 1;
   min-height: 0;
