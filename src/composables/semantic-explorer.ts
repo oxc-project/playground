@@ -1,7 +1,12 @@
 import { createGlobalState } from "@vueuse/core";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import { useOxc } from "~/composables/oxc";
-import { editorValue, outputHoverRange } from "~/composables/state";
+import {
+  activeTab,
+  editorValue,
+  outputBindingHighlights,
+  outputHoverRange,
+} from "~/composables/state";
 import { createSemanticSource, indexScoping, parseScoping } from "~/utils/scoping";
 
 export const useSemanticExplorer = createGlobalState(async () => {
@@ -50,6 +55,27 @@ export const useSemanticExplorer = createGlobalState(async () => {
       ? undefined
       : index.value?.symbols.get(selectedSymbolId.value),
   );
+  watchEffect(() => {
+    outputBindingHighlights.value = undefined;
+    if (activeTab.value !== "scoping" || !fresh.value || !symbol.value || !index.value) return;
+
+    const binding = symbol.value;
+    const spans = [
+      binding.span,
+      ...binding.redeclarations.map((declaration) => declaration.span),
+      ...binding.references.flatMap((id) => {
+        const reference = index.value!.references.get(id);
+        return reference?.symbolId === binding.id ? [reference.span] : [];
+      }),
+    ];
+    const uniqueSpans = new Map(spans.map((span) => [`${span.start}:${span.end}`, span]));
+    const ranges = [...uniqueSpans.values()].flatMap((span) => {
+      const location = source.value.locate(span);
+      return location ? [location.range] : [];
+    });
+    outputBindingHighlights.value = { source: semanticSource.value!, ranges };
+  });
+
   const scope = computed(() =>
     selectedScopeId.value === undefined
       ? undefined

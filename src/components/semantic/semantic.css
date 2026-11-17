@@ -211,9 +211,11 @@
   outline-offset: 2px;
 }
 .semantic-index-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(24px, auto) minmax(28px, auto);
   align-items: center;
-  gap: 4px;
+  column-gap: 8px;
   min-width: 0;
   border-bottom: 1px solid hsl(var(--border) / 0.5);
   padding: 2px 8px;
@@ -224,25 +226,37 @@
 }
 .semantic-index-button {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-column: 1;
+  grid-row: 1 / 3;
+  grid-template-rows: subgrid;
   align-items: center;
-  gap: 2px 8px;
   min-width: 0;
-  flex: 1;
-  padding: 6px 4px;
+  padding: 0 4px;
   text-align: left;
 }
 .semantic-index-button:focus-visible {
   outline: none;
 }
-.semantic-index-button > .semantic-meta {
+.semantic-index-name {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+.semantic-index-name > .semantic-meta {
+  flex-shrink: 0;
+}
+.semantic-index-references {
   grid-column: 2;
-  grid-row: 1 / 3;
+  grid-row: 1;
+  justify-self: end;
+  padding-right: 4px;
   white-space: nowrap;
 }
 .semantic-index-item > .semantic-source {
-  align-self: stretch;
-  justify-content: center;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
 }
 .semantic-index-item > .semantic-source:focus-visible {
   outline-offset: -2px;

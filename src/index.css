@@ -433,7 +433,8 @@
   animation: theme-in 160ms ease-out;
 }
 
-.ast-highlight {
+.ast-highlight,
+.semantic-binding-highlight {
   background: hsl(var(--primary) / 0.18);
 }
 

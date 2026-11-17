@@ -11,6 +11,7 @@ export const autoFocus = ref(true);
 // Semantic byte spans are mapped to positions so highlights also survive
 // Monaco's BOM and line-ending handling. Existing AST offset ranges still work.
 export const outputHoverRange = ref<Range | IRange>();
+export const outputBindingHighlights = ref<{ source: string; ranges: IRange[] }>();
 
 // Active tab state for output panel
 export const activeTab = ref("codegen");

@@ -182,15 +182,19 @@ const code = computed(() => {
                   :title="binding.name"
                   @click="selectSymbol(binding.id)"
                 >
-                  <span class="font-mono truncate">{{ binding.name }}</span>
-                  <span class="semantic-meta"
-                    >#{{ binding.id }} · {{ binding.references.length }} refs</span
-                  >
+                  <span class="semantic-index-name">
+                    <span class="font-mono truncate">{{ binding.name }}</span>
+                    <span class="semantic-meta">#{{ binding.id }}</span>
+                  </span>
                   <span class="semantic-index-context"
                     >{{ index.scopes.get(binding.scopeId)?.kind }} #{{ binding.scopeId }} ·
                     {{ binding.flags }}</span
                   >
                 </button>
+                <span class="semantic-index-references semantic-meta">
+                  {{ binding.references.length }}
+                  {{ binding.references.length === 1 ? "ref" : "refs" }}
+                </span>
                 <SemanticSource
                   :location="source.locate(binding.span)"
                   :fresh
