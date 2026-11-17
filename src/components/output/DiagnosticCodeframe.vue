@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from "vue";
-import { createHighlighter } from "~/utils/shiki";
+import { computed } from "vue";
 import { alignDiagnosticSource, type DiagnosticToken } from "~/utils/diagnostic-codeframe";
 
 const props = defineProps<{
   codeframe: string;
-  source: string;
+  tokens: DiagnosticToken[][];
   severityColor: string;
 }>();
 
-const tokens = ref<DiagnosticToken[][]>([]);
 const lines = computed(() =>
   props.codeframe.split("\n").map((text) => {
     // Keep the compiler's gutter, annotations, and spacing intact. Only the
@@ -31,7 +29,7 @@ const lines = computed(() =>
 );
 const highlightedLines = computed(() =>
   lines.value.map((line) => {
-    const sourceTokens = line.lineNumber && tokens.value[line.lineNumber - 1];
+    const sourceTokens = line.lineNumber && props.tokens[line.lineNumber - 1];
     const aligned =
       sourceTokens && line.source !== undefined
         ? alignDiagnosticSource(line.source, sourceTokens)
@@ -43,26 +41,6 @@ const highlightedLines = computed(() =>
     };
   }),
 );
-
-watchEffect(async (onCleanup) => {
-  // Tokenize the original file so excerpts inside comments or templates retain
-  // their lexical context; diagnostic arrows never enter the tokenizer.
-  const source = props.source;
-  tokens.value = [];
-  if (!source) return;
-  let stale = false;
-  onCleanup(() => (stale = true));
-  try {
-    const highlighter = await createHighlighter();
-    const result = highlighter.codeToTokens(source, {
-      lang: "tsx",
-      themes: { light: "oxc-light", dark: "oxc-dark" },
-    });
-    if (!stale) tokens.value = result.tokens;
-  } catch {
-    // The complete plain code frame remains available if highlighting fails.
-  }
-});
 </script>
 
 <template>

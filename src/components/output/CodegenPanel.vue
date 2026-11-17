@@ -12,9 +12,7 @@ import PrintedEditor from "./PrintedEditor.vue";
 const { oxc, options, error, baselineCode, baselineSourcemap, baselineError, compilationErrors } =
   await useOxc();
 const expectedDiffVisited = ref(expectedDiffEnabled.value);
-const compilationFailed = computed(
-  () => !!error.value || (expectedDiffVisited.value && compilationErrors.value.length > 0),
-);
+const compilationFailed = computed(() => !!error.value || compilationErrors.value.length > 0);
 const expectedDiffId = useId();
 function toggleExpectedDiff() {
   expectedDiffVisited.value = true;

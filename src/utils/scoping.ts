@@ -1,7 +1,4 @@
-import {
-  createDiagnosticOffsetMapper,
-  createDiagnosticPositionMapper,
-} from "./diagnostic-offsets.ts";
+import { createSourceRangeMapper } from "./source-range.ts";
 
 export interface ByteSpan {
   start: number;
@@ -142,29 +139,25 @@ export function indexScoping(data: ScopingData) {
 // partial code point; AST and source-map offsets must never enter this mapper.
 export function createSemanticSource(source: string) {
   const lines = source.split(/\r\n|\r|\n/);
-  const toUtf16 = createDiagnosticOffsetMapper(source);
-  const toPosition = createDiagnosticPositionMapper(source, toUtf16);
+  const toRange = createSourceRangeMapper(source, "utf8");
 
   function locate(span: ByteSpan) {
-    if (
-      !Number.isInteger(span.start) ||
-      !Number.isInteger(span.end) ||
-      span.end <= span.start ||
-      !toUtf16.isBoundary(span.start) ||
-      !toUtf16.isBoundary(span.end)
-    )
-      return;
-    const start = { offset: toUtf16(span.start), ...toPosition(span.start) };
-    const end = { offset: toUtf16(span.end), ...toPosition(span.end) };
+    const location = toRange(span);
+    if (!location) return;
+    const start = {
+      offset: location.offsets[0],
+      lineNumber: location.positions.startLineNumber,
+      column: location.positions.startColumn,
+    };
+    const end = {
+      offset: location.offsets[1],
+      lineNumber: location.positions.endLineNumber,
+      column: location.positions.endColumn,
+    };
     return {
       start,
       end,
-      range: {
-        startLineNumber: start.lineNumber,
-        startColumn: start.column,
-        endLineNumber: end.lineNumber,
-        endColumn: end.column,
-      },
+      range: location.positions,
       text: source.slice(start.offset, end.offset),
       snippet: lines[start.lineNumber - 1]?.trim() ?? "",
     };
