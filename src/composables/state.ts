@@ -14,6 +14,7 @@ export const outputHoverRange = ref<Range | IRange>();
 
 // Active tab state for output panel
 export const activeTab = ref("codegen");
+export const scopingView = ref<"scopes" | "bindings">("scopes");
 
 // Formatter panel checkbox states
 export const formatterPanels = reactive({

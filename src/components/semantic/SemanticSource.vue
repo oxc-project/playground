@@ -27,7 +27,7 @@ onBeforeUnmount(clear);
     type="button"
     class="semantic-source"
     :class="{ 'semantic-snippet': snippet }"
-    :title="`Go to source · ${location.start.lineNumber}:${location.start.column}`"
+    :title="`Go to source · ${location.start.lineNumber}:${location.start.column}${snippet ? ` · ${location.snippet}` : ''}`"
     :aria-label="`Go to source${label ? ` for ${label}` : ''} at ${location.start.lineNumber}:${location.start.column}`"
     @click.stop="navigate(location.range)"
     @mouseenter="highlight"

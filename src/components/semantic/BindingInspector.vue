@@ -71,7 +71,7 @@ const capturedCount = computed(() =>
 </script>
 
 <template>
-  <section class="semantic-inspector" aria-label="Binding inspector">
+  <section class="semantic-inspector" aria-label="Scoping inspector" tabindex="-1">
     <slot />
     <template v-if="symbol">
       <div class="semantic-inspector-title">
@@ -127,9 +127,9 @@ const capturedCount = computed(() =>
           References <span class="semantic-meta">{{ references.length }}</span>
         </h4>
         <p class="mb-2 text-muted-foreground">
-          {{ references.filter((r) => r.isRead).length }} reads ·
-          {{ references.filter((r) => r.isWrite).length }} writes ·
-          {{ references.filter((r) => r.isType).length }} type uses
+          Reads {{ references.filter((r) => r.isRead).length }} · Writes
+          {{ references.filter((r) => r.isWrite).length }} · Type uses
+          {{ references.filter((r) => r.isType).length }}
         </p>
         <p v-if="capturedCount" class="mb-2 text-muted-foreground">
           {{ capturedCount }} value {{ capturedCount === 1 ? "use crosses" : "uses cross" }} a
@@ -295,10 +295,13 @@ const capturedCount = computed(() =>
       </details>
     </template>
     <p v-else class="semantic-empty">Select a scope or binding to inspect it.</p>
-    <p class="semantic-footnote">
-      Original-source static analysis. Reads and writes follow Oxc reference flags; property
-      mutation is not binding reassignment. Function boundaries describe lexical use, not runtime
-      allocation. Dynamic eval / with and TypeScript scopes have additional rules.
-    </p>
+    <details class="semantic-footnote semantic-raw-details">
+      <summary>About this analysis</summary>
+      <p>
+        Original-source static analysis. Reads and writes follow Oxc reference flags; property
+        mutation is not binding reassignment. Function boundaries describe lexical use, not runtime
+        allocation. Dynamic eval / with and TypeScript scopes have additional rules.
+      </p>
+    </details>
   </section>
 </template>

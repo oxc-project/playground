@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { computed, ref } from "vue";
 import type { SemanticScope, createSemanticSource, indexScoping } from "~/utils/scoping";
 import SemanticSource from "./SemanticSource.vue";
@@ -32,13 +33,19 @@ const bindings = computed(() => props.index.declared.get(props.scope.id) ?? []);
         :aria-label="`${expanded ? 'Collapse' : 'Expand'} ${scope.kind} scope ${scope.id}`"
         @click="expanded = !expanded"
       >
-        {{ expanded ? "⌄" : "›" }}
+        <Icon
+          icon="ri:arrow-right-s-line"
+          class="size-4"
+          :class="{ 'rotate-90': expanded }"
+          aria-hidden="true"
+        />
       </button>
       <button
         type="button"
         class="semantic-scope-name"
         :title="scope.kind"
         :aria-label="`Inspect ${scope.kind} scope ${scope.id}`"
+        :aria-pressed="selectedSymbolId === undefined && selectedScopeId === scope.id"
         @click="$emit('selectScope', scope.id)"
       >
         <span class="truncate">{{ scope.kind }}</span
@@ -59,6 +66,7 @@ const bindings = computed(() => props.index.declared.get(props.scope.id) ?? []);
             :class="{ 'semantic-selected': selectedSymbolId === symbol.id }"
             :aria-pressed="selectedSymbolId === symbol.id"
             :aria-label="`Inspect binding ${symbol.name} #${symbol.id}`"
+            :title="symbol.name"
             @click="$emit('selectSymbol', symbol.id)"
           >
             <span class="truncate font-mono">{{ symbol.name }}</span>
