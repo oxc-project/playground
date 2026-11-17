@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useSourceRange } from "~/composables/source-navigation";
 import { outputHoverRange } from "~/composables/state";
-import { getRange } from "~/utils/range";
 import { useHighlightColor } from "~/utils/shiki";
 
 const props = defineProps<{
@@ -18,17 +18,18 @@ const key = computed(() => {
   return String(props.id);
 });
 const keyColor = useHighlightColor(key);
+const sourceRange = useSourceRange(() => props.value, "utf8");
 
 function handleMouseOver(event: MouseEvent) {
   if (props.root) {
     event.stopPropagation();
     outputHoverRange.value = undefined;
   } else if (props.value) {
-    const range = getRange(props.value);
+    const range = sourceRange.value;
     if (!range) return;
 
     event.stopPropagation();
-    outputHoverRange.value = range;
+    outputHoverRange.value = range.offsets;
   }
 }
 

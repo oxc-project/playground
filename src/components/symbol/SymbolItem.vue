@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import SourceRangeButton from "~/components/SourceRangeButton.vue";
+import { useSourceRange } from "~/composables/source-navigation";
 import { outputHoverRange } from "~/composables/state";
-import { getRange } from "~/utils/range";
 import { useHighlightColor } from "~/utils/shiki";
 import SymbolItemValue from "./SymbolItemValue.vue";
 
@@ -11,15 +12,11 @@ const props = defineProps<{
 
 const name = computed(() => props.value.name);
 const nameColor = useHighlightColor(name);
+const sourceRange = useSourceRange(() => props.value.span, "utf8");
 
 function handleMouseOver(event: MouseEvent) {
-  if (props.value.span) {
-    const range = getRange(props.value.span);
-    if (!range) return;
-
-    event.stopPropagation();
-    outputHoverRange.value = range;
-  }
+  event.stopPropagation();
+  outputHoverRange.value = sourceRange.value?.offsets;
 }
 function handleMouseLeave() {
   outputHoverRange.value = undefined;
@@ -33,6 +30,7 @@ function handleMouseLeave() {
       <span class="opacity-50"> (id: {{ value.symbol_id }})</span>
       <span class="opacity-70">:&nbsp;</span>
     </span>
+    <SourceRangeButton :range="sourceRange?.positions" :label="`symbol ${name}`" />
     <span>
       <span class="opacity-70">{</span>
       <div v-for="(val, k) in value" :key="k" class="pl-4">

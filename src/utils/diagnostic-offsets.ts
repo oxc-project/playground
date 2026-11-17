@@ -2,6 +2,11 @@
 // normalization. Monaco also keeps a leading BOM outside its editable text.
 export function createDiagnosticPositionMapper(source: string) {
   const toUtf16 = createDiagnosticOffsetMapper(source);
+  const toPosition = createUtf16PositionMapper(source);
+  return (byteOffset: number) => toPosition(toUtf16(byteOffset));
+}
+
+export function createUtf16PositionMapper(source: string) {
   const starts = [source.charCodeAt(0) === 0xfeff ? 1 : 0];
   const ends: number[] = [];
   for (const match of source.matchAll(/\r\n|\r|\n/g)) {
@@ -10,8 +15,7 @@ export function createDiagnosticPositionMapper(source: string) {
   }
   ends.push(source.length);
 
-  return (byteOffset: number) => {
-    const offset = toUtf16(byteOffset);
+  return (offset: number) => {
     let low = 0;
     let high = starts.length;
     while (low < high) {
