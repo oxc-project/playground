@@ -87,11 +87,15 @@ watchEffect((onCleanup) => {
   const range = outputHoverRange.value;
   if (!props.main || !editor || !range) return;
 
-  const start = model.value.getPositionAt(range[0]);
-  const end = model.value.getPositionAt(range[1]);
+  const highlight = Array.isArray(range)
+    ? monaco.Range.fromPositions(
+        model.value.getPositionAt(range[0]),
+        model.value.getPositionAt(range[1]),
+      )
+    : monaco.Range.lift(range);
   const decorations = editor.createDecorationsCollection([
     {
-      range: monaco.Range.fromPositions(start, end),
+      range: highlight,
       options: {
         isWholeLine: false,
         className: "ast-highlight",

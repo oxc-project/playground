@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useOxc } from "~/composables/oxc";
-import OutputPreview from "./OutputPreview.vue";
-
-const { oxc } = await useOxc();
+import SemanticExplorer from "~/components/semantic/SemanticExplorer.vue";
 </script>
 
 <template>
-  <OutputPreview :code="oxc.scopeText" lang="tsx" />
+  <SemanticExplorer view="scope" />
 </template>

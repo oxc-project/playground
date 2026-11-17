@@ -167,6 +167,7 @@ export const useOxc = createGlobalState(async () => {
   const { Oxc: OxcConstructor } = await oxcModule;
   const state = shallowRef(oxc);
   const error = ref<unknown>();
+  const semanticSource = ref<string>();
   const baselineCode = ref("");
   const baselineSourcemap = ref("");
   const baselineError = ref<string>();
@@ -266,9 +267,11 @@ export const useOxc = createGlobalState(async () => {
       }
 
       oxc.run(editorValue.value, rawOptions);
+      semanticSource.value = editorValue.value;
       // Reset error if successful
       error.value = undefined;
     } catch (caughtError) {
+      semanticSource.value = undefined;
       console.error(caughtError);
       error.value = errors.length ? errors : caughtError;
     }
@@ -387,6 +390,7 @@ export const useOxc = createGlobalState(async () => {
     options,
     monacoLanguage,
     compilationErrors,
+    semanticSource,
     baselineCode,
     baselineSourcemap,
     baselineError,
