@@ -29,7 +29,7 @@ export const formatterPanels = reactive({
 export const enabledLintRules = ref<string[]>([]);
 
 // Where generated code imports runtime helpers from: the npm package default,
-// or versioned esm.sh URLs that a browser module can load directly.
+// or versioned ESM CDN URLs that a browser module can load directly.
 export const helperRuntime = ref<"npm" | "esm">("npm");
 
 export const compareEnabled = ref(false);

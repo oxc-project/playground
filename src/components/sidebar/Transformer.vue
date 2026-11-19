@@ -12,7 +12,7 @@ const { options } = await useOxc();
 
 const helperRuntimeOptions: { value: "npm" | "esm"; label: string }[] = [
   { value: "npm", label: "@oxc-project/runtime" },
-  { value: "esm", label: "esm.sh (versioned URL)" },
+  { value: "esm", label: "esm.run (versioned URL)" },
 ];
 </script>
 
