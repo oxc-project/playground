@@ -37,9 +37,9 @@ use Module, `cjs`/`cts` use CommonJS, and other supported extensions use
 Unambiguous.
 
 **Runtime helpers** in Transformer selects npm package paths (the default) or
-versioned esm.sh URLs matching the sibling Oxc checkout, and the choice is saved
+versioned esm.run URLs matching the sibling Oxc checkout, and the choice is saved
 in the share URL. To run helper-using output, use **Source type → Module** and
-**Runtime helpers → esm.sh**. The sandbox uses the browser's native module loader;
+**Runtime helpers → esm.run**. The sandbox uses the browser's native module loader;
 bare npm imports, `require()`, and Node.js APIs are unavailable. Execution errors
 appear in the console. Enable the Transformer first to run TypeScript or JSX.
 

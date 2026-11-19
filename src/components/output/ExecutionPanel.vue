@@ -271,7 +271,7 @@ watch([() => props.baselineCode, () => props.baselineSourceMap, () => props.base
               >
                 To run output that imports runtime helpers, select
                 <strong>Parser → Source type → Module</strong> and
-                <strong>Transformer → Runtime helpers → esm.sh</strong> in configuration. The
+                <strong>Transformer → Runtime helpers → esm.run</strong> in configuration. The
                 browser cannot resolve npm package imports or <code>require()</code>.
               </TooltipContent>
             </TooltipPortal>

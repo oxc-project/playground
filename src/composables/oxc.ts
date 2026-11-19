@@ -186,7 +186,7 @@ export const useOxc = createGlobalState(async () => {
     return (
       options.value.transformer.helperModuleName ??
       (helperRuntime.value === "esm" && runtimeVersion
-        ? `https://esm.sh/@oxc-project/runtime@${runtimeVersion}`
+        ? `https://esm.run/@oxc-project/runtime@${runtimeVersion}`
         : undefined)
     );
   });
